@@ -1,0 +1,467 @@
+/*
+  Text.strings
+  社区
+
+  Created by BoBo on 2019/11/4.
+  Copyright © 2019 BoBo. All rights reserved.
+*/
+"Popular" = "Popular";
+"Show" = "Show";
+"Hot" = "Hot";
+"Follow" = "Follow";
+"Super Star" = "Super Star";
+"Supporter" = "Supporter";
+"Famle" = "Famle";
+"Male" = "Male";
+"DAILY" = "DAILY";
+"WEEKLY" = "WEEKLY";
+"Pay 10 gold coins to give him roses" = "Pay 10 gold coins to give him roses";
+"Give" = "Give";
+"Me" = "Me";
+"My Charm" = "My Charm";
+"Members" = "Members";
+"Help&feedback" = "Help&feedback";
+"Setting" = "Setting";
+"Version Number" = "Version Number";
+"Enter ID or phone number" = "Enter ID or phone number";
+"Call Record" = "Call Record";
+"All Calls" = "All Calls";
+"Missed Call" = "Missed Call";
+"Video" = "Video";
+"Saving Changes" = "Saving Changes";
+"processing..." = "processing...";
+"Hold to Talk"="Hold to Talk";
+"Release to send"="Release to send";
+"Comments"="Comments";
+"Your account has been frozen"="Your account has been frozen";
+"Please enter your account number"="Please enter your account number";
+"Search User"="Search User";
+"Please enter the ID you want to search"="Please enter the ID you want to search";
+"Searching" = "Searching";
+"No answer"="No answer";
+"Recording is started"="Recording is started";
+"Recording is ended"="Recording is ended";
+"Call canceled,request rejected"="Call canceled,request rejected";
+"Insufficient balance of opposite party" = "Insufficient balance of opposite party";
+"Call failed"="Call failed";
+"Already processed on other ports"="Already processed on other ports";
+
+"Take photos"="Take photos";
+"Choose from album"="Choose from album";
+"Take videos"="Take videos";
+"Cancel"="Cancel";
+"Your device does not support uploading photos this way"="Your device does not support uploading photos this way";
+"Complete"="Complete";
+"submitting..."="submitting...";
+"Submit"="Submit";
+"Setting up"="Setting up";
+"Loading..." = "Loading...";
+"No"="No";
+"Get Code"="Get Code";
+"Logging..."="Logging...";
+"Video time can not be less than%@ seconds, click Re-record"="Video time can not be less than%@ seconds, click Re-record";
+"Video time cannot be less than%d seconds, click Re-record"="Video time cannot be less than%d seconds, click Re-record";
+"Re-recording"="Re-recording";
+"Submitting"="Submitting";
+
+"Limited camera rights, unable to view and record videos" = "Limited camera rights, unable to view and record videos";
+"Microphone access is limited and video recording is not possible" = "Microphone access is limited and video recording is not possible";
+
+
+//相亲
+"Searching online user for you..." = "Searching online user for you...";
+"Quick Video…" = "Quick Video…";
+"Connenting…" = "Connenting…";
+"Camera on…" = "Camera on…";
+"Start Video" = "Start Video";
+"Return to continue matching" = "Return to continue matching";
+"Send" = "Send";
+"Nitce to meet you" = "Nitce to meet you";
+"The match is successful"= "The match is successful";
+"Say Hello" = "Say Hello";
+"Your balance is insufficient. This video connection failed.\nPlease make sure you have enough gold coins" = "Your balance is insufficient. This video connection failed.\nPlease make sure you have enough gold coins";
+"Call prompt" = "Call prompt";
+"CONGRATULATION" = "CONGRATULATION";
+//TrendsNoticeViewController.m
+
+"New message"="New message";
+"No new message now~"="No new message now~";
+"give rewards to you"="give rewards to you";
+"“Like”you"="“Like”you";
+
+
+//InputCheckNumberViewController
+"Verification of mobile phones" = "Verification of mobile phones";
+"Input Verification Code"="Input Verification Code";
+"Verification Code" = "Verification Code";
+"Verification code sent to" = "Verification code sent to";
+"Re-acquisition" = "Re-acquisition";
+"verification code has been sent" = "verification code has been sent";
+"In Verification..." = "In Verification...";
+
+
+//DengLuHomeViewController
+"Log in..." = "Log in...";
+"YoYo user agreement" = "YoYo user agreement";
+"Account password login" = "Account password login";
+"Input password" = "Input password";
+"Next" = "next";
+"Enter your mobile phone number "="Enter your mobile phone number ";
+
+//完善资料 WanShanZiLiaoViewController.m
+"Perfecting Basic Data" = "Perfecting Basic Data";
+"Nickname:"="Nickname:";
+"Add Nickname"="Add Nickname";
+"Birthday:"="Birthday:";
+"please select"="please select";
+"Let‘s Go"="Let‘s Go";
+"Birthday"="Birthday";
+"Once the gender is determined, it will not be changed" = "Once the gender is determined, it will not be changed";
+"Please enter a nickname" = "Please enter a nickname";
+"Please choose gender" = "Please choose gender";
+"Please choose your birthday" = "Please choose your birthday";
+"Nickname cannot be more than 15 characters"="Nickname cannot be more than 15 characters";
+"Submitting..."="Submitting...";
+"Sex Selection"="Sex Selection";
+
+
+/*
+ NormalUse
+ */
+
+"Just now"="Just now";
+"Seconds ago"="Seconds ago";
+"Minutes ago"="Minutes ago";
+"Hours ago"="Hours ago";
+"Yesterday"="Yesterday";
+"1 day ago"="1 day ago";
+"Days ago"="Days ago";
+"Weeks ago"="Weeks ago";
+
+
+//PersonalCenterViewController
+
+"User id"="User id";
+"Feedback"="Feedback";
+"Settings" = "Settings";
+"Cancellation" = "Cancellation";
+"Account cancellation" = "Account cancellation";
+"After the cancellation, the account and related data will be deleted from the platform " = "After the cancellation, the account and related data will be deleted from the platform ";
+//设置界面 SettingViewController
+
+"Notifications"="Notifications";
+"Turned on"="Turned on";
+"In the iPhone's Settings - notification center - function, find the app YoYo to change the Settings for new message alerts" = "In the iPhone's Settings - notification center - function, find the app YoYo to change the Settings for new message alerts";
+"About"="About";
+"Blacklist"="Blacklist";
+"Log out"="Log out";
+"Confirm Log out"="Confirm Log out";
+"Log out"="Log out";
+"About us"="About us";
+"Welcome to use"="Welcome to use";
+"No blacklist"="No blacklist";
+
+
+"Recommend" = "Recommend";
+
+// GeRenZiLiaoViewController.m
+"Personal Details" = "Personal Details";
+"Nickname"="Nickname";
+"Male"="Male";
+"Female"="Female";
+"Edit Profile" = "Edit Profile";
+"Profile photo"="Profile photo";
+"Gender"="Gender";
+"Signature"="Signature";
+"Upload complete"="Upload complete";
+"Not set" = "Not set";
+"Upload complete, please wait for review"="Upload complete, please wait for review";
+"Add Nickname"="Add Nickname";
+"The nickname can not be empty"="The nickname can not be empty";
+"A nickname has a maximum of 15 characters" = "A nickname has a maximum of 15 characters";
+"Changed the nickname"="Changed the nickname";
+"Signature"="Signature";
+"Set my personalize signature"="Set my personalize signature";
+"The signature can not be empty"="The signature can not be empty";
+"Signature up to 100 characters"= "Signature up to 100 characters";
+
+
+//YongHuXinXiViewController
+"Followed"="Followed";
+"Follow"="Follow";
+"Unfollow"="Unfllowed";
+"signature not set" = "signature not set";
+"Moments"="Moments";
+"Photos" = "Photos";
+"Video call"="Video call";
+"Message" = "Message";
+"times played"="times played";
+"Can't chat with yourself"="Can't chat with yourself";
+"Don't care about yourself" = "Don't care about yourself";
+"The anchors can not chat with each other!"="The anchors can not chat with each other!";
+"You can not make a video call with yourself"="You can not make a video call with yourself";
+"You can not make a video call with the anchors"="You can not make a video call with the anchors";
+"You can only make a video call with the anchors"="You can only make a video call with the anchors";
+"The user is busy，please call it later"="The user is busy，please call it later";
+"You can't talk to each other"="You can't talk to each other";
+"Confirm to blacklist it"="Confirm to blacklist it";
+"Block"="Block";
+"Report"="Report";
+"Confirm to delete this status"="Confirm to delete this status";
+"Blacklist this user"="Blacklist this user";
+
+//HuoQuGengDuoTableViewCell.m
+
+"Loading more data..."="Loading more data...";
+
+//DTXiangQingViewController
+"Moments details"="Moments details";
+"Instant details"="Instant details";
+"Say something"="Say something";
+"Comment content cannot be empty"="Comment content cannot be empty";
+"Deleted"="Deleted";
+"somebody to reward"="somebody to reward";
+"Like list"="Like list";
+"somebody to like >"="somebody to like >";
+"Play"="Play";
+"browse" = "browse";
+"Status comment"="Status comment";
+"Delete this comment?"="Delete this comment?";
+"Reply"="Reply";
+"Deleted the comment"="Deleted the comment";
+"Rewarded"="Rewarded";
+"Unfollow" = "Unfollow";
+
+//ChuangJianDTViewController.m
+
+"Photos" ="Photos";
+"Video" = "Video";
+"Create Moments"="Create Moments";
+"Post"="Post";
+"Say something~"="Say something~";
+"Add topic"="Add topic";
+"My location"="My location";
+"Anonymous post"="Anonymous post";
+"Mysterious interactions between strangers, and your story will be presented anonymously~"="Mysterious interactions between strangers, and your story will be presented anonymously~";
+"Creating Moments..."="Creating Moments...";
+"Choose the photo to upload"="Choose the photo to upload";
+"Choose the video to upload"="Choose the video to upload";
+"Text content can not be empty"="Text content can not be empty";
+"Upload the video failed, please try again"="Upload the video failed, please try again";
+"Video is too large please re-select"="Video is too large please re-select";
+"Posted"="Posted";
+"Posted, please wait for review" = "Posted, please wait for review";
+"Please waitting..."="Please waitting...";
+
+
+//消息模块 XinXiListViewController
+"Meet"="Meet";
+"Notification"="Notification";
+"No system notification"="No system notification";
+"Missed" = "Missed";
+"Recents" = "Recents";
+"Followed you" = "Followed you";
+
+
+//XinXiListTableViewCell.m
+
+"User Material Application Notice"="User Material Application Notice";
+"No nickname"="No nickname";
+"[Photos]"="[Photos]";
+"[Voices]"="[Voices]";
+"[Private videos]"="[Private videos]";
+"[Private photos]"="[Private photos]";
+"[Private voices]"="[Private voices]";
+"[Make a video call with me]"="[Make a video call with me]";
+"[Give me a gift]"="[Give me a gift]";
+"[Followed messages]"="[Followed messages]";
+"[Message revoked]" = "[Message revoked]";
+
+/*
+ YongHuJBViewController.m
+ */
+"Report Content"="Report Content";
+"   Upload the photo evidence (optional)"="   Upload the photo evidence (optional)";
+"(1-9 photos)"="(1-9 photos)";
+"Fill in the report content (optional within 200 words)"="Fill in the report content (optional within 200 words)";
+"Please fill in the report content"="Please fill in the report content";
+"Reporting..."="Reporting...";
+"Reported"="Reported";
+"Content porn"="Content porn";
+"Content violence"="Content violence";
+"other" = "other";
+/*
+ ChatCallVideoMessageCell.m
+ */
+"HI，handsome boy！"="HI，handsome boy！";
+"Call me！"="Call me！";
+"Click on the video"="Click on the video";
+
+/*
+ ChatVoiceMessageCell.m
+ */
+"Received voice！"="Received voice！";
+"This message only for yourself"="This message only for yourself";
+"Privacy message"="Privacy message";
+"Play now"="Play now";
+
+/*
+ ChatSendGiftMessageCell.m
+ */
+"Want one"="Want one";
+"Click on the gift"="Click on the gift";
+
+/*
+ ChatVideoMessageCell.m
+ */
+"Send a private video！"="Send a private video！";
+
+/*
+ ChatImageMessageCell.m
+ */
+"Send a private photo"="Send a private photo";
+"View now"="View now";
+
+// RongYChatViewController.m
+"Send successful" = "Send successful";
+"Send failed, please try again"="Send failed, please try again";
+"Successful"="Successful";
+"Open a membership to chat privately with the anchor"="Open a membership to chat privately with the anchor";
+"Risk warning："="Risk warning：";
+"Nice to meet you"="Nice to meet you";
+"Don't want to sleep in this long night,you too?"="Don't want to sleep in this long night,you too?";
+"This is my first time here,would you please chat with me。"="This is my first time here,would you please chat with me。";
+"Followed each other will unlock the private chat function~"="Followed each other will unlock the private chat function~";
+"translate" = "translate";
+"Give gifts"="Give gifts";
+"Account balance"="Account balance";
+"Gift now"="Gift now";
+"Check private photo"="Check private photo";
+"Confirm"="Confirm";
+
+
+/*
+ WYVideoViewController.m
+ */
+"Camera permissions are limited, video call is not available"="Camera permissions are limited, video call is not available";
+"Microphone permissions are limited, voice call is not available"="Microphone permissions are limited, voice call is not available";
+"Answer Timeout" = "Answer Timeout";
+"Connection Failed" = "Connection Failed";
+"Announcement: This platform strictly abides by national laws and regulations and various rules and regulations, strictly prohibits any obscene and pornographic vulgar acts. Once found, it is immediately banned. Please civilized video chat, create a harmonious network environment.~" = "Announcement: This platform strictly abides by national laws and regulations and various rules and regulations, strictly prohibits any obscene and pornographic vulgar acts. Once found, it is immediately banned. Please civilized video chat, create a harmonious network environment.~";
+"Creating a Civilized Social Environmentn  Interception of Popular Contents" = "Creating a Civilized Social Environmentn  Interception of Popular Contents";
+"Reporting" = "Reporting";
+"Camera opend" = "Camera opend";
+"Camera closed" = "Camera closed";
+"Microphone on" = "Microphone on";
+"Microphone off" = "Microphone off";
+"Front camera" = "Front camera";
+"After camera" = "After camera";
+"My language" = "My language";
+"Video call may be compromissed and incur charges on data network. Continue?"="Video call may be compromissed and incur charges on data network. Continue?";
+"is insufficient, please "="is insufficient, please ";
+"The sending content can not be empty"="The sending content can not be empty";
+"Your account balance is insufficient. Video will hang up soon. Please recharge it."= "Your account balance is insufficient. Video will hang up soon. Please recharge it.";
+"Reward"= "Reward";
+"Less than one minute of video time after purchase will affect your video experience  Continue to buy or not?"="Less than one minute of video time after purchase will affect your video experience  Continue to buy or not?";
+"Interacting…"="Interacting…";
+"Comment the interaction"="Comment the interaction";
+"Initiate a chat interaction with you…"="Initiate a chat interaction with you…";
+"Paid interaction，do not be perfunctory ~"="Paid interaction，do not be perfunctory ~";
+"Choose the gift"="Choose the gift";
+"send to" = "send to";
+"one" = "one";
+"send to %@ one%@  "="send to %@ one%@  ";
+"Voice actor verification"="Voice actor verification";
+"Personal monologue："="Personal monologue：";
+"Little fairy"="Little fairy";
+"Waiting for accepting"="Waiting for accepting";
+"In the process of voice call, it is strictly forbidden to have any content that violates national laws and regulations, such as pornography, obscenity, politics, gambling, violence, etc. It has been found that we will immediately block the account."="In the process of voice call, it is strictly forbidden to have any content that violates national laws and regulations, such as pornography, obscenity, politics, gambling, violence, etc. It has been found that we will immediately block the account.";
+"Hang up"="Hang up";
+
+"Answer"="Answer";
+"sound off"="sound off";
+"Gift list"="Gift list";
+"Invite you for a voice call"="Invite you for a voice call";
+"In the process of video call, it is strictly forbidden to have any content that violates national laws and regulations, such as pornography, obscenity, politics, gambling, violence, etc. It has been found that we will immediately block the account"="In the process of video call, it is strictly forbidden to have any content that violates national laws and regulations, such as pornography, obscenity, politics, gambling, violence, etc. It has been found that we will immediately block the account";
+"Turn off the camera"="Turn off the camera";
+"Connect"="Connect";
+"Inviting you"="Inviting you";
+"Continue"="Continue";
+"Recharge amount"="Recharge amount";
+
+"Very satisfied"="Very satisfied";
+"Not satisfied"="Not satisfied";
+"This host has no flirtation option now~"="This host has no flirtation option now~";
+"Determine payment"="Determine payment";
+"Start right now"="Start right now";
+"Insufficient balance"="Insufficient balance";
+"You have evaluated the current interaction"="You have evaluated the current interaction";
+"Voice mode"="Voice mode";
+"Warm Reminder"="Warm Reminder";
+"The video call deduction fee is abnormal, whether to hang up"="The video call deduction fee is abnormal, whether to hang up";
+"Deduction succeeded"="Deduction succeeded";
+"Deduction failed"="Deduction failed";
+"Deduction failed and hung up"="Deduction failed and hung up";
+"Confirm"="Confirm";
+"Whether to accept the call within 5 minutes "="Whether to accept the call within 5 minutes ";
+"Yes"="Yes";
+"Open the camera"="Open the camera";
+"They turned off the camera"="They turned off the camera";
+"They opened the camera"="They opened the camera";
+"Video network quality is poor"="Video network quality is poor";
+"Video network quality is extremely poor"="Video network quality is extremely poor";
+"Video network quality is poor"="Video network quality is poor";
+
+//会员
+"Open VIP successfully"="Open VIP successfully";
+"Top up successful"="Top up successful";
+"Payment failed, please try again later"="Payment failed, please try again later";
+"Receive today's award"="Receive today's award";
+//账单明细界面 KuaiCheng_AccountDetailViewController
+"Coins"="Coins";
+
+"Billing Details" = "Billing Details";
+"Outflow" = "Outflow";
+"Inflow" = "Inflow";
+"No outflow now"="No outflow now";
+"No inflow now"="No inflow now";
+
+"Recharge VIP "="Recharge VIP ";
+"Gold coin Recharge"="Gold coin Recharge";
+"Received Gifts"="Received Gifts";
+"Sent Gifts"="Sent Gifts";
+"Withdraw Cash"="Withdraw Cash";
+"Private Chat"="Private Chat";
+"Share Rewards"="Share Rewards";
+"Promotion Of Withdrawal"="Promotion Of Withdrawal";
+"Task Rewards"="Task Rewards";
+"Member Award"="Member Award";
+"Private Voices"="Private Voices";
+"Private Videos"="Private Videos";
+"Private Photos"="Private Photos";
+"Voice Call"="Voice Call";
+"Newcomer Videos"="Newcomer Videos";
+"Tease Interaction"="Tease Interaction";
+"First Charge Reward"="First Charge Reward";
+"Bind Your Phone Number"="Bind Your Phone Number";
+"Private Video" = "Private Video";
+"Video Award" = "Video Award";
+//TransactionDetailsViewController.m
+"Transaction Details"="Transaction Details";
+"Transaction Types"="Transaction Types";
+"Trading Status"="Trading Status";
+"Normal"="Normal";
+"Order Number"="Order Number";
+"Creation Time"="Creation Time";
+"Have questions about this order"="Have questions about this order";
+
+
+//主播端 我的守护 ChengZi_AnchorShouHuListViewController
+"Back"="Back";
+"Give a gift to support her"="Give a gift to support her";
+"Vacancies"="Vacancies";
+"Quietly tell you that consumption can increase the guardian value. Go and guard your fairy~"="Quietly tell you that consumption can increase the guardian value. Go and guard your fairy~";
+"Send"="Send";
+"Choose the gift"="Choose the gift";
+"Sent the gift"="Sent the gift";
+
