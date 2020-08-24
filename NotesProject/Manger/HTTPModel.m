@@ -53,10 +53,10 @@ singleton_implementation(HTTPModel)
      failure:(void (^)(NSURLSessionDataTask *, NSError *))failure{
     WEAKSELF
     
-
+    
     AFAppDotNetAPIClient * apiClient =   [AFAppDotNetAPIClient sharedClient];
     
-//    [apiClient.requestSerializer setValue:@"appstore" forHTTPHeaderField:@"channel"];
+    //    [apiClient.requestSerializer setValue:@"appstore" forHTTPHeaderField:@"channel"];
     
     
     [apiClient POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -72,7 +72,7 @@ singleton_implementation(HTTPModel)
         if (maxCont == 1) {
             if (failure) {
                 failure(task, error);
-               // [Common showMessageView:NET_ERROR_MSG];
+                // [Common showMessageView:NET_ERROR_MSG];
             }
         } else if (error.code == -1001 || re.statusCode == 504) {
             dispatch_after(100*NSEC_PER_MSEC, dispatch_get_main_queue(), ^{
@@ -82,7 +82,7 @@ singleton_implementation(HTTPModel)
             if (failure) {
                 failure(task, error);
                 // [Common showMessageView:NET_ERROR_MSG];
-               // [Common showMessageView:NET_ERROR_MSG view:self.view];
+                // [Common showMessageView:NET_ERROR_MSG view:self.view];
             }
         }
     }];
@@ -121,7 +121,7 @@ singleton_implementation(HTTPModel)
         } else {
             if (failure) {
                 failure(task, error);
-                 //[Common showMessageView:NET_ERROR_MSG];
+                //[Common showMessageView:NET_ERROR_MSG];
             }
         }
     }];
@@ -222,112 +222,310 @@ singleton_implementation(HTTPModel)
 
 # pragma - mark http请求接口
 
-+(void)xt_sendVerifyCode:(NSString *_Nullable)mobile
-                    type:(NSString *_Nullable)type
-                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
++(void)getCurrentCity:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-    NSString *url = @"https://api.sweetmatch.cn/api/sendVerifyCode";//[NSString stringWithFormat:@"%@%@/%@", @"http://test-xt-api.cyoulive.cn/",@"api",@"login"];
-      
-      NSMutableDictionary * parameter = [[NSMutableDictionary alloc] init];
-      [parameter setObject:mobile forKey:@"mobile"];
-      [parameter setObject:type forKey:@"type"];
-      
-      [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
-          
-      } success:^(NSURLSessionDataTask *task, id responseObject) {
-              callback([[responseObject objectForKey:@"retCode"] integerValue], responseObject, [responseObject objectForKey:@"retMsg"]);
-          
-      } failure:^(NSURLSessionDataTask *task, NSError *error) {
-          callback(-1, nil, NET_ERROR_MSG);
-      }];
-}
-
-+(void)getShangPinList:(NSDictionary *_Nullable)parameter
-              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
-{
-
-    NSString *url = [NSString stringWithFormat:@"%@api/commodity/list",HTTP_REQUESTURL];
-    
-    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
-        
-    } success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-
-        if ([dict valueForKey:@"data"]) {
-            
-            callback([[dict valueForKey:@"code"] integerValue], dict, [dict objectForKey:@"msg"]);
-        }
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        callback(-1, nil, NET_ERROR_MSG);
-    }];
-
-}
-+(void)getCityList:(NSDictionary *_Nullable)parameter
-              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
-{
-
-    NSString *url = @"http://42.194.167.215:8089/appi/common/getCityList";
+    NSString *url = [NSString stringWithFormat:@"%@/common/curCity",HTTP_REQUESTURL];
     
     [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-        NSLog(@"%@",dict);
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+        
+        
+    }];
+    
+}
++(void)getHotCityList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/common/getHotCity",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+
++(void)getCityList:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/common/getCityList",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
         
     }];
 }
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-
-    NSString *url = @"http://42.194.167.215:8089/appi/common/sendSmsCode";
+    NSString *url = [NSString stringWithFormat:@"%@/common/sendSmsCode",HTTP_REQUESTURL];
     
     [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-
-        if ([dict valueForKey:@"data"]) {
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
             
-            callback([[dict valueForKey:@"code"] integerValue], dict, [dict objectForKey:@"msg"]);
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
         }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         callback(-1, nil, NET_ERROR_MSG);
     }];
-
+    
 }
 +(void)login:(NSDictionary *_Nullable)parameter
     callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-
-    NSString *url = @"http://42.194.167.215:8089/appi/login/index";
+    
+    NSString *url = [NSString stringWithFormat:@"%@/login/index",HTTP_REQUESTURL];;
     
     [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-
-        if ([dict valueForKey:@"data"]) {
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
             
-            callback([[dict valueForKey:@"code"] integerValue], dict, [dict objectForKey:@"msg"]);
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         callback(-1, nil, NET_ERROR_MSG);
     }];
+    
+}
++(void)uploadImageVideo:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url = [NSString stringWithFormat:@"http://129.28.198.178:8090/api/upload/img_upload"];
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+    
+}
++(void)getBannerList:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url = [NSString stringWithFormat:@"%@/common/bannerList",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+    
+}
+//防雷防骗列表
++(void)getArticleList:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/common/getArticleList",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
 
 }
+//防雷防骗详情
++(void)getArticleDetail:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/common/getArticleDetail",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+
+}
+
+
 
 
 @end

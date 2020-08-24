@@ -51,9 +51,9 @@
     
     
     self.topTitleLale = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 44)];
-    self.topTitleLale.textColor = [UIColor blackColor];
+    self.topTitleLale.textColor = RGBFormUIColor(0x333333);
     self.topTitleLale.textAlignment = NSTextAlignmentCenter;
-    self.topTitleLale.font = [UIFont fontWithName:@"Helvetica-Bold" size:18*BiLiWidth];
+    self.topTitleLale.font = [UIFont systemFontOfSize:17*BiLiWidth];//[UIFont fontWithName:@"Helvetica-Bold" size:18*BiLiWidth];
     [self.topNavView addSubview:self.topTitleLale];
     
     
@@ -79,6 +79,7 @@
     self.lineView.backgroundColor = [UIColor blackColor];
     self.lineView.alpha = 0.2;
     [self.topNavView addSubview:self.lineView];
+    self.lineView.hidden = YES;
     
     self.loadingBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, TopHeight_PingMu+self.topNavView.frame.size.height, WIDTH_PingMu, HEIGHT_PingMu-60)];
     self.loadingBottomView.backgroundColor = [UIColor blackColor];

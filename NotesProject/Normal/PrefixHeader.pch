@@ -51,6 +51,8 @@
 //首页
 #import "HomeListCell.h"
 
+#import "CityListViewController.h"
+
 #import "TiYanBaoGaoViewController.h"
 #import "FangLeiFangPianViewController.h"
 #import "HeiDianBaoGuangViewController.h"
@@ -67,6 +69,7 @@
 #import "XiaoXiViewController.h"
 
 //我的
+#import "XiaoXiViewController.h"
 #import "JingCaiFuLiViewController.h"
 #import "MyCenterViewController.h"
 

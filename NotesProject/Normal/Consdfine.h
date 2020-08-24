@@ -21,6 +21,8 @@
 #define WYCertificate @"yoyoPushDis"
 
 #define HTTP_REQUESTURL @"http://yzjs.yingheyezi.com/wh/"
+#define Image_URL @"http://42.194.167.215:8089/"
+
 //
 
 #else
@@ -29,7 +31,8 @@
 #define WYAPPKey @"4317b56661cca83a3fdee0ffeed0ffcf"
 //网易云信appkey
 #define WYCertificate @"YoYoPushDev"
-#define HTTP_REQUESTURL @"http://yzjs.yingheyezi.com/wh/"
+#define HTTP_REQUESTURL @"http://42.194.167.215:8089/appi"
+#define Image_URL @"http://42.194.167.215:8089"
 #endif
 
 

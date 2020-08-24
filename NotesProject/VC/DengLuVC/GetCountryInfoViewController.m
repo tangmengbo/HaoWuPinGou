@@ -30,32 +30,11 @@
     [self.view addSubview:imageView];
     
     
-    
-
-    NSDictionary * parameter = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:1],@"pageno",[NSNumber numberWithInt:10],@"pagesize", nil];
-
-    [HTTPModel getShangPinList:parameter
-                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-
-        if(status!=0)
-        {
-            [NormalUse showToastView:msg view:self.view];
-        }
-
-        NSArray * array = [responseObject objectForKey:@"data"];
-        NSLog(@"%@",array);
-
-    }];
-
     [HTTPModel getCityList:nil
                   callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
     }];
     
-    [HTTPModel getVerifyCode:[[NSDictionary alloc]initWithObjectsAndKeys:@"15829782534",@"mobile", nil]
-                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-    }];
 
     [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"15829782534",@"mobile",@"123456",@"password", nil]
             callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {

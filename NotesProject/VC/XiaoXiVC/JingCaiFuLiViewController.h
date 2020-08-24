@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JingCaiFuLiViewController : MainBaseViewController
 
+{
+    int number;//购买次数
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

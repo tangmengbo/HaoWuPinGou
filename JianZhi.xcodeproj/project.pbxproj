@@ -24,6 +24,8 @@
 		5F34DCEC24EF7A5900DE15A1 /* DingZhiFuWuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCEB24EF7A5900DE15A1 /* DingZhiFuWuViewController.m */; };
 		5F34DCEF24EF7D5000DE15A1 /* DingZhiFuWuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCEE24EF7D5000DE15A1 /* DingZhiFuWuTableViewCell.m */; };
 		5F34DCF524EFCEF000DE15A1 /* JingCaiFuLiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */; };
+		5F34DCFB24F38E6700DE15A1 /* CityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */; };
+		5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
 		5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */; };
@@ -120,6 +122,10 @@
 		5F34DCEE24EF7D5000DE15A1 /* DingZhiFuWuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DingZhiFuWuTableViewCell.m; sourceTree = "<group>"; };
 		5F34DCF324EFCEF000DE15A1 /* JingCaiFuLiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingCaiFuLiViewController.h; sourceTree = "<group>"; };
 		5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingCaiFuLiViewController.m; sourceTree = "<group>"; };
+		5F34DCF924F38E6700DE15A1 /* CityListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityListViewController.h; sourceTree = "<group>"; };
+		5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CityListViewController.m; sourceTree = "<group>"; };
+		5F34DCFC24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FangLeiFangPianDetailViewController.h; sourceTree = "<group>"; };
+		5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FangLeiFangPianDetailViewController.m; sourceTree = "<group>"; };
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
@@ -248,10 +254,14 @@
 				5F34DCC224EE15A100DE15A1 /* VIewAndCell */,
 				5F22EBBE24ECF359002DCF61 /* HomeViewController.h */,
 				5F22EBBF24ECF359002DCF61 /* HomeViewController.m */,
+				5F34DCF924F38E6700DE15A1 /* CityListViewController.h */,
+				5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */,
 				5F34DCDE24EF744900DE15A1 /* TiYanBaoGaoViewController.h */,
 				5F34DCDF24EF744900DE15A1 /* TiYanBaoGaoViewController.m */,
 				5F34DCE424EF777400DE15A1 /* FangLeiFangPianViewController.h */,
 				5F34DCE524EF777400DE15A1 /* FangLeiFangPianViewController.m */,
+				5F34DCFC24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.h */,
+				5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */,
 				5F34DCE124EF769500DE15A1 /* HeiDianBaoGuangViewController.h */,
 				5F34DCE224EF769500DE15A1 /* HeiDianBaoGuangViewController.m */,
 				5F34DCEA24EF7A5900DE15A1 /* DingZhiFuWuViewController.h */,
@@ -809,6 +819,7 @@
 				5FE3EC062355A3E400C77F4D /* UIImage+LLGif.m in Sources */,
 				5FE3EC1B2355A3E400C77F4D /* TZGifPhotoPreviewController.m in Sources */,
 				5F34DCE624EF777400DE15A1 /* FangLeiFangPianViewController.m in Sources */,
+				5F34DCFB24F38E6700DE15A1 /* CityListViewController.m in Sources */,
 				5F34DCE324EF769500DE15A1 /* HeiDianBaoGuangViewController.m in Sources */,
 				5FE3EC102355A3E400C77F4D /* TZVideoPlayerController.m in Sources */,
 				5FE3EA6C235599D200C77F4D /* AppDelegate.m in Sources */,
@@ -827,6 +838,7 @@
 				5FE3ECBE2355B7AB00C77F4D /* XinXiListTableViewCell.m in Sources */,
 				5FE3EC122355A3E400C77F4D /* NSBundle+TZImagePicker.m in Sources */,
 				5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */,
+				5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */,
 				5FE3ECC02355B7AB00C77F4D /* XinXiListViewController.m in Sources */,
 				5F22EBC424ECF371002DCF61 /* GaoDuanViewController.m in Sources */,
 				5FE3EC172355A3E400C77F4D /* TZImageManager.m in Sources */,

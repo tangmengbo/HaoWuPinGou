@@ -10,6 +10,8 @@
 
 @interface HomeViewController ()<WSPageViewDelegate,WSPageViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
+@property(nonatomic,strong)NSArray * bannerArray;
+
 @property(nonatomic,strong)NSMutableArray * vipFuncationArray;
 @property(nonatomic,strong,nullable)WSPageView *pageView;
 @property(nonatomic,strong)UIPageControl * pageControl;
@@ -43,8 +45,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.bannerArray = responseObject;
+            [self initContentView];
+
+        }
+    }];
+    
+    [HTTPModel getVerifyCode:[[NSDictionary alloc]initWithObjectsAndKeys:@"15829782534",@"mobile", nil]
+                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+    }];
+
+    
+    UIImage *image =[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"];
+    //png和jpeg的压缩
+    NSData *data = UIImagePNGRepresentation(image);
+    // NSData *data = UIImageJPEGRepresentation(image, 0.1);
+
+    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:data,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key", nil]
+                       callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+    }];
+    
+        
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
+    
     
     UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
     locationImageView.image = [UIImage imageNamed:@"home_location"];
@@ -54,12 +84,18 @@
     self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.locationLable.adjustsFontSizeToFitWidth = YES;
     self.locationLable.textColor = RGBFormUIColor(0x333333);
-    self.locationLable.text = @"深圳市";
     [self.topNavView addSubview:self.locationLable];
+    
+    [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        self.locationLable.text = [responseObject objectForKey:@"cityName"];
+    }];
+
     
     //筛选
     UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-46*BiLiWidth, (self.topNavView.height-16*BiLiWidth)/2, 11*BiLiWidth, 16*BiLiWidth)];
     [shaiXuanButton setImage:[UIImage imageNamed:@"home_shaiXuan"] forState:UIControlStateNormal];
+    [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.topNavView addSubview:shaiXuanButton];
     
     //搜索
@@ -69,7 +105,7 @@
 
 
     
-    [self initContentView];
+//    [self initContentView];
 
 }
 -(void)initContentView
@@ -450,6 +486,11 @@
 }
 #pragma mark UIButtonClick
 
+-(void)shaiXuanButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(void)tiYanBaoGaoButtonClick
 {
     TiYanBaoGaoViewController * vc = [[TiYanBaoGaoViewController alloc] init];
@@ -489,7 +530,7 @@
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
     
-    return 3;
+    return self.bannerArray.count;
 }
 
 - (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -499,8 +540,8 @@
     {
         bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 147*BiLiWidth)];
     }
-    
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+    NSDictionary * info = [self.bannerArray objectAtIndex:index];
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Image_URL,[info objectForKey:@"picture"]]]];
     return bannerView;
     
 }

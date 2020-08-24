@@ -56,6 +56,7 @@
     
     UIButton * xiaoXiButton = [[UIButton alloc] initWithFrame:CGRectMake(277*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 19*BiLiWidth, 22*BiLiWidth)];
     [xiaoXiButton setImage:[UIImage imageNamed:@"my_xiaoXi"] forState:UIControlStateNormal];
+    [xiaoXiButton addTarget:self action:@selector(xiaoXiButonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:xiaoXiButton];
     
     UIButton * sheZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width+27*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 20*BiLiWidth, 22*BiLiWidth)];
@@ -163,7 +164,11 @@
     
 }
 #pragma mark--UIButton
-
+-(void)xiaoXiButonClick
+{
+    XiaoXiViewController * vc = [[XiaoXiViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(void)myJieSuoButtonClick
 {
     

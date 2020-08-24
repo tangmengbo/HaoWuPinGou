@@ -318,11 +318,6 @@
     return headerView;
     
 }
-#pragma mark--guanFnagTap
--(void)guanFnagTap:(UITapGestureRecognizer *)tap
-{
-    
-}
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.0001;
@@ -330,6 +325,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
 {
     return nil;
+}
+
+#pragma mark--guanFnagTap
+-(void)guanFnagTap:(UITapGestureRecognizer *)tap
+{
+    
 }
 -(void)pingFenButtonClick
 {
