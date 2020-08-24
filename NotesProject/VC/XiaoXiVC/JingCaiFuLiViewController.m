@@ -21,10 +21,16 @@
 
 @implementation JingCaiFuLiViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self xianShiTabBar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self yinCangTabbar];
     
     UIImageView * bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, WIDTH_PingMu*767/360)];
     bottomImageView.image = [UIImage imageNamed:@"fuLi_bg"];
@@ -33,6 +39,7 @@
     
     self.topNavView.backgroundColor = [UIColor clearColor];
     self.lineView.hidden = YES;
+    self.backImageView.hidden = YES;
     [bottomImageView addSubview:self.topNavView];
 
     self.topTitleLale.text = @"精彩福利";

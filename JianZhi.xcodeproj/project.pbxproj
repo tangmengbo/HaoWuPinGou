@@ -283,6 +283,8 @@
 		5F22EBBC24ECF317002DCF61 /* XiaoXiVC */ = {
 			isa = PBXGroup;
 			children = (
+				5F34DCF324EFCEF000DE15A1 /* JingCaiFuLiViewController.h */,
+				5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */,
 				5F22EBC824ECF39E002DCF61 /* XiaoXiViewController.h */,
 				5F22EBC924ECF39E002DCF61 /* XiaoXiViewController.m */,
 			);
@@ -294,8 +296,6 @@
 			children = (
 				5F22EBCB24ECF3A8002DCF61 /* MyCenterViewController.h */,
 				5F22EBCC24ECF3A8002DCF61 /* MyCenterViewController.m */,
-				5F34DCF324EFCEF000DE15A1 /* JingCaiFuLiViewController.h */,
-				5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */,
 				5FE3EC492355B1B500C77F4D /* SheZhiViewController.h */,
 				5FE3EC532355B1B500C77F4D /* SheZhiViewController.m */,
 			);

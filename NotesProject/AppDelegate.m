@@ -125,7 +125,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     MyNavigationViewController * nav3 = [[MyNavigationViewController alloc] initWithRootViewController:VC3];
     
     
-    XiaoXiViewController   * VC4 = [[XiaoXiViewController alloc] init];
+    JingCaiFuLiViewController   * VC4 = [[JingCaiFuLiViewController alloc] init];
     MyNavigationViewController * nav4 = [[MyNavigationViewController alloc] initWithRootViewController:VC4];
     
     
