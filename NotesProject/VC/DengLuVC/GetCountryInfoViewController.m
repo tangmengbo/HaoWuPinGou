@@ -30,16 +30,6 @@
     [self.view addSubview:imageView];
     
     
-    [HTTPModel getCityList:nil
-                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-    }];
-    
-
-    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"15829782534",@"mobile",@"123456",@"password", nil]
-            callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-    }];
 }
 
 @end

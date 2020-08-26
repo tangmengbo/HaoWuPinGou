@@ -36,7 +36,8 @@
         _sharedClient.responseSerializer = [AFHTTPResponseSerializer serializer];
         _sharedClient.requestSerializer.timeoutInterval = 5.f;
         
-        [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+       // [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//        [_sharedClient.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
         
         _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];

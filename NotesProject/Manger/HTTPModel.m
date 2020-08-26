@@ -46,6 +46,7 @@ singleton_implementation(HTTPModel)
 
 # pragma - mark 封装请求
 
+
 + (void)POST:(NSString *)URLString
   parameters:(id)parameters
     progress:(void (^)(NSProgress *))progress
@@ -56,36 +57,107 @@ singleton_implementation(HTTPModel)
     
     AFAppDotNetAPIClient * apiClient =   [AFAppDotNetAPIClient sharedClient];
     
-    //    [apiClient.requestSerializer setValue:@"appstore" forHTTPHeaderField:@"channel"];
-    
-    
-    [apiClient POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        if (progress) {
-            progress(uploadProgress);
-        }
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (success) {
-            success(task, responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSHTTPURLResponse *re =(NSHTTPURLResponse *)  task.response;
-        if (maxCont == 1) {
-            if (failure) {
-                failure(task, error);
-                // [Common showMessageView:NET_ERROR_MSG];
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [apiClient.requestSerializer setValue:[NormalUse defaultsGetObjectKey:LoginToken] forHTTPHeaderField:@"logintoken"];
+
+    }
+
+    //上传文件
+    if([URLString containsString:@"upload/img_upload"])
+    {
+        [apiClient.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+        
+        NSDictionary * postInfo = [[NSDictionary alloc] initWithObjectsAndKeys:[parameters objectForKey:@"upload_key"],@"upload_key", nil];
+        
+        [apiClient POST:URLString parameters:postInfo constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            
+            NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+            formatter.dateFormat=@"yyyyMMddHHmmss";
+            NSString * dateStr= [formatter stringFromDate:[NSDate date]];
+            NSString * imageType = [NormalUse contentTypeForImageData:[parameters objectForKey:@"file"]];
+            if([@"img" isEqualToString:[parameters objectForKey:@"file_type"]])
+            {
+                NSString *fileName=[NSString stringWithFormat:@"%@.%@",dateStr,imageType];
+                [formData appendPartWithFileData:[parameters objectForKey:@"file"] name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+
             }
-        } else if (error.code == -1001 || re.statusCode == 504) {
-            dispatch_after(100*NSEC_PER_MSEC, dispatch_get_main_queue(), ^{
-                [weakSelf REPLYPOST:URLString  errerCount:1 parameters:parameters progress:progress success:success failure:failure];
-            });
-        } else {
-            if (failure) {
-                failure(task, error);
-                // [Common showMessageView:NET_ERROR_MSG];
-                // [Common showMessageView:NET_ERROR_MSG view:self.view];
+            else
+            {
+                NSString *fileName=[NSString stringWithFormat:@"%@.%@",dateStr,@"MOV"];
+                [formData appendPartWithFileData:[parameters objectForKey:@"file"] name:@"file" fileName:fileName mimeType:@"video/quicktime"];
+
             }
-        }
-    }];
+
+            
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            if (success) {
+                success(task, responseObject);
+            }
+
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSHTTPURLResponse *re =(NSHTTPURLResponse *)  task.response;
+                       if (maxCont == 1) {
+                           if (failure) {
+                               failure(task, error);
+                               // [Common showMessageView:NET_ERROR_MSG];
+                           }
+                       } else if (error.code == -1001 || re.statusCode == 504) {
+                           dispatch_after(100*NSEC_PER_MSEC, dispatch_get_main_queue(), ^{
+                               [weakSelf REPLYPOST:URLString  errerCount:1 parameters:parameters progress:progress success:success failure:failure];
+                           });
+                       } else {
+                           if (failure) {
+                               failure(task, error);
+                               // [Common showMessageView:NET_ERROR_MSG];
+                               // [Common showMessageView:NET_ERROR_MSG view:self.view];
+                           }
+                       }
+        }];
+
+    }
+    else
+    {
+        //普通数据请求
+        [apiClient.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        [apiClient POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+            if (progress) {
+                progress(uploadProgress);
+            }
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if (success) {
+                success(task, responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSHTTPURLResponse *re =(NSHTTPURLResponse *)  task.response;
+            if (maxCont == 1) {
+                if (failure) {
+                    failure(task, error);
+                    // [Common showMessageView:NET_ERROR_MSG];
+                }
+            } else if (error.code == -1001 || re.statusCode == 504) {
+                dispatch_after(100*NSEC_PER_MSEC, dispatch_get_main_queue(), ^{
+                    [weakSelf REPLYPOST:URLString  errerCount:1 parameters:parameters progress:progress success:success failure:failure];
+                });
+            } else {
+                if (failure) {
+                    failure(task, error);
+                    // [Common showMessageView:NET_ERROR_MSG];
+                    // [Common showMessageView:NET_ERROR_MSG view:self.view];
+                }
+            }
+        }];
+
+
+    }
+
+    
 }
 
 
@@ -134,7 +206,15 @@ singleton_implementation(HTTPModel)
     success:(void (^)(NSURLSessionDataTask *, id))success
     failure:(void (^)(NSURLSessionDataTask *, NSError *))failure{
     WEAKSELF
-    [[AFAppDotNetAPIClient sharedClient] GET:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    
+    AFAppDotNetAPIClient * apiClient =   [AFAppDotNetAPIClient sharedClient];
+
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [apiClient.requestSerializer setValue:[NormalUse defaultsGetObjectKey:LoginToken] forHTTPHeaderField:@"logintoken"];
+    }
+
+    [apiClient GET:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
@@ -333,6 +413,10 @@ singleton_implementation(HTTPModel)
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+        NSLog(@"%@",jsonStr);
+        
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
             
@@ -367,6 +451,7 @@ singleton_implementation(HTTPModel)
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
+        
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
             
@@ -400,6 +485,9 @@ singleton_implementation(HTTPModel)
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+        NSLog(@"%@",jsonStr);
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
             
@@ -433,6 +521,11 @@ singleton_implementation(HTTPModel)
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+        NSLog(@"%@",jsonStr);
+
+        
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
             
@@ -456,7 +549,7 @@ singleton_implementation(HTTPModel)
 }
 //防雷防骗列表
 +(void)getArticleList:(NSDictionary *_Nullable)parameter
-callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
     NSString *url =  [NSString stringWithFormat:@"%@/common/getArticleList",HTTP_REQUESTURL];
     
@@ -487,11 +580,11 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         callback(error.code, nil, error.domain);
         
     }];
-
+    
 }
 //防雷防骗详情
 +(void)getArticleDetail:(NSDictionary *_Nullable)parameter
-callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
     NSString *url =  [NSString stringWithFormat:@"%@/common/getArticleDetail",HTTP_REQUESTURL];
     
@@ -522,11 +615,194 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         callback(error.code, nil, error.domain);
         
     }];
-
+    
 }
 
+//活动首页
++(void)getHuoDongHomeInfo:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/Ticket/index",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+    
+}
 
+//开奖列表
++(void)getKaiJingList:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/Ticket/ticketList",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+    
+}
+//开奖详情
++(void)getKaiJingDetail:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/Ticket/ticketDetail",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+    
+}
+//购买兑奖码
++(void)buyTicket:(NSDictionary *_Nullable)parameter
+        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/Ticket/buyTicket",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
 
+        NSLog(@"%@",jsonStr);
+
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
+//获取购买记录
++(void)getBuyList:(NSDictionary *_Nullable)parameter
+         callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/Ticket/buyList",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+        NSLog(@"%@",jsonStr);
+
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
 
 @end
 

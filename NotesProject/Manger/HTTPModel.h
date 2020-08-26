@@ -46,20 +46,18 @@ singleton_interface(HTTPModel)
 //取消所有请求
 + (void)clearAllRequt;
 
-+(void)xt_sendVerifyCode:(NSString *_Nullable)mobile
-                    type:(NSString *_Nullable)type
-                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-//common
+//获取当前城市
 +(void)getCurrentCity:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-
+//获取热门城市列表
 +(void)getHotCityList:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//获取城市列表
 +(void)getCityList:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-
+//发送验证码
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
@@ -76,6 +74,25 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 //防雷防骗详情
 +(void)getArticleDetail:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//活动首页 
++(void)getHuoDongHomeInfo:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//开奖列表 
++(void)getKaiJingList:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//开奖详情
++(void)getKaiJingDetail:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//购买兑奖码
++(void)buyTicket:(NSDictionary *_Nullable)parameter
+        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//获取购买记录
++(void)getBuyList:(NSDictionary *_Nullable)parameter
 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 @end

@@ -14,7 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 {
     int number;//购买次数
+    
+    int shengYuTime;//距离开奖的时间
 }
+
+@property(nonatomic,strong)NSTimer * timer;
+
 
 @end
 

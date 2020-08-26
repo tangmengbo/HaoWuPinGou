@@ -66,11 +66,16 @@
 #import "FuQiJiaoViewController.h"
 
 //消息
+#import "GouMaiJiLuListViewController.h"
+#import "KaiJiangDetailViewController.h"
+#import "KaiJiangJiLuListViewController.h"
+#import "JingCaiFuLiViewController.h"
+
 #import "XiaoXiViewController.h"
 
 //我的
+#import "ShouShiMiMaViewController.h"
 #import "XiaoXiViewController.h"
-#import "JingCaiFuLiViewController.h"
 #import "MyCenterViewController.h"
 
 #import "SheZhiViewController.h"

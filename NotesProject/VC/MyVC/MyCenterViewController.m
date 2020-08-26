@@ -171,7 +171,8 @@
 }
 -(void)myJieSuoButtonClick
 {
-    
+    ShouShiMiMaViewController * vc = [[ShouShiMiMaViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)kaiJiangButtonClick
 {

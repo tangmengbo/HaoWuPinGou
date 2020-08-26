@@ -55,18 +55,21 @@
         }
     }];
     
-    [HTTPModel getVerifyCode:[[NSDictionary alloc]initWithObjectsAndKeys:@"15829782534",@"mobile", nil]
-                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"18740118239",@"mobile",@"123456",@"password", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
+        if (status==1) {
+            
+            NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+            [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+            
+        }
     }];
 
-    
     UIImage *image =[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"];
     //png和jpeg的压缩
-    NSData *data = UIImagePNGRepresentation(image);
-    // NSData *data = UIImageJPEGRepresentation(image, 0.1);
+    NSData *imageData = UIImagePNGRepresentation(image);
 
-    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:data,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key", nil]
+    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:imageData,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key",@"img",@"file_type", nil]
                        callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
     }];

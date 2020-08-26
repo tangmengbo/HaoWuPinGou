@@ -10,6 +10,8 @@
 
 @interface JingCaiFuLiViewController ()
 
+@property(nonatomic,strong)NSDictionary * messageInfo;
+
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 @property(nonatomic,strong)UILabel * jinBiLable;
 @property(nonatomic,strong)UILabel * danWeiLable;
@@ -33,6 +35,32 @@
     [super viewDidLoad];
     
     number = 1;
+    [HTTPModel getHuoDongHomeInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.messageInfo = responseObject;
+            
+            NSNumber * base_coinNumber = [self.messageInfo objectForKey:@"base_coin"];
+            NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
+            
+            CGSize size = [NormalUse setSize:base_coinStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:22*BiLiWidth];
+            self.jinBiLable.left = (WIDTH_PingMu-size.width)/2;
+            self.jinBiLable.width = size.width;
+            self.jinBiLable.text = base_coinStr;
+            self.danWeiLable.left = self.jinBiLable.left+self.jinBiLable.width+12*BiLiWidth;
+            //当前时间
+            NSString *timeSpNow = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970])];
+            NSNumber * draw_time = [self.messageInfo objectForKey:@"draw_time"];//开奖时间
+            NSTimeInterval timeSpNowInt = [timeSpNow doubleValue];
+            NSTimeInterval timeSpInt = [draw_time doubleValue];
+            
+            self->shengYuTime = (int)difftime(timeSpInt, timeSpNowInt);
+            
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
+
+        }
+    }];
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-BottomHeight_PingMu)];
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu*767/360)];
@@ -56,16 +84,17 @@
     self.topTitleLale.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.topTitleLale.textColor = RGBFormUIColor(0xFFFFFF);
     
-    UIImageView * jiLuImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11.5*BiLiWidth-69.5*BiLiWidth, (self.topNavView.height-13*BiLiWidth)/2, 11.5*BiLiWidth, 13*BiLiWidth)];
-    jiLuImageView.image = [UIImage imageNamed:@"home_location"];
-    [self.topNavView addSubview:jiLuImageView];
     
-    UILabel * jiLuLable = [[UILabel alloc] initWithFrame:CGRectMake(jiLuImageView.left+jiLuImageView.width+5.5*BiLiWidth, jiLuImageView.top, 50*BiLiWidth, jiLuImageView.height)];
-    jiLuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    jiLuLable.adjustsFontSizeToFitWidth = YES;
-    jiLuLable.textColor = RGBFormUIColor(0xFFFFFF);
-    jiLuLable.text = @"开奖记录";
-    [self.topNavView addSubview:jiLuLable];
+    Lable_ImageButton * kaiJiangJiLuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11.5*BiLiWidth-69.5*BiLiWidth, 0, 69*BiLiWidth, self.topNavView.height)];
+    kaiJiangJiLuButton.button_imageView.frame = CGRectMake(0, (kaiJiangJiLuButton.height-14*BiLiWidth)/2, 14*BiLiWidth, 14*BiLiWidth);
+    kaiJiangJiLuButton.button_imageView.backgroundColor = [UIColor redColor];
+    kaiJiangJiLuButton.button_lable.frame = CGRectMake(kaiJiangJiLuButton.button_imageView.left+kaiJiangJiLuButton.button_imageView.width+5*BiLiWidth, 0, 50*BiLiWidth, kaiJiangJiLuButton.height);
+    kaiJiangJiLuButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    kaiJiangJiLuButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
+    kaiJiangJiLuButton.button_lable.text = @"开奖记录";
+    [kaiJiangJiLuButton addTarget:self action:@selector(kaiJiangListButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.topNavView addSubview:kaiJiangJiLuButton];
+
 
     
     UILabel * jiangJinTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+25*BiLiWidth, WIDTH_PingMu, 12*BiLiWidth)];
@@ -75,11 +104,10 @@
     jiangJinTipLable.text = @"奖金累积";
     [bottomImageView addSubview:jiangJinTipLable];
     
-    CGSize size = [NormalUse setSize:@"123456" withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:22*BiLiWidth];
+    CGSize size = [NormalUse setSize:@"0" withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:22*BiLiWidth];
     self.jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake((WIDTH_PingMu-size.width)/2, jiangJinTipLable.top+jiangJinTipLable.height+15*BiLiWidth, size.width, 22*BiLiWidth)];
     self.jinBiLable.textColor = RGBFormUIColor(0xFFA217);
     self.jinBiLable.font = [UIFont systemFontOfSize:22*BiLiWidth];
-    self.jinBiLable.text = @"123456";
     [bottomImageView addSubview:self.jinBiLable];
     
     self.danWeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.jinBiLable.left+self.jinBiLable.width+12*BiLiWidth, self.jinBiLable.top+6*BiLiWidth, 50, 13*BiLiWidth)];
@@ -93,13 +121,6 @@
     self.daoJiShiLable.textColor = RGBFormUIColor(0x999999);
     [bottomImageView addSubview:self.daoJiShiLable];
 
-    
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"距离下次开奖时间还有00天00时00分00秒"];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(10, 2)];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(13, 2)];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(16, 2)];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(19, 2)];
-    self.daoJiShiLable.attributedText = str;
     
     UIView * controlView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-171.5*BiLiWidth-137*BiLiWidth)/2, self.daoJiShiLable.top+self.daoJiShiLable.height+5.5*BiLiWidth, 171.5*BiLiWidth+137*BiLiWidth, 40*BiLiWidth)];
     controlView.layer.cornerRadius = 5*BiLiWidth;
@@ -129,6 +150,7 @@
     [self.jinBiGouMaiButton setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
     [self.jinBiGouMaiButton setTitle:@"50金币购买" forState:UIControlStateNormal];
     self.jinBiGouMaiButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    [self.jinBiGouMaiButton addTarget:self action:@selector(jinBiGouMaiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:self.jinBiGouMaiButton];
     
     
@@ -139,6 +161,7 @@
     shuoMingButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     shuoMingButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
     shuoMingButton.button_lable.text = @"规则说明";
+    [shuoMingButton addTarget:self action:@selector(shuoMingButton) forControlEvents:UIControlEventTouchUpInside];
     [bottomImageView addSubview:shuoMingButton];
     
     
@@ -150,6 +173,7 @@
     gouMaiJiLuButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
     gouMaiJiLuButton.button_lable.text = @"购买记录";
     [bottomImageView addSubview:gouMaiJiLuButton];
+    [gouMaiJiLuButton addTarget:self action:@selector(gouMaiJiLuButtonClick) forControlEvents:UIControlEventTouchUpInside];
 
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(32*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+90*BiLiWidth, 100*BiLiWidth, 15*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
@@ -228,6 +252,39 @@
 
     
 }
+
+#pragma mark -- NSTimer_Action
+-(void)timerRecord
+{
+    //eg:总共十分钟 600秒
+    shengYuTime --;
+    
+    int shengYuDay = shengYuTime/(3600*24);
+    
+    NSString *  dayStr = shengYuDay >= 10 ? [NSString stringWithFormat:@"%d",shengYuDay] : [NSString stringWithFormat:@"0%d",shengYuDay];
+
+    
+    int shengYuHour = (shengYuTime%(3600*24))/3600;
+    
+    NSString *  hourStr = shengYuHour >= 10 ? [NSString stringWithFormat:@"%d",shengYuHour] : [NSString stringWithFormat:@"0%d",shengYuHour];
+
+    
+    int shengYuMinutes = (shengYuTime%3600)/60;
+    
+    NSString *  minutesStr = shengYuMinutes >= 10 ? [NSString stringWithFormat:@"%d",shengYuMinutes] : [NSString stringWithFormat:@"0%d",shengYuMinutes];
+    
+    int shengYusecond = shengYuTime%60;
+    
+    NSString * secondStr = shengYusecond >= 10 ? [NSString stringWithFormat:@"%d",shengYusecond] : [NSString stringWithFormat:@"0%d",shengYusecond];
+
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离下次开奖时间还有%@天%@时%@分%@秒",dayStr,hourStr,minutesStr,secondStr]];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(10, 2)];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(13, 2)];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(16, 2)];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(19, 2)];
+    self.daoJiShiLable.attributedText = str;
+}
+
 #pragma mark -- UIButtonClick
 
 -(void)jianButtonClick
@@ -247,5 +304,29 @@
     [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%d金币购买",number*50] forState:UIControlStateNormal];
 
 }
-
+-(void)jinBiGouMaiButtonClick
+{
+    NSNumber * idNumber = [self.messageInfo objectForKey:@"id"];
+    [HTTPModel buyTicket:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",number],@"nums",[NSString stringWithFormat:@"%d",idNumber.intValue],@"ticket_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            [NormalUse showToastView:@"购买成功" view:self.view];
+        }
+    }];
+}
+-(void)shuoMingButton
+{
+    [NormalUse showToastView:[self.messageInfo objectForKey:@"rules"] view:self.view];
+}
+-(void)kaiJiangListButtonClick
+{
+    KaiJiangJiLuListViewController * vc = [[KaiJiangJiLuListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)gouMaiJiLuButtonClick
+{
+    GouMaiJiLuListViewController * vc = [[GouMaiJiLuListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end
