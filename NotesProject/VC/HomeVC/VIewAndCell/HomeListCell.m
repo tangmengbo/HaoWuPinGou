@@ -19,12 +19,25 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        
+        self.selectedBackgroundView = [[UIView alloc] init];
+        self.selectedBackgroundView.backgroundColor = RGBFormUIColor(0xF4F4F4);
+
+        
         self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
         [self addSubview:self.headerImageView];
+        
+        self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
+        self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        self.faBuTimeLable.textColor = RGBFormUIColor(0xF6BC61);
+        self.faBuTimeLable.backgroundColor = RGBFormUIColor(0x333333);
+        self.faBuTimeLable.textAlignment = NSTextAlignmentCenter;
+        self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
+        [self.headerImageView addSubview:self.faBuTimeLable];
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
@@ -47,13 +60,13 @@
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.fuWuLable];
 
-        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+6*BiLiWidth, 50*BiLiWidth, 11*BiLiWidth)];
+        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+6*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0x999999);
-        self.pingFenLable.text = @"综合评分：";
+        self.pingFenLable.text = @"综合评分: ";
         [self addSubview:self.pingFenLable];
         
-        self.pingFenStarView = [[UIView alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width+7.5*BiLiWidth, self.pingFenLable.top-1*BiLiWidth, 72*BiLiWidth, 12*BiLiWidth)];
+        self.pingFenStarView = [[UIView alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width+3.5*BiLiWidth, self.pingFenLable.top-1*BiLiWidth, 72*BiLiWidth, 12*BiLiWidth)];
         [self addSubview:self.pingFenStarView];
 
         
@@ -69,12 +82,45 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
-    self.titleLable.text = @"深圳高质量兼职";
-    self.leiXingLable.text = [NSString stringWithFormat:@"类型：%@",@"洗浴桑拿"];
-    self.diQuLable.text = [NSString stringWithFormat:@"所在地区：%@",@"深圳市"];
-    self.fuWuLable.text = [NSString stringWithFormat:@"服务项目：%@",@"洗澡、擦背、采耳等"];
-    self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况：%@",@"1200-2000"];
+    
+    //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
+    self.headerImageView.backgroundColor = [UIColor redColor];
+    
+    if ([NormalUse isValidString:[info objectForKey:@"create_at"]]) {
+        
+        CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
+        self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
+        self.faBuTimeLable.width = size.width+5*BiLiWidth;
+        self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.faBuTimeLable.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.faBuTimeLable.layer.mask = maskLayer;
+
+
+    }
+    self.titleLable.text = [info objectForKey:@"title"];
+    self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
+    self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
+    self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];
+    NSNumber *  trade_money = [info objectForKey:@"trade_money"];
+    if ([trade_money isKindOfClass:[NSNumber class]]) {
+        
+        self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d",trade_money.intValue];
+
+    }
+    
+    [self.pingFenStarView removeAllSubviews];
+    NSNumber * complex_score = [info objectForKey:@"complex_score"];
+    for (int i=0; i<complex_score.intValue; i++) {
+        
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*i, 0, 12*BiLiWidth, 12*BiLiWidth)];
+        imageView.backgroundColor = [UIColor redColor];
+        [self.pingFenStarView addSubview:imageView];
+        
+    }
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

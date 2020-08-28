@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GaoDuanViewController : MainBaseViewController
 
+@property(nonatomic,strong)UIView * sliderView;
+
+@property(nonatomic,strong)NSArray * bannerArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ShouShiMiMaViewController : MainBaseViewController
+@interface SetShouShiMiMaViewController : MainBaseViewController
+
+@property(nonatomic,assign)int shouShiType;//GesturePasswordStatusLogin 登录手势密码 GesturePasswordStatusSet 设置手势密码
 
 @end
 

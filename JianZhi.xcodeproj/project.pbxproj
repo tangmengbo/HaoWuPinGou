@@ -10,10 +10,11 @@
 		5F0B382024F60EDC00FC935A /* GesturePasswordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B381B24F60EDC00FC935A /* GesturePasswordButton.m */; };
 		5F0B382124F60EDC00FC935A /* GesturePasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B381C24F60EDC00FC935A /* GesturePasswordView.m */; };
 		5F0B382224F60EDC00FC935A /* GesturePasswordConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B381F24F60EDC00FC935A /* GesturePasswordConfig.m */; };
-		5F0B382524F6100700FC935A /* ShouShiMiMaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382424F6100700FC935A /* ShouShiMiMaViewController.m */; };
+		5F0B382524F6100700FC935A /* SetShouShiMiMaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382424F6100700FC935A /* SetShouShiMiMaViewController.m */; };
 		5F0B382824F63AB400FC935A /* KaiJiangJiLuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382724F63AB400FC935A /* KaiJiangJiLuListViewController.m */; };
 		5F0B382B24F63D9000FC935A /* KaiJiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382A24F63D9000FC935A /* KaiJiangDetailViewController.m */; };
 		5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382D24F6439E00FC935A /* GouMaiJiLuListViewController.m */; };
+		5F12E7A924F8E14C00B2EDFA /* HeiDianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */; };
 		5F22EBC024ECF359002DCF61 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22EBBF24ECF359002DCF61 /* HomeViewController.m */; };
 		5F22EBC424ECF371002DCF61 /* GaoDuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22EBC324ECF371002DCF61 /* GaoDuanViewController.m */; };
 		5F22EBC724ECF389002DCF61 /* FuQiJiaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22EBC624ECF389002DCF61 /* FuQiJiaoViewController.m */; };
@@ -101,14 +102,16 @@
 		5F0B381D24F60EDC00FC935A /* GesturePasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GesturePasswordView.h; sourceTree = "<group>"; };
 		5F0B381E24F60EDC00FC935A /* GesturePasswordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GesturePasswordButton.h; sourceTree = "<group>"; };
 		5F0B381F24F60EDC00FC935A /* GesturePasswordConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GesturePasswordConfig.m; sourceTree = "<group>"; };
-		5F0B382324F6100700FC935A /* ShouShiMiMaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShouShiMiMaViewController.h; sourceTree = "<group>"; };
-		5F0B382424F6100700FC935A /* ShouShiMiMaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShouShiMiMaViewController.m; sourceTree = "<group>"; };
+		5F0B382324F6100700FC935A /* SetShouShiMiMaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetShouShiMiMaViewController.h; sourceTree = "<group>"; };
+		5F0B382424F6100700FC935A /* SetShouShiMiMaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetShouShiMiMaViewController.m; sourceTree = "<group>"; };
 		5F0B382624F63AB400FC935A /* KaiJiangJiLuListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KaiJiangJiLuListViewController.h; sourceTree = "<group>"; };
 		5F0B382724F63AB400FC935A /* KaiJiangJiLuListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KaiJiangJiLuListViewController.m; sourceTree = "<group>"; };
 		5F0B382924F63D9000FC935A /* KaiJiangDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KaiJiangDetailViewController.h; sourceTree = "<group>"; };
 		5F0B382A24F63D9000FC935A /* KaiJiangDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KaiJiangDetailViewController.m; sourceTree = "<group>"; };
 		5F0B382C24F6439E00FC935A /* GouMaiJiLuListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GouMaiJiLuListViewController.h; sourceTree = "<group>"; };
 		5F0B382D24F6439E00FC935A /* GouMaiJiLuListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GouMaiJiLuListViewController.m; sourceTree = "<group>"; };
+		5F12E7A724F8E14C00B2EDFA /* HeiDianDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeiDianDetailViewController.h; sourceTree = "<group>"; };
+		5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianDetailViewController.m; sourceTree = "<group>"; };
 		5F22EBBE24ECF359002DCF61 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		5F22EBBF24ECF359002DCF61 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		5F22EBC224ECF371002DCF61 /* GaoDuanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GaoDuanViewController.h; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 				5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */,
 				5F34DCE124EF769500DE15A1 /* HeiDianBaoGuangViewController.h */,
 				5F34DCE224EF769500DE15A1 /* HeiDianBaoGuangViewController.m */,
+				5F12E7A724F8E14C00B2EDFA /* HeiDianDetailViewController.h */,
+				5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */,
 				5F34DCEA24EF7A5900DE15A1 /* DingZhiFuWuViewController.h */,
 				5F34DCEB24EF7A5900DE15A1 /* DingZhiFuWuViewController.m */,
 			);
@@ -348,8 +353,8 @@
 				5F22EBCC24ECF3A8002DCF61 /* MyCenterViewController.m */,
 				5FE3EC492355B1B500C77F4D /* SheZhiViewController.h */,
 				5FE3EC532355B1B500C77F4D /* SheZhiViewController.m */,
-				5F0B382324F6100700FC935A /* ShouShiMiMaViewController.h */,
-				5F0B382424F6100700FC935A /* ShouShiMiMaViewController.m */,
+				5F0B382324F6100700FC935A /* SetShouShiMiMaViewController.h */,
+				5F0B382424F6100700FC935A /* SetShouShiMiMaViewController.m */,
 			);
 			path = MyVC;
 			sourceTree = "<group>";
@@ -831,7 +836,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F0B382524F6100700FC935A /* ShouShiMiMaViewController.m in Sources */,
+				5F0B382524F6100700FC935A /* SetShouShiMiMaViewController.m in Sources */,
 				5F34DCD924EE801E00DE15A1 /* FuQiJiaoHomeCell.m in Sources */,
 				5FC7AD8C24D0080000EEEC66 /* SimulateIDFA.m in Sources */,
 				5F0B382224F60EDC00FC935A /* GesturePasswordConfig.m in Sources */,
@@ -897,6 +902,7 @@
 				5FE3EC1A2355A3E400C77F4D /* TZImagePickerController.m in Sources */,
 				5FE3EC162355A3E400C77F4D /* TZProgressView.m in Sources */,
 				5FE3EAC923559FB400C77F4D /* MainBaseViewController.m in Sources */,
+				5F12E7A924F8E14C00B2EDFA /* HeiDianDetailViewController.m in Sources */,
 				5FE3EA7D235599D300C77F4D /* main.m in Sources */,
 				5FE3EC142355A3E400C77F4D /* TZPhotoPreviewController.m in Sources */,
 				5F34DCC524EE15CA00DE15A1 /* HomeListCell.m in Sources */,

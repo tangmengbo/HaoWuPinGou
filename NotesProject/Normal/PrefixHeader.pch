@@ -42,6 +42,8 @@
 
 #import "HTTPModel.h"
 
+#import "GesturePasswordView.h"
+
 #import "GetCountryInfoViewController.h"
 
 #import "Lable_ImageButton.h"
@@ -53,6 +55,7 @@
 
 #import "CityListViewController.h"
 
+#import "HeiDianDetailViewController.h"
 #import "TiYanBaoGaoViewController.h"
 #import "FangLeiFangPianViewController.h"
 #import "HeiDianBaoGuangViewController.h"
@@ -74,11 +77,11 @@
 #import "XiaoXiViewController.h"
 
 //我的
-#import "ShouShiMiMaViewController.h"
+#import "SetShouShiMiMaViewController.h"
 #import "XiaoXiViewController.h"
+#import "SheZhiViewController.h"
 #import "MyCenterViewController.h"
 
-#import "SheZhiViewController.h"
 
 
 

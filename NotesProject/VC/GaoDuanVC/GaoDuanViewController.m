@@ -91,6 +91,23 @@
         
         [self.listButtonArray addObject:button];
     }
+    
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(10.5*BiLiWidth,17*BiLiWidth+27*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
+    self.sliderView.layer.masksToBounds = YES;
+    self.sliderView.alpha = 0.8;
+    [self.view addSubview:self.sliderView];
+    
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = self.sliderView.bounds;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(0, 1);
+    gradientLayer.locations = @[@0,@1];
+    [self.sliderView.layer addSublayer:gradientLayer];
 
 
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height+BottomHeight_PingMu))];
@@ -135,7 +152,25 @@
     [self.itemButtonContentView addSubview:self.zuiReButton1];
 
     self.itemButtonContentView.hidden = YES;
+    
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.bannerArray = responseObject;
+            
+            if([NormalUse isValidArray:self.bannerArray])
+            {
+                [self.mainTableView reloadData];
+
+            }
+                
+
+        }
+    }];
+
 }
+#pragma mark--顶部按钮点击
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
     [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
@@ -149,6 +184,11 @@
             size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
             button.frame  = CGRectMake(originx,17*BiLiWidth+15*BiLiWidth, size.width, 17*BiLiWidth);
             button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+            }];
+
 
         }
         else

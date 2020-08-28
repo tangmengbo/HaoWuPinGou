@@ -49,4 +49,8 @@ typedef NS_ENUM(NSInteger, GesturePasswordStatus) {
 +(instancetype)status:(GesturePasswordStatus)status frame:(CGRect)frame  onPasswordSet:(void (^)(void))onPasswordSet onGetCorrectPswd:(void (^)(void))GetCorrectPswd onGetIncorrectPswd:(void (^)(void))GetIncorrectPswd errorInput:(void (^)(void))errorInput;
 
 +(instancetype)status:(GesturePasswordStatus)status frame:(CGRect)frame verificationPassword:(void (^)(void))verificationPassword verificationError:(void (^)(void))verificationError onPasswordSet:(void (^)(void))onPasswordSet onGetCorrectPswd:(void (^)(void))GetCorrectPswd onGetIncorrectPswd:(void (^)(void))GetIncorrectPswd errorInput:(void (^)(void))errorInput;
+
+- (void)setPropertiesByState:(GesturePasswordButtonState)buttonState;
+
+-(void)setIncorrectTip;
 @end

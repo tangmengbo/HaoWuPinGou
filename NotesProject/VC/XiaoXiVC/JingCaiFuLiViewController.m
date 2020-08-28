@@ -97,7 +97,7 @@
 
 
     
-    UILabel * jiangJinTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+25*BiLiWidth, WIDTH_PingMu, 12*BiLiWidth)];
+    UILabel * jiangJinTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+28*BiLiWidth, WIDTH_PingMu, 12*BiLiWidth)];
     jiangJinTipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     jiangJinTipLable.textAlignment = NSTextAlignmentCenter;
     jiangJinTipLable.textColor = RGBFormUIColor(0x333333);
@@ -317,7 +317,18 @@
 }
 -(void)shuoMingButton
 {
-    [NormalUse showToastView:[self.messageInfo objectForKey:@"rules"] view:self.view];
+    UITextView * contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 60*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-60*BiLiWidth)];
+    contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    contentTextView.textColor = RGBFormUIColor(0x868686);
+    contentTextView.editable = NO;
+    contentTextView.backgroundColor = [UIColor purpleColor];
+    [self.view addSubview:contentTextView];
+    
+    NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+    contentTextView.attributedText = attrStr;
+
+
 }
 -(void)kaiJiangListButtonClick
 {

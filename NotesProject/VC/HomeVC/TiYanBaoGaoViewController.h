@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TiYanBaoGaoViewController : MainBaseViewController
+{
+    int page;
+}
+@property(nonatomic,strong)NSMutableArray * sourceArray;
 
 @end
 

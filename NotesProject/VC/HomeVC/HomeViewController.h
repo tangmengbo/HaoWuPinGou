@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeViewController : MainBaseViewController
 
+@property(nonatomic,strong)UIView * sliderView;
+
 @end
 
 NS_ASSUME_NONNULL_END

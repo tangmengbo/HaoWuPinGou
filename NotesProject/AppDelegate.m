@@ -64,8 +64,36 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     }
     */
 
-    
-    [self setYiDengLuTabBar];
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [HTTPModel alsoNeesShouShiMiMa:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                //是否需要手势密码
+                BOOL  isSign =  [[responseObject objectForKey:@"flag"] boolValue];
+                
+                if (isSign)
+                {
+                    [self setShouShiYanZhengTabbar];
+
+                }
+                else
+                {
+                    [self setYiDengLuTabBar];
+                }
+
+            }
+            else
+            {
+                [self setYiDengLuTabBar];
+            }
+        }];
+    }
+    else
+    {
+        [self setYiDengLuTabBar];
+    }
     
     return YES;
 }
@@ -100,8 +128,12 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     self.window.rootViewController = nav;
 
 }
--(void)setGetCountryInfoTabbar
+-(void)setShouShiYanZhengTabbar
 {
+    SetShouShiMiMaViewController * vc = [[SetShouShiMiMaViewController alloc] init];
+    vc.shouShiType = GesturePasswordStatusLogin;
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nav;
 
 }
 -(void)setWeiDengLuTabBar

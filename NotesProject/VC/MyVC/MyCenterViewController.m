@@ -61,6 +61,7 @@
     
     UIButton * sheZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width+27*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 20*BiLiWidth, 22*BiLiWidth)];
     [sheZhiButton setImage:[UIImage imageNamed:@"my_setting"] forState:UIControlStateNormal];
+    [sheZhiButton addTarget:self action:@selector(sheZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:sheZhiButton];
     
     UIButton * huiYuanButton = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView.top+self.headerImageView.height+33.5*BiLiWidth, 160*BiLiWidth, 78*BiLiWidth)];
@@ -169,9 +170,14 @@
     XiaoXiViewController * vc = [[XiaoXiViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
+-(void)sheZhiButtonClick
+{
+    SheZhiViewController * vc = [[SheZhiViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(void)myJieSuoButtonClick
 {
-    ShouShiMiMaViewController * vc = [[ShouShiMiMaViewController alloc] init];
+    SetShouShiMiMaViewController * vc = [[SetShouShiMiMaViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)kaiJiangButtonClick

@@ -214,6 +214,24 @@
         [self.listButtonArray addObject:button];
     }
     
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(19.5*BiLiWidth,self.dingZhi.top+self.dingZhi.height+40*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
+    self.sliderView.layer.masksToBounds = YES;
+    self.sliderView.alpha = 0.8;
+    [self.view addSubview:self.sliderView];
+    
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = self.sliderView.bounds;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(0, 1);
+    gradientLayer.locations = @[@0,@1];
+    [self.sliderView.layer addSublayer:gradientLayer];
+
+    
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.dingZhi.top+self.dingZhi.height+64.5*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.dingZhi.top+self.dingZhi.height+64.5*BiLiWidth+BottomHeight_PingMu))];
     [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*array.count, self.contentScrollView.height)];
     self.contentScrollView.pagingEnabled = YES;
@@ -229,7 +247,7 @@
         NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
         [self.pageIndexArray addObject:pageIndexNumber];
         
-        NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
+        NSMutableArray * sourceArray = [[NSMutableArray alloc] init];
         [self.dataSourceArray addObject:sourceArray];
         
         UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(WIDTH_PingMu*i, 0, WIDTH_PingMu, self.contentScrollView.height)];
@@ -246,76 +264,179 @@
         mjHeader.lastUpdatedTimeLabel.hidden = YES;
         tableView.mj_header = mjHeader;
         
+        
         MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
         tableView.mj_footer = mjFooter;
+        
 
     }
+    [self firstGetTieZiList];
+    [self firstGetRedList];
+    [self firstGetYanZhengBangDanList];
+    [self firstGetYanCheBaoGaoList];
+}
+-(void)firstGetTieZiList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+    
+    [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+                   callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
+            
+            UITableView * tableView = [self.tableViewArray objectAtIndex:0];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            
+            [tableView reloadData];
+            
+            
+        }
+        
+    }];
+    
+}
+-(void)firstGetRedList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+    
+    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+                 callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
 
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
+
+            UITableView * tableView = [self.tableViewArray objectAtIndex:1];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+
+            [tableView reloadData];
+            
+
+        }
+        
+    }];
+
+}
+-(void)firstGetYanZhengBangDanList
+{
+    
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
+
+    [HTTPModel getYanZhengList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
+
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
+            
+            
+            UITableView * tableView = [self.tableViewArray objectAtIndex:2];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            [tableView reloadData];
+
+        }
+        
+    }];
+}
+-(void)firstGetYanCheBaoGaoList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
+    
+    [HTTPModel getYanCheBaoGaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
+
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
+
+            UITableView * tableView = [self.tableViewArray objectAtIndex:3];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+
+            [tableView reloadData];
+
+        }
+
+    }];
 }
 -(void)loadNewLsit
 {
     int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
     if (index==0) {
-        
-        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
-        [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
-        sourceArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
-        [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:0];
-        [tableView.mj_header endRefreshing];
-        [tableView reloadData];
+            
+        [self firstGetTieZiList];
     }
     else if(index==1)
     {
-        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
-        [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
-        sourceArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
-        [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
-
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:1];
-        [tableView.mj_header endRefreshing];
-        [tableView reloadData];
+        [self firstGetRedList];
 
     }
     else if(index==2)
     {
-        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
-        [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
-        sourceArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
-        [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
-
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:2];
-        [tableView.mj_header endRefreshing];
-        [tableView reloadData];
-
+        [self firstGetYanZhengBangDanList];
     }
     else if(index==3)
     {
-        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
-        [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
-        
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
-        sourceArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
-        [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
-
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:3];
-        [tableView.mj_header endRefreshing];
-        [tableView reloadData];
-
+        [self firstGetYanCheBaoGaoList];
     }
         
-    NSLog(@"%@",self.pageIndexArray);
 
 }
 -(void)loadMoreList
@@ -324,76 +445,168 @@
     if (index==0) {
         
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
-        pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-        [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
-        [sourceArray addObject:@"1"];
-        [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
 
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:0];
-        [tableView.mj_footer endRefreshing];
-        [tableView reloadData];
+        [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                       callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
+
+                UITableView * tableView = [self.tableViewArray objectAtIndex:0];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+
+                [tableView reloadData];
+
+
+                
+            }
+            
+        }];
+
         
     }
     else if(index==1)
     {
+        
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
-        pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-        [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:1];
-        [sourceArray addObject:@"1"];
-        [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
+        [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                     callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
 
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:1];
-        [tableView.mj_footer endRefreshing];
-        [tableView reloadData];
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:1];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
+
+                UITableView * tableView = [self.tableViewArray objectAtIndex:1];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+
+                [tableView reloadData];
+
+            }
+            
+        }];
+
 
 
     }
     else if(index==2)
     {
+        
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
-        pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-        [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:2];
-        [sourceArray addObject:@"1"];
-        [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
-
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:2];
-        [tableView.mj_footer endRefreshing];
-        [tableView reloadData];
+        [HTTPModel getYanZhengList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                          callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+                
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:2];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
+                
+                UITableView * tableView = [self.tableViewArray objectAtIndex:2];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+                
+                [tableView reloadData];
+                
+            }
+            
+        }];
 
 
     }
     else if(index==3)
     {
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
-        pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-        [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
-        
-        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:3];
-        [sourceArray addObject:@"1"];
-        [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
-
-        
-        UITableView * tableView = [self.tableViewArray objectAtIndex:3];
-        [tableView.mj_footer endRefreshing];
-        [tableView reloadData];
+        [HTTPModel getYanCheBaoGaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                              callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
+                
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:3];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
+                
+                UITableView * tableView = [self.tableViewArray objectAtIndex:3];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+                
+                [tableView reloadData];
+                
+            }
+            
+        }];
 
     }
-    NSLog(@"%@",self.pageIndexArray);
 }
+#pragma mark -- 分类buttonclick
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
     [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
     float originx = 13*BiLiWidth;
     CGSize size;
+    
     for (int i=0; i<self.listButtonArray.count; i++) {
         
         UIButton * button = [self.listButtonArray objectAtIndex:i];
@@ -402,7 +615,12 @@
             size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
             button.frame  = CGRectMake(originx,self.dingZhi.top+self.dingZhi.height+27.5*BiLiWidth, size.width, 17*BiLiWidth);
             button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+            }];
 
+            
         }
         else
         {
@@ -412,7 +630,7 @@
         }
         
         originx = button.left+button.width+11.5*BiLiWidth;
-
+        
         
     }
 }
@@ -480,7 +698,27 @@
         cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
-    [cell contentViewSetData:nil];
+    NSMutableArray * sourcerray;
+    if (tableView.tag==0) {
+        
+         sourcerray = [self.dataSourceArray objectAtIndex:0];
+    }
+    else if (tableView.tag==1)
+    {
+        sourcerray = [self.dataSourceArray objectAtIndex:1];
+
+    }
+    else if (tableView.tag==2)
+    {
+        sourcerray = [self.dataSourceArray objectAtIndex:2];
+
+    }
+    else if (tableView.tag==3)
+    {
+        sourcerray = [self.dataSourceArray objectAtIndex:3];
+
+    }
+    [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -544,7 +782,7 @@
         bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 147*BiLiWidth)];
     }
     NSDictionary * info = [self.bannerArray objectAtIndex:index];
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Image_URL,[info objectForKey:@"picture"]]]];
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
     return bannerView;
     
 }

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * titleLable;
+@property(nonatomic,strong)UILabel * faBuTimeLable;
 @property(nonatomic,strong)UILabel * leiXingLable;
 @property(nonatomic,strong)UILabel * diQuLable;
 @property(nonatomic,strong)UILabel * fuWuLable;

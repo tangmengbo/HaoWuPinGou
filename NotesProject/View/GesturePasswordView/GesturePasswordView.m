@@ -152,25 +152,35 @@
             [self setPasswordBlock];
         }
     }else if(self.status == GesturePasswordStatusLogin){
+        
         NSString *password = [self getPassword];
         NSString *inputPassword  = [[NSString alloc] init];
         for (GesturePasswordButton *btn in self.selectorAry) {
             inputPassword = [inputPassword stringByAppendingFormat:@"%@",@(btn.tag)];
         }
         [self.delegate setPassWorldFinsih:inputPassword];
-        if ([inputPassword isEqualToString:password]) {
-            self.onGetCorrectPswd();
-            [self setPropertiesByState:GesturePasswordButtonStateNormal];
-        }else{
-            self.onGetIncorrectPswd();
-            [self setPropertiesByState:GesturePasswordButtonStateIncorrect];
-        }
+        
+//        if ([inputPassword isEqualToString:password]) {
+//            self.onGetCorrectPswd();
+//            [self setPropertiesByState:GesturePasswordButtonStateNormal];
+//        }else{
+//            self.onGetIncorrectPswd();
+//            [self setPropertiesByState:GesturePasswordButtonStateIncorrect];
+//        }
     }
     GesturePasswordButton *btn = [self.selectorAry lastObject];
     [self setCurrentPoint:btn.center];
     [self setNeedsDisplay];
 }
+-(void)setIncorrectTip
+{
+    self.onGetIncorrectPswd();
+    [self setPropertiesByState:GesturePasswordButtonStateIncorrect];
 
+    GesturePasswordButton *btn = [self.selectorAry lastObject];
+    [self setCurrentPoint:btn.center];
+    [self setNeedsDisplay];
+}
 #pragma mark Logic
 - (void)setPasswordBlock
 {

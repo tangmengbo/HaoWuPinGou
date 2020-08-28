@@ -28,6 +28,8 @@
     self.topTitleLale.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.lineView.hidden = YES;
     
+    page = 0;
+    
     UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
     locationImageView.image = [UIImage imageNamed:@"home_location"];
     [self.topNavView addSubview:locationImageView];
@@ -49,6 +51,7 @@
     MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
     mjHeader.lastUpdatedTimeLabel.hidden = YES;
     self.mainTableView.mj_header = mjHeader;
+    [self.mainTableView.mj_header beginRefreshing];
     
     MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
     self.mainTableView.mj_footer = mjFooter;
@@ -57,18 +60,67 @@
 }
 -(void)loadNewLsit
 {
-    
+    page = 0;
+    [HTTPModel getTiYanBaoGaoList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self->page++;
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            [self.mainTableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            self.sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.mainTableView reloadData];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
 }
 -(void)loadMoreList
 {
-    
+    [HTTPModel getTiYanBaoGaoList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self->page++;
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            for (NSDictionary * info in dataArray) {
+                
+                [self.sourceArray addObject:info];
+            }
+            if (dataArray.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            [self.mainTableView reloadData];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+
 }
 #pragma mark UItableView Delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return 5;
+    return self.sourceArray.count;
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,21 +140,12 @@
         cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
-    [cell contentViewSetData:nil];
+    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
