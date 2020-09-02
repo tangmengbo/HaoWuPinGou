@@ -39,7 +39,7 @@
                 
                 UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, self.topNavView.top+self.topNavView.height+10*BiLiWidth+129*BiLiWidth*i, WIDTH_PingMu-25*BiLiWidth, 110*BiLiWidth)];
                 button.tag =  i;
-                [button sd_setBackgroundImageWithURL:[NSURL URLWithString:[info objectForKey:@"show_cover_pic"]] forState:UIControlStateNormal];
+                [button sd_setBackgroundImageWithURL:[NSURL URLWithString:[HTTP_REQUESTURL stringByAppendingString:[NormalUse getobjectForKey:[info objectForKey:@"show_cover_pic"]]]] forState:UIControlStateNormal];
                 [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
                 button.backgroundColor = [UIColor greenColor];
                 [self.view addSubview:button];
@@ -58,9 +58,8 @@
 -(void)buttonClick:(UIButton *)button
 {
     NSDictionary * info = [self.sourceArray objectAtIndex:button.tag];
-    NSNumber * idNumber = [info objectForKey:@"id"];
     FangLeiFangPianDetailViewController * vc = [[FangLeiFangPianDetailViewController alloc] init];
-    vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    vc.info = info;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

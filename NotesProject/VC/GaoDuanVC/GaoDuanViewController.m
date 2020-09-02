@@ -35,11 +35,18 @@
 
 @property(nonatomic,strong)NSString * zuiXinOrZuiRe;//1 最新 2 最热
 
+@property(nonatomic,strong)NSArray * guanFangTuiJianDianPuArray;
+
 
 @end
 
 @implementation GaoDuanViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self xianShiTabBar];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -168,6 +175,15 @@
 
         }
     }];
+    [HTTPModel getGuanFangTuiJianDianPu:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.guanFangTuiJianDianPuArray = responseObject;
+            [self.mainTableView reloadData];
+            
+        }
+    }];
 
 }
 #pragma mark--顶部按钮点击
@@ -203,6 +219,32 @@
         
     }
 }
+#pragma mark--经纪人认证 女神认证 全国空降 陪玩
+
+-(void)jingJiRenRenZhengButtonClick
+{
+    JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)nvShenRenZhengButtonClick
+{
+    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)kongJiangButtonClick
+{
+    
+}
+
+-(void)peiWanButtonClick
+{
+    
+}
+
+
+  
+
 #pragma mark---scrollviewDelegate
 -(void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
@@ -313,25 +355,28 @@
     UIScrollView * fenLeiScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.pageControl.top+self.pageControl.height+25*BiLiWidth, WIDTH_PingMu, 57*BiLiWidth)];
     [headerView addSubview:fenLeiScrollView];
     
-    UIImageView * imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-    imageView1.image = [UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"];
-    [fenLeiScrollView addSubview:imageView1];
+    UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"] forState:UIControlStateNormal];
+    [button1 addTarget:self action:@selector(jingJiRenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [fenLeiScrollView addSubview:button1];
     
-    UIImageView * imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(imageView1.left+imageView1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-    imageView2.image = [UIImage imageNamed:@"gaoDuan_nuShenRenZheng"];
-    [fenLeiScrollView addSubview:imageView2];
-    
-    
-    UIImageView * imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(imageView2.left+imageView2.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-    imageView3.image = [UIImage imageNamed:@"gaoDuan_quanGuoKongJian"];
-    [fenLeiScrollView addSubview:imageView3];
+    UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(nvShenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [fenLeiScrollView addSubview:button2];
     
     
-    UIImageView * imageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(imageView3.left+imageView3.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-    imageView4.image = [UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"];
-    [fenLeiScrollView addSubview:imageView4];
+    UIButton * button3 = [[UIButton alloc] initWithFrame:CGRectMake(button2.left+button2.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanGuoKongJian"] forState:UIControlStateNormal];
+    [button3 addTarget:self action:@selector(kongJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [fenLeiScrollView addSubview:button3];
     
-    [fenLeiScrollView setContentSize:CGSizeMake(imageView4.left+imageView4.width+12*BiLiWidth, fenLeiScrollView.height)];
+    
+    UIButton * button4 = [[UIButton alloc] initWithFrame:CGRectMake(button3.left+button3.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
+    [button4 addTarget:self action:@selector(peiWanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [fenLeiScrollView addSubview:button4];
+    [fenLeiScrollView setContentSize:CGSizeMake(button4.left+button4.width+12*BiLiWidth, fenLeiScrollView.height)];
     
     //官方推荐
     UILabel * guanFangTuiJianLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, fenLeiScrollView.top+fenLeiScrollView.height+24*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
@@ -343,7 +388,9 @@
     UIScrollView * guanFangTuiJianScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, guanFangTuiJianLable.top+guanFangTuiJianLable.height+13*BiLiWidth, WIDTH_PingMu, 176*BiLiWidth)];
     [headerView addSubview:guanFangTuiJianScrollView];
     
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<self.guanFangTuiJianDianPuArray.count; i++) {
+        
+        NSDictionary * info = [self.guanFangTuiJianDianPuArray objectAtIndex:i];
         
         UIButton * contentView = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth+156*BiLiWidth*i, 0, 151.5*BiLiWidth, 176*BiLiWidth)];
         contentView.layer.cornerRadius = 4*BiLiWidth;
@@ -361,28 +408,31 @@
         headerImageView.autoresizingMask = UIViewAutoresizingNone;
         headerImageView.clipsToBounds = YES;
         [contentView addSubview:headerImageView];
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
         
         
+        UIView *  jiaoBiaoView = [[UILabel alloc] initWithFrame:CGRectMake(contentView.width-39*BiLiWidth,0,39*BiLiWidth,18*BiLiWidth)];
+        [contentView addSubview:jiaoBiaoView];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = jiaoBiaoView.bounds;
+        gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer.startPoint = CGPointMake(0, 0);
+        gradientLayer.endPoint = CGPointMake(0, 1);
+        gradientLayer.locations = @[@0,@1];
+        [jiaoBiaoView.layer addSublayer:gradientLayer];
         
         UILabel *  jiaoBiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(contentView.width-39*BiLiWidth,0,39*BiLiWidth,18*BiLiWidth)];
         jiaoBiaoLable.textAlignment = NSTextAlignmentCenter;
         jiaoBiaoLable.textColor = RGBFormUIColor(0xFFFFFF);
         jiaoBiaoLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         jiaoBiaoLable.adjustsFontSizeToFitWidth = YES;
-        jiaoBiaoLable.text = @"北疆";
+        jiaoBiaoLable.text = [info objectForKey:@"city_name"];
         [contentView addSubview:jiaoBiaoLable];
-        
-        //渐变设置
-        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-        CAGradientLayer * gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = jiaoBiaoLable.bounds;
-        gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-        gradientLayer.startPoint = CGPointMake(0, 0);
-        gradientLayer.endPoint = CGPointMake(0, 1);
-        gradientLayer.locations = @[@0,@1];
-        [jiaoBiaoLable.layer addSublayer:gradientLayer];
+
         
         //某个角圆角
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:jiaoBiaoLable.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(4*BiLiWidth, 4*BiLiWidth)];
@@ -394,14 +444,14 @@
         UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, headerImageView.top+headerImageView.height+9.5*BiLiWidth, contentView.width, 14*BiLiWidth)];
         titleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         titleLable.textColor = RGBFormUIColor(0x333333);
-        titleLable.text = @"画的健身房";
+        titleLable.text = [info objectForKey:@"name"];
         titleLable.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:titleLable];
         
         UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(0, titleLable.top+titleLable.height+7*BiLiWidth, contentView.width, 11*BiLiWidth)];
         messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         messageLable.textColor = RGBFormUIColor(0x999999);
-        messageLable.text = @"画的健身房";
+        messageLable.text = [info objectForKey:@"name"];
         messageLable.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:messageLable];
         

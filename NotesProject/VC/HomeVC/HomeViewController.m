@@ -65,15 +65,6 @@
         }
     }];
 
-    UIImage *image =[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"];
-    //png和jpeg的压缩
-    NSData *imageData = UIImagePNGRepresentation(image);
-
-    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:imageData,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key",@"img",@"file_type", nil]
-                       callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-    }];
-    
         
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
@@ -92,19 +83,20 @@
     [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         self.locationLable.text = [responseObject objectForKey:@"cityName"];
+        [NormalUse defaultsSetObject:[responseObject objectForKey:@"cityName"] forKey:CurrentCity];
     }];
 
     
     //筛选
-    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-46*BiLiWidth, (self.topNavView.height-16*BiLiWidth)/2, 11*BiLiWidth, 16*BiLiWidth)];
-    [shaiXuanButton setImage:[UIImage imageNamed:@"home_shaiXuan"] forState:UIControlStateNormal];
-    [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.topNavView addSubview:shaiXuanButton];
-    
-    //搜索
-    UIButton * searchButton = [[UIButton alloc] initWithFrame:CGRectMake(shaiXuanButton.left+shaiXuanButton.width+16*BiLiWidth, (self.topNavView.height-16*BiLiWidth)/2, 16*BiLiWidth, 16*BiLiWidth)];
-    [searchButton setImage:[UIImage imageNamed:@"home_search"] forState:UIControlStateNormal];
-    [self.topNavView addSubview:searchButton];
+//    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-46*BiLiWidth, (self.topNavView.height-16*BiLiWidth)/2, 11*BiLiWidth, 16*BiLiWidth)];
+//    [shaiXuanButton setImage:[UIImage imageNamed:@"home_shaiXuan"] forState:UIControlStateNormal];
+//    [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.topNavView addSubview:shaiXuanButton];
+//
+//    //搜索
+//    UIButton * searchButton = [[UIButton alloc] initWithFrame:CGRectMake(shaiXuanButton.left+shaiXuanButton.width+16*BiLiWidth, (self.topNavView.height-16*BiLiWidth)/2, 16*BiLiWidth, 16*BiLiWidth)];
+//    [searchButton setImage:[UIImage imageNamed:@"home_search"] forState:UIControlStateNormal];
+//    [self.topNavView addSubview:searchButton];
 
 
     
@@ -130,7 +122,7 @@
     self.pageControl.currentPage = 0;      //设置当前页指示点
     self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
     self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
-    self.pageControl.numberOfPages = 3;
+    self.pageControl.numberOfPages = self.bannerArray.count;
     [self.view addSubview:self.pageControl];
     
     Lable_ImageButton * tiYanBaoGao = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+5*BiLiWidth, 69.5*BiLiWidth, 76.5*BiLiWidth)];
@@ -684,20 +676,70 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
-    return  144*BiLiWidth+17*BiLiWidth;
+    if (tableView.tag==3) {
+        
+        NSMutableArray * sourcerray = [self.dataSourceArray objectAtIndex:3];
+
+        return [CheYouPingJiaCell cellHegiht:[sourcerray objectAtIndex:indexPath.row]];
+    }
+    else
+    {
+        return  144*BiLiWidth+17*BiLiWidth;
+
+    }
     
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
-    HomeListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
-    if (cell == nil)
-    {
-        cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+    if (tableView.tag==3) {
+        
+        NSString *tableIdentifier = [NSString stringWithFormat:@"CheYouPingJiaCell"] ;
+        CheYouPingJiaCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        if (cell == nil)
+        {
+            cell = [[CheYouPingJiaCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        NSMutableArray * sourcerray;
+        sourcerray = [self.dataSourceArray objectAtIndex:3];
+        cell.type = @"yanCheBaoGao";
+        [cell initContentView:[sourcerray objectAtIndex:indexPath.row]];
+        
+        return cell;
+
     }
-    cell.backgroundColor = [UIColor clearColor];
+    else
+    {
+        NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
+        HomeListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        if (cell == nil)
+        {
+            cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        NSMutableArray * sourcerray;
+        if (tableView.tag==0) {
+            
+             sourcerray = [self.dataSourceArray objectAtIndex:0];
+        }
+        else if (tableView.tag==1)
+        {
+            sourcerray = [self.dataSourceArray objectAtIndex:1];
+
+        }
+        else if (tableView.tag==2)
+        {
+            sourcerray = [self.dataSourceArray objectAtIndex:2];
+
+        }
+        [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row]];
+        return cell;
+
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSMutableArray * sourcerray;
     if (tableView.tag==0) {
         
@@ -713,17 +755,20 @@
         sourcerray = [self.dataSourceArray objectAtIndex:2];
 
     }
-    else if (tableView.tag==3)
+    else
     {
         sourcerray = [self.dataSourceArray objectAtIndex:3];
 
     }
-    [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row]];
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
+    NSDictionary * info = [sourcerray objectAtIndex:indexPath.row];
+    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+    NSNumber * idNumber = [info objectForKey:@"id"];
+    if ([idNumber isKindOfClass:[NSNumber class]]) {
+        
+        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+
+    }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark UIButtonClick
 

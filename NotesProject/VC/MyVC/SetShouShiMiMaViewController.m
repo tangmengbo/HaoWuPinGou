@@ -56,12 +56,12 @@
     if (self.shouShiType == GesturePasswordStatusLogin) {
         
         self.topNavView.hidden = YES;
-        self.infoLabel.text = @"请设置手势密码";
+        self.infoLabel.text =@"请输入手势密码" ;
 
     }
     else if (self.shouShiType == GesturePasswordStatusSet)
     {
-        self.infoLabel.text = @"请输入手势密码";
+        self.infoLabel.text =@"请设置手势密码" ;
 
     }
     else if (self.shouShiType == GesturePasswordStatusReset)
@@ -84,15 +84,25 @@
 
             if (status==1) {
                 
-                AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                [delegate setYiDengLuTabBar];
+                BOOL   flag =  [[responseObject objectForKey:@"flag"] boolValue];
+
+                if(flag)
+                {
+                    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    [delegate setYiDengLuTabBar];
+
+                }
+                else
+                {
+                    [self.gesturePasswordView setIncorrectTip];
+                    
+                    [NormalUse showToastView:msg view:self.view];
+
+                }
 
             }
             else
             {
-
-                [self.gesturePasswordView setIncorrectTip];
-                
                 [NormalUse showToastView:msg view:self.view];
                 
             }
@@ -104,8 +114,10 @@
             
             if (status==1) {
                 
+                [self.navigationController popViewControllerAnimated:YES];
+                
                 [NormalUse showToastView:@"手势密码设置成功" view:[NormalUse getCurrentVC].view];
-
+                
             }
             else
             {

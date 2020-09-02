@@ -17,20 +17,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.topTitleLale.text = [self.info objectForKey:@"title"];
+    
     self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height))];
     self.contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
     self.contentTextView.textColor = RGBFormUIColor(0x868686);
     [self.view addSubview:self.contentTextView];
     
-    [HTTPModel getArticleDetail:[[NSDictionary alloc]initWithObjectsAndKeys:self.idStr,@"id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        NSDictionary * info = responseObject;
-        NSString * contentStr = [info objectForKey:@"content"];
-        NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
-        self.contentTextView.attributedText = attrStr;
-        [self.contentTextView sizeToFit];
+    NSString * content = [self.info objectForKey:@"content"];
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+    self.contentTextView.attributedText = attrStr;
+    [self.contentTextView sizeToFit];
 
-    }];
 }
 
 /*

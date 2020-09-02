@@ -28,27 +28,31 @@
     [self yinCangTabbar];
     
     UIImageView * topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 180*BiLiWidth)];
-    topImageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    topImageView.image = [UIImage imageNamed:@"banner_dingZhiFuWu"];
     topImageView.userInteractionEnabled = YES;
     [self.view addSubview:topImageView];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createDingZhiFuWu)];
+    [topImageView addGestureRecognizer:tap];
     //某个角圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:topImageView.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = topImageView.bounds;
-    maskLayer.path = maskPath.CGPath;
-    topImageView.layer.mask = maskLayer;
+//    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:topImageView.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+//    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+//    maskLayer.frame = topImageView.bounds;
+//    maskLayer.path = maskPath.CGPath;
+//    topImageView.layer.mask = maskLayer;
 
-    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
-    locationImageView.image = [UIImage imageNamed:@"home_location"];
-    [self.topNavView addSubview:locationImageView];
-    
-    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
-    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.locationLable.adjustsFontSizeToFitWidth = YES;
-    self.locationLable.textColor = RGBFormUIColor(0xFFFFFF);
-    self.locationLable.text = @"深圳市";
-    [self.topNavView addSubview:self.locationLable];
+//    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
+//    locationImageView.image = [UIImage imageNamed:@"home_location"];
+//    [self.topNavView addSubview:locationImageView];
+//
+//    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
+//    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.locationLable.adjustsFontSizeToFitWidth = YES;
+//    self.locationLable.textColor = RGBFormUIColor(0xFFFFFF);
+//    self.locationLable.text = @"深圳市";
+//    [self.topNavView addSubview:self.locationLable];
 
+    self.backImageView.frame = CGRectMake(self.backImageView.left, (self.topNavView.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.backImageView.image = [UIImage imageNamed:@"white_back"];
     self.topNavView.backgroundColor = [UIColor clearColor];
     [topImageView addSubview:self.topNavView];
     
@@ -107,6 +111,13 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+}
+#pragma mark --UIButtonClick
+-(void)createDingZhiFuWu
+{
+    CreateDingZhiFuWuViewController * vc = [[CreateDingZhiFuWuViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

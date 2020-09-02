@@ -22,7 +22,7 @@
 
 #define HTTP_REQUESTURL @"http://yzjs.yingheyezi.com/wh/"
 
-//
+
 
 #else
 #pragma mark 接口 测试
@@ -31,6 +31,7 @@
 //网易云信appkey
 #define WYCertificate @"YoYoPushDev"
 #define HTTP_REQUESTURL @"http://42.194.167.215:8089"
+#define HTTP_FileUpload @"http://129.28.198.178:8090"
 #endif
 
 
@@ -54,8 +55,9 @@
 
 
 
-#define YongHuINFO @"YongHuINFO"
-#define LoginToken @"LoginTokenDefaults"
+#define YongHuINFO @"YongHuINFO" //当前用户信息
+#define LoginToken @"LoginTokenDefaults" //当前用户token
+#define CurrentCity @"CurrentCityDefaults" //当前城市
 
 
 #endif /* Consdfine_h */

@@ -82,26 +82,31 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
-    
-    //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
-    self.headerImageView.backgroundColor = [UIColor redColor];
-    
-    if ([NormalUse isValidString:[info objectForKey:@"create_at"]]) {
+    if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
-        CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
-        self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
-        self.faBuTimeLable.width = size.width+5*BiLiWidth;
-        self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
         
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = self.faBuTimeLable.bounds;
-        maskLayer.path = maskPath.CGPath;
-        self.faBuTimeLable.layer.mask = maskLayer;
-
-
     }
-    self.titleLable.text = [info objectForKey:@"title"];
+    if ([[info objectForKey:@"images"] isKindOfClass:[NSArray class]])
+    {
+        NSArray * images = [info objectForKey:@"images"];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+    }
+    
+    
+    CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
+    self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
+    self.faBuTimeLable.width = size.width+5*BiLiWidth;
+    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+    
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.faBuTimeLable.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.faBuTimeLable.layer.mask = maskLayer;
+    
+    self.titleLable.text =[info objectForKey:@"title"] ;
+    
     self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
     self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];
@@ -109,18 +114,25 @@
     if ([trade_money isKindOfClass:[NSNumber class]]) {
         
         self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d",trade_money.intValue];
-
     }
     
     [self.pingFenStarView removeAllSubviews];
+    
+    
     NSNumber * complex_score = [info objectForKey:@"complex_score"];
-    for (int i=0; i<complex_score.intValue; i++) {
+    if ([complex_score isKindOfClass:[NSNumber class]]) {
         
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*i, 0, 12*BiLiWidth, 12*BiLiWidth)];
-        imageView.backgroundColor = [UIColor redColor];
-        [self.pingFenStarView addSubview:imageView];
+        for (int i=0; i<complex_score.intValue; i++) {
+            
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*i, 0, 12*BiLiWidth, 12*BiLiWidth)];
+            imageView.backgroundColor = [UIColor redColor];
+            [self.pingFenStarView addSubview:imageView];
+            
+        }
         
     }
+    
+    
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

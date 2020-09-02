@@ -79,9 +79,16 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)loginOut:(NSDictionary *_Nullable)parameter
        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-
+//上传文件
 +(void)uploadImageVideo:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//用文件路径获取对应id
++(void)saveFile:(NSDictionary *_Nullable)parameter
+       callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//投诉帖子
++(void)tieZiTouSu:(NSDictionary *_Nullable)parameter
+         callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //获取信息类型
 +(void)getXinXiLeiXing:(NSDictionary *_Nullable)parameter
@@ -94,7 +101,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //获取小姐类型
 +(void)getXiaoJieLeiXing:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-
+//定制需求 Upscale/made
++(void)dingZhiXuQiu:(NSDictionary *_Nullable)parameter
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //项目金币列表
 +(void)getAppJinBiList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -120,7 +129,12 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getHeiDianDetail:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-//帖子列表home/index
+//茶小二&经纪人认证
++(void)jingJiRenRenZheng:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
+//帖子列表
 +(void)getTieZiList:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
@@ -143,6 +157,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //活动首页 
 +(void)getHuoDongHomeInfo:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//官方推荐店铺
++(void)getGuanFangTuiJianDianPu:(NSDictionary *_Nullable)parameter
+                       callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //开奖列表 
 +(void)getKaiJingList:(NSDictionary *_Nullable)parameter

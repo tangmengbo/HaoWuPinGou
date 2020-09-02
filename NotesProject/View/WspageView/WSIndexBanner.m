@@ -29,6 +29,8 @@
         _mainImageView.layer.masksToBounds = YES;
         _mainImageView.userInteractionEnabled = YES;
         _mainImageView.layer.cornerRadius = 8*BiLiWidth;
+        _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _mainImageView.autoresizingMask = UIViewAutoresizingNone;
         _mainImageView.layer.masksToBounds = YES;
     }
     return _mainImageView;

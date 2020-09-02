@@ -70,6 +70,7 @@
 
 +(NSString *)getSiLiaoReadableDateFromTimestamp:(NSTimeInterval )createdAt;
 
++ (NSString *)weekdayStringWithDate:(NSDate *)date;
 
 //获取 昨天 今天 周几 消息列表
 +(NSString *)getMessageReadableDateFromTimestamp:(NSString *)stamp;

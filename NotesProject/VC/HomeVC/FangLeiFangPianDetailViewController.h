@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FangLeiFangPianDetailViewController : MainBaseViewController
 
-@property(nonatomic,strong)NSString * idStr;
+@property(nonatomic,strong)NSDictionary * info;
 
 @property(nonatomic,strong)UITextView * contentTextView;
 

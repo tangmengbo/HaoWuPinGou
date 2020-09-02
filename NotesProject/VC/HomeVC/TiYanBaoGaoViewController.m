@@ -133,11 +133,11 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
-    HomeListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+    NSString *tableIdentifier = [NSString stringWithFormat:@"TiYanBaoGaoCell"] ;
+    TiYanBaoGaoCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
     if (cell == nil)
     {
-        cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        cell = [[TiYanBaoGaoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
     [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row]];
@@ -145,7 +145,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    TiYanBaoGaoDetailViewController * vc = [[TiYanBaoGaoDetailViewController alloc] init];
+    vc.info = [self.sourceArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
