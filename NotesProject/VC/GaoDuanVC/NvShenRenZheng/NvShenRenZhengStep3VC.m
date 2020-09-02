@@ -18,6 +18,9 @@
     [super viewDidLoad];
     
     self.topTitleLale.text = @"认证";
+    
+    needJinBiValue = 200;
+    self.loadingFullScreen= @"yes";
     [self initTopStepView];
 }
 
@@ -108,9 +111,107 @@
     step4TipLable.text = @"等待审核";
     step4TipLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:step4TipLable];
+    
+    UIImageView * tipImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-318*BiLiWidth)/2, step4TipLable.top+step4TipLable.height+30*BiLiWidth, 318*BiLiWidth, 206*BiLiWidth)];
+    tipImageView.image = [UIImage imageNamed:@"jiaoLaYaJin"];
+    [self.view addSubview:tipImageView];
+    
+    self.jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 160*BiLiWidth, 150*BiLiWidth, 24*BiLiWidth)];
+    self.jinBiLable.font = [UIFont systemFontOfSize:24*BiLiWidth];
+    self.jinBiLable.textColor = RGBFormUIColor(0x333333);
+    [tipImageView addSubview:self.jinBiLable];
+    
+    NSString * jinBiStr = [NSString stringWithFormat:@"%d 金币",needJinBiValue];
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:jinBiStr];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(jinBiStr.length-2, 2)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(jinBiStr.length-2, 2)];
+    self.jinBiLable.attributedText = str;
+    
+    UILabel * renZhengTipLable = [[UILabel alloc] initWithFrame:CGRectMake(tipImageView.width-175*BiLiWidth, self.jinBiLable.top, 150*BiLiWidth, 24*BiLiWidth)];
+    renZhengTipLable.textAlignment = NSTextAlignmentRight;
+    renZhengTipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    renZhengTipLable.text = @"申请认证所需费用";
+    [tipImageView addSubview:renZhengTipLable];
+    
 
     
-    UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, step4TipLable.top+step4TipLable.height+20*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
+    UILabel * yuELable = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+9*BiLiWidth, WIDTH_PingMu, 18*BiLiWidth)];
+    yuELable.font = [UIFont systemFontOfSize:18*BiLiWidth];
+    yuELable.textColor = RGBFormUIColor(0xFED062);
+    yuELable.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:yuELable];
+    
+    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:@"当前可用金币：10000"];
+    [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
+    [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
+    yuELable.attributedText = str1;
+    
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(26.5*BiLiWidth, yuELable.top+yuELable.height+20*BiLiWidth, 100*BiLiWidth, 13*BiLiWidth)];
+    tipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    tipLable.textColor = RGBFormUIColor(0x333333);
+    tipLable.textAlignment = NSTextAlignmentCenter;
+    tipLable.text = @"您也可同时认证：";
+    [self.view addSubview:tipLable];
+    
+    NSString * renZhengStr1;
+    NSString * renZhengStr2;
+    if ([@"1" isEqualToString:self.renZhengType]) {
+        
+        renZhengStr1 = @"外围";
+        renZhengStr2 = @"全球陪玩";
+
+    }
+    else if ([@"2" isEqualToString:self.renZhengType])
+    {
+        renZhengStr1 = @"女神";
+        renZhengStr2 = @"全球陪玩";
+
+    }
+    else
+    {
+        renZhengStr1 = @"女神";
+        renZhengStr2 = @"外围";
+
+    }
+    
+    self.lableButton1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(tipLable.left+tipLable.width+20*BiLiWidth, tipLable.top-6 *BiLiWidth,50*BiLiWidth,24*BiLiWidth)];
+    [self.lableButton1 addTarget:self action:@selector(lableButton1Click) forControlEvents:UIControlEventTouchUpInside];
+    self.lableButton1.tag = 0;
+    self.lableButton1.button_imageView.frame = CGRectMake(0, 6*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth);
+    self.lableButton1.button_imageView.layer.cornerRadius = 6*BiLiWidth;
+    self.lableButton1.button_imageView.layer.masksToBounds = YES;
+    self.lableButton1.button_imageView.layer.borderWidth = 1;
+    self.lableButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+    self.lableButton1.button_imageView1.frame = CGRectMake(self.lableButton1.button_imageView.left+1.5*BiLiWidth, self.lableButton1.button_imageView.top+1.5*BiLiWidth, 9*BiLiWidth, 9*BiLiWidth);
+    self.lableButton1.button_imageView1.layer.cornerRadius = 4.5*BiLiWidth;
+    self.lableButton1.button_imageView1.layer.masksToBounds = YES;
+    self.lableButton1.button_lable.frame = CGRectMake(17*BiLiWidth, 0, 30*BiLiWidth, 24*BiLiWidth);
+    self.lableButton1.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.lableButton1.button_lable.textColor = RGBFormUIColor(0x999999);
+    self.lableButton1.button_lable.text = @"外围";
+    [self.view addSubview:self.lableButton1];
+    
+    self.lableButton2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.lableButton1.left+self.lableButton1.width+24*BiLiWidth, self.lableButton1.top,110*BiLiWidth,24*BiLiWidth)];
+    self.lableButton2.tag = 0;
+    [self.lableButton2 addTarget:self action:@selector(lableButton2Click) forControlEvents:UIControlEventTouchUpInside];
+    self.lableButton2.button_imageView.frame = CGRectMake(0, 6*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth);
+    self.lableButton2.button_imageView.layer.cornerRadius = 6*BiLiWidth;
+    self.lableButton2.button_imageView.layer.masksToBounds = YES;
+    self.lableButton2.button_imageView.layer.borderWidth = 1;
+    self.lableButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+    self.lableButton2.button_imageView1.frame = CGRectMake(self.lableButton1.button_imageView.left+1.5*BiLiWidth, self.lableButton1.button_imageView.top+1.5*BiLiWidth, 9*BiLiWidth, 9*BiLiWidth);
+    self.lableButton2.button_imageView1.layer.cornerRadius = 4.5*BiLiWidth;
+    self.lableButton2.button_imageView1.layer.masksToBounds = YES;
+    self.lableButton2.button_lable.frame = CGRectMake(17*BiLiWidth, 0, 90*BiLiWidth, 24*BiLiWidth);
+    self.lableButton2.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.lableButton2.button_lable.textColor = RGBFormUIColor(0x999999);
+    self.lableButton2.button_lable.text = @"全球陪玩";
+    [self.view addSubview:self.lableButton2];
+
+
+
+    
+    UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, self.lableButton2.top+self.lableButton2.height+20*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
     [tiJiaoButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:tiJiaoButton];
     //渐变设置
@@ -130,14 +231,127 @@
     tiJiaoLable.textColor = [UIColor whiteColor];
     [tiJiaoButton addSubview:tiJiaoLable];
     
+}
+#pragma mark--UIButtonClick
+
+-(void)lableButton1Click
+{
+    if (self.lableButton1.tag==0) {
+        
+        self.lableButton1.tag = 1;
+        self.lableButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        self.lableButton1.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
+        self.lableButton1.button_lable.textColor = RGBFormUIColor(0x333333);
+        
+        needJinBiValue = needJinBiValue+200;
+        
+        if ([@"1" isEqualToString:self.renZhengType]) {
+            
+            self.renZhengType1 = @"2";
+
+        }
+        else if ([@"2" isEqualToString:self.renZhengType])
+        {
+            self.renZhengType1 = @"1";
+        }
+        else
+        {
+            self.renZhengType1 = @"1";
+
+        }
 
 
+
+    }
+    else
+    {
+        self.lableButton1.tag = 0;
+        self.lableButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.lableButton1.button_imageView1.backgroundColor = [UIColor clearColor];
+        self.lableButton1.button_lable.textColor = RGBFormUIColor(0x999999);
+        
+        needJinBiValue = needJinBiValue-200;
+        
+        self.renZhengType1 = @"";
+
+
+    }
+    NSString * jinBiStr = [NSString stringWithFormat:@"%d 金币",needJinBiValue];
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:jinBiStr];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(jinBiStr.length-2, 2)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(jinBiStr.length-2, 2)];
+    self.jinBiLable.attributedText = str;
     
+
+
+}
+-(void)lableButton2Click
+{
+    if (self.lableButton2.tag==0) {
+        
+        self.lableButton2.tag = 1;
+        self.lableButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        self.lableButton2.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
+        self.lableButton2.button_lable.textColor = RGBFormUIColor(0x333333);
+        needJinBiValue = needJinBiValue+200;
+        
+        if ([@"1" isEqualToString:self.renZhengType]) {
+            
+            self.renZhengType2 = @"3";
+
+        }
+        else if ([@"2" isEqualToString:self.renZhengType])
+        {
+            self.renZhengType2 = @"3";
+        }
+        else
+        {
+            self.renZhengType2 = @"2";
+
+        }
+
+    }
+    else
+    {
+        self.lableButton2.tag = 0;
+        self.lableButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.lableButton2.button_imageView1.backgroundColor = [UIColor clearColor];
+        self.lableButton2.button_lable.textColor = RGBFormUIColor(0x999999);
+        needJinBiValue = needJinBiValue-200;
+
+        self.renZhengType2 = @"";
+
+    }
+    NSString * jinBiStr = [NSString stringWithFormat:@"%d 金币",needJinBiValue];
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:jinBiStr];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(jinBiStr.length-2, 2)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(jinBiStr.length-2, 2)];
+    self.jinBiLable.attributedText = str;
+
 }
 -(void)nextButtonClick
 {
-    NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
+    [dic setObject:self.renZhengType forKey:@"type"]; //1女神 2外围女 3全球空降
+    
+    [self xianShiLoadingView:@"认证中..." view:self.view];
+    
+    [HTTPModel sanDaRenZheng:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self yinCangLoadingView];
+        
+        if (status==1) {
+            
+            NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+        
+    }];
 
 }
 

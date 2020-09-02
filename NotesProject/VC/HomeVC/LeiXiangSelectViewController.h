@@ -11,7 +11,7 @@
 @protocol LeiXiangSelectViewControllerDelegate
 @optional
 
-- (void)itemSelected:(NSString *)str type:(NSString *)type;
+- (void)itemSelected:(NSString * _Nonnull)str type:(NSString *)type;
 
 @end
 

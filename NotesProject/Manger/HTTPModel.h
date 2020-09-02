@@ -133,6 +133,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)jingJiRenRenZheng:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//三大认证申请接口  1女神 2外围女 3全球空降
++(void)sanDaRenZheng:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //帖子列表
 +(void)getTieZiList:(NSDictionary *_Nullable)parameter
@@ -161,6 +164,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //官方推荐店铺
 +(void)getGuanFangTuiJianDianPu:(NSDictionary *_Nullable)parameter
                        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//经纪人店铺详情
++(void)getDianPuDetail:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //开奖列表 
 +(void)getKaiJingList:(NSDictionary *_Nullable)parameter

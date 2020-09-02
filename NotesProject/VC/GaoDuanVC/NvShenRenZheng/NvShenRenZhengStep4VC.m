@@ -112,35 +112,51 @@
     [self.view addSubview:step4TipLable];
 
     
-    UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, step4TipLable.top+step4TipLable.height+20*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
+    UIImageView * tipImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-72*BiLiWidth)/2, step4TipLable.top+step4TipLable.height+43*BiLiWidth, 72*BiLiWidth, 72*BiLiWidth)];
+    tipImageView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:tipImageView];
+    
+    UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+24*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];
+    tipLable1.textAlignment = NSTextAlignmentCenter;
+    tipLable1.textColor = RGBFormUIColor(0x343434);
+    tipLable1.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    tipLable1.text = @"您的申请已提交";
+    [self.view addSubview:tipLable1];
+    
+    UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake((WIDTH_PingMu-200*BiLiWidth)/2, tipLable1.top+tipLable1.height+11*BiLiWidth, 200*BiLiWidth, 40*BiLiWidth)];
+    tipLable2.textAlignment = NSTextAlignmentCenter;
+    tipLable2.textColor = RGBFormUIColor(0x9A9A9A);
+    tipLable2.font = [UIFont systemFontOfSize:13*BiLiWidth];
+    tipLable2.text = @"审核将会在「消息」中通知到您\n请耐心等待～";
+    tipLable2.numberOfLines = 2;
+    [self.view addSubview:tipLable2];
+
+    
+
+    UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, tipLable2.top+tipLable2.height+100*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
     [tiJiaoButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:tiJiaoButton];
     //渐变设置
     CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-    gradientLayer1.frame = tiJiaoButton.bounds;
     gradientLayer1.cornerRadius = 20*BiLiWidth;
+    gradientLayer1.frame = tiJiaoButton.bounds;
     gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
     gradientLayer1.startPoint = CGPointMake(0, 0);
     gradientLayer1.endPoint = CGPointMake(0, 1);
     gradientLayer1.locations = @[@0,@1];
     [tiJiaoButton.layer addSublayer:gradientLayer1];
-    
+
     UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tiJiaoButton.width, tiJiaoButton.height)];
     tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    tiJiaoLable.text = @"下一步";
+    tiJiaoLable.text = @"确定";
     tiJiaoLable.textAlignment = NSTextAlignmentCenter;
     tiJiaoLable.textColor = [UIColor whiteColor];
     [tiJiaoButton addSubview:tiJiaoLable];
-    
 
-
-    
 }
 -(void)nextButtonClick
 {
-    NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

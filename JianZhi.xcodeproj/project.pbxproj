@@ -61,6 +61,7 @@
 		5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
+		5F60AC0C24FFABA5005BC151 /* DianuDetailListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */; };
 		5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */; };
 		5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46624E6895200E835AB /* HTTPModel.m */; };
 		5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */; };
@@ -228,6 +229,8 @@
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
+		5F60AC0A24FFABA5005BC151 /* DianuDetailListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianuDetailListTableViewCell.h; sourceTree = "<group>"; };
+		5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianuDetailListTableViewCell.m; sourceTree = "<group>"; };
 		5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lable_ImageButton.m; sourceTree = "<group>"; };
 		5F8557BC2398DC6400BA1E18 /* Lable_ImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lable_ImageButton.h; sourceTree = "<group>"; };
 		5F91C46624E6895200E835AB /* HTTPModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPModel.m; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 			children = (
 				5F34DCC724EE4E2600DE15A1 /* GaoDuanHomeCell.h */,
 				5F34DCC824EE4E2600DE15A1 /* GaoDuanHomeCell.m */,
+				5F60AC0A24FFABA5005BC151 /* DianuDetailListTableViewCell.h */,
+				5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */,
 			);
 			path = ViewAndCell;
 			sourceTree = "<group>";
@@ -997,6 +1002,7 @@
 				5F0B382524F6100700FC935A /* SetShouShiMiMaViewController.m in Sources */,
 				5F34DCD924EE801E00DE15A1 /* FuQiJiaoHomeCell.m in Sources */,
 				5FC7AD8C24D0080000EEEC66 /* SimulateIDFA.m in Sources */,
+				5F60AC0C24FFABA5005BC151 /* DianuDetailListTableViewCell.m in Sources */,
 				5F0B382224F60EDC00FC935A /* GesturePasswordConfig.m in Sources */,
 				5F2650F824FE254A00171684 /* JingJiRenRenZhengStep2VC.m in Sources */,
 				5F34DCE024EF744900DE15A1 /* TiYanBaoGaoViewController.m in Sources */,

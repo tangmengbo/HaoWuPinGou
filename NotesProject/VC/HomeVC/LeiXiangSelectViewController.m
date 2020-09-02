@@ -21,14 +21,47 @@
     [super viewDidLoad];
     
     [self.rightButton setTitle:@"保存" forState:UIControlStateNormal];
+    self.buttonArray = [NSMutableArray array];
+    self.selectButtonArray = [NSMutableArray array];
     
+    if ([@"meizi" isEqualToString:self.type]) {
+        
+        [HTTPModel getXiaoJieLeiXing:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                self.sourceArray = responseObject;
+                
+                [self initView];
+            }
+            
+        }];
+        
+
+    }
+    else if ([@"fuwu" isEqualToString:self.type])
+    {
+        [HTTPModel getFuWuLeiXing:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                self.sourceArray = responseObject;
+                [self initView];
+            }
+
+        }];
+
+    }
+
+}
+-(void)initView
+{
+ 
     float originx = 12*BiLiWidth;
     float originy = 30*BiLiWidth;
     float xDisTance =  10*BiLiWidth;
     float yDistance = 20*BiLiWidth;
-    self.buttonArray = [NSMutableArray array];
-    self.selectButtonArray = [NSMutableArray array];
-    
+
     for (int i=0; i<self.sourceArray.count; i++) {
         
         NSString * leiXingStr = [self.sourceArray objectAtIndex:i];
@@ -52,6 +85,7 @@
         originx = originx+button.width+xDisTance;
         
     }
+
 }
 -(void)buttonClick:(UIButton *)selectButton
 {
@@ -90,7 +124,7 @@
         
         UIButton * button = [self.selectButtonArray objectAtIndex:i];
         
-        str = [[str stringByAppendingString:@","] stringByAppendingString:[self.sourceArray objectAtIndex:button.tag]];
+        str = [[str stringByAppendingString:@"|"] stringByAppendingString:[self.sourceArray objectAtIndex:button.tag]];
     }
     [self.delegate itemSelected:str type:self.type];
     [self.navigationController popViewControllerAnimated:YES];

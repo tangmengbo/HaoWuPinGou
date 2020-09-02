@@ -94,16 +94,35 @@
     tipImageView.image = [UIImage imageNamed:@"jiaoLaYaJin"];
     [self.view addSubview:tipImageView];
     
+    self.jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 160*BiLiWidth, 150*BiLiWidth, 24*BiLiWidth)];
+    self.jinBiLable.font = [UIFont systemFontOfSize:24*BiLiWidth];
+    self.jinBiLable.textColor = RGBFormUIColor(0x333333);
+    [tipImageView addSubview:self.jinBiLable];
+    
+    NSString * jinBiStr = @"200 金币";
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:jinBiStr];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(jinBiStr.length-2, 2)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(jinBiStr.length-2, 2)];
+    self.jinBiLable.attributedText = str;
+    
+    UILabel * renZhengTipLable = [[UILabel alloc] initWithFrame:CGRectMake(tipImageView.width-175*BiLiWidth, self.jinBiLable.top, 150*BiLiWidth, 24*BiLiWidth)];
+    renZhengTipLable.textAlignment = NSTextAlignmentRight;
+    renZhengTipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    renZhengTipLable.text = @"申请认证所需费用";
+    [tipImageView addSubview:renZhengTipLable];
+    
+
+    
     UILabel * yuELable = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+9*BiLiWidth, WIDTH_PingMu, 18*BiLiWidth)];
     yuELable.font = [UIFont systemFontOfSize:18*BiLiWidth];
     yuELable.textColor = RGBFormUIColor(0xFED062);
     yuELable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:yuELable];
     
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"当前可用金币：10000"];
-    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
-    yuELable.attributedText = str;
+    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:@"当前可用金币：10000"];
+    [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
+    [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
+    yuELable.attributedText = str1;
 
     UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, yuELable.top+yuELable.height+36*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
     [tiJiaoButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];

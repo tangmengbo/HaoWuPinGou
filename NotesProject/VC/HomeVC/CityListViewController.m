@@ -86,7 +86,11 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSString * keyStr = [self.keyArray objectAtIndex:indexPath.section];
+    NSArray *  cityNameArray = [self.sourceInfo objectForKey:keyStr];
+    NSDictionary * info = [cityNameArray objectAtIndex:indexPath.row];
+    [self.delegate citySelect:info];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

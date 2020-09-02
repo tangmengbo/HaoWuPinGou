@@ -41,7 +41,6 @@
                 button.tag =  i;
                 [button sd_setBackgroundImageWithURL:[NSURL URLWithString:[HTTP_REQUESTURL stringByAppendingString:[NormalUse getobjectForKey:[info objectForKey:@"show_cover_pic"]]]] forState:UIControlStateNormal];
                 [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-                button.backgroundColor = [UIColor greenColor];
                 [self.view addSubview:button];
                 
             }

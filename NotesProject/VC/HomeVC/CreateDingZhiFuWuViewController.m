@@ -12,9 +12,6 @@
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
-@property(nonatomic,strong)NSArray * xiaoJieLeiXingArray;
-@property(nonatomic,strong)NSArray * fuWuLeiXingArray;
-
 
 @end
 
@@ -23,23 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [HTTPModel getXiaoJieLeiXing:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            self.xiaoJieLeiXingArray = responseObject;
-        }
-        
-    }];
-    
-    [HTTPModel getFuWuLeiXing:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            self.fuWuLeiXingArray = responseObject;
-        }
-
-    }];
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
     if (@available(iOS 11.0, *)) {
@@ -436,7 +416,6 @@
 -(void)leiXingButtonClick
 {
     LeiXiangSelectViewController * vc = [[LeiXiangSelectViewController alloc] init];
-    vc.sourceArray = self.xiaoJieLeiXingArray;
     vc.type = @"meizi";
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
@@ -445,7 +424,6 @@
 {
     LeiXiangSelectViewController * vc = [[LeiXiangSelectViewController alloc] init];
     vc.type = @"fuwu";
-    vc.sourceArray = self.fuWuLeiXingArray;
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 

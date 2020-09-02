@@ -229,6 +229,7 @@
 -(void)nvShenRenZhengButtonClick
 {
     NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    vc.renZhengType = @"1";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -455,6 +456,11 @@
         messageLable.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:messageLable];
         
+        UIButton * clickButton = [[UIButton alloc] initWithFrame:contentView.frame];
+        clickButton.tag = i;
+        [clickButton addTarget:self action:@selector(guanFangTuiJianClick:) forControlEvents:UIControlEventTouchUpInside];
+        [contentView addSubview:clickButton];
+
         
     }
     
@@ -505,6 +511,16 @@
     
     return headerView;
     
+}
+#pragma mark--UIButtonClick
+-(void)guanFangTuiJianClick:(UIButton *)button
+{
+    NSDictionary * info = [self.guanFangTuiJianDianPuArray objectAtIndex:button.tag];
+    DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
+    NSNumber * idNumber = [info objectForKey:@"id"];
+    vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    vc.dianName = [info objectForKey:@"name"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)pingFenButtonClick
 {

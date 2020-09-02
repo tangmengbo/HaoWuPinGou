@@ -64,6 +64,10 @@
     [super viewWillAppear:YES];
     
     [self startSession];
+    if ([NormalUse isValidString:self.luZhiVideoPathId]) {
+        
+        self.tiJiaoButton.enabled = YES;
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     
@@ -260,86 +264,105 @@
 {
     [self xianShiLoadingView:@"上传中..." view:self.view];
     
-    // 获取本地视频url地址
-    NSURL *mp4 = [self convertToMp4:self.fileSavePath];
+     // mov格式转mp4
+    // NSURL *mp4 = [self convertToMp4:self.fileSavePath];
+
     
-    NSData *data = [NSData dataWithContentsOfURL:mp4];
+    [self yaSuoAndUploadVideo:self.fileSavePath];
     
-    //[self boFang:mp4];
     
-    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:data,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key",@"video",@"file_type", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        [self yinCangLoadingView];
-        if (status==1) {
-            NvShenRenZhengStep2VC * vc = [[NvShenRenZhengStep2VC alloc] init];
-            vc.videoPath = [responseObject objectForKey:@"filename"];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else
+}
+//压缩视频并上传
+-(void)yaSuoAndUploadVideo :(NSURL *)fileURL
+{
+    
+    NSString * yaSuoPath = [self getVideoSaveFilePathString];
+    NSURL *yaSuoUrl = [[RAFileManager defaultManager] filePathUrlWithUrl:yaSuoPath];
+    
+    // 视频压缩
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
+    AVAssetExportSession *exportSession= [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    
+    exportSession.shouldOptimizeForNetworkUse = YES;
+    exportSession.outputURL = yaSuoUrl;
+    exportSession.outputFileType = AVFileTypeMPEG4;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        int exportStatus = exportSession.status;
+        switch (exportStatus)
         {
-            [NormalUse showToastView:msg view:self.view];
-            
+            case AVAssetExportSessionStatusFailed:
+            {
+                NSError *exportError = exportSession.error;
+                NSLog (@"AVAssetExportSessionStatusFailed: %@", exportError);
+                [self uploadVideo:self.fileSavePath];
+                break;
+            }
+            case AVAssetExportSessionStatusCompleted:
+            {
+                NSData *data = [NSData dataWithContentsOfURL:yaSuoUrl];
+                
+                unsigned long long size = data.length;
+                NSString * videoFileSize = [NSString stringWithFormat:@"%.2f", size / pow(10, 6)];
+                //视频大于5兆不让上传
+                if (videoFileSize.intValue>5) {
+                    
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        
+                        [self yinCangLoadingView];
+                        [NormalUse showToastView:@"视频过大请重新录制" view:self.view];
+                        
+                    });
+                    
+                }
+                else
+                {
+                    [self uploadVideo:yaSuoUrl];
+                }
+            }
         }
     }];
     
     
 }
-// 视频转换为MP4
-- (NSURL *)convertToMp4:(NSURL *)movUrl
+-(void)uploadVideo:(NSURL *)videoUrl
 {
-    NSURL *mp4Url = nil;
-    AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:movUrl options:nil];
-    NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
-    
-    if ([compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
-        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset
-                                                                              presetName:AVAssetExportPresetHighestQuality];
-        NSString *mp4Path = [NSString stringWithFormat:@"%@/%d%d.mp4", [self dataPath], (int)[[NSDate date] timeIntervalSince1970], arc4random() % 100000];
-        mp4Url = [NSURL fileURLWithPath:mp4Path];
-        exportSession.outputURL = mp4Url;
-        exportSession.shouldOptimizeForNetworkUse = YES;
-        exportSession.outputFileType = AVFileTypeMPEG4;
-        dispatch_semaphore_t wait = dispatch_semaphore_create(0l);
-        [exportSession exportAsynchronouslyWithCompletionHandler:^{
-            switch ([exportSession status]) {
-                case AVAssetExportSessionStatusFailed: {
-                    NSLog(@"failed, error:%@.", exportSession.error);
-                } break;
-                case AVAssetExportSessionStatusCancelled: {
-                    NSLog(@"cancelled.");
-                } break;
-                case AVAssetExportSessionStatusCompleted: {
-                    NSLog(@"completed.");
-                } break;
-                default: {
-                    NSLog(@"others.");
-                } break;
-            }
-            dispatch_semaphore_signal(wait);
-        }];
-        long timeout = dispatch_semaphore_wait(wait, DISPATCH_TIME_FOREVER);
-        if (timeout) {
-            NSLog(@"timeout.");
+     NSData *data = [NSData dataWithContentsOfURL:videoUrl];
+
+    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:data,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key",@"video",@"file_type", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
+        if (status==1) {
+            
+            [HTTPModel saveFile:[[NSDictionary alloc]initWithObjectsAndKeys:[responseObject objectForKey:@"filename"],@"filepath", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                
+                [self yinCangLoadingView];
+                if (status==1)
+                {
+                    NvShenRenZhengStep2VC * vc = [[NvShenRenZhengStep2VC alloc] init];
+                    vc.renZhengType = self.renZhengType;
+                    self.luZhiVideoPathId = [responseObject objectForKey:@"fileId"];
+                    vc.luZhiVideoPathId = [responseObject objectForKey:@"fileId"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+                }
+
+
+            }];
         }
-        if (wait) {
-            //dispatch_release(wait);
-            wait = nil;
+        else
+        {
+            [self yinCangLoadingView];
+
+            [NormalUse showToastView:msg view:self.view];
+
         }
-    }
-    return mp4Url;
+    }];
+
 }
-- (NSString*)dataPath
-{
-    NSString *dataPath = [NSString stringWithFormat:@"%@/Library/appdata/chatbuffer", NSHomeDirectory()];
-    NSFileManager *fm = [NSFileManager defaultManager];
-    if(![fm fileExistsAtPath:dataPath]){
-        [fm createDirectoryAtPath:dataPath
-      withIntermediateDirectories:YES
-                       attributes:nil
-                            error:nil];
-    }
-    return dataPath;
-}
+
+
 #pragma mark--开始录制视频
 -(void)beginAndRecord:(UIButton *)button
 {
@@ -497,7 +520,7 @@
     //更改这个设置的时候必须先锁定设备，修改完后再解锁，否则崩溃
     [device lockForConfiguration:nil];
     //设置闪光灯为自动
-    //    [device setFlashMode:AVCaptureFlashModeAuto];
+    //  [device setFlashMode:AVCaptureFlashModeAuto];
     [device unlockForConfiguration];
     
     self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:device error:&error];
@@ -596,5 +619,60 @@
 - (AVCaptureDevice *)backCamera {
     return [self cameraWithPosition:AVCaptureDevicePositionBack];
 }
-
+// 视频转换为MP4
+- (NSURL *)convertToMp4:(NSURL *)movUrl
+{
+    NSURL *mp4Url = nil;
+    AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:movUrl options:nil];
+    NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
+    
+    if ([compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
+        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset
+                                                                              presetName:AVAssetExportPresetHighestQuality];
+        NSString *mp4Path = [NSString stringWithFormat:@"%@/%d%d.mp4", [self dataPath], (int)[[NSDate date] timeIntervalSince1970], arc4random() % 100000];
+        mp4Url = [NSURL fileURLWithPath:mp4Path];
+        exportSession.outputURL = mp4Url;
+        exportSession.shouldOptimizeForNetworkUse = YES;
+        exportSession.outputFileType = AVFileTypeMPEG4;
+        dispatch_semaphore_t wait = dispatch_semaphore_create(0l);
+        [exportSession exportAsynchronouslyWithCompletionHandler:^{
+            switch ([exportSession status]) {
+                case AVAssetExportSessionStatusFailed: {
+                    NSLog(@"failed, error:%@.", exportSession.error);
+                } break;
+                case AVAssetExportSessionStatusCancelled: {
+                    NSLog(@"cancelled.");
+                } break;
+                case AVAssetExportSessionStatusCompleted: {
+                    NSLog(@"completed.");
+                } break;
+                default: {
+                    NSLog(@"others.");
+                } break;
+            }
+            dispatch_semaphore_signal(wait);
+        }];
+        long timeout = dispatch_semaphore_wait(wait, DISPATCH_TIME_FOREVER);
+        if (timeout) {
+            NSLog(@"timeout.");
+        }
+        if (wait) {
+            //dispatch_release(wait);
+            wait = nil;
+        }
+    }
+    return mp4Url;
+}
+- (NSString*)dataPath
+{
+    NSString *dataPath = [NSString stringWithFormat:@"%@/Library/appdata/chatbuffer", NSHomeDirectory()];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if(![fm fileExistsAtPath:dataPath]){
+        [fm createDirectoryAtPath:dataPath
+      withIntermediateDirectories:YES
+                       attributes:nil
+                            error:nil];
+    }
+    return dataPath;
+}
 @end

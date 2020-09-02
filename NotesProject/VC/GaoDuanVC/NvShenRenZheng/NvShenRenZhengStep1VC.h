@@ -10,18 +10,22 @@
 
 #define TIMER_INTERVAL 0.1
 #define VIDEO_RECORDER_MAX_TIME 10 //视频最大时长 (单位/秒)
-#define VIDEO_RECORDER_MIN_TIME 5  //最短视频时长 (单位/秒)
+#define VIDEO_RECORDER_MIN_TIME 3  //最短视频时长 (单位/秒)
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NvShenRenZhengStep1VC : MainBaseViewController
 
+@property(nonatomic,strong)NSString * renZhengType;//1女神 2外围女 3全球空降 当前选择的认证选项
+
 @property(nonatomic,strong) UIButton * tiJiaoButton;
 
 @property(nonatomic,strong)AVPlayer * player;
 @property(nonatomic,strong)AVPlayerLayer * layer;
 @property(nonatomic,strong)UIView * containerView;
+
+@property(nonatomic,strong)NSString * luZhiVideoPathId;
 
 
 
