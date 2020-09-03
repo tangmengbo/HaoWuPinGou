@@ -25,7 +25,7 @@
     
     [self yinCangTabbar];
     
-    self.topTitleLale.text = self.dianName;
+   // self.topTitleLale.text = self.dianName;
     
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height))style:UITableViewStyleGrouped];
     self.mainTableView.delegate = self;
@@ -42,6 +42,7 @@
             
             self.dianPuInfo = responseObject;
             self.artist_list = [self.dianPuInfo objectForKey:@"artist_list"];
+            self.topTitleLale.text = [self.dianPuInfo objectForKey:@"name"];
             [self.mainTableView reloadData];
         }
         else
@@ -157,11 +158,11 @@
         }
 
 
-        CGSize titleSize = [NormalUse setSize:self.dianName withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+        CGSize titleSize = [NormalUse setSize:[self.dianPuInfo objectForKey:@"name"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
         UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+9.5*BiLiWidth, headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
         titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         titleLable.textColor = RGBFormUIColor(0x333333);
-        titleLable.text  = self.dianName;
+        titleLable.text  = [self.dianPuInfo objectForKey:@"name"];
         [headerView addSubview:titleLable];
         
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];

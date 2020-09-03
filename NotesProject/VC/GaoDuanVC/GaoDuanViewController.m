@@ -10,6 +10,11 @@
 #import "GaoDuanHomeCell.h"
 
 @interface GaoDuanViewController ()<WSPageViewDelegate,WSPageViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+{
+    NvShenListViewController * nvShenListVC;
+    WaiWeiListViewController * waiWeiVC;
+    PeiWanListViewController * peiWanVC;
+}
 
 @property(nonatomic,strong)UILabel * locationLable;
 
@@ -35,8 +40,9 @@
 
 @property(nonatomic,strong)NSString * zuiXinOrZuiRe;//1 最新 2 最热
 
-@property(nonatomic,strong)NSArray * guanFangTuiJianDianPuArray;
+@property(nonatomic,strong)NSArray * guanFangTuiJianDianPuArray;//官方推荐列表
 
+@property(nonatomic,strong)NSArray * jingJiRenListArray;//官方推荐列表
 
 @end
 
@@ -46,6 +52,47 @@
 {
     [super viewWillAppear:animated];
     [self xianShiTabBar];
+    
+    //获取当前用户角色
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [HTTPModel getUserRole:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if(status==1)
+            {
+                //"auth_nomal":0,//茶馆儿认证：无
+                //auth_agent":1,//经纪人认证：有
+                //auth_goddess":1,//女神认证：有
+                //auth_global":0,//全球陪玩:无
+                //auth_peripheral":0//外围认证：无
+                
+                NSDictionary * info = [responseObject objectForKey:@"data"];
+                
+
+                NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+                NSString * defaultsKey = [UserRole stringByAppendingString:token];
+
+                NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+                
+                if ([NormalUse isValidDictionary:userRoleDic]) {
+                    
+                    if (![info isEqual:userRoleDic]) {
+                        
+                        [NormalUse defaultsSetObject:info forKey:defaultsKey];
+                        [self.mainTableView reloadData];
+
+                    }
+                    
+                }
+                else
+                {
+                    [NormalUse defaultsSetObject:info forKey:defaultsKey];
+                    [self.mainTableView reloadData];
+                }
+            }
+        }];
+
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,16 +100,16 @@
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
     
-    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
-    locationImageView.image = [UIImage imageNamed:@"home_location"];
-    [self.topNavView addSubview:locationImageView];
-    
-    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
-    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.locationLable.adjustsFontSizeToFitWidth = YES;
-    self.locationLable.textColor = RGBFormUIColor(0x333333);
-    self.locationLable.text = @"深圳市";
-    [self.topNavView addSubview:self.locationLable];
+//    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
+//    locationImageView.image = [UIImage imageNamed:@"home_location"];
+//    [self.topNavView addSubview:locationImageView];
+//
+//    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
+//    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.locationLable.adjustsFontSizeToFitWidth = YES;
+//    self.locationLable.textColor = RGBFormUIColor(0x333333);
+//    self.locationLable.text = @"深圳市";
+//    [self.topNavView addSubview:self.locationLable];
     
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
@@ -73,21 +120,21 @@
         UIButton * button;
         if (i==0) {
             
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,17*BiLiWidth+15*BiLiWidth, size.width, 17*BiLiWidth)];
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 18*BiLiWidth)];
             [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
             [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
+            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
 
 
         }
         else
         {
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, 17*BiLiWidth+19*BiLiWidth, size.width, 12*BiLiWidth)];
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth)];
             [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
             [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
 
 
         }
@@ -99,7 +146,7 @@
         [self.listButtonArray addObject:button];
     }
     
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(10.5*BiLiWidth,17*BiLiWidth+27*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(10.5*BiLiWidth,TopHeight_PingMu+37*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
     self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
     self.sliderView.layer.masksToBounds = YES;
     self.sliderView.alpha = 0.8;
@@ -117,7 +164,7 @@
     [self.sliderView.layer addSublayer:gradientLayer];
 
 
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height+BottomHeight_PingMu))];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, TopHeight_PingMu+58*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(TopHeight_PingMu+58*BiLiWidth+BottomHeight_PingMu))];
     [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*array.count, self.contentScrollView.height)];
     self.contentScrollView.pagingEnabled = YES;
     self.contentScrollView.tag = 1001;
@@ -130,6 +177,19 @@
    self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mainTableView.tag = 1002;
    [self.contentScrollView addSubview:self.mainTableView];
+    
+    nvShenListVC = [[NvShenListViewController alloc] init];
+    nvShenListVC.view.frame = CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, self.contentScrollView.height);
+    [self.contentScrollView addSubview:nvShenListVC.view];
+    
+    waiWeiVC = [[WaiWeiListViewController alloc] init];
+    waiWeiVC.view.frame = CGRectMake(WIDTH_PingMu*2, 0, WIDTH_PingMu, self.contentScrollView.height);
+    [self.contentScrollView addSubview:waiWeiVC.view];
+
+    peiWanVC = [[PeiWanListViewController alloc] init];
+    peiWanVC.view.frame = CGRectMake(WIDTH_PingMu*3, 0, WIDTH_PingMu, self.contentScrollView.height);
+    [self.contentScrollView addSubview:peiWanVC.view];
+
 
     self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
     self.itemButtonContentView.backgroundColor = [UIColor whiteColor];
@@ -184,6 +244,14 @@
             
         }
     }];
+    [HTTPModel getJingJiRenList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.jingJiRenListArray = [responseObject objectForKey:@"data"];
+            [self.mainTableView reloadData];
+        }
+    }];
 
 }
 #pragma mark--顶部按钮点击
@@ -197,9 +265,9 @@
         UIButton * button = [self.listButtonArray objectAtIndex:i];
         if (button.tag==selectButton.tag) {
             
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
-            button.frame  = CGRectMake(originx,17*BiLiWidth+15*BiLiWidth, size.width, 17*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
+            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
+            button.frame  = CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 18*BiLiWidth);
+            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
             
             [UIView animateWithDuration:0.5 animations:^{
                 self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
@@ -209,9 +277,9 @@
         }
         else
         {
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-            button.frame  = CGRectMake(originx, 17*BiLiWidth+19*BiLiWidth, size.width, 12*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+            button.frame  = CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth);
+            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
         }
         
         originx = button.left+button.width+11.5*BiLiWidth;
@@ -294,7 +362,7 @@
 #pragma mark UItableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return self.jingJiRenListArray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -313,7 +381,7 @@
         cell = [[GaoDuanHomeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor whiteColor];
-    [cell contentViewSetData:nil];
+    [cell contentViewSetData:[self.jingJiRenListArray objectAtIndex:indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -353,13 +421,15 @@
     [headerView addSubview:self.pageControl];
     
     //分类scrollview
-    UIScrollView * fenLeiScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.pageControl.top+self.pageControl.height+25*BiLiWidth, WIDTH_PingMu, 57*BiLiWidth)];
+    MyScrollView * fenLeiScrollView = [[MyScrollView alloc] initWithFrame:CGRectMake(0, self.pageControl.top+self.pageControl.height+25*BiLiWidth, WIDTH_PingMu, 57*BiLiWidth)];
     [headerView addSubview:fenLeiScrollView];
     
     UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"] forState:UIControlStateNormal];
     [button1 addTarget:self action:@selector(jingJiRenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button1];
+    
+    
     
     UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
@@ -379,6 +449,74 @@
     [fenLeiScrollView addSubview:button4];
     [fenLeiScrollView setContentSize:CGSizeMake(button4.left+button4.width+12*BiLiWidth, fenLeiScrollView.height)];
     
+    //"auth_nomal":0,//茶馆儿认证：无
+    //auth_agent":1,//经纪人认证：有
+    //auth_goddess":1,//女神认证：有
+    //auth_global":0,//全球陪玩:无
+    //auth_peripheral":0//外围认证：无
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+
+        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+        NSString * defaultsKey = [UserRole stringByAppendingString:token];
+        
+        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+        
+        if ([NormalUse isValidDictionary:userRoleDic]) {
+            
+            NSNumber * auth_agent = [userRoleDic objectForKey:@"auth_agent"];
+            if([auth_agent isKindOfClass:[NSNumber class]])
+            {
+                if (auth_agent.intValue==1) {
+                    
+                    [button1 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button1.backgroundColor = [UIColor redColor];
+
+
+                }
+                else
+                {
+                    [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"] forState:UIControlStateNormal];
+
+                }
+            }
+            
+            NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+            if([auth_goddess isKindOfClass:[NSNumber class]])
+            {
+                if (auth_goddess.intValue==1) {
+                    
+                    [button2 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button2.backgroundColor = [UIColor redColor];
+
+                }
+                else
+                {
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
+
+                }
+            }
+            
+            NSNumber * auth_peripheral = [userRoleDic objectForKey:@"auth_peripheral"];
+            if([auth_peripheral isKindOfClass:[NSNumber class]])
+            {
+                if (auth_peripheral.intValue==1) {
+                    
+                    [button3 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button3.backgroundColor = [UIColor redColor];
+
+                }
+                else
+                {
+                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanGuoKongJian"] forState:UIControlStateNormal];
+
+                }
+            }
+
+
+        }
+
+        
+    }
     //官方推荐
     UILabel * guanFangTuiJianLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, fenLeiScrollView.top+fenLeiScrollView.height+24*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
     guanFangTuiJianLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:17*BiLiWidth];
@@ -519,7 +657,6 @@
     DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
     NSNumber * idNumber = [info objectForKey:@"id"];
     vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
-    vc.dianName = [info objectForKey:@"name"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)pingFenButtonClick

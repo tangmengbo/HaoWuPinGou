@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GaoDuanHomeCell : UITableViewCell
 
+@property(nonatomic,strong)NSDictionary * info;
+
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * titleLable;
 @property(nonatomic,strong)UIImageView * starImageView;
@@ -19,6 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UILabel * cityLable;
 @property(nonatomic,strong)UIButton * jinRuButton;
 @property(nonatomic,strong)UIScrollView * contentScrollView;
+@property(nonatomic,strong)UIImageView * jiaoYiBaoZhengImageView;
+@property(nonatomic,strong)UILabel * renZhengLable;
+@property(nonatomic,strong)UILabel * chengJiaoLable;
+
+
+
 
 @property(nonatomic,strong)UIView * lineView;
 

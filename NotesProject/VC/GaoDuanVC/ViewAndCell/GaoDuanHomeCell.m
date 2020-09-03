@@ -53,12 +53,35 @@
         [self.jinRuButton setTitle:@"进店看看" forState:UIControlStateNormal];
         [self.jinRuButton setTitleColor:RGBFormUIColor(0xDDDDDD) forState:UIControlStateNormal];
         self.jinRuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        [self.jinRuButton addTarget:self action:@selector(jinDianKanKanButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_jinRuButton];
 
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+18*BiLiWidth, WIDTH_PingMu, 132*BiLiWidth)];
         [self addSubview:self.contentScrollView];
         
-        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.contentScrollView.top+self.contentScrollView.height+48*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
+        self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 109*BiLiWidth, 16.5*BiLiWidth)];
+        self.jiaoYiBaoZhengImageView.backgroundColor = [UIColor greenColor];
+        [self addSubview:self.jiaoYiBaoZhengImageView];
+        
+        self.renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-144*BiLiWidth,self.jiaoYiBaoZhengImageView.top+1, 60*BiLiWidth, 14.5*BiLiWidth)];
+        self.renZhengLable.textColor = RGBFormUIColor(0x656565);
+        self.renZhengLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        self.renZhengLable.adjustsFontSizeToFitWidth = YES;
+        self.renZhengLable.backgroundColor = RGBFormUIColor(0xEDEDED);
+        self.renZhengLable.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.renZhengLable];
+
+
+
+        self.chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(self.renZhengLable.left+self.renZhengLable.width+12*BiLiWidth, self.renZhengLable.top, 60*BiLiWidth, 14.5*BiLiWidth)];
+        self.chengJiaoLable.textColor = RGBFormUIColor(0x656565);
+        self.chengJiaoLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        self.chengJiaoLable.adjustsFontSizeToFitWidth = YES;
+        self.chengJiaoLable.backgroundColor = RGBFormUIColor(0xEDEDED);
+        self.chengJiaoLable.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.chengJiaoLable];
+
+        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.chengJiaoLable.top+self.chengJiaoLable.height+20*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
         self.lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
         [self addSubview:self.lineView];
         
@@ -69,29 +92,86 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
-    self.titleLable.text = @"深圳高质量兼职";
+    self.info = info;
+    if ([NormalUse isValidString:[info objectForKey:@"image"]]) {
+        
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
+
+    }
+    self.titleLable.text = [info objectForKey:@"user_name"];
     self.starImageView.backgroundColor = [UIColor redColor];
-    self.starLable.text = @"4.6";
-    self.cityLable.text = @"深圳市";
+    NSNumber * complex_score = [info objectForKey:@"complex_score"];
+    if ([complex_score isKindOfClass:[NSNumber class]]) {
+        
+        self.starLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
+
+    }
+    self.cityLable.text = [info objectForKey:@"city_name"];
     
     [self.contentScrollView removeAllSubviews];
     
-    int number = arc4random()%3+1;
-    for (int i=0; i<number; i++) {
+    NSArray * post_list = [info objectForKey:@"post_list"];
+    for (int i=0; i<post_list.count; i++) {
+        
+        NSDictionary * info = [post_list objectAtIndex:i];
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth+113*BiLiWidth*i, 0, 109*BiLiWidth, 131*BiLiWidth)];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.autoresizingMask = UIViewAutoresizingNone;
         imageView.clipsToBounds = YES;
         imageView.layer.cornerRadius = 5*BiLiWidth;
-        [imageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+        
+        if ([NormalUse isValidString:[info objectForKey:@"images"]]) {
+            
+            [imageView sd_setImageWithURL:[info objectForKey:@"images"]];
+
+            
+        }
+        else if ([NormalUse isValidArray:[info objectForKey:@"images"]])
+        {
+            NSArray * images = [info objectForKey:@"images"];
+            [imageView sd_setImageWithURL:[images objectAtIndex:0]];
+
+            
+        }
         [self.contentScrollView addSubview:imageView];
         
         [self.contentScrollView setContentSize:CGSizeMake(imageView.left+imageView.width+12*BiLiWidth, self.contentScrollView.height)];
 
     }
+    
+    NSNumber * post_num = [info objectForKey:@"post_num"];
+    if ([post_num isKindOfClass:[NSNumber class]]) {
+        
+        NSString * renZhengStr = [NSString stringWithFormat:@"认证 %d",post_num.intValue];
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:renZhengStr];
+        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
+        self.renZhengLable.attributedText = str;
 
+
+    }
+
+    NSNumber * deal_num = [info objectForKey:@"deal_num"];
+    if ([post_num isKindOfClass:[NSNumber class]]) {
+        
+        NSString * chengJiaoStr = [NSString stringWithFormat:@"成交 %d",deal_num.intValue];
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:chengJiaoStr];
+        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
+        self.chengJiaoLable.attributedText = str;
+
+
+    }
+
+
+}
+-(void)jinDianKanKanButtonClick
+{
+    DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
+    NSNumber * idNumber = [self.info objectForKey:@"id"];
+    vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -108,6 +108,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getAppJinBiList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//个人角色获取[对应不同的认证权限]
++(void)getUserRole:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //参数 type 0 闪屏页 1 首页 2高端 3夫妻交 4活动 5我的    
 +(void)getBannerList:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -137,6 +141,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)sanDaRenZheng:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//帖子详情
++(void)getTieZiDetail:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //帖子列表
 +(void)getTieZiList:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -164,6 +172,20 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //官方推荐店铺
 +(void)getGuanFangTuiJianDianPu:(NSDictionary *_Nullable)parameter
                        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//经纪人列表 appi/Upscale/agentList
++(void)getJingJiRenList:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//女神/外围/全球列表  type_id 1女神 2外围 3全球 page 下标
++(void)getSanDaGirlList:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//三大角色详情
++(void)getSanDaGirlDetail:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
 //经纪人店铺详情
 +(void)getDianPuDetail:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

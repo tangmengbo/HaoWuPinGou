@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DianPuDetailViewController : MainBaseViewController
 
 @property(nonatomic,strong)NSString * dianPuId;
-@property(nonatomic,strong)NSString * dianName;
 
 @property(nonatomic,strong)UIButton * guanZhuButton;
 

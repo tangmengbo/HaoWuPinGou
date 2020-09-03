@@ -10,6 +10,8 @@
 
 @interface TieZiDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
+@property(nonatomic,strong)NSDictionary * tieZiInfo;
+
 @end
 
 @implementation TieZiDetailViewController
@@ -26,6 +28,19 @@
     
     [self yinCangTabbar];
     
+    [HTTPModel getTieZiDetail:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.tieZiInfo = responseObject;
+            [self initTopMessageView];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+    
     self.backImageView.frame = CGRectMake(self.backImageView.left, (self.topNavView.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
     self.backImageView.image = [UIImage imageNamed:@"white_back"];
 
@@ -41,6 +56,11 @@
     self.topNavView.backgroundColor = [UIColor clearColor];
     [self.view bringSubviewToFront:self.topNavView];
     
+
+}
+-(void)initTopMessageView
+{
+    
     JYCarousel *scrollLunBo = [[JYCarousel alloc] initWithFrame:CGRectMake(0, 0,WIDTH_PingMu,WIDTH_PingMu) configBlock:^JYConfiguration *(JYConfiguration *carouselConfig) {
         carouselConfig.pageContollType = MiddlePageControl;
         carouselConfig.pageTintColor = [UIColor whiteColor];
@@ -52,12 +72,12 @@
     scrollLunBo.layer.masksToBounds = YES;
     [self.mainScrollView addSubview:scrollLunBo];
     
-    NSMutableArray * imageArray = [[NSMutableArray alloc] init];
-    [imageArray addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598848496759&di=5eab6d091e7b04cfbd3427030fcb2120&imgtype=0&src=http%3A%2F%2Ft9.baidu.com%2Fit%2Fu%3D86853839%2C3576305254%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D750%26h%3D390"];
-    [imageArray addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598848517122&di=b8369dc4048b491e1a5facfee8f3a066&imgtype=0&src=http%3A%2F%2Ft9.baidu.com%2Fit%2Fu%3D3923875871%2C1613462878%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854"];
-    [imageArray addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598848517122&di=a1cbc871ebf45d927a21799054dfaa76&imgtype=0&src=http%3A%2F%2Ft9.baidu.com%2Fit%2Fu%3D2266751744%2C4253267866%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D854"];
-        //开始轮播
-    [scrollLunBo startCarouselWithArray:imageArray];
+    if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"images"]]) {
+        
+        NSMutableArray * images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
+        [scrollLunBo startCarouselWithArray:images];
+
+    }
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
@@ -69,11 +89,7 @@
     maskLayer.path = maskPath.CGPath;
     self.messageContentView.layer.mask = maskLayer;
 
-    [self initTopMessageView];
-}
--(void)initTopMessageView
-{
-    NSString * nickStr = @"青春活力美少女";
+    NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
     CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
     UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 11*BiLiWidth, size.width, 17*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
@@ -92,7 +108,7 @@
     UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     cityLable.textColor = RGBFormUIColor(0x9A9A9A);
-    cityLable.text = @"上海市";
+    cityLable.text = [self.tieZiInfo objectForKey:@"city_name"];
     [self.messageContentView addSubview:cityLable];
     
     Lable_ImageButton * shouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-21*BiLiWidth-14*BiLiWidth, 14*BiLiWidth, 21*BiLiWidth, 35.5*BiLiWidth)];
@@ -118,7 +134,12 @@
     UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(53.5*BiLiWidth, 25.5*BiLiWidth, 50*BiLiWidth, 33*BiLiWidth)];
     pingFenLable.font = [UIFont systemFontOfSize:33*BiLiWidth];
     pingFenLable.textColor = RGBFormUIColor(0xFFA218);
-    pingFenLable.text = @"4.5";
+    NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
+    if ([complex_score isKindOfClass:[NSNumber class]]) {
+        
+        pingFenLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
+
+    }
     [pingFenView addSubview:pingFenLable];
     
     UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenLable.left, 63.5*BiLiWidth, pingFenLable.width, 11*BiLiWidth)];
@@ -135,12 +156,28 @@
     yanZhiLable.textAlignment = NSTextAlignmentCenter;
     [pingFenView addSubview:yanZhiLable];
 
+    NSNumber * face_value = [self.tieZiInfo objectForKey:@"face_value"];
     
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(yanZhiLable.left+yanZhiLable.width+19*BiLiWidth+20*BiLiWidth*i, yanZhiLable.top, 12*BiLiWidth, 12*BiLiWidth)];
         imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
+        
+        if ([face_value isKindOfClass:[NSNumber class]]) {
+            
+            if (i<=face_value.intValue) {
+                
+                imageView.backgroundColor = [UIColor redColor];
+
+            }
+            else
+            {
+                imageView.backgroundColor = [UIColor greenColor];
+
+            }
+
+        }
         
     }
     
@@ -151,12 +188,29 @@
     jiShuLable.textAlignment = NSTextAlignmentCenter;
     [pingFenView addSubview:jiShuLable];
 
-    
+    NSNumber * skill_value = [self.tieZiInfo objectForKey:@"skill_value"];
+
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(jiShuLable.left+jiShuLable.width+19*BiLiWidth+20*BiLiWidth*i, jiShuLable.top, 12*BiLiWidth, 12*BiLiWidth)];
         imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
+        
+        if ([skill_value isKindOfClass:[NSNumber class]]) {
+            
+            if (i<=skill_value.intValue) {
+                
+                imageView.backgroundColor = [UIColor redColor];
+
+            }
+            else
+            {
+                imageView.backgroundColor = [UIColor greenColor];
+
+            }
+
+        }
+
         
     }
 
@@ -168,12 +222,29 @@
     huanJingLable.textAlignment = NSTextAlignmentCenter;
     [pingFenView addSubview:huanJingLable];
 
-    
+    NSNumber * ambience_value = [self.tieZiInfo objectForKey:@"ambience_value"];
+
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(huanJingLable.left+huanJingLable.width+19*BiLiWidth+20*BiLiWidth*i, huanJingLable.top, 12*BiLiWidth, 12*BiLiWidth)];
         imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
+        
+        if ([ambience_value isKindOfClass:[NSNumber class]]) {
+            
+            if (i<=ambience_value.intValue) {
+                
+                imageView.backgroundColor = [UIColor redColor];
+
+            }
+            else
+            {
+                imageView.backgroundColor = [UIColor greenColor];
+
+            }
+
+        }
+
         
     }
 
@@ -266,10 +337,10 @@
     jiaGeImageView.backgroundColor = [UIColor redColor];
     [self.jiBenXinXiContentView addSubview:jiaGeImageView];
     
-    UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(21.5*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth)];
     jiaGeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     jiaGeLable.textColor = RGBFormUIColor(0x666666);
-    jiaGeLable.text = @"价格：1500-3000";
+    jiaGeLable.text = [NSString stringWithFormat:@"价格：%@-%@",[self.tieZiInfo objectForKey:@"min_price"],[self.tieZiInfo objectForKey:@"max_price"]];
     [self.jiBenXinXiContentView addSubview:jiaGeLable];
     
     //数量
@@ -277,10 +348,15 @@
     shuLiangImageView.backgroundColor = [UIColor redColor];
     [self.jiBenXinXiContentView addSubview:shuLiangImageView];
     
-    UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(21.5*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
     shuLiangLableLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     shuLiangLableLable.textColor = RGBFormUIColor(0x666666);
-    shuLiangLableLable.text = @"数量：5";
+    NSNumber *  nums = [self.tieZiInfo objectForKey:@"nums"];
+    if ([nums isKindOfClass:[NSNumber class]]) {
+        
+        shuLiangLableLable.text = [NSString stringWithFormat:@"数量：%d",nums.intValue];
+
+    }
     [self.jiBenXinXiContentView addSubview:shuLiangLableLable];
 
     //年龄
@@ -288,10 +364,16 @@
     ageImageView.backgroundColor = [UIColor redColor];
     [self.jiBenXinXiContentView addSubview:ageImageView];
     
-    UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(21.5*BiLiWidth,ageImageView.top , 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth,ageImageView.top , 200*BiLiWidth, 12*BiLiWidth)];
     ageLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     ageLable.textColor = RGBFormUIColor(0x666666);
-    ageLable.text = @"年龄：26";
+    NSNumber *  age = [self.tieZiInfo objectForKey:@"age"];
+    if ([age isKindOfClass:[NSNumber class]]) {
+        
+        ageLable.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
+
+    }
+
     [self.jiBenXinXiContentView addSubview:ageLable];
 
     //项目
@@ -299,10 +381,10 @@
     xiangMuImageView.backgroundColor = [UIColor redColor];
     [self.jiBenXinXiContentView addSubview:xiangMuImageView];
     
-    UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(21.5*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+    UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = @"项目：踩背、推油、按摩、丝袜制服";
+    xiangMuLable.text = [self.tieZiInfo objectForKey:@"service_type"];
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 
@@ -326,7 +408,7 @@
     headerImageView.backgroundColor = [UIColor redColor];
     [self.xiangQingJieShaoContentView addSubview:headerImageView];
     
-    NSString * nickStr = @"青春活力美少女";
+    NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
     CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
     UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, 6*BiLiWidth, size.width, 14*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
@@ -360,16 +442,22 @@
     UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left+pingFenTipLable.width+12*BiLiWidth, headerImageView.top+headerImageView.height+17.5*BiLiWidth, 45*BiLiWidth, 18*BiLiWidth)];
     pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
     pingFenLable.textColor = RGBFormUIColor(0x343434);
-    pingFenLable.text = @"4.5";
-    [self.xiangQingJieShaoContentView addSubview:pingFenLable];
+    NSNumber *  complex_score = [self.tieZiInfo objectForKey:@"complex_score"];
+    if ([complex_score isKindOfClass:[NSNumber class]]) {
+        
+        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
 
+    }
+
+
+    [self.xiangQingJieShaoContentView addSubview:pingFenLable];
     UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left, pingFenTipLable.top+pingFenTipLable.height+17.5*BiLiWidth, 333*BiLiWidth, 0)];
     messageLable.numberOfLines = 0;
     messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     messageLable.textColor = RGBFormUIColor(0x343434);
     [self.xiangQingJieShaoContentView addSubview:messageLable];
 
-    NSString * neiRongStr = @"1.整理好仪容仪表，化淡妆，准时点到，不迟到、早退、绝对服从餐厅领班的领导和只会 ......\n2.上班前了解就餐人数及时间，了解宴请来宾有无其他特殊要求，做好针对个性化服务工作。";
+    NSString * neiRongStr = [self.tieZiInfo objectForKey:@"decription"];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距

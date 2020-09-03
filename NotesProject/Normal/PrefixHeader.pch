@@ -75,6 +75,7 @@
 
 //高端
 #import "GaoDuanHomeCell.h"
+#import "NvShenListTableViewCell.h"
 
 #import "NvShenRenZhengStep1VC.h"
 #import "NvShenRenZhengStep2VC.h"
@@ -84,6 +85,9 @@
 #import "JingJiRenRenZhengStep2VC.h"
 #import "JingJiRenRenZhengStep3VC.h"
 
+#import "PeiWanListViewController.h"
+#import "WaiWeiListViewController.h"
+#import "NvShenListViewController.h"
 #import "DianPuDetailViewController.h"
 #import "GaoDuanViewController.h"
 

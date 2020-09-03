@@ -90,7 +90,11 @@
     if ([[info objectForKey:@"images"] isKindOfClass:[NSArray class]])
     {
         NSArray * images = [info objectForKey:@"images"];
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+        if ([NormalUse isValidArray:images]) {
+            
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+
+        }
     }
     
     
