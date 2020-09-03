@@ -10,6 +10,9 @@
 #import "DingZhiFuWuTableViewCell.h"
 
 @interface DingZhiFuWuViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    int page;
+}
 
 @property(nonatomic,strong)UILabel * locationLable;
 
@@ -33,23 +36,8 @@
     [self.view addSubview:topImageView];
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(createDingZhiFuWu)];
     [topImageView addGestureRecognizer:tap];
-    //某个角圆角
-//    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:topImageView.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-//    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-//    maskLayer.frame = topImageView.bounds;
-//    maskLayer.path = maskPath.CGPath;
-//    topImageView.layer.mask = maskLayer;
-
-//    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
-//    locationImageView.image = [UIImage imageNamed:@"home_location"];
-//    [self.topNavView addSubview:locationImageView];
-//
-//    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
-//    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-//    self.locationLable.adjustsFontSizeToFitWidth = YES;
-//    self.locationLable.textColor = RGBFormUIColor(0xFFFFFF);
-//    self.locationLable.text = @"深圳市";
-//    [self.topNavView addSubview:self.locationLable];
+    
+    
 
     self.backImageView.frame = CGRectMake(self.backImageView.left, (self.topNavView.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
     self.backImageView.image = [UIImage imageNamed:@"white_back"];
@@ -66,13 +54,6 @@
     tipLable.text = @"什么是定制服务？";
     [self.view addSubview:tipLable];
     
-    self.sourceArray = [NSMutableArray array];
-    NSDictionary * info = [[NSDictionary alloc] initWithObjectsAndKeys:@"昂克赛拉登记卡SD卡三块多,撒发大水打撒",@"message", nil];
-    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"奥施康定哈就是大家都哈大家啊就是订单几哈飒飒大",@"message", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"暗杀教室的骄傲的氨基酸的哈上架到经安徽省大家啊黄金道士爱神的箭哈就是大阿萨德很骄傲姜思达爱神的箭哈圣诞节啊",@"message", nil];
-    [self.sourceArray addObject:info];
-    [self.sourceArray addObject:info1];
-    [self.sourceArray addObject:info2];
 
     
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tipLable.height+tipLable.top, WIDTH_PingMu, HEIGHT_PingMu-(tipLable.height+tipLable.top))];
@@ -81,6 +62,75 @@
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mainTableView];
 
+
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainTableView.mj_header = mjHeader;
+    [self.mainTableView.mj_header beginRefreshing];
+    
+    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    self.mainTableView.mj_footer = mjFooter;
+
+}
+-(void)loadNewLsit
+{
+    page = 0;
+    [HTTPModel getDingZhiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self.mainTableView.mj_header endRefreshing];
+        self->page = self->page+1;
+        if (status==1) {
+            
+            NSArray * array = [responseObject objectForKey:@"data"];
+            self.sourceArray = [[NSMutableArray alloc] initWithArray:array];
+            if (array.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            [self.mainTableView reloadData];
+            
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+}
+-(void)loadMoreList
+{
+    [HTTPModel getDingZhiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self.mainTableView.mj_footer endRefreshing];
+        
+        self->page = self->page+1;
+        if (status==1) {
+            
+            NSArray * array = [responseObject objectForKey:@"data"];
+            if (array.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            
+            for (NSDictionary * info in array) {
+                
+                [self.sourceArray addObject:info];
+            }
+            [self.mainTableView reloadData];
+            
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
 
 }
 

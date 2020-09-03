@@ -98,12 +98,25 @@
     [self.messageContentView addSubview:nickLable];
     
     UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-14.5*BiLiWidth)/2, 16*BiLiWidth, 14.5*BiLiWidth)];
-    vImageView.backgroundColor = [UIColor redColor];
+    vImageView.image = [UIImage imageNamed:@"vip_black"];
     [self.messageContentView addSubview:vImageView];
     
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 56*BiLiWidth, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.backgroundColor = [UIColor redColor];
+    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
+    
+    NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
+    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+        
+        if (auth_nomal.intValue==0) {
+            
+            guanFangRenZhengImageView.width = 13.5*BiLiWidth*126/39;
+            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+
+
+        }
+
+    }
     
     UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
@@ -113,13 +126,27 @@
     
     Lable_ImageButton * shouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-21*BiLiWidth-14*BiLiWidth, 14*BiLiWidth, 21*BiLiWidth, 35.5*BiLiWidth)];
     shouCangButton.button_imageView.frame = CGRectMake((shouCangButton.width-19.5*BiLiWidth)/2, 0, 19.5*BiLiWidth, 18*BiLiWidth);
-    shouCangButton.button_imageView.backgroundColor = [UIColor redColor];
-    shouCangButton.button_lable.frame = CGRectMake(0, shouCangButton.button_imageView.top+shouCangButton.button_imageView.height+6.5*BiLiWidth, 21*BiLiWidth, 11*BiLiWidth);
+    shouCangButton.button_imageView.image = [UIImage imageNamed:@"shouCang_n"];
+    shouCangButton.button_lable.frame = CGRectMake(-10*BiLiWidth, shouCangButton.button_imageView.top+shouCangButton.button_imageView.height+6.5*BiLiWidth, 21*BiLiWidth+20*BiLiWidth, 11*BiLiWidth);
     shouCangButton.button_lable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+    shouCangButton.button_lable.textAlignment = NSTextAlignmentCenter;
     shouCangButton.button_lable.textColor = RGBFormUIColor(0x9A9A9A);
     shouCangButton.button_lable.text = @"收藏";
-    shouCangButton.button_lable.adjustsFontSizeToFitWidth = YES;
+    shouCangButton.tag = 0;
+    [shouCangButton addTarget:self action:@selector(shouCangOrQuXiaoShouCang:) forControlEvents:UIControlEventTouchUpInside];
     [self.messageContentView addSubview:shouCangButton];
+    
+    NSNumber * is_like = [self.tieZiInfo objectForKey:@"is_like"];
+    if ([is_like isKindOfClass:[NSNumber class]]) {
+        
+        if (is_like.intValue!=0) {
+            
+            shouCangButton.tag = 1;
+            shouCangButton.button_imageView.image = [UIImage imageNamed:@"shouCang_h"];
+            shouCangButton.button_lable.text = @"已收藏";
+
+        }
+    }
 
 
     UIView * pingFenView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
@@ -161,19 +188,18 @@
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(yanZhiLable.left+yanZhiLable.width+19*BiLiWidth+20*BiLiWidth*i, yanZhiLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
         
         if ([face_value isKindOfClass:[NSNumber class]]) {
             
             if (i<=face_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
 
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
 
@@ -193,19 +219,18 @@
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(jiShuLable.left+jiShuLable.width+19*BiLiWidth+20*BiLiWidth*i, jiShuLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
         
         if ([skill_value isKindOfClass:[NSNumber class]]) {
             
             if (i<=skill_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
 
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
 
@@ -227,19 +252,18 @@
     for (int i=0; i<5; i++) {
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(huanJingLable.left+huanJingLable.width+19*BiLiWidth+20*BiLiWidth*i, huanJingLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        imageView.backgroundColor = [UIColor redColor];
         [pingFenView addSubview:imageView];
         
         if ([ambience_value isKindOfClass:[NSNumber class]]) {
             
             if (i<=ambience_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
 
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
 
@@ -250,7 +274,7 @@
 
 
     Lable_ImageButton * jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, pingFenView.top+pingFenView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
-    [jieSuoButton setBackgroundColor:[UIColor purpleColor]];
+    [jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
     jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, jieSuoButton.height);
     jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFE1B0);
@@ -345,7 +369,7 @@
     
     //数量
     UIImageView * shuLiangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-    shuLiangImageView.backgroundColor = [UIColor redColor];
+    shuLiangImageView.image = [UIImage imageNamed:@"ziLiao_renShu"];
     [self.jiBenXinXiContentView addSubview:shuLiangImageView];
     
     UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
@@ -361,7 +385,7 @@
 
     //年龄
     UIImageView * ageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, shuLiangImageView.top+shuLiangImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-    ageImageView.backgroundColor = [UIColor redColor];
+    ageImageView.image = [UIImage imageNamed:@"ziLiao_age"];
     [self.jiBenXinXiContentView addSubview:ageImageView];
     
     UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth,ageImageView.top , 200*BiLiWidth, 12*BiLiWidth)];
@@ -378,7 +402,7 @@
 
     //项目
     UIImageView * xiangMuImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, ageImageView.top+ageImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-    xiangMuImageView.backgroundColor = [UIColor redColor];
+    xiangMuImageView.image = [UIImage imageNamed:@"ziLiao_xiangMu"];
     [self.jiBenXinXiContentView addSubview:xiangMuImageView];
     
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
@@ -457,7 +481,7 @@
     messageLable.textColor = RGBFormUIColor(0x343434);
     [self.xiangQingJieShaoContentView addSubview:messageLable];
 
-    NSString * neiRongStr = [self.tieZiInfo objectForKey:@"decription"];
+    NSString * neiRongStr = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距
@@ -556,6 +580,52 @@
 }
 
 #pragma mark--UIButtonClick
+
+-(void)shouCangOrQuXiaoShouCang:(Lable_ImageButton *)button
+{
+    button.enabled = NO;
+    if (button.tag==0) {
+        
+        [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           
+            button.enabled = YES;
+            button.tag = 1;
+
+            if (status==1) {
+                
+                button.button_imageView.image = [UIImage imageNamed:@"shouCang_h"];
+                button.button_lable.text = @"已收藏";
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+            
+        }];
+    }
+    else
+    {
+        NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:array,@"ids", nil];
+        [HTTPModel tieZiFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           
+            button.enabled = YES;
+            button.tag = 0;
+            if (status==1) {
+                button.button_imageView.image = [UIImage imageNamed:@"shouCang_n"];
+                button.button_lable.text = @"收藏";
+
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+            
+        }];
+
+    }
+    
+}
 
 -(void)listTopButtonClick:(UIButton *)button
 {

@@ -75,8 +75,8 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
                 
                 if (isSign)
                 {
-                    //[self setShouShiYanZhengTabbar];
-                    [self setYiDengLuTabBar];
+                    [self setShouShiYanZhengTabbar];
+                    //[self setYiDengLuTabBar];
                 }
                 else
                 {

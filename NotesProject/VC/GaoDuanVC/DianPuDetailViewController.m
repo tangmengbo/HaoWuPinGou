@@ -166,12 +166,12 @@
         [headerView addSubview:titleLable];
         
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];
-        vipImageView.backgroundColor = [UIColor greenColor];
+        vipImageView.image = [UIImage imageNamed:@"vip_black"];
         [headerView addSubview:vipImageView];
         
         Lable_ImageButton * pingFenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+7*BiLiWidth, 37*BiLiWidth, 13*BiLiWidth)];
         pingFenButton.button_imageView.frame = CGRectMake(0, 0, 13*BiLiWidth, 13*BiLiWidth);
-        pingFenButton.button_imageView.backgroundColor = [UIColor greenColor];
+        pingFenButton.button_imageView.image = [UIImage imageNamed:@"star_yellow"];
         pingFenButton.button_lable.frame = CGRectMake(18*BiLiWidth, 0, 20*BiLiWidth, 13*BiLiWidth);
         pingFenButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         pingFenButton.button_lable.textColor = RGBFormUIColor(0xF5BB61);
@@ -204,7 +204,7 @@
         self.guanZhuButton = [[UIButton alloc] initWithFrame:guanZhuBottomView.frame];
         [self.guanZhuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.guanZhuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-        [self.guanZhuButton addTarget:self action:@selector(guanZhuButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.guanZhuButton addTarget:self action:@selector(guanZhuButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.guanZhuButton];
         NSNumber * is_follow = [self.dianPuInfo objectForKey:@"is_follow"];
         if ([is_follow isKindOfClass:[NSNumber class]]) {
@@ -212,13 +212,13 @@
             if (is_follow.intValue==0) {
                 
                 self.guanZhuButton.tag = 0;
-                [self.guanZhuButton setTitle:@"关注" forState:UIControlStateNormal];
+                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_n"] forState:UIControlStateNormal];
 
             }
             else
             {
                 self.guanZhuButton.tag = 1;
-                [self.guanZhuButton setTitle:@"已关注" forState:UIControlStateNormal];
+                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_h"] forState:UIControlStateNormal];
 
             }
         }
@@ -281,7 +281,7 @@
         [headerView addSubview:jiaoYiBaoZhengImageView];
         
         Lable_ImageButton * jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
-        [jieSuoButton setBackgroundColor:[UIColor purpleColor]];
+        [jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
         jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, jieSuoButton.height);
         jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFE1B0);
@@ -322,6 +322,48 @@
     
     
     return headerView;
+    
+}
+-(void)guanZhuButtonClick:(UIButton *)button
+{
+    button.enabled = NO;
+    
+    if (button.tag==0) {
+        
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.dianPuId,@"shop_id", nil];
+        [HTTPModel dianPuFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            button.enabled = YES;
+            if (status==1) {
+                
+                [button setBackgroundImage:[UIImage imageNamed:@"guanZhu_h"] forState:UIControlStateNormal];
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+        }];
+
+    }
+    else
+    {
+        NSArray * array = [[NSArray alloc] initWithObjects:self.dianPuId, nil];
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:array,@"ids", nil];
+        [HTTPModel dianPuUnfollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            button.enabled = YES;
+            if (status==1) {
+                
+                [button setBackgroundImage:[UIImage imageNamed:@"guanZhu_n"] forState:UIControlStateNormal];
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+        }];
+
+    }
+        
     
 }
 -(void)pingFenButtonClick

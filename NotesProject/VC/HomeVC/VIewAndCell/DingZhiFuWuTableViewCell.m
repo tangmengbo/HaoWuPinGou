@@ -87,21 +87,19 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
-//    self.contentMessageView.layer.shadowColor = [UIColor grayColor].CGColor;
-//    self.contentMessageView.layer.shadowOffset = CGSizeMake(0, 1);//CGSizeZero; //设置偏移量为0,四周都有阴影
-//    self.contentMessageView.layer.shadowRadius = 3.0f;//阴影半径，默认3
-//    self.contentMessageView.layer.shadowOpacity = 0.3f;//阴影透明度，默认0
-//    self.contentMessageView.layer.masksToBounds = NO;
-//    self.contentMessageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.contentMessageView.bounds cornerRadius:self.contentMessageView.layer.cornerRadius].CGPath;
+    NSDictionary * userinfo = [info objectForKey:@"userinfo"];
+    if ([NormalUse isValidDictionary:userinfo]) {
+        
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]]];
+        self.titleLable.text = [userinfo objectForKey:@"nickname"];
 
+    }
     
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
-    self.titleLable.text = @"深圳高质量兼职";
-    self.weiZhiLable.text = @"深圳";
-    self.faBuTimeLable.text = @"发布时间：2020-09-30";
-    self.priceLable.text = @"¥1500~¥3000";
+    self.weiZhiLable.text = [info objectForKey:@"city_name"];
+    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
     
-    NSString * neiRongStr = [info objectForKey:@"message"];
+    NSString * neiRongStr = [info objectForKey:@"love_type"];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距
@@ -117,7 +115,7 @@
     self.contentMessageView.height = self.neiRongView.top+self.neiRongView.height+14*BiLiWidth;
     
     self.dingZhiNeiRongLable.text = neiRongStr;
-    self.dingZhiTimeLable.text = @"预定时间：2020-10-02";
+    self.dingZhiTimeLable.text = [NSString stringWithFormat:@"预定时间：%@ - %@",[info objectForKey:@"start_date"],[info objectForKey:@"end_date"]];
     
 }
 +(float)cellHegiht:(NSDictionary *)info
@@ -127,7 +125,7 @@
     lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     lable.numberOfLines = 0;
 
-    NSString * neiRongStr = [info objectForKey:@"message"];
+    NSString * neiRongStr = [info objectForKey:@"love_type"];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距

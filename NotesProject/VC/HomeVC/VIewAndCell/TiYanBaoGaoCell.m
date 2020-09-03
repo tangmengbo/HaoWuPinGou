@@ -129,18 +129,28 @@
     
     NSNumber * avg_value = [info objectForKey:@"avg_value"];
     
-    if ([avg_value isKindOfClass:[NSNumber class]])
-    {
-        for (int i=0; i<avg_value.intValue; i++) {
-            
-            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*i, 0, 12*BiLiWidth, 12*BiLiWidth)];
-            imageView.backgroundColor = [UIColor redColor];
+    if ([avg_value isKindOfClass:[NSNumber class]]) {
+        
+        for(int i=1;i<=5;i++)
+        {
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*(i-1), 0, 12*BiLiWidth, 12*BiLiWidth)];
             [self.pingFenStarView addSubview:imageView];
             
+            if (i<=avg_value.intValue) {
+                
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
+
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"star_hui"];
+
+            }
+
         }
         
     }
-    
+
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

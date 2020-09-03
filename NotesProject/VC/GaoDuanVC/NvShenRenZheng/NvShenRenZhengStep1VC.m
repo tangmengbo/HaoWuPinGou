@@ -206,8 +206,7 @@
 
     self.beginAndStopRecordButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-25*BiLiWidth)/2,self.jinDuBottomView.top+self.jinDuBottomView.height+20*BiLiWidth, 25*BiLiWidth, 27*BiLiWidth)];
     self.beginAndStopRecordButton.tag = 0;
-    self.beginAndStopRecordButton.backgroundColor = [UIColor redColor];
-    [self.beginAndStopRecordButton addTarget:self action:@selector(beginAndRecord:) forControlEvents:UIControlEventTouchDown];
+    [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];    [self.beginAndStopRecordButton addTarget:self action:@selector(beginAndRecord:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.beginAndStopRecordButton];
     
     self.tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, self.beginAndStopRecordButton.top+self.beginAndStopRecordButton.height+20*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
@@ -368,14 +367,13 @@
 {
     if (button.tag==0) {
         button.tag=1;
-        button.backgroundColor = [UIColor redColor];
-        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"zcrz_btn_wanchengluzhi"] forState:UIControlStateNormal];
+        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"tingzhi_luZhi"] forState:UIControlStateNormal];
         [self startVideoRecorder];
 
     }
     else
     {
-        button.backgroundColor = [UIColor greenColor];
+        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
 
         button.tag=0;
         [self stopVideoRecorder];
@@ -436,7 +434,7 @@
 }
 - (void)stopVideoRecorder{
     
-    self.beginAndStopRecordButton.backgroundColor = [UIColor greenColor];
+    [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
     [self.movieFileOutput stopRecording];
     [self timerStop];
     
@@ -460,7 +458,7 @@
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"录制时间不能小于%d秒",VIDEO_RECORDER_MIN_TIME] message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
-            [wself.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"zcrz_btn_luzhi"] forState:UIControlStateNormal];
+            [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
             
         }];
         [alert addAction:cancleAction];
@@ -556,6 +554,17 @@
     [self.view.layer insertSublayer:self.previewLayer atIndex:0];
     
     [self switchCamera];
+    
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake((WIDTH_PingMu-155*BiLiWidth)/2, view.top+view.height+34*BiLiWidth, 155*BiLiWidth, 50*BiLiWidth)];
+    tipLable.backgroundColor = [RGBFormUIColor(0x1A1A1A) colorWithAlphaComponent:0.3];
+    tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    tipLable.textColor = [UIColor whiteColor];
+    tipLable.textAlignment = NSTextAlignmentCenter;
+    tipLable.layer.cornerRadius = 4*BiLiWidth;
+    tipLable.layer.masksToBounds = YES;
+    tipLable.numberOfLines = 2;
+    tipLable.text = @"请清晰读出数字\n235612";
+    [self.view addSubview:tipLable];
     
     
 }

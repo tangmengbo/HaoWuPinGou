@@ -111,7 +111,7 @@
 
     
     UIImageView * tipImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-72*BiLiWidth)/2, step3TipLable.top+step3TipLable.height+43*BiLiWidth, 72*BiLiWidth, 72*BiLiWidth)];
-    tipImageView.backgroundColor = [UIColor redColor];
+    tipImageView.image = [UIImage imageNamed:@"success_tip"];
     [self.view addSubview:tipImageView];
     
     UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+24*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];

@@ -114,7 +114,7 @@
     }
     else
     {
-        self.toolButton.backgroundColor = [UIColor redColor];
+        [self.toolButton setBackgroundImage:[UIImage imageNamed:@"yiYanZheng"] forState:UIControlStateNormal];
     }
     if ([NormalUse isValidString:[info objectForKey:@"avatar"]]) {
         

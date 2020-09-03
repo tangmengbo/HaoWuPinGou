@@ -34,13 +34,24 @@
     } verificationError:^{
         weakSelf.infoLabel.text = @"旧密码验证错误";
     }  onPasswordSet:^ {
-        weakSelf.infoLabel.text = @"请重新输入刚才设置的手势密码";
+        
+        if (self.shouShiType == GesturePasswordStatusSet) {
+            
+            weakSelf.infoLabel.text = @"请重新输入刚才设置的手势密码";
+
+        }
+
     } onGetCorrectPswd:^ {
         
         weakSelf.infoLabel.text = @"设置成功";
         
     } onGetIncorrectPswd:^ {
-        weakSelf.infoLabel.text = @"与上一次输入不一致，请重新设置";
+        
+        if (self.shouShiType == GesturePasswordStatusSet) {
+            
+            weakSelf.infoLabel.text = @"与上一次输入不一致，请重新设置";
+
+        }
     } errorInput:^{
         weakSelf.infoLabel.text = @"请至少连接4个点";
     }];
@@ -84,7 +95,7 @@
 
             if (status==1) {
                 
-                BOOL   flag =  [[responseObject objectForKey:@"flag"] boolValue];
+                BOOL  flag =  [[responseObject objectForKey:@"flag"] boolValue];
 
                 if(flag)
                 {

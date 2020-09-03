@@ -87,7 +87,7 @@
     
     Lable_ImageButton * kaiJiangJiLuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11.5*BiLiWidth-69.5*BiLiWidth, 0, 69*BiLiWidth, self.topNavView.height)];
     kaiJiangJiLuButton.button_imageView.frame = CGRectMake(0, (kaiJiangJiLuButton.height-14*BiLiWidth)/2, 14*BiLiWidth, 14*BiLiWidth);
-    kaiJiangJiLuButton.button_imageView.backgroundColor = [UIColor redColor];
+    kaiJiangJiLuButton.button_imageView.image = [UIImage imageNamed:@"fuLi_jiLu"];
     kaiJiangJiLuButton.button_lable.frame = CGRectMake(kaiJiangJiLuButton.button_imageView.left+kaiJiangJiLuButton.button_imageView.width+5*BiLiWidth, 0, 50*BiLiWidth, kaiJiangJiLuButton.height);
     kaiJiangJiLuButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     kaiJiangJiLuButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
@@ -129,7 +129,7 @@
     [bottomImageView addSubview:controlView];
     
     UIButton * jianButton = [[UIButton alloc] initWithFrame:CGRectMake(17*BiLiWidth, 10*BiLiWidth, 20*BiLiWidth, 20*BiLiWidth)];
-    jianButton.backgroundColor = [UIColor redColor];
+    [jianButton setBackgroundImage:[UIImage imageNamed:@"number_jian"] forState:UIControlStateNormal];
     [jianButton addTarget:self action:@selector(jianButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:jianButton];
     
@@ -141,7 +141,7 @@
     [controlView addSubview:self.numberLable];
     
     UIButton * jiaButton = [[UIButton alloc] initWithFrame:CGRectMake(self.numberLable.left+self.numberLable.width, 10*BiLiWidth, 20*BiLiWidth, 20*BiLiWidth)];
-    jiaButton.backgroundColor = [UIColor redColor];
+    [jiaButton setBackgroundImage:[UIImage imageNamed:@"number_jia"] forState:UIControlStateNormal];
     [jiaButton addTarget:self action:@selector(jiaButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:jiaButton];
 
@@ -156,7 +156,7 @@
     
     Lable_ImageButton * shuoMingButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(23*BiLiWidth, controlView.top+controlView.height+42*BiLiWidth, 69*BiLiWidth, 14*BiLiWidth)];
     shuoMingButton.button_imageView.frame = CGRectMake(0, 0, 14*BiLiWidth, 14*BiLiWidth);
-    shuoMingButton.button_imageView.backgroundColor = [UIColor redColor];
+    shuoMingButton.button_imageView.image = [UIImage imageNamed:@"fuLi_shuoMing"];
     shuoMingButton.button_lable.frame = CGRectMake(shuoMingButton.button_imageView.left+shuoMingButton.button_imageView.width+5*BiLiWidth, shuoMingButton.button_imageView.top, 50*BiLiWidth, 14*BiLiWidth);
     shuoMingButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     shuoMingButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
@@ -167,7 +167,7 @@
     
     Lable_ImageButton * gouMaiJiLuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, controlView.top+controlView.height+42*BiLiWidth, 69*BiLiWidth, 14*BiLiWidth)];
     gouMaiJiLuButton.button_imageView.frame = CGRectMake(0, 0, 14*BiLiWidth, 14*BiLiWidth);
-    gouMaiJiLuButton.button_imageView.backgroundColor = [UIColor redColor];
+    gouMaiJiLuButton.button_imageView.image = [UIImage imageNamed:@"fuLi_jiLu"];
     gouMaiJiLuButton.button_lable.frame = CGRectMake(shuoMingButton.button_imageView.left+shuoMingButton.button_imageView.width+5*BiLiWidth, shuoMingButton.button_imageView.top, 50*BiLiWidth, 14*BiLiWidth);
     gouMaiJiLuButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     gouMaiJiLuButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);

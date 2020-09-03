@@ -11,25 +11,22 @@
 
 @interface FuQiJiaoViewController ()<UITableViewDelegate,UITableViewDataSource,WSPageViewDelegate,WSPageViewDataSource>
 
-@property(nonatomic,strong)UITableView * mainTableView;
-
-@property(nonatomic,strong)NSMutableArray * sourceArray;
-
 @property(nonatomic,strong,nullable)WSPageView *pageView;
 @property(nonatomic,strong)UIPageControl * pageControl;
+@property(nonatomic,strong)NSArray * bannerArray;
 
-@property(nonatomic,strong)UIButton * pingFenButton;
-@property(nonatomic,strong)UIButton * zuiXinButton;
-@property(nonatomic,strong)UIButton * zuiReButton;
+@property(nonatomic,strong)UIScrollView * contentScrollView;
 
-@property(nonatomic,strong)UIView * itemButtonContentView;
-@property(nonatomic,strong)UIButton * pingFenButton1;
-@property(nonatomic,strong)UIButton * zuiXinButton1;
-@property(nonatomic,strong)UIButton * zuiReButton1;
+@property(nonatomic,strong)NSMutableArray * listButtonArray;
+@property(nonatomic,strong)UIView * sliderView;
 
-@property(nonatomic,assign)CGFloat  lastcontentOffset;
+@property(nonatomic,strong)NSMutableArray * tableViewArray;//存放tableview
+@property(nonatomic,strong)NSMutableArray * pageIndexArray;//存放pageindex
+@property(nonatomic,strong)NSMutableArray * dataSourceArray;//存放数据源
 
-@property(nonatomic,strong)NSString * zuiXinOrZuiRe;//1 最新 2 最热
+
+
+
 
 
 @end
@@ -42,79 +39,322 @@
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
     
-    self.sourceArray = [NSMutableArray array];
-    NSDictionary * info = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"key", nil];
-    [self.sourceArray addObject:info];
-    [self.sourceArray addObject:info];
-    [self.sourceArray addObject:info];
-    [self.sourceArray addObject:info];
-    [self.sourceArray addObject:info];
+    self.topTitleLale.text = @"夫妻交友";
+    
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.bannerArray = responseObject;
+            
+            if([NormalUse isValidArray:self.bannerArray])
+            {
+                self.pageControl.numberOfPages = self.bannerArray.count;
 
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, TopHeight_PingMu+18*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(TopHeight_PingMu+18*BiLiWidth+BottomHeight_PingMu))style:UITableViewStyleGrouped];
-   self.mainTableView.delegate = self;
-   self.mainTableView.dataSource = self;
-   self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.mainTableView.tag = 1002;
-   [self.view addSubview:self.mainTableView];
+                //顶部轮播图
+                self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 146*BiLiWidth)];
+                self.pageView.currentWidth = 305;
+                self.pageView.currentHeight = 146;
+                self.pageView.normalHeight = 134;
+                self.pageView.delegate = self;
+                self.pageView.dataSource = self;
+                self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
+                self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
+                self.pageView.orginPageCount = 3; //原始页数
+                self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
+                [self.view addSubview:self.pageView] ;
 
-    self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, TopHeight_PingMu+13*BiLiWidth, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
-    self.itemButtonContentView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.itemButtonContentView];
-    
-    self.zuiXinOrZuiRe = @"1";
-    
-    self.pingFenButton1 = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 14.5*BiLiWidth, 50*BiLiWidth, 12*BiLiWidth)];
-    [self.pingFenButton1 setTitle:@"评分最高" forState:UIControlStateNormal];
-    [self.pingFenButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    self.pingFenButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.pingFenButton1 addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.itemButtonContentView addSubview:self.pingFenButton1];
-    
-    self.zuiXinButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+33*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiXinButton1 setTitle:@"最新" forState:UIControlStateNormal];
-    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-    self.zuiXinButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiXinButton1 addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.itemButtonContentView addSubview:self.zuiXinButton1];
-    
-    self.zuiReButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+79*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiReButton1 setTitle:@"最热" forState:UIControlStateNormal];
-    [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    self.zuiReButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiReButton1 addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.itemButtonContentView addSubview:self.zuiReButton1];
+            }
+                
 
-    self.itemButtonContentView.hidden = YES;
+        }
+    }];
+
+    
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.topNavView.top+self.topNavView.height+146*BiLiWidth+8*BiLiWidth, 200*BiLiWidth, 10)];
+    self.pageControl.currentPage = 0;      //设置当前页指示点
+    self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
+    self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
+    self.pageControl.numberOfPages = self.bannerArray.count;
+    [self.view addSubview:self.pageControl];
+    
+    self.listButtonArray = [NSMutableArray array];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"热门推荐", nil];
+    float originx = 13*BiLiWidth;
+    CGSize size;
+    for (int i=0; i<array.count; i++) {
+        
+        UIButton * button;
+        if (i==0) {
+            
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,self.pageControl.top+self.pageControl.height+27.5*BiLiWidth, size.width, 18*BiLiWidth)];
+            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
+
+
+        }
+        else
+        {
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, self.pageControl.top+self.pageControl.height+32.5*BiLiWidth, size.width, 14*BiLiWidth)];
+            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+
+
+        }
+        button.tag = i;
+        [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
+        originx = button.left+button.width+11.5*BiLiWidth;
+        
+        [self.listButtonArray addObject:button];
+    }
+    
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(19.5*BiLiWidth,self.pageControl.top+self.pageControl.height+40*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
+    self.sliderView.layer.masksToBounds = YES;
+    self.sliderView.alpha = 0.8;
+    [self.view addSubview:self.sliderView];
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = self.sliderView.bounds;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(0, 1);
+    gradientLayer.locations = @[@0,@1];
+    [self.sliderView.layer addSublayer:gradientLayer];
+    
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.sliderView.top+self.sliderView.height+20*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.sliderView.top+self.sliderView.height+20*BiLiWidth+BottomHeight_PingMu))];
+    self.contentScrollView.pagingEnabled = YES;
+    self.contentScrollView.tag = 1001;
+    self.contentScrollView.delegate = self;
+    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*2, self.contentScrollView.height)];
+    [self.view addSubview:self.contentScrollView];
+    
+    
+    self.pageIndexArray = [NSMutableArray array];
+    self.tableViewArray = [NSMutableArray array];
+    self.dataSourceArray = [NSMutableArray array];
+    
+    for (int i=0; i<array.count; i++) {
+        
+        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+        [self.pageIndexArray addObject:pageIndexNumber];
+        
+        NSMutableArray * sourceArray = [[NSMutableArray alloc] init];
+        [self.dataSourceArray addObject:sourceArray];
+        
+        UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(WIDTH_PingMu*i, 0, WIDTH_PingMu, self.contentScrollView.height)];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.tag = i;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.contentScrollView addSubview:tableView];
+        
+        [self.tableViewArray addObject:tableView];
+        
+        
+        MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+        mjHeader.lastUpdatedTimeLabel.hidden = YES;
+        tableView.mj_header = mjHeader;
+        
+        
+        MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+        tableView.mj_footer = mjFooter;
+        
+
+    }
+    [self firstGetZuiXinShangChuanList];
+    [self firstGetRenMenTuiJianList];
+
+
+
+}
+-(void)firstGetZuiXinShangChuanList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+    
+    [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+                   callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
+            
+            UITableView * tableView = [self.tableViewArray objectAtIndex:0];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            
+            [tableView reloadData];
+            
+            
+        }
+        
+    }];
+}
+-(void)firstGetRenMenTuiJianList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+    
+    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+                 callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
+
+            UITableView * tableView = [self.tableViewArray objectAtIndex:1];
+            [tableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [tableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+
+            [tableView reloadData];
+            
+
+        }
+        
+    }];
+
+}
+-(void)loadNewLsit
+{
+    int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+    if (index==0) {
+            
+        [self firstGetZuiXinShangChuanList];
+    }
+    else if(index==1)
+    {
+        [self firstGetRenMenTuiJianList];
+
+    }
+
+}
+-(void)loadMoreList
+{
+    int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+    if (index==0) {
+        
+        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
+
+        [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                       callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
+
+                UITableView * tableView = [self.tableViewArray objectAtIndex:0];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+
+                [tableView reloadData];
+
+
+                
+            }
+            
+        }];
+
+        
+    }
+    else if(index==1)
+    {
+        
+        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
+        [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+                     callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
+                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+                [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+
+                NSArray * dataArray = [responseObject objectForKey:@"data"];
+                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:1];
+                for (NSDictionary * info in dataArray) {
+                    
+                    [sourceArray addObject:info];
+                }
+                [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
+
+                UITableView * tableView = [self.tableViewArray objectAtIndex:1];
+                if (dataArray.count>=10) {
+                    
+                    [tableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+
+                [tableView reloadData];
+
+            }
+            
+        }];
+
+
+
+    }
+    
 }
 #pragma mark---scrollviewDelegate
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
-    if (scrollView.tag==1002) {
+    if (scrollView.tag==1001) {
         
+        int  specialIndex = scrollView.contentOffset.x/WIDTH_PingMu;
         
-        CGFloat hight = scrollView.frame.size.height;
-        CGFloat contentOffset = scrollView.contentOffset.y;
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
-        CGFloat offset = contentOffset - self.lastcontentOffset;
-        self.lastcontentOffset = contentOffset;
-
-        if (offset > 0 && contentOffset > 0) {
-           NSLog(@"上拉行为");
-            if (scrollView.contentOffset.y>=378*BiLiWidth) {
-                
-                self.itemButtonContentView.hidden = NO;
-            }
-
-        }
-        if (offset < 0 && distanceFromBottom > hight) {
-            NSLog(@"下拉行为");
-            if (scrollView.contentOffset.y<=378*BiLiWidth) {
-                
-                
-            self.itemButtonContentView.hidden = YES;
-                       
-            }
-        }
+        UIButton * button = [self.listButtonArray objectAtIndex:specialIndex];
+        [button sendActionsForControlEvents:UIControlEventTouchUpInside];
 
     }
 
@@ -123,17 +363,40 @@
 #pragma mark UItableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int cellNumber;
-    if (self.sourceArray.count%2==0) {
+    
+    if (tableView.tag==0) {
         
-        cellNumber = (int)self.sourceArray.count/2;
+        NSMutableArray * sourcerray = [self.dataSourceArray objectAtIndex:0];
+        int cellNumber;
+        if (sourcerray.count%2==0) {
+            
+            cellNumber = (int)sourcerray.count/2;
+        }
+        else
+        {
+            cellNumber = (int)sourcerray.count/2+1;
+        }
+        
+        return cellNumber;
     }
-    else
+    else if (tableView.tag==1)
     {
-        cellNumber = (int)self.sourceArray.count/2+1;
+        NSMutableArray * sourcerray = [self.dataSourceArray objectAtIndex:1];
+        int cellNumber;
+        if (sourcerray.count%2==0) {
+            
+            cellNumber = (int)sourcerray.count/2;
+        }
+        else
+        {
+            cellNumber = (int)sourcerray.count/2+1;
+        }
+        
+        return cellNumber;
+        
     }
-    return cellNumber;
-
+    return 0;
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -151,210 +414,70 @@
     }
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ((indexPath.row+1)*2<=self.sourceArray.count) {
+    if (tableView.tag==0) {
         
-        [cell initData:[self.sourceArray objectAtIndex:indexPath.row*2] info2:[self.sourceArray objectAtIndex:indexPath.row*2+1]];
+        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:0];
+        if ((indexPath.row+1)*2<=sourceArray.count) {
+            
+            [cell initData:[sourceArray objectAtIndex:indexPath.row*2] info2:[sourceArray objectAtIndex:indexPath.row*2+1]];
+        }
+        else
+        {
+            [cell initData:[sourceArray objectAtIndex:indexPath.row*2] info2:nil];
+        }
+
+
     }
-    else
+    else if(tableView.tag==1)
     {
-        [cell initData:[self.sourceArray objectAtIndex:indexPath.row*2] info2:nil];
+        NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:1];
+        if ((indexPath.row+1)*2<=sourceArray.count) {
+            
+            [cell initData:[sourceArray objectAtIndex:indexPath.row*2] info2:[sourceArray objectAtIndex:indexPath.row*2+1]];
+        }
+        else
+        {
+            [cell initData:[sourceArray objectAtIndex:indexPath.row*2] info2:nil];
+        }
+
     }
     return cell;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+#pragma mark -- 分类buttonclick
+-(void)listTopButtonClick:(UIButton *)selectButton
 {
-        
-    return 378*BiLiWidth+24*BiLiWidth;
-   
-}
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+    [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
     
-    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 501*BiLiWidth+24*BiLiWidth)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    //顶部轮播图
-    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 100*BiLiWidth)];
-    self.pageView.currentWidth = 305;
-    self.pageView.currentHeight = 100;
-    self.pageView.normalHeight = 87;
-    self.pageView.delegate = self;
-    self.pageView.dataSource = self;
-    self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-    self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-    self.pageView.orginPageCount = 3; //原始页数
-    self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-    [headerView addSubview:self.pageView] ;
+    float originx = 13*BiLiWidth;
+    CGSize size;
     
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.top+self.pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
-    self.pageControl.currentPage = 0;      //设置当前页指示点
-    self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
-    self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
-    self.pageControl.numberOfPages = 3;
-    [headerView addSubview:self.pageControl];
+    for (int i=0; i<self.listButtonArray.count; i++) {
         
-    //官方推荐
-    UILabel * guanFangTuiJianLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, self.pageControl.top+self.pageControl.height+11*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
-    guanFangTuiJianLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:17*BiLiWidth];
-    guanFangTuiJianLable.textColor = RGBFormUIColor(0x333333);
-    guanFangTuiJianLable.text = @"官方推荐";
-    [headerView addSubview:guanFangTuiJianLable];
-    
-    UIScrollView * guanFangTuiJianScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, guanFangTuiJianLable.top+guanFangTuiJianLable.height+13*BiLiWidth, WIDTH_PingMu, 176*BiLiWidth)];
-    guanFangTuiJianScrollView.scrollEnabled = YES;
-    [headerView addSubview:guanFangTuiJianScrollView];
-    
-    for (int i=0; i<3; i++) {
+        UIButton * button = [self.listButtonArray objectAtIndex:i];
+        if (button.tag==selectButton.tag) {
+            
+            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
+            button.frame  = CGRectMake(originx,self.pageControl.top+self.pageControl.height+27.5*BiLiWidth, size.width, 18*BiLiWidth);
+            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+            }];
+
+            
+        }
+        else
+        {
+            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+            button.frame  = CGRectMake(originx, self.pageControl.top+self.pageControl.height+32.5*BiLiWidth, size.width, 14*BiLiWidth);
+            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        }
         
-        UIView * contentView = [[UIView alloc] initWithFrame:CGRectMake(12*BiLiWidth+156*BiLiWidth*i, 0, 151.5*BiLiWidth, 176*BiLiWidth)];
-        contentView.layer.cornerRadius = 4*BiLiWidth;
-        contentView.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
-        contentView.layer.borderWidth = 1;
-        contentView.clipsToBounds = YES;
-        [guanFangTuiJianScrollView addSubview:contentView];
-        
-        UITapGestureRecognizer * guanFqangTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(guanFnagTap:)];
-        [contentView addGestureRecognizer:guanFqangTap];
-        
-        
-        [guanFangTuiJianScrollView setContentSize:CGSizeMake(contentView.left+contentView.width+12*BiLiWidth, guanFangTuiJianScrollView.height)];
-        
-        NSLog(@"%f=========================****%f",contentView.left+contentView.width+12*BiLiWidth,guanFangTuiJianScrollView.width);
-        
-        
-        UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, contentView.width, 126*BiLiWidth)];
-        headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-        headerImageView.autoresizingMask = UIViewAutoresizingNone;
-        headerImageView.clipsToBounds = YES;
-        [contentView addSubview:headerImageView];
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
-        
-        
-        
-        UILabel *  jiaoBiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(contentView.width-39*BiLiWidth,0,39*BiLiWidth,18*BiLiWidth)];
-        jiaoBiaoLable.textAlignment = NSTextAlignmentCenter;
-        jiaoBiaoLable.textColor = RGBFormUIColor(0xFFFFFF);
-        jiaoBiaoLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        jiaoBiaoLable.adjustsFontSizeToFitWidth = YES;
-        jiaoBiaoLable.text = @"北疆";
-        [contentView addSubview:jiaoBiaoLable];
-        
-        //渐变设置
-        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-        CAGradientLayer * gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = jiaoBiaoLable.bounds;
-        gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-        gradientLayer.startPoint = CGPointMake(0, 0);
-        gradientLayer.endPoint = CGPointMake(0, 1);
-        gradientLayer.locations = @[@0,@1];
-        [jiaoBiaoLable.layer addSublayer:gradientLayer];
-        
-        //某个角圆角
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:jiaoBiaoLable.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(4*BiLiWidth, 4*BiLiWidth)];
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = jiaoBiaoLable.bounds;
-        maskLayer.path = maskPath.CGPath;
-        jiaoBiaoLable.layer.mask = maskLayer;
-        
-        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, headerImageView.top+headerImageView.height+9.5*BiLiWidth, contentView.width, 14*BiLiWidth)];
-        titleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-        titleLable.textColor = RGBFormUIColor(0x333333);
-        titleLable.text = @"画的健身房";
-        titleLable.textAlignment = NSTextAlignmentCenter;
-        [contentView addSubview:titleLable];
-        
-        UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(0, titleLable.top+titleLable.height+7*BiLiWidth, contentView.width, 11*BiLiWidth)];
-        messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        messageLable.textColor = RGBFormUIColor(0x999999);
-        messageLable.text = @"画的健身房";
-        messageLable.textAlignment = NSTextAlignmentCenter;
-        [contentView addSubview:messageLable];
+        originx = button.left+button.width+11.5*BiLiWidth;
         
         
     }
-    
-    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, guanFangTuiJianScrollView.top+guanFangTuiJianScrollView.height+20*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
-    lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
-    [headerView addSubview:lineView];
-    
-    self.pingFenButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView.top+lineView.height+18*BiLiWidth, 50*BiLiWidth, 12*BiLiWidth)];
-    [self.pingFenButton setTitle:@"评分最高" forState:UIControlStateNormal];
-    [self.pingFenButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    self.pingFenButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:self.pingFenButton];
-    
-    self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+33*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
-    self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiXinButton addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:self.zuiXinButton];
-    
-    self.zuiReButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+79*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiReButton setTitle:@"最热" forState:UIControlStateNormal];
-    self.zuiReButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiReButton addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:self.zuiReButton];
-    
-    if ([@"1" isEqualToString:self.zuiXinOrZuiRe]) {
-        
-        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-        [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-
-
-    }
-    else
-    {
-        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-        [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-
-    }
-    
-    return headerView;
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0.0001;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
-{
-    return nil;
-}
-
-#pragma mark--guanFnagTap
--(void)guanFnagTap:(UITapGestureRecognizer *)tap
-{
-    
-}
--(void)pingFenButtonClick
-{
-}
--(void)zuiXinButtonClick
-{
-    self.zuiXinOrZuiRe = @"1";
-    [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-    
-    [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    
-}
--(void)zuiReButtonClick
-{
-    self.zuiXinOrZuiRe = @"2";
-
-    [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    
-    [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-    [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-
 }
 
 
@@ -376,7 +499,7 @@
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
     
-    return 3;
+    return self.bannerArray.count;
 }
 
 - (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -386,21 +509,12 @@
     {
         bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 100*BiLiWidth)];
     }
+    NSDictionary * info = [self.bannerArray objectAtIndex:index];
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
     
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
     return bannerView;
     
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

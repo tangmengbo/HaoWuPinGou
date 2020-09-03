@@ -32,9 +32,9 @@
         [self addSubview:self.titleLable];
         
         self.starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+13*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-        self.starImageView.image = [UIImage imageNamed:@""];
+        self.starImageView.image = [UIImage imageNamed:@"star_yellow"];
         [self addSubview:self.starImageView];
-        
+
         self.starLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starImageView.left+self.starImageView.width+5*BiLiWidth, self.starImageView.top, 19*BiLiWidth, 12*BiLiWidth)];
         self.starLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.starLable.textColor = RGBFormUIColor(0xF5BB61);
@@ -99,7 +99,6 @@
 
     }
     self.titleLable.text = [info objectForKey:@"user_name"];
-    self.starImageView.backgroundColor = [UIColor redColor];
     NSNumber * complex_score = [info objectForKey:@"complex_score"];
     if ([complex_score isKindOfClass:[NSNumber class]]) {
         

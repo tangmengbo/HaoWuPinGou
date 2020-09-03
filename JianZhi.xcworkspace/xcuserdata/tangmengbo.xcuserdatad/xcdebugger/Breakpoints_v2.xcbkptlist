@@ -39,22 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DE0F9189-1FC8-490A-81FD-E31CE9B3598D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "-guanFnagTap:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B4F1CA22-6719-4F2F-BB1B-BA41EC67AE6C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -110,8 +94,8 @@
             filePath = "NotesProject/Manger/HTTPModel.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1719"
-            endingLineNumber = "1719"
+            startingLineNumber = "1909"
+            endingLineNumber = "1909"
             landmarkName = "+buyTicket:callback:"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +158,8 @@
             filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "-uploadVideo:"
             landmarkType = "7">
             <Locations>
@@ -190,9 +174,9 @@
                   urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "335"
-                  endingLineNumber = "335"
-                  offsetFromSymbolStart = "96">
+                  startingLineNumber = "334"
+                  endingLineNumber = "334"
+                  offsetFromSymbolStart = "116">
                </Location>
                <Location
                   uuid = "2FDBEFF3-EF3C-43F1-A516-E97CD7D693CD - 96c8fcd637351487"
@@ -205,9 +189,9 @@
                   urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "335"
-                  endingLineNumber = "335"
-                  offsetFromSymbolStart = "15">
+                  startingLineNumber = "334"
+                  endingLineNumber = "334"
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -222,8 +206,8 @@
             filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-uploadVideo:"
             landmarkType = "7">
          </BreakpointContent>
@@ -304,7 +288,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "969"
                   endingLineNumber = "969"
-                  offsetFromSymbolStart = "45">
+                  offsetFromSymbolStart = "60">
                </Location>
                <Location
                   uuid = "8D0F953D-3EAC-4209-BA3A-926E47827D01 - 4d57744a1c5fc816"
@@ -319,7 +303,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "970"
                   endingLineNumber = "970"
-                  offsetFromSymbolStart = "85">
+                  offsetFromSymbolStart = "88">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -417,6 +401,38 @@
             startingLineNumber = "1075"
             endingLineNumber = "1075"
             landmarkName = "-getImagePathId"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B1FB7C7-3AEB-4867-91FF-6E487708B3B7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/HomeVC/HeiDianDetailViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81925612-27C2-462B-B3CF-ED180A762454"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "-initXiangQingJieShaoView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

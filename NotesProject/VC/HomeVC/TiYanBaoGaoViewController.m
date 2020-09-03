@@ -30,16 +30,16 @@
     
     page = 0;
     
-    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
-    locationImageView.image = [UIImage imageNamed:@"home_location"];
-    [self.topNavView addSubview:locationImageView];
-    
-    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
-    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.locationLable.adjustsFontSizeToFitWidth = YES;
-    self.locationLable.textColor = RGBFormUIColor(0x333333);
-    self.locationLable.text = @"深圳市";
-    [self.topNavView addSubview:self.locationLable];
+//    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
+//    locationImageView.image = [UIImage imageNamed:@"home_location"];
+//    [self.topNavView addSubview:locationImageView];
+//    
+//    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
+//    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.locationLable.adjustsFontSizeToFitWidth = YES;
+//    self.locationLable.textColor = RGBFormUIColor(0x333333);
+//    self.locationLable.text = @"深圳市";
+//    [self.topNavView addSubview:self.locationLable];
 
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+10*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height+10*BiLiWidth))];
     self.mainTableView.delegate = self;

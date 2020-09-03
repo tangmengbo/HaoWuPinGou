@@ -220,7 +220,7 @@
 
     self.itemButtonContentView.hidden = YES;
     
-    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -387,6 +387,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    NSDictionary * info = [self.jingJiRenListArray objectAtIndex:indexPath.row];
+    DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
+    NSNumber * idNumber = [info objectForKey:@"id"];
+    vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -402,22 +408,26 @@
     headerView.backgroundColor = [UIColor whiteColor];
     //顶部轮播图
     self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 100*BiLiWidth)];
-    self.pageView.currentWidth = 305;
-    self.pageView.currentHeight = 100;
-    self.pageView.normalHeight = 87;
-    self.pageView.delegate = self;
-    self.pageView.dataSource = self;
-    self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-    self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-    self.pageView.orginPageCount = 3; //原始页数
-    self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-    [headerView addSubview:self.pageView] ;
+    if ([NormalUse isValidArray:self.bannerArray]) {
+        
+        self.pageView.currentWidth = 305;
+        self.pageView.currentHeight = 100;
+        self.pageView.normalHeight = 87;
+        self.pageView.delegate = self;
+        self.pageView.dataSource = self;
+        self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
+        self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
+        self.pageView.orginPageCount = 3; //原始页数
+        self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
+        [headerView addSubview:self.pageView] ;
+
+    }
     
     self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.top+self.pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
     self.pageControl.currentPage = 0;      //设置当前页指示点
     self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
     self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
-    self.pageControl.numberOfPages = 3;
+    self.pageControl.numberOfPages = self.bannerArray.count;
     [headerView addSubview:self.pageControl];
     
     //分类scrollview
@@ -703,7 +713,7 @@
 #pragma mark NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
     
-    return 3;
+    return self.bannerArray.count;
 }
 
 - (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -713,8 +723,9 @@
     {
         bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 100*BiLiWidth)];
     }
-    
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+    NSDictionary * info = [self.bannerArray objectAtIndex:index];
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+
     return bannerView;
     
 }

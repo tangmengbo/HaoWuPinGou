@@ -844,6 +844,43 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
     
 }
+
+//定制列表
++(void)getDingZhiList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/home/made_list",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+    
+}
+
 //定制需求 Upscale/made
 +(void)dingZhiXuQiu:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -1210,6 +1247,83 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
            
            callback(-1, nil, NET_ERROR_MSG);
        }];
+}
+//收藏帖子
++(void)tieZiFollow:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/favorites",HTTP_REQUESTURL];;
+       
+       [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+           
+           NSLog(@"%@",jsonStr);
+           
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(-1, nil, NET_ERROR_MSG);
+       }];
+
+}
+
+//取消收藏帖子
++(void)tieZiUnFollow:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/unfavorites",HTTP_REQUESTURL];;
+       
+       [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+           
+           NSLog(@"%@",jsonStr);
+           
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(-1, nil, NET_ERROR_MSG);
+       }];
+
 }
 
 //帖子详情
@@ -1640,6 +1754,82 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     
 }
 
+//关注店铺
++(void)dianPuFollow:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/unfollow",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
+//取消关注店铺
++(void)dianPuUnfollow:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/unfollow",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
 //开奖列表
 +(void)getKaiJingList:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback

@@ -159,15 +159,14 @@
         
         for (int i=1; i<6; i++) {
             UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-124.5*BiLiWidth-25*BiLiWidth)+25*BiLiWidth*i, lineView4.top+lineView4.height+13.5*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-            imageView.backgroundColor = [UIColor redColor];
             [self.mainScrollView addSubview:imageView];
             if (i<=face_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
         }
@@ -191,15 +190,14 @@
         
         for (int i=1; i<6; i++) {
             UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-124.5*BiLiWidth-25*BiLiWidth)+25*BiLiWidth*i, lineView5.top+lineView5.height+13.5*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-            imageView.backgroundColor = [UIColor redColor];
             [self.mainScrollView addSubview:imageView];
             if (i<=skill_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
         }
@@ -222,15 +220,14 @@
         
         for (int i=1; i<6; i++) {
             UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-124.5*BiLiWidth-25*BiLiWidth)+25*BiLiWidth*i, lineView6.top+lineView6.height+13.5*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-            imageView.backgroundColor = [UIColor redColor];
             [self.mainScrollView addSubview:imageView];
             if (i<=ambience_value.intValue) {
                 
-                imageView.backgroundColor = [UIColor redColor];
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
             }
             else
             {
-                imageView.backgroundColor = [UIColor greenColor];
+                imageView.image = [UIImage imageNamed:@"star_hui"];
 
             }
         }

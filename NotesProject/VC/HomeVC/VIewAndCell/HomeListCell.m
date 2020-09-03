@@ -126,12 +126,22 @@
     NSNumber * complex_score = [info objectForKey:@"complex_score"];
     if ([complex_score isKindOfClass:[NSNumber class]]) {
         
-        for (int i=0; i<complex_score.intValue; i++) {
-            
-            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*i, 0, 12*BiLiWidth, 12*BiLiWidth)];
-            imageView.backgroundColor = [UIColor redColor];
+        for(int i=1;i<=5;i++)
+        {
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*(i-1), 0, 12*BiLiWidth, 12*BiLiWidth)];
             [self.pingFenStarView addSubview:imageView];
             
+            if (i<=complex_score.intValue) {
+                
+                imageView.image = [UIImage imageNamed:@"star_yellow"];
+
+            }
+            else
+            {
+                imageView.image = [UIImage imageNamed:@"star_hui"];
+
+            }
+
         }
         
     }

@@ -101,7 +101,12 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //获取小姐类型
 +(void)getXiaoJieLeiXing:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-//定制需求 Upscale/made
+
+//定制列表
++(void)getDingZhiList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//定制需求
 +(void)dingZhiXuQiu:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //项目金币列表
@@ -140,6 +145,14 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //三大认证申请接口  1女神 2外围女 3全球空降
 +(void)sanDaRenZheng:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//收藏帖子
++(void)tieZiFollow:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//取消收藏帖子
++(void)tieZiUnFollow:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //帖子详情
 +(void)getTieZiDetail:(NSDictionary *_Nullable)parameter
@@ -189,6 +202,14 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //经纪人店铺详情
 +(void)getDianPuDetail:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//关注店铺
++(void)dianPuFollow:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//取消关注店铺
++(void)dianPuUnfollow:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //开奖列表 
 +(void)getKaiJingList:(NSDictionary *_Nullable)parameter
