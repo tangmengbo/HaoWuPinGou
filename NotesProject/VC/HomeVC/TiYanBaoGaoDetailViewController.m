@@ -312,7 +312,10 @@
 
 -(void)chaKanButtonClick
 {
-    
+    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+    NSNumber * post_id = [self.info objectForKey:@"post_id"];
+    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(WSPageView *)flowView {

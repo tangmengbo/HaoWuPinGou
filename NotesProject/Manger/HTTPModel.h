@@ -227,4 +227,13 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getBuyList:(NSDictionary *_Nullable)parameter
          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//解锁  //解锁 type_id  1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务
++(void)unlockMobile:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
+//获取解锁列表(6类)  type_id  默认1。1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务
++(void)getJieUnlockList:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 @end

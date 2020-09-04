@@ -28,7 +28,10 @@
     
     [self yinCangTabbar];
     
+    [NormalUse xianShiGifLoadingView:self];
     [HTTPModel getTieZiDetail:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [NormalUse quXiaoGifLoadingView:self];
         
         if (status==1) {
             

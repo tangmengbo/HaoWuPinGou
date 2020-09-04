@@ -14,6 +14,7 @@
 		5F0B382824F63AB400FC935A /* KaiJiangJiLuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382724F63AB400FC935A /* KaiJiangJiLuListViewController.m */; };
 		5F0B382B24F63D9000FC935A /* KaiJiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382A24F63D9000FC935A /* KaiJiangDetailViewController.m */; };
 		5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B382D24F6439E00FC935A /* GouMaiJiLuListViewController.m */; };
+		5F0BE20F2501D9DA00D307C7 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5F0BE20E2501D9DA00D307C7 /* loading.gif */; };
 		5F12E7A924F8E14C00B2EDFA /* HeiDianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */; };
 		5F22EBC024ECF359002DCF61 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22EBBF24ECF359002DCF61 /* HomeViewController.m */; };
 		5F22EBC424ECF371002DCF61 /* GaoDuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22EBC324ECF371002DCF61 /* GaoDuanViewController.m */; };
@@ -140,6 +141,7 @@
 		5F0B382A24F63D9000FC935A /* KaiJiangDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KaiJiangDetailViewController.m; sourceTree = "<group>"; };
 		5F0B382C24F6439E00FC935A /* GouMaiJiLuListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GouMaiJiLuListViewController.h; sourceTree = "<group>"; };
 		5F0B382D24F6439E00FC935A /* GouMaiJiLuListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GouMaiJiLuListViewController.m; sourceTree = "<group>"; };
+		5F0BE20E2501D9DA00D307C7 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5F12E7A724F8E14C00B2EDFA /* HeiDianDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeiDianDetailViewController.h; sourceTree = "<group>"; };
 		5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianDetailViewController.m; sourceTree = "<group>"; };
 		5F22EBBE24ECF359002DCF61 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -626,6 +628,7 @@
 			isa = PBXGroup;
 			children = (
 				04715AC323963D2A009CD914 /* KKlive.entitlements */,
+				5F0BE20E2501D9DA00D307C7 /* loading.gif */,
 				5F54D5D12382709A00282C63 /* Flash.xib */,
 				5F691555237521CE00646D13 /* View */,
 				5FE3EBC92355A39600C77F4D /* ThirdPartyVC */,
@@ -964,6 +967,7 @@
 				5FE3EC3E2355AB8000C77F4D /* AgreementViewController.xib in Resources */,
 				5F54D5D22382709A00282C63 /* Flash.xib in Resources */,
 				5FE3EC152355A3E400C77F4D /* TZImagePickerController.bundle in Resources */,
+				5F0BE20F2501D9DA00D307C7 /* loading.gif in Resources */,
 				5FE3EC092355A3E400C77F4D /* LICENSE in Resources */,
 				5FE3EA75235599D200C77F4D /* Main.storyboard in Resources */,
 			);

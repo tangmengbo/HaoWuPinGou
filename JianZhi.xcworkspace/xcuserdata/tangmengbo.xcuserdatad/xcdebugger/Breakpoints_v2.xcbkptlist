@@ -176,7 +176,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "334"
                   endingLineNumber = "334"
-                  offsetFromSymbolStart = "116">
+                  offsetFromSymbolStart = "96">
                </Location>
                <Location
                   uuid = "2FDBEFF3-EF3C-43F1-A516-E97CD7D693CD - 96c8fcd637351487"
@@ -191,7 +191,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "334"
                   endingLineNumber = "334"
-                  offsetFromSymbolStart = "16">
+                  offsetFromSymbolStart = "15">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -288,7 +288,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "969"
                   endingLineNumber = "969"
-                  offsetFromSymbolStart = "60">
+                  offsetFromSymbolStart = "45">
                </Location>
                <Location
                   uuid = "8D0F953D-3EAC-4209-BA3A-926E47827D01 - 4d57744a1c5fc816"
@@ -303,7 +303,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "970"
                   endingLineNumber = "970"
-                  offsetFromSymbolStart = "88">
+                  offsetFromSymbolStart = "85">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -417,22 +417,6 @@
             startingLineNumber = "22"
             endingLineNumber = "22"
             landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "81925612-27C2-462B-B3CF-ED180A762454"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "-initXiangQingJieShaoView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
