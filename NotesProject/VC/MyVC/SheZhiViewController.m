@@ -84,11 +84,11 @@
 {
     
     __weak typeof(self) wself = self;
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Log out" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * cancle = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"退出登录" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    UIAlertAction * exit = [UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction * exit = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [wself LoginOut];
              
@@ -101,8 +101,20 @@
 
 -(void)LoginOut
 {
+    [HTTPModel loginOut:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            [NormalUse defaultsSetObject:nil forKey:UserInformation];
+            [NormalUse defaultsSetObject:nil forKey:LoginToken];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [appDelegate setWeiDengLuTabBar];
+    [appDelegate setYiDengLuTabBar];
 }
 
 -(void)viewWillAppear:(BOOL)animated

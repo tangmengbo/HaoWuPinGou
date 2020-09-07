@@ -81,25 +81,62 @@
 }
 -(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
-    [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+    if ([[info1 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
+        
+        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
+        
+    }
+    if ([[info1 objectForKey:@"images"] isKindOfClass:[NSArray class]])
+    {
+        NSArray * images = [info1 objectForKey:@"images"];
+        if ([NormalUse isValidArray:images]) {
+            
+            [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            
+        }
+    }
+
     NSString * titleStr = @"飞机扣水电费";
     CGSize size = [NormalUse setSize:titleStr withCGSize:CGSizeMake(WIDTH_PingMu, HEIGHT_PingMu) withFontSize:14*BiLiWidth];
     self.cityLable1.width = size.width;
     self.cityLable1.text = titleStr;
     self.zuanShiImageView1.left = self.cityLable1.left+self.cityLable1.width+5*BiLiWidth;
-    self.messageLable1.text = @"年龄：40/36";
+    NSNumber * age_male = [info1 objectForKey:@"age_male"];
+    if ([age_male isKindOfClass:[NSNumber class]]) {
+        
+        self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d",age_male.intValue];
+
+    }
     
     if ([NormalUse isValidDictionary:info2]) {
         
         self.contentView2.hidden = NO;
 
-        [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597827992453&di=89f2d23d41e7e650adec139e15eb8688&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"]];
+        if ([[info2 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
+            
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
+            
+        }
+        if ([[info2 objectForKey:@"images"] isKindOfClass:[NSArray class]])
+        {
+            NSArray * images = [info2 objectForKey:@"images"];
+            if ([NormalUse isValidArray:images]) {
+                
+                [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+                
+            }
+        }
         NSString * titleStr = @"飞机扣水电费";
         CGSize size = [NormalUse setSize:titleStr withCGSize:CGSizeMake(WIDTH_PingMu, HEIGHT_PingMu) withFontSize:14*BiLiWidth];
         self.cityLable2.width = size.width;
         self.cityLable2.text = titleStr;
         self.zuanShiImageView2.left = self.cityLable1.left+self.cityLable1.width+5*BiLiWidth;
-        self.messageLable2.text = @"年龄：40/36";
+        NSNumber * age_male = [info2 objectForKey:@"age_male"];
+        if ([age_male isKindOfClass:[NSNumber class]]) {
+            
+            self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d",age_male.intValue];
+            
+        }
 
     }
     else

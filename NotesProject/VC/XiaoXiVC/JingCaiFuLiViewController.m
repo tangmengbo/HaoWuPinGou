@@ -175,6 +175,7 @@
     [bottomImageView addSubview:gouMaiJiLuButton];
     [gouMaiJiLuButton addTarget:self action:@selector(gouMaiJiLuButtonClick) forControlEvents:UIControlEventTouchUpInside];
 
+    /*
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(32*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+90*BiLiWidth, 100*BiLiWidth, 15*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     tipLable.textColor = RGBFormUIColor(0x333333);
@@ -250,7 +251,7 @@
     [fourHoursLingQuButton addSubview:fhLingQuButton];
 
 
-    
+    */
 }
 
 #pragma mark -- NSTimer_Action

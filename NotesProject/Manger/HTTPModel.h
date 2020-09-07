@@ -60,6 +60,11 @@ singleton_interface(HTTPModel)
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//获取初始化账号
++(void)registerInit:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
 +(void)login:(NSDictionary *_Nullable)parameter
     callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
@@ -235,5 +240,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //获取解锁列表(6类)  type_id  默认1。1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务
 +(void)getJieUnlockList:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//夫妻交列表
++(void)getFuQiJiaoList:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 @end

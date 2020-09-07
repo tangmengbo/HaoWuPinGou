@@ -28,44 +28,10 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     [self registerAPNs];
     
-    /*
-    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [userDefaults objectForKey:YongHuINFO];
-    if ([userInfo isKindOfClass:[NSDictionary class]]&&[userInfo objectForKey:@"userId"])
-    {
-        
-        NSString *dengLuAccount = [userInfo objectForKey:@"userId"];
-        NSString *dengLuToken   =  [userInfo objectForKey:@"face_token"];
-        [[[NIMSDK sharedSDK] loginManager] login:dengLuAccount
-                                           token:dengLuToken
-                                      completion:^(NSError *error) {
-            
-            if (error == nil)
-            {
-                NSString *userID = [NIMSDK sharedSDK].loginManager.currentAccount;
-                NSString *toast = [NSString stringWithFormat:@"网易云 登录成功 code: %zd",error.code];
-                NSLog(@"%@||%@",toast,userID);
-                
-            }
-            else
-            {
-                NSString *toast = [NSString stringWithFormat:@"网易云 登录失败 code: %zd",error.code];
-                NSLog(@"%@",toast);
-                
-                AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                [appDelegate setWeiDengLuTabBar];
-                
-            }
-        }];
-        
-        
-        [[RongYManager getInstance] connectRongCloud];
-        
-    }
-    */
-
+    //用户已经登录
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
+        //是否需要手势密码
         [HTTPModel alsoNeesShouShiMiMa:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -75,24 +41,49 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
                 
                 if (isSign)
                 {
+                    //输入手势密码
                     [self setShouShiYanZhengTabbar];
-                    //[self setYiDengLuTabBar];
                 }
                 else
                 {
+                    //直接进入
                     [self setYiDengLuTabBar];
                 }
 
             }
             else
             {
+                //直接进入
                 [self setYiDengLuTabBar];
             }
         }];
     }
     else
     {
-        [self setYiDengLuTabBar];
+        //未登录用户先 获取初始化账号
+        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
+                    
+                    //用户基本信息存储到本地
+                    [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:[responseObject objectForKey:@"info"]] forKey:UserInformation];
+
+                }
+                //获取初始化账号 成功后调用登录 获取到logintoken
+                [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                    
+                    if (status==1) {
+                        
+                        NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+                        [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+                        [self setYiDengLuTabBar];
+
+                    }
+                }];
+            }
+        }];
     }
     
     return YES;

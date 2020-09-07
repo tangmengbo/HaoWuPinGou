@@ -55,15 +55,15 @@
         }
     }];
     
-    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"18740118239",@"mobile",@"123456",@"password", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
-            [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
-            
-        }
-    }];
+//    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"18740118239",@"mobile",@"123456",@"password", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//        
+//        if (status==1) {
+//            
+//            NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+//            [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+//            
+//        }
+//    }];
 
         
     self.backImageView.hidden = YES;

@@ -124,6 +124,18 @@
     return YES;
 }
 
+
+
++(NSString *)getCurrentUserName {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
+    return [userInfo objectForKey:@"nickname"];
+}
++(NSString *)getCurrentAvatarpath {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
+    return [userInfo objectForKey:@"avatar"];
+}
 +(NSString *)getUpdateStatusStr
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -133,47 +145,37 @@
 
 +(NSString *)getNowUserID {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     return [userInfo objectForKey:@"userId"];
 }
 
-
-+(NSString *)getCurrentUserName {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
-    return [userInfo objectForKey:@"nick"];
-}
 +(NSString *)getCurrentUserSex
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     return [userInfo objectForKey:@"sex"];
 
 }
 +(NSString *)getCurrentUserAnchorType
 {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * info = [userDefaults objectForKey:YongHuINFO];
+    NSDictionary * info = [userDefaults objectForKey:UserInformation];
     NSNumber * numberType = [info objectForKey:@"accountType"];
     NSString * typeStr = [NSString stringWithFormat:@"%d",numberType.intValue];
     return typeStr;
 }
-+(NSString *)getCurrentAvatarpath {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
-    return [userInfo objectForKey:@"avatarUrl"];
-}
+
 +(NSString *)getVIPStatus{
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     return [userInfo objectForKey:@"isVip"];
 
 }
 +(NSString *)getRoleStatus
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     return [userInfo objectForKey:@"role"];
 
 }
@@ -1038,7 +1040,7 @@
 +(NSString *)getCurrentSex
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     NSNumber * sexNumber = [userInfo objectForKey:@"sex"];
     return [NSString stringWithFormat:@"%d",sexNumber.intValue];
     

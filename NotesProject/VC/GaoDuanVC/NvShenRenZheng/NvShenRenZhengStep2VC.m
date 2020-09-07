@@ -189,7 +189,7 @@
 
     self.ageTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, ageLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.ageTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"选择产品年龄>" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.ageTF];
+    [NormalUse setTextFieldPlaceholder:@"填写产品年龄" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.ageTF];
     self.ageTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.ageTF.textColor = RGBFormUIColor(0x343434);
     self.ageTF.textAlignment = NSTextAlignmentRight;
@@ -320,7 +320,7 @@
         UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(yanZhiLable.left+yanZhiLable.width+14*BiLiWidth+26*BiLiWidth*(i-1), yanZhiLable.top, 13*BiLiWidth, 13*BiLiWidth)];
         button.tag = i;
         [button addTarget:self action:@selector(yanZhiStarClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor grayColor];
+        [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
         [self.mainScrollView addSubview:button];
         
         [self.yanZhiStarButtonArray addObject:button];
@@ -338,7 +338,7 @@
         UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(jiShuLable.left+jiShuLable.width+14*BiLiWidth+26*BiLiWidth*(i-1), jiShuLable.top, 13*BiLiWidth, 13*BiLiWidth)];
         button.tag = i;
         [button addTarget:self action:@selector(jiShuStarClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor grayColor];
+        [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
         [self.mainScrollView addSubview:button];
         
         [self.jiShuStarButtonArray addObject:button];
@@ -357,7 +357,7 @@
         UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(huanJingLable.left+huanJingLable.width+14*BiLiWidth+26*BiLiWidth*(i-1), huanJingLable.top, 13*BiLiWidth, 13*BiLiWidth)];
         button.tag = i;
         [button addTarget:self action:@selector(huanJingStarClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor grayColor];
+        [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
         [self.mainScrollView addSubview:button];
         
         [self.huanJingStarButtonArray addObject:button];
@@ -723,11 +723,11 @@
         
         if (button.tag<=selectButton.tag) {
             
-            button.backgroundColor = [UIColor yellowColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_yellow"] forState:UIControlStateNormal];
         }
         else
         {
-            button.backgroundColor = [UIColor grayColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
 
         }
     }
@@ -740,11 +740,11 @@
         
         if (button.tag<=selectButton.tag) {
             
-            button.backgroundColor = [UIColor yellowColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_yellow"] forState:UIControlStateNormal];
         }
         else
         {
-            button.backgroundColor = [UIColor grayColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
 
         }
     }
@@ -757,11 +757,11 @@
         
         if (button.tag<=selectButton.tag) {
             
-            button.backgroundColor = [UIColor yellowColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_yellow"] forState:UIControlStateNormal];
         }
         else
         {
-            button.backgroundColor = [UIColor grayColor];
+            [button setBackgroundImage:[UIImage imageNamed:@"star_hui"] forState:UIControlStateNormal];
 
         }
     }

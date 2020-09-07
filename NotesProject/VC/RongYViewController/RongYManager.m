@@ -57,7 +57,7 @@
 - (void)connectRongCloud {
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     NSString *loginToken = [userInfo objectForKey:@"face_token"];
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
         [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
@@ -130,7 +130,7 @@
 - (void)applicationWillEnterForeground {
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:YongHuINFO];
+    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
     NSString *loginToken = [userInfo objectForKey:@"face_token"];
 
 

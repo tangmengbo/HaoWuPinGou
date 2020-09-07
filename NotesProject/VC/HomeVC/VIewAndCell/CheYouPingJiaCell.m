@@ -118,7 +118,7 @@
     }
     if ([NormalUse isValidString:[info objectForKey:@"avatar"]]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[HTTP_REQUESTURL stringByAppendingString:[info objectForKey:@"avatar"]]]];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatar"]]];
 
     }
 

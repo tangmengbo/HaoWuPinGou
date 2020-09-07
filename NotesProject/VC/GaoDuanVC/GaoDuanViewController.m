@@ -303,12 +303,18 @@
 
 -(void)kongJiangButtonClick
 {
-    
+    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    vc.renZhengType = @"2";
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 -(void)peiWanButtonClick
 {
-    
+    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    vc.renZhengType = @"3";
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 
@@ -398,7 +404,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
         
-    return 501*BiLiWidth+24*BiLiWidth;
+    return 501*BiLiWidth+24*BiLiWidth+47*BiLiWidth;
    
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -407,12 +413,12 @@
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 501*BiLiWidth+24*BiLiWidth)];
     headerView.backgroundColor = [UIColor whiteColor];
     //顶部轮播图
-    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 100*BiLiWidth)];
+    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
     if ([NormalUse isValidArray:self.bannerArray]) {
         
         self.pageView.currentWidth = 305;
-        self.pageView.currentHeight = 100;
-        self.pageView.normalHeight = 87;
+        self.pageView.currentHeight = 147;
+        self.pageView.normalHeight = 134;
         self.pageView.delegate = self;
         self.pageView.dataSource = self;
         self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
@@ -604,7 +610,7 @@
         messageLable.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:messageLable];
         
-        UIButton * clickButton = [[UIButton alloc] initWithFrame:contentView.frame];
+        UIButton * clickButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, contentView.width, contentView.height)];
         clickButton.tag = i;
         [clickButton addTarget:self action:@selector(guanFangTuiJianClick:) forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:clickButton];

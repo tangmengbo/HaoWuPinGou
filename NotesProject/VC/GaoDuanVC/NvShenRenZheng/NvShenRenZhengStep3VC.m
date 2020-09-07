@@ -188,7 +188,7 @@
     self.lableButton1.button_lable.frame = CGRectMake(17*BiLiWidth, 0, 30*BiLiWidth, 24*BiLiWidth);
     self.lableButton1.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.lableButton1.button_lable.textColor = RGBFormUIColor(0x999999);
-    self.lableButton1.button_lable.text = @"外围";
+    self.lableButton1.button_lable.text = renZhengStr1;
     [self.view addSubview:self.lableButton1];
     
     self.lableButton2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.lableButton1.left+self.lableButton1.width+24*BiLiWidth, self.lableButton1.top,110*BiLiWidth,24*BiLiWidth)];
@@ -205,7 +205,7 @@
     self.lableButton2.button_lable.frame = CGRectMake(17*BiLiWidth, 0, 90*BiLiWidth, 24*BiLiWidth);
     self.lableButton2.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.lableButton2.button_lable.textColor = RGBFormUIColor(0x999999);
-    self.lableButton2.button_lable.text = @"全球陪玩";
+    self.lableButton2.button_lable.text = renZhengStr2;
     [self.view addSubview:self.lableButton2];
 
 
@@ -259,8 +259,6 @@
             self.renZhengType1 = @"1";
 
         }
-
-
 
     }
     else
@@ -333,6 +331,20 @@
 {
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
     [dic setObject:self.renZhengType forKey:@"type"]; //1女神 2外围女 3全球空降
+    NSMutableArray * other_type = [NSMutableArray array];
+    if ([NormalUse isValidString:self.renZhengType1]) {
+        
+        [other_type addObject:self.renZhengType1];
+    }
+    if ([NormalUse isValidString:self.renZhengType2]) {
+        
+        [other_type addObject:self.renZhengType2];
+    }
+    if ([NormalUse isValidArray:other_type]) {
+        
+        [dic setObject:other_type forKey:@"other_type"];
+    }
+
     
     [self xianShiLoadingView:@"认证中..." view:self.view];
     

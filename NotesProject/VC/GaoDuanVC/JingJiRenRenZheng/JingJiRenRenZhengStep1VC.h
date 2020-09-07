@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JingJiRenRenZhengStep1VC : MainBaseViewController
 
-@property(nonatomic,strong)UITextField * fuWuDiQuTF;
+@property(nonatomic,strong)NSDictionary * cityInfo;
+
+@property(nonatomic,strong)UIButton * fuWuDiQuTF;
 @property(nonatomic,strong)UITextField * chanPinShuLiangTF;
 @property(nonatomic,strong)UITextField * beginPriceTF;
 @property(nonatomic,strong)UITextField * endPriceTF;

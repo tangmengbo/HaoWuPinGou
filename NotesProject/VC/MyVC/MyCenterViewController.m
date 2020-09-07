@@ -35,20 +35,24 @@
 }
 -(void)initContentView
 {
+    
     self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 61*BiLiWidth, 61*BiLiWidth)];
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
     self.headerImageView.clipsToBounds = YES;
     self.headerImageView.layer.cornerRadius = 61*BiLiWidth/2;
-    self.headerImageView.backgroundColor = [UIColor redColor];
     self.headerImageView.layer.masksToBounds = YES;
     [self.mainScrollView addSubview:self.headerImageView];
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NormalUse getCurrentAvatarpath]] placeholderImage:[UIImage imageNamed:@"moRen_header"]];
     
     self.nickLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left+self.headerImageView.width+14*BiLiWidth, TopHeight_PingMu+19*BiLiWidth, 150*BiLiWidth, 17*BiLiWidth)];
     self.nickLable.textColor = RGBFormUIColor(0x333333);
     self.nickLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.nickLable.text = @"去玩而且二";
     [self.mainScrollView addSubview:self.nickLable];
+    self.nickLable.text = [NormalUse getCurrentUserName];
+    
+    self.nickLable =
     
     self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+6.5*BiLiWidth, 150*BiLiWidth, 12*BiLiWidth)];
     self.messageLable.textColor = RGBFormUIColor(0x999999);

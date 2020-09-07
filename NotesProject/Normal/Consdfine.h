@@ -55,7 +55,7 @@
 
 
 
-#define YongHuINFO @"YongHuINFO" //当前用户信息
+#define UserInformation @"UserINFO" //当前用户信息
 #define LoginToken @"LoginTokenDefaults" //当前用户token
 #define CurrentCity @"CurrentCityDefaults" //当前城市
 #define UserRole @"UserRoleDefaults"//当前用户角色

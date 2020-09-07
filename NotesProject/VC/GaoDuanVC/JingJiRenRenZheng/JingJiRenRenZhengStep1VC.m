@@ -8,7 +8,7 @@
 
 #import "JingJiRenRenZhengStep1VC.h"
 
-@interface JingJiRenRenZhengStep1VC ()
+@interface JingJiRenRenZhengStep1VC ()<CityListViewControllerDelegate>
 
 @end
 
@@ -110,12 +110,15 @@
     fuWuDiQuLable.text = @"服务地区";
     [self.view addSubview:fuWuDiQuLable];
 
-    self.fuWuDiQuTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, fuWuDiQuLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
+    self.fuWuDiQuTF = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, fuWuDiQuLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.fuWuDiQuTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写服务地区>" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.fuWuDiQuTF];
-    self.fuWuDiQuTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    self.fuWuDiQuTF.textColor = RGBFormUIColor(0x343434);
-    self.fuWuDiQuTF.textAlignment = NSTextAlignmentRight;
+    [self.fuWuDiQuTF setTitle:@"" forState:UIControlStateNormal];
+    
+    self.fuWuDiQuTF.titleLabel.font = [UIFont systemFontOfSize:13*BiLiWidth];
+    [self.fuWuDiQuTF setTitle:@"选择所在地区>" forState:UIControlStateNormal];
+    [self.fuWuDiQuTF setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
+    self.fuWuDiQuTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [self.fuWuDiQuTF addTarget:self action:@selector(diQuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.fuWuDiQuTF];
 
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, fuWuDiQuLable.top+fuWuDiQuLable.height, 270*BiLiWidth, 1)];
@@ -130,7 +133,7 @@
 
     self.chanPinShuLiangTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, chanPinShuLiangLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.chanPinShuLiangTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写产品数量>" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
+    [NormalUse setTextFieldPlaceholder:@"填写产品数量" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
     self.chanPinShuLiangTF.textAlignment = NSTextAlignmentRight;
     self.chanPinShuLiangTF.keyboardType = UIKeyboardTypeNumberPad;
     self.chanPinShuLiangTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -179,7 +182,7 @@
 
     self.lianXiFangShiTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lianXiFangShiLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.lianXiFangShiTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写联系方式>" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.lianXiFangShiTF];
+    [NormalUse setTextFieldPlaceholder:@"填写联系方式" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.lianXiFangShiTF];
     self.lianXiFangShiTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.lianXiFangShiTF.textColor = RGBFormUIColor(0x343434);
     [self.view addSubview:self.lianXiFangShiTF];
@@ -212,10 +215,24 @@
 
 
 }
+-(void)diQuButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+#pragma mark--选择城市后的代理
+-(void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    [self.fuWuDiQuTF setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+    [self.fuWuDiQuTF setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+}
+
 -(void)nextButtonClick
 {
     
-    if(![NormalUse isValidString:self.fuWuDiQuTF.text])
+    if(![NormalUse isValidDictionary:self.cityInfo])
     {
         [NormalUse showToastView:@"请填写服务地区" view:self.view];
         return;
@@ -251,7 +268,8 @@
     }
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     [dic setObject:@"1" forKey:@"type"];//认证类型 1茶小二 2经纪人
-    [dic setObject:self.fuWuDiQuTF.text forKey:@"city_code"];
+    NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+    [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
     [dic setObject:self.chanPinShuLiangTF.text forKey:@"nums"];
     [dic setObject:self.beginPriceTF.text forKey:@"min_price"];
     [dic setObject:self.endPriceTF.text forKey:@"max_price"];

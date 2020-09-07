@@ -70,6 +70,7 @@
         carouselConfig.currentPageTintColor = [UIColor lightGrayColor];
         carouselConfig.placeholder = [UIImage imageNamed:@"default"];
         carouselConfig.faileReloadTimes = 5;
+        carouselConfig.contentMode = UIViewContentModeScaleAspectFill;
         return carouselConfig;
     } target:self];
     scrollLunBo.layer.masksToBounds = YES;
@@ -427,58 +428,58 @@
     self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, 0)];
     [self.bottomContentScollView addSubview:self.xiangQingJieShaoContentView];
     
-    UIImageView * headerImageView =  [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
-    headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-    headerImageView.autoresizingMask = UIViewAutoresizingNone;
-    headerImageView.clipsToBounds = YES;
-    headerImageView.layer.cornerRadius = 24*BiLiWidth;
-    headerImageView.backgroundColor = [UIColor redColor];
-    [self.xiangQingJieShaoContentView addSubview:headerImageView];
-    
-    NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
-    CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, 6*BiLiWidth, size.width, 14*BiLiWidth)];
-    nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    nickLable.textColor = RGBFormUIColor(0x343434);
-    nickLable.text = nickStr;
-    [self.xiangQingJieShaoContentView addSubview:nickLable];
-    
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+9*BiLiWidth, 6*BiLiWidth, 26*BiLiWidth, 14*BiLiWidth)];
-    tipLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
-    tipLable.textColor = RGBFormUIColor(0xFFFFFF);
-    tipLable.layer.cornerRadius = 4*BiLiWidth;
-    tipLable.clipsToBounds = YES;
-    tipLable.text = @"作者";
-    [self.xiangQingJieShaoContentView addSubview:tipLable];
-
-    
-    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, tipLable.top+tipLable.height+11.5*BiLiWidth, 100*BiLiWidth, 11*BiLiWidth)];
-    timeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-    timeLable.text = @"2020-08-28";
-    [self.xiangQingJieShaoContentView addSubview:timeLable];
-    
-    
-    UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 45*BiLiWidth, 11*BiLiWidth)];
-    pingFenTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    pingFenTipLable.textColor = RGBFormUIColor(0x9A9A9A);
-    pingFenTipLable.text = @"综合评分";
-    [self.xiangQingJieShaoContentView addSubview:pingFenTipLable];
-
-
-    UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left+pingFenTipLable.width+12*BiLiWidth, headerImageView.top+headerImageView.height+17.5*BiLiWidth, 45*BiLiWidth, 18*BiLiWidth)];
-    pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
-    pingFenLable.textColor = RGBFormUIColor(0x343434);
-    NSNumber *  complex_score = [self.tieZiInfo objectForKey:@"complex_score"];
-    if ([complex_score isKindOfClass:[NSNumber class]]) {
-        
-        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
-
-    }
-
-
-    [self.xiangQingJieShaoContentView addSubview:pingFenLable];
-    UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left, pingFenTipLable.top+pingFenTipLable.height+17.5*BiLiWidth, 333*BiLiWidth, 0)];
+//    UIImageView * headerImageView =  [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
+//    headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    headerImageView.autoresizingMask = UIViewAutoresizingNone;
+//    headerImageView.clipsToBounds = YES;
+//    headerImageView.layer.cornerRadius = 24*BiLiWidth;
+//    headerImageView.backgroundColor = [UIColor redColor];
+//    [self.xiangQingJieShaoContentView addSubview:headerImageView];
+//
+//    NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
+//    CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+//    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, 6*BiLiWidth, size.width, 14*BiLiWidth)];
+//    nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//    nickLable.textColor = RGBFormUIColor(0x343434);
+//    nickLable.text = nickStr;
+//    [self.xiangQingJieShaoContentView addSubview:nickLable];
+//
+//    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+9*BiLiWidth, 6*BiLiWidth, 26*BiLiWidth, 14*BiLiWidth)];
+//    tipLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
+//    tipLable.textColor = RGBFormUIColor(0xFFFFFF);
+//    tipLable.layer.cornerRadius = 4*BiLiWidth;
+//    tipLable.clipsToBounds = YES;
+//    tipLable.text = @"作者";
+//    [self.xiangQingJieShaoContentView addSubview:tipLable];
+//
+//
+//    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, tipLable.top+tipLable.height+11.5*BiLiWidth, 100*BiLiWidth, 11*BiLiWidth)];
+//    timeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+//    timeLable.textColor = RGBFormUIColor(0x9A9A9A);
+//    timeLable.text = @"2020-08-28";
+//    [self.xiangQingJieShaoContentView addSubview:timeLable];
+//
+//
+//    UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 45*BiLiWidth, 11*BiLiWidth)];
+//    pingFenTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+//    pingFenTipLable.textColor = RGBFormUIColor(0x9A9A9A);
+//    pingFenTipLable.text = @"综合评分";
+//    [self.xiangQingJieShaoContentView addSubview:pingFenTipLable];
+//
+//
+//    UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left+pingFenTipLable.width+12*BiLiWidth, headerImageView.top+headerImageView.height+17.5*BiLiWidth, 45*BiLiWidth, 18*BiLiWidth)];
+//    pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
+//    pingFenLable.textColor = RGBFormUIColor(0x343434);
+//    NSNumber *  complex_score = [self.tieZiInfo objectForKey:@"complex_score"];
+//    if ([complex_score isKindOfClass:[NSNumber class]]) {
+//
+//        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
+//
+//    }
+//
+//
+//    [self.xiangQingJieShaoContentView addSubview:pingFenLable];
+    UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, 7.5*BiLiWidth, 333*BiLiWidth, 0)];
     messageLable.numberOfLines = 0;
     messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     messageLable.textColor = RGBFormUIColor(0x343434);

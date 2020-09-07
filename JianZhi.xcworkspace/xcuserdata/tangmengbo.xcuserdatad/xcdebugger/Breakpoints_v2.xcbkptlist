@@ -94,8 +94,8 @@
             filePath = "NotesProject/Manger/HTTPModel.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1909"
-            endingLineNumber = "1909"
+            startingLineNumber = "1944"
+            endingLineNumber = "1944"
             landmarkName = "+buyTicket:callback:"
             landmarkType = "7">
          </BreakpointContent>
@@ -145,70 +145,6 @@
             startingLineNumber = "58"
             endingLineNumber = "58"
             landmarkName = "+POST:parameters:progress:success:failure:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2FDBEFF3-EF3C-43F1-A516-E97CD7D693CD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
-            landmarkName = "-uploadVideo:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2FDBEFF3-EF3C-43F1-A516-E97CD7D693CD - ff7eed2fa173fb1a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__37-[NvShenRenZhengStep1VC uploadVideo:]_block_invoke"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "334"
-                  endingLineNumber = "334"
-                  offsetFromSymbolStart = "96">
-               </Location>
-               <Location
-                  uuid = "2FDBEFF3-EF3C-43F1-A516-E97CD7D693CD - 96c8fcd637351487"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__37-[NvShenRenZhengStep1VC uploadVideo:]_block_invoke_2"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "334"
-                  endingLineNumber = "334"
-                  offsetFromSymbolStart = "15">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "10BACCB3-D30B-4B75-A976-B0A89CDD0005"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep1VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
-            landmarkName = "-uploadVideo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -288,7 +224,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "969"
                   endingLineNumber = "969"
-                  offsetFromSymbolStart = "45">
+                  offsetFromSymbolStart = "60">
                </Location>
                <Location
                   uuid = "8D0F953D-3EAC-4209-BA3A-926E47827D01 - 4d57744a1c5fc816"
@@ -303,7 +239,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "970"
                   endingLineNumber = "970"
-                  offsetFromSymbolStart = "85">
+                  offsetFromSymbolStart = "88">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -327,86 +263,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2EF7E591-301D-4B5B-B3C3-85B91F0DC2F7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1102"
-            endingLineNumber = "1102"
-            landmarkName = "-getImagePathId"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E0403BB7-3112-4417-83D3-0A095EB2C733"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1081"
-            endingLineNumber = "1081"
-            landmarkName = "-getImagePathId"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5FF0EA9C-86FF-4662-95D6-030CE7A7DC1E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1052"
-            endingLineNumber = "1052"
-            landmarkName = "-uploadImage"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CA8BB179-4105-49FC-8941-F4DA5928BA73"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1039"
-            endingLineNumber = "1039"
-            landmarkName = "-uploadImage"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2A09E635-0CB7-4136-9DCF-A89DBC522AE2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1075"
-            endingLineNumber = "1075"
-            landmarkName = "-getImagePathId"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "1B1FB7C7-3AEB-4867-91FF-6E487708B3B7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -417,6 +273,38 @@
             startingLineNumber = "22"
             endingLineNumber = "22"
             landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "02FF04D9-9C39-4D0D-958F-2ABE001F856D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/AppDelegate.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D372C3F-CE1B-41D7-BB6F-6BFA414E75B8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep3VC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-initTopStepView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

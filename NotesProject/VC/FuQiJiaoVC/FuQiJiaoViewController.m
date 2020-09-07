@@ -177,15 +177,15 @@
 }
 -(void)firstGetZuiXinShangChuanList
 {
-    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
-    [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+    [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
-            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
             [self.pageIndexArray replaceObjectAtIndex:0 withObject:pageIndexNumber];
             
             NSArray * dataArray = [responseObject objectForKey:@"data"];
@@ -212,15 +212,15 @@
 }
 -(void)firstGetRenMenTuiJianList
 {
-    NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge", nil]
                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
-            NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
             [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
 
             NSArray * dataArray = [responseObject objectForKey:@"data"];
