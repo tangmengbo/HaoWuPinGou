@@ -114,11 +114,9 @@
     self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
     self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];
-    NSNumber *  trade_money = [info objectForKey:@"trade_money"];
-    if ([trade_money isKindOfClass:[NSNumber class]]) {
         
-        self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d",trade_money.intValue];
-    }
+    self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %@",[info objectForKey:@"trade_money"]];
+    
     
     [self.pingFenStarView removeAllSubviews];
     

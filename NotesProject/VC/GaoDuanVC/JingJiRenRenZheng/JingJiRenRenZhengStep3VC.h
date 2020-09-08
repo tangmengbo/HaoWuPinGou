@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JingJiRenRenZhengStep3VC : MainBaseViewController
 
+@property(nonatomic,assign)BOOL  alsoShowBackButton;
+
 @end
 
 NS_ASSUME_NONNULL_END

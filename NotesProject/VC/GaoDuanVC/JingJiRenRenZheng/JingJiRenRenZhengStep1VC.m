@@ -267,7 +267,7 @@
         return;
     }
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:@"1" forKey:@"type"];//认证类型 1茶小二 2经纪人
+    [dic setObject:self.renZhengType forKey:@"type"];//认证类型 1茶小二 2经纪人
     NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
     [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
     [dic setObject:self.chanPinShuLiangTF.text forKey:@"nums"];

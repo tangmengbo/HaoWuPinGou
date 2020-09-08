@@ -58,6 +58,13 @@
             self->shengYuTime = (int)difftime(timeSpInt, timeSpNowInt);
             
             self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
+            
+            NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
+            NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+            self.contentTextView.attributedText = attrStr;
+            [self.contentTextView sizeToFit];
+            
+            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.contentTextView.top+self.contentTextView.height)];
 
         }
     }];
@@ -153,8 +160,17 @@
     [self.jinBiGouMaiButton addTarget:self action:@selector(jinBiGouMaiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:self.jinBiGouMaiButton];
     
-    
-    Lable_ImageButton * shuoMingButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(23*BiLiWidth, controlView.top+controlView.height+42*BiLiWidth, 69*BiLiWidth, 14*BiLiWidth)];
+    float originY;
+    if (TopHeight_PingMu==35) {
+        
+        originY = 27*BiLiHeight;
+
+    }
+    else
+    {
+        originY = 42*BiLiHeight;
+    }
+    Lable_ImageButton * shuoMingButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(23*BiLiWidth, controlView.top+controlView.height+originY, 69*BiLiWidth, 14*BiLiWidth)];
     shuoMingButton.button_imageView.frame = CGRectMake(0, 0, 14*BiLiWidth, 14*BiLiWidth);
     shuoMingButton.button_imageView.image = [UIImage imageNamed:@"fuLi_shuoMing"];
     shuoMingButton.button_lable.frame = CGRectMake(shuoMingButton.button_imageView.left+shuoMingButton.button_imageView.width+5*BiLiWidth, shuoMingButton.button_imageView.top, 50*BiLiWidth, 14*BiLiWidth);
@@ -165,7 +181,7 @@
     [bottomImageView addSubview:shuoMingButton];
     
     
-    Lable_ImageButton * gouMaiJiLuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, controlView.top+controlView.height+42*BiLiWidth, 69*BiLiWidth, 14*BiLiWidth)];
+    Lable_ImageButton * gouMaiJiLuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, shuoMingButton.top, 69*BiLiWidth, 14*BiLiWidth)];
     gouMaiJiLuButton.button_imageView.frame = CGRectMake(0, 0, 14*BiLiWidth, 14*BiLiWidth);
     gouMaiJiLuButton.button_imageView.image = [UIImage imageNamed:@"fuLi_jiLu"];
     gouMaiJiLuButton.button_lable.frame = CGRectMake(shuoMingButton.button_imageView.left+shuoMingButton.button_imageView.width+5*BiLiWidth, shuoMingButton.button_imageView.top, 50*BiLiWidth, 14*BiLiWidth);
@@ -174,6 +190,15 @@
     gouMaiJiLuButton.button_lable.text = @"购买记录";
     [bottomImageView addSubview:gouMaiJiLuButton];
     [gouMaiJiLuButton addTarget:self action:@selector(gouMaiJiLuButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(23*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiHeight, WIDTH_PingMu-46*BiLiWidth, HEIGHT_PingMu-(gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiWidth+BottomHeight_PingMu+10*BiLiWidth))];
+    self.contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    self.contentTextView.textColor = RGBFormUIColor(0x868686);
+    self.contentTextView.editable = NO;
+    self.contentTextView.backgroundColor = [UIColor clearColor];
+    [bottomImageView addSubview:self.contentTextView];
+    
+
 
     /*
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(32*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+90*BiLiWidth, 100*BiLiWidth, 15*BiLiWidth)];
@@ -318,17 +343,6 @@
 }
 -(void)shuoMingButton
 {
-    UITextView * contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 60*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-60*BiLiWidth)];
-    contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    contentTextView.textColor = RGBFormUIColor(0x868686);
-    contentTextView.editable = NO;
-    contentTextView.backgroundColor = [UIColor purpleColor];
-    [self.view addSubview:contentTextView];
-    
-    NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
-    contentTextView.attributedText = attrStr;
-
 
 }
 -(void)kaiJiangListButtonClick

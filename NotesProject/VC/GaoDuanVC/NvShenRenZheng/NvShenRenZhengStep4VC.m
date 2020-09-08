@@ -14,9 +14,48 @@
 
 @implementation NvShenRenZhengStep4VC
 
+#pragma mark -- 禁止右滑返回
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (!self.alsoShowBackButton) {
+        
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+    }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (!self.alsoShowBackButton) {
+        
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self yinCangTabbar];
+    
+    if (!self.alsoShowBackButton) {
+        self.backImageView.hidden = YES;
+        self.leftButton.hidden = YES;
+
+    }
+
     self.topTitleLale.text = @"认证";
     [self initTopStepView];
 }

@@ -60,13 +60,14 @@
             
             if(status==1)
             {
+                //0 未认证 1 已认证 2 审核中
                 //"auth_nomal":0,//茶馆儿认证：无
                 //auth_agent":1,//经纪人认证：有
                 //auth_goddess":1,//女神认证：有
                 //auth_global":0,//全球陪玩:无
                 //auth_peripheral":0//外围认证：无
                 
-                NSDictionary * info = [responseObject objectForKey:@"data"];
+                NSDictionary * info = responseObject;
                 
 
                 NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
@@ -191,7 +192,7 @@
     [self.contentScrollView addSubview:peiWanVC.view];
 
 
-    self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
+    self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+5*BiLiWidth, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
     self.itemButtonContentView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.itemButtonContentView];
     
@@ -289,31 +290,95 @@
 }
 #pragma mark--经纪人认证 女神认证 全国空降 陪玩
 
--(void)jingJiRenRenZhengButtonClick
+-(void)jingJiRenRenZhengButtonClick:(UIButton *)button
 {
-    JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (button.tag==0) {
+        
+        JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"2";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else if (button.tag==1)//已认证
+    {
+        
+    }
+    else if(button.tag==2)//审核中
+    {
+        JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }
 }
--(void)nvShenRenZhengButtonClick
+-(void)nvShenRenZhengButtonClick:(UIButton *)button
 {
-    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
-    vc.renZhengType = @"1";
-    [self.navigationController pushViewController:vc animated:YES];
+    if (button.tag==0) {//未认证
+        
+        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"1";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else if (button.tag==1)//已认证
+    {
+        
+    }
+    else if(button.tag==2)//审核中
+    {
+        NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    
 }
 
--(void)kongJiangButtonClick
+-(void)kongJiangButtonClick:(UIButton *)button
 {
-    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
-    vc.renZhengType = @"2";
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if (button.tag==0) {//未认证
+        
+        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"2";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else if (button.tag==1)//已认证
+    {
+        
+    }
+    else if(button.tag==2)//审核中
+    {
+        NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+
 
 }
 
--(void)peiWanButtonClick
+-(void)peiWanButtonClick:(UIButton *)button
 {
-    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
-    vc.renZhengType = @"3";
-    [self.navigationController pushViewController:vc animated:YES];
+    if (button.tag==0) {//未认证
+        
+        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"3";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else if (button.tag==1)//已认证
+    {
+        
+    }
+    else if(button.tag==2)//审核中
+    {
+        NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
 
 }
 
@@ -442,29 +507,30 @@
     
     UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"] forState:UIControlStateNormal];
-    [button1 addTarget:self action:@selector(jingJiRenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [button1 addTarget:self action:@selector(jingJiRenRenZhengButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button1];
     
     
     
     UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
-    [button2 addTarget:self action:@selector(nvShenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [button2 addTarget:self action:@selector(nvShenRenZhengButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button2];
     
     
     UIButton * button3 = [[UIButton alloc] initWithFrame:CGRectMake(button2.left+button2.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanGuoKongJian"] forState:UIControlStateNormal];
-    [button3 addTarget:self action:@selector(kongJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
+    [button3 addTarget:self action:@selector(kongJiangButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button3];
     
     
     UIButton * button4 = [[UIButton alloc] initWithFrame:CGRectMake(button3.left+button3.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
-    [button4 addTarget:self action:@selector(peiWanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [button4 addTarget:self action:@selector(peiWanButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button4];
     [fenLeiScrollView setContentSize:CGSizeMake(button4.left+button4.width+12*BiLiWidth, fenLeiScrollView.height)];
     
+    //0 未认证 1 已认证 2 审核中
     //"auth_nomal":0,//茶馆儿认证：无
     //auth_agent":1,//经纪人认证：有
     //auth_goddess":1,//女神认证：有
@@ -482,11 +548,18 @@
             NSNumber * auth_agent = [userRoleDic objectForKey:@"auth_agent"];
             if([auth_agent isKindOfClass:[NSNumber class]])
             {
+                button1.tag = auth_agent.intValue;
                 if (auth_agent.intValue==1) {
                     
                     [button1 setBackgroundImage:nil forState:UIControlStateNormal];
                     button1.backgroundColor = [UIColor redColor];
 
+
+                }
+                else if (auth_agent.intValue==2)
+                {
+                    [button1 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button1.backgroundColor = [UIColor greenColor];
 
                 }
                 else
@@ -497,12 +570,20 @@
             }
             
             NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+            
             if([auth_goddess isKindOfClass:[NSNumber class]])
             {
+                button2.tag = auth_goddess.intValue;
                 if (auth_goddess.intValue==1) {
                     
                     [button2 setBackgroundImage:nil forState:UIControlStateNormal];
                     button2.backgroundColor = [UIColor redColor];
+
+                }
+                else if (auth_goddess.intValue==2)
+                {
+                    [button2 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button2.backgroundColor = [UIColor greenColor];
 
                 }
                 else
@@ -515,15 +596,45 @@
             NSNumber * auth_peripheral = [userRoleDic objectForKey:@"auth_peripheral"];
             if([auth_peripheral isKindOfClass:[NSNumber class]])
             {
+                button3.tag = auth_peripheral.intValue;
                 if (auth_peripheral.intValue==1) {
                     
                     [button3 setBackgroundImage:nil forState:UIControlStateNormal];
                     button3.backgroundColor = [UIColor redColor];
 
                 }
+                else if (auth_peripheral.intValue==2)
+                {
+                    [button3 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button3.backgroundColor = [UIColor greenColor];
+
+                }
                 else
                 {
-                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanGuoKongJian"] forState:UIControlStateNormal];
+                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
+
+                }
+            }
+
+            NSNumber * auth_global = [userRoleDic objectForKey:@"auth_global"];
+            if([auth_global isKindOfClass:[NSNumber class]])
+            {
+                button4.tag = auth_global.intValue;
+                if (auth_global.intValue==1) {
+                    
+                    [button4 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button4.backgroundColor = [UIColor redColor];
+
+                }
+                else if (auth_global.intValue==2)
+                {
+                    [button4 setBackgroundImage:nil forState:UIControlStateNormal];
+                    button4.backgroundColor = [UIColor greenColor];
+
+                }
+                else
+                {
+                    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
 
                 }
             }

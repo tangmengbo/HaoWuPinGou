@@ -64,6 +64,8 @@
 #import "LeiXiangSelectViewController.h"
 #import "CreateDingZhiFuWuViewController.h"
 #import "TiYanBaoGaoDetailViewController.h"
+#import "CreateTieZiViewController.h"
+
 
 #import "TieZiDetailViewController.h"
 #import "HeiDianDetailViewController.h"

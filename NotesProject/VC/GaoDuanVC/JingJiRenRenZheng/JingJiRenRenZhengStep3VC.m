@@ -18,8 +18,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    if (!self.alsoShowBackButton) {
+
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
+
     }
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -31,14 +35,29 @@
 }
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return NO;
+    if (!self.alsoShowBackButton) {
+        
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    [self yinCangTabbar];
+
     self.topTitleLale.text = @"认证";
-    self.backImageView.hidden = YES;
-    self.leftButton.hidden = YES;
+    
+    if (!self.alsoShowBackButton) {
+        
+        self.backImageView.hidden = YES;
+        self.leftButton.hidden = YES;
+
+    }
     
     [self initTopStepView];
 }

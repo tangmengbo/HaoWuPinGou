@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * sliderView;
 
+@property(nonatomic,strong)UIView * chaXiaoErFaTieRenZhengView;//茶小二发帖,认证
+
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -153,27 +153,65 @@
     tipLable.text = @"您也可同时认证：";
     [self.view addSubview:tipLable];
     
+    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+    NSString * defaultsKey = [UserRole stringByAppendingString:token];
+    NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+    NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];//女神
+    NSNumber * auth_peripheral = [userRoleDic objectForKey:@"auth_peripheral"];//外围
+    NSNumber * auth_global = [userRoleDic objectForKey:@"auth_global"];//空降
+
+    
     NSString * renZhengStr1;
     NSString * renZhengStr2;
     if ([@"1" isEqualToString:self.renZhengType]) {
         
-        renZhengStr1 = @"外围";
-        renZhengStr2 = @"全球陪玩";
+        if(auth_peripheral.intValue==0)
+        {
+            renZhengStr1 = @"外围";
+        }
+        
+        if(auth_global.intValue==0)
+        {
+            renZhengStr2 = @"全球陪玩";
+
+        }
+
 
     }
     else if ([@"2" isEqualToString:self.renZhengType])
     {
-        renZhengStr1 = @"女神";
-        renZhengStr2 = @"全球陪玩";
+        if(auth_goddess.intValue==0)
+        {
+            renZhengStr1 = @"女神";
+
+        }
+        
+        if(auth_global.intValue==0)
+        {
+            renZhengStr2 = @"全球陪玩";
+
+        }
+
 
     }
     else
     {
-        renZhengStr1 = @"女神";
-        renZhengStr2 = @"外围";
+        
+        if(auth_goddess.intValue==0)
+        {
+            renZhengStr1 = @"女神";
+
+        }
+        
+        if(auth_peripheral.intValue==0)
+        {
+            renZhengStr2 = @"外围";
+
+        }
+
 
     }
-    
+
     self.lableButton1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(tipLable.left+tipLable.width+20*BiLiWidth, tipLable.top-6 *BiLiWidth,50*BiLiWidth,24*BiLiWidth)];
     [self.lableButton1 addTarget:self action:@selector(lableButton1Click) forControlEvents:UIControlEventTouchUpInside];
     self.lableButton1.tag = 0;
@@ -190,6 +228,13 @@
     self.lableButton1.button_lable.textColor = RGBFormUIColor(0x999999);
     self.lableButton1.button_lable.text = renZhengStr1;
     [self.view addSubview:self.lableButton1];
+    
+    if (![NormalUse isValidString:renZhengStr1]) {
+        
+        self.lableButton1.hidden = YES;
+        self.lableButton1.width = 0;
+    }
+    
     
     self.lableButton2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.lableButton1.left+self.lableButton1.width+24*BiLiWidth, self.lableButton1.top,110*BiLiWidth,24*BiLiWidth)];
     self.lableButton2.tag = 0;
@@ -208,6 +253,11 @@
     self.lableButton2.button_lable.text = renZhengStr2;
     [self.view addSubview:self.lableButton2];
 
+    if (![NormalUse isValidString:renZhengStr2]) {
+        
+        self.lableButton2.hidden = YES;
+        self.lableButton2.width = 0;
+    }
 
 
     
@@ -331,18 +381,24 @@
 {
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
     [dic setObject:self.renZhengType forKey:@"type"]; //1女神 2外围女 3全球空降
-    NSMutableArray * other_type = [NSMutableArray array];
+    NSMutableArray * other_typeArray = [NSMutableArray array];
     if ([NormalUse isValidString:self.renZhengType1]) {
         
-        [other_type addObject:self.renZhengType1];
+        [other_typeArray addObject:self.renZhengType1];
     }
     if ([NormalUse isValidString:self.renZhengType2]) {
         
-        [other_type addObject:self.renZhengType2];
+        [other_typeArray addObject:self.renZhengType2];
     }
-    if ([NormalUse isValidArray:other_type]) {
+    if ([NormalUse isValidArray:other_typeArray] && other_typeArray.count>0) {
         
-        [dic setObject:other_type forKey:@"other_type"];
+        NSString * other_type = [other_typeArray objectAtIndex:0];
+        for (int i=1; i<other_typeArray.count; i++) {
+            
+            other_type = [[other_type stringByAppendingString:@"|"] stringByAppendingString:[other_typeArray objectAtIndex:i]];
+        }
+    [dic setObject:other_type forKey:@"other_type"];
+
     }
 
     

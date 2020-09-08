@@ -159,6 +159,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)tieZiUnFollow:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//发布帖子
++(void)faBuTieZi:(NSDictionary *_Nullable)parameter
+        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //帖子详情
 +(void)getTieZiDetail:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

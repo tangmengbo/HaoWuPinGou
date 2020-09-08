@@ -335,7 +335,7 @@
             
             button.enabled = YES;
             if (status==1) {
-                
+                button.tag = 1;
                 [button setBackgroundImage:[UIImage imageNamed:@"guanZhu_h"] forState:UIControlStateNormal];
             }
             else
@@ -347,13 +347,12 @@
     }
     else
     {
-        NSArray * array = [[NSArray alloc] initWithObjects:self.dianPuId, nil];
-        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:array,@"ids", nil];
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.dianPuId,@"ids", nil];
         [HTTPModel dianPuUnfollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             button.enabled = YES;
             if (status==1) {
-                
+                button.tag = 0;
                 [button setBackgroundImage:[UIImage imageNamed:@"guanZhu_n"] forState:UIControlStateNormal];
             }
             else

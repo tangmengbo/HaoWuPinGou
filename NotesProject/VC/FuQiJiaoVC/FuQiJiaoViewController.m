@@ -180,7 +180,7 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge",@"time",@"order", nil]
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -215,7 +215,7 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"hot",@"order", nil]
                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -267,7 +267,7 @@
         
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
 
-        [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge",@"time",@"order", nil]
                        callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -308,7 +308,7 @@
     {
         
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
-        [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge", nil]
+        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge",@"hot",@"order", nil]
                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {

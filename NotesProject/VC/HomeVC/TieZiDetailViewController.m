@@ -593,10 +593,9 @@
         [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
-            button.tag = 1;
 
             if (status==1) {
-                
+                button.tag = 1;
                 button.button_imageView.image = [UIImage imageNamed:@"shouCang_h"];
                 button.button_lable.text = @"已收藏";
             }
@@ -609,13 +608,14 @@
     }
     else
     {
-        NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
-        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:array,@"ids", nil];
+        //NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.post_id,@"ids", nil];
         [HTTPModel tieZiFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
-            button.tag = 0;
             if (status==1) {
+                button.tag = 0;
+
                 button.button_imageView.image = [UIImage imageNamed:@"shouCang_n"];
                 button.button_lable.text = @"收藏";
 

@@ -1299,7 +1299,6 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
            
            NSLog(@"%@",jsonStr);
            
-           
            NSNumber * code = [dict objectForKey:@"code"];
            if (code.intValue==1) {
                
@@ -1360,7 +1359,43 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
        }];
 
 }
-
+//发布帖子
++(void)faBuTieZi:(NSDictionary *_Nullable)parameter
+        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/home/post",HTTP_REQUESTURL];
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+}
 //帖子详情
 +(void)getTieZiDetail:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -1793,7 +1828,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)dianPuFollow:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/unfollow",HTTP_REQUESTURL];;
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/follow",HTTP_REQUESTURL];;
     
     [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
         
