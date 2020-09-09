@@ -135,22 +135,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "33872B7A-2BBC-47F9-B867-CA9CA88AF680"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/Manger/HTTPModel.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "+POST:parameters:progress:success:failure:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D40C6978-BF94-4505-A43D-3FD4EB869328"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -224,7 +208,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "969"
                   endingLineNumber = "969"
-                  offsetFromSymbolStart = "45">
+                  offsetFromSymbolStart = "60">
                </Location>
                <Location
                   uuid = "8D0F953D-3EAC-4209-BA3A-926E47827D01 - 4d57744a1c5fc816"
@@ -239,7 +223,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "970"
                   endingLineNumber = "970"
-                  offsetFromSymbolStart = "85">
+                  offsetFromSymbolStart = "88">
                </Location>
             </Locations>
          </BreakpointContent>

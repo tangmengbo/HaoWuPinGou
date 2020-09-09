@@ -544,7 +544,7 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
+    NSString *tableIdentifier = [NSString stringWithFormat:@"CheYouPingJiaCell"] ;
     CheYouPingJiaCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
     if (cell == nil)
     {

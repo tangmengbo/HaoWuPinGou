@@ -80,7 +80,7 @@
     }
     return self;
 }
--(void)contentViewSetData:(NSDictionary *)info
+-(void)contentViewSetData:(NSDictionary *)info cellType:(CellType)cellType
 {
     if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
@@ -98,16 +98,20 @@
     }
     
     
-    CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
-    self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
-    self.faBuTimeLable.width = size.width+5*BiLiWidth;
-    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
-    
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.faBuTimeLable.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.faBuTimeLable.layer.mask = maskLayer;
+    if (cellType!=YanZhengBangDan) {
+        
+        CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
+        self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
+        self.faBuTimeLable.width = size.width+5*BiLiWidth;
+        self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.faBuTimeLable.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.faBuTimeLable.layer.mask = maskLayer;
+
+    }
     
     self.titleLable.text =[info objectForKey:@"title"] ;
     

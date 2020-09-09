@@ -1188,18 +1188,23 @@
         if (tableView.tag==0) {
             
              sourcerray = [self.dataSourceArray objectAtIndex:0];
+            [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row] cellType:ZuiXinShangChuan];
+
         }
         else if (tableView.tag==1)
         {
             sourcerray = [self.dataSourceArray objectAtIndex:1];
+            [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row] cellType:HongBangTuiJian];
+
 
         }
         else if (tableView.tag==2)
         {
             sourcerray = [self.dataSourceArray objectAtIndex:2];
+            [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row] cellType:YanZhengBangDan];
+
 
         }
-        [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row]];
         return cell;
 
     }

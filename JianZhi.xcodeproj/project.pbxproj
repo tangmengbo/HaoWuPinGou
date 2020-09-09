@@ -72,6 +72,10 @@
 		5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */; };
 		5FC7AD8C24D0080000EEEC66 /* SimulateIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */; };
 		5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8503425079C6F009286CE /* CreateTieZiViewController.m */; };
+		5FD850452508774E009286CE /* FuQiJiaoRenZhengStep1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD850442508774E009286CE /* FuQiJiaoRenZhengStep1VC.m */; };
+		5FD8504825087759009286CE /* FuQiJiaoRenZhengStep2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8504725087759009286CE /* FuQiJiaoRenZhengStep2VC.m */; };
+		5FD8504B25087766009286CE /* FuQiJiaoRenZhengStep3VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8504A25087766009286CE /* FuQiJiaoRenZhengStep3VC.m */; };
+		5FD8504E25087772009286CE /* FuQiJiaoRenZhengStep4VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8504D25087772009286CE /* FuQiJiaoRenZhengStep4VC.m */; };
 		5FDA455C2490EA0A00130D1E /* MyNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA455B2490EA0A00130D1E /* MyNavigationViewController.m */; };
 		5FE3EA6C235599D200C77F4D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE3EA6B235599D200C77F4D /* AppDelegate.m */; };
 		5FE3EA72235599D200C77F4D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE3EA71235599D200C77F4D /* ViewController.m */; };
@@ -256,6 +260,14 @@
 		5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulateIDFA.h; sourceTree = "<group>"; };
 		5FD8503325079C6F009286CE /* CreateTieZiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateTieZiViewController.h; sourceTree = "<group>"; };
 		5FD8503425079C6F009286CE /* CreateTieZiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateTieZiViewController.m; sourceTree = "<group>"; };
+		5FD850432508774E009286CE /* FuQiJiaoRenZhengStep1VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoRenZhengStep1VC.h; sourceTree = "<group>"; };
+		5FD850442508774E009286CE /* FuQiJiaoRenZhengStep1VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoRenZhengStep1VC.m; sourceTree = "<group>"; };
+		5FD8504625087759009286CE /* FuQiJiaoRenZhengStep2VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoRenZhengStep2VC.h; sourceTree = "<group>"; };
+		5FD8504725087759009286CE /* FuQiJiaoRenZhengStep2VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoRenZhengStep2VC.m; sourceTree = "<group>"; };
+		5FD8504925087766009286CE /* FuQiJiaoRenZhengStep3VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoRenZhengStep3VC.h; sourceTree = "<group>"; };
+		5FD8504A25087766009286CE /* FuQiJiaoRenZhengStep3VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoRenZhengStep3VC.m; sourceTree = "<group>"; };
+		5FD8504C25087772009286CE /* FuQiJiaoRenZhengStep4VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoRenZhengStep4VC.h; sourceTree = "<group>"; };
+		5FD8504D25087772009286CE /* FuQiJiaoRenZhengStep4VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoRenZhengStep4VC.m; sourceTree = "<group>"; };
 		5FDA455A2490EA0A00130D1E /* MyNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNavigationViewController.h; sourceTree = "<group>"; };
 		5FDA455B2490EA0A00130D1E /* MyNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNavigationViewController.m; sourceTree = "<group>"; };
 		5FE3EA67235599D200C77F4D /* YoYo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YoYo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -439,6 +451,7 @@
 		5F22EBBB24ECF30C002DCF61 /* FuQiJiaoVC */ = {
 			isa = PBXGroup;
 			children = (
+				5FD8503625087628009286CE /* FuQiJiaoRenZheng */,
 				5F34DCDA24EE802300DE15A1 /* ViewAndCell */,
 				5F22EBC524ECF389002DCF61 /* FuQiJiaoViewController.h */,
 				5F22EBC624ECF389002DCF61 /* FuQiJiaoViewController.m */,
@@ -609,6 +622,21 @@
 				5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */,
 			);
 			path = Manger;
+			sourceTree = "<group>";
+		};
+		5FD8503625087628009286CE /* FuQiJiaoRenZheng */ = {
+			isa = PBXGroup;
+			children = (
+				5FD850432508774E009286CE /* FuQiJiaoRenZhengStep1VC.h */,
+				5FD850442508774E009286CE /* FuQiJiaoRenZhengStep1VC.m */,
+				5FD8504625087759009286CE /* FuQiJiaoRenZhengStep2VC.h */,
+				5FD8504725087759009286CE /* FuQiJiaoRenZhengStep2VC.m */,
+				5FD8504925087766009286CE /* FuQiJiaoRenZhengStep3VC.h */,
+				5FD8504A25087766009286CE /* FuQiJiaoRenZhengStep3VC.m */,
+				5FD8504C25087772009286CE /* FuQiJiaoRenZhengStep4VC.h */,
+				5FD8504D25087772009286CE /* FuQiJiaoRenZhengStep4VC.m */,
+			);
+			path = FuQiJiaoRenZheng;
 			sourceTree = "<group>";
 		};
 		5FE3EA5E235599D200C77F4D = {
@@ -1041,6 +1069,7 @@
 				5F34DCDD24EF716500DE15A1 /* MyScrollView.m in Sources */,
 				5F2650D824FC8C9A00171684 /* JYWeakTimer.m in Sources */,
 				5F2650FF24FE3F6600171684 /* NvShenRenZhengStep1VC.m in Sources */,
+				5FD8504E25087772009286CE /* FuQiJiaoRenZhengStep4VC.m in Sources */,
 				5F24D24E25009B0E00476CFA /* WaiWeiListViewController.m in Sources */,
 				5FE3EC052355A3E400C77F4D /* NSString+LLMediaExt.m in Sources */,
 				5F2650E224FCADF100171684 /* CheYouPingJiaCell.m in Sources */,
@@ -1076,16 +1105,19 @@
 				5F26511224FE57D600171684 /* DianPuDetailViewController.m in Sources */,
 				5F0B382124F60EDC00FC935A /* GesturePasswordView.m in Sources */,
 				5FE3EC0F2355A3E400C77F4D /* TZAssetCell.m in Sources */,
+				5FD8504B25087766009286CE /* FuQiJiaoRenZhengStep3VC.m in Sources */,
 				5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */,
 				5F2650DD24FC8C9A00171684 /* JYConfiguration.m in Sources */,
 				5FE3EC062355A3E400C77F4D /* UIImage+LLGif.m in Sources */,
 				5FE3EC1B2355A3E400C77F4D /* TZGifPhotoPreviewController.m in Sources */,
 				5F2650F124FDF5FD00171684 /* JvBaoViewController.m in Sources */,
 				5F34DCE624EF777400DE15A1 /* FangLeiFangPianViewController.m in Sources */,
+				5FD850452508774E009286CE /* FuQiJiaoRenZhengStep1VC.m in Sources */,
 				5F34DCFB24F38E6700DE15A1 /* CityListViewController.m in Sources */,
 				5F0B382024F60EDC00FC935A /* GesturePasswordButton.m in Sources */,
 				5F34DCE324EF769500DE15A1 /* HeiDianBaoGuangViewController.m in Sources */,
 				5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */,
+				5FD8504825087759009286CE /* FuQiJiaoRenZhengStep2VC.m in Sources */,
 				5FE3EC102355A3E400C77F4D /* TZVideoPlayerController.m in Sources */,
 				5FE3EA6C235599D200C77F4D /* AppDelegate.m in Sources */,
 				5F2650FB24FE255900171684 /* JingJiRenRenZhengStep3VC.m in Sources */,

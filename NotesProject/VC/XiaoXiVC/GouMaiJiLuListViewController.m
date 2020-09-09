@@ -53,7 +53,7 @@
     }
     -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
     {
-        NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
+        NSString *tableIdentifier = [NSString stringWithFormat:@"UITableViewCell"] ;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
         if (cell == nil)
         {

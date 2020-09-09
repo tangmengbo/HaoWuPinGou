@@ -442,14 +442,14 @@ static CGSize AssetGridThumbnailSize;
     }
     TZAssetModel *model = _models[index];
     if (model.type == TZAssetModelMediaTypeVideo) {
-        if (tzImagePickerVc.selectedModels.count > 0) {
-            TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
-            [imagePickerVc showAlertWithTitle:[NSBundle tz_localizedStringForKey:@"Can not choose both video and photo"]];
-        } else {
+//        if (tzImagePickerVc.selectedModels.count > 0) {
+//            TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
+//            [imagePickerVc showAlertWithTitle:[NSBundle tz_localizedStringForKey:@"Can not choose both video and photo"]];
+//        } else {
             TZVideoPlayerController *videoPlayerVc = [[TZVideoPlayerController alloc] init];
             videoPlayerVc.model = model;
             [self.navigationController pushViewController:videoPlayerVc animated:YES];
-        }
+      //  }
     } else if (model.type == TZAssetModelMediaTypePhotoGif && tzImagePickerVc.allowPickingGif) {
         if (tzImagePickerVc.selectedModels.count > 0) {
             TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;

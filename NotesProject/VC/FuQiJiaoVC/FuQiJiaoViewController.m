@@ -33,6 +33,12 @@
 
 @implementation FuQiJiaoViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self xianShiTabBar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -40,6 +46,12 @@
     self.lineView.hidden = YES;
     
     self.topTitleLale.text = @"夫妻交友";
+    
+    UIButton * liJiRenZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 0, 72*BiLiWidth, self.topNavView.height)];
+    [liJiRenZhengButton setImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
+    //[liJiRenZhengButton setBackgroundImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
+    [liJiRenZhengButton addTarget:self action:@selector(liJiRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.topNavView addSubview:liJiRenZhengButton];
     
     [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -443,7 +455,13 @@
     }
     return cell;
 }
+#pragma mark--认证按钮点击
 
+-(void)liJiRenZhengButtonClick
+{
+    FuQiJiaoRenZhengStep1VC * vc = [[FuQiJiaoRenZhengStep1VC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 #pragma mark -- 分类buttonclick
 -(void)listTopButtonClick:(UIButton *)selectButton
 {

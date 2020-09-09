@@ -245,6 +245,11 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getJieUnlockList:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//夫妻交认证
++(void)fuQiJiaoRenZheng:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
 //夫妻交列表
 +(void)getFuQiJiaoList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

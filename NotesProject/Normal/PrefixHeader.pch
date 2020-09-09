@@ -94,6 +94,11 @@
 #import "GaoDuanViewController.h"
 
 //夫妻交
+#import "FuQiJiaoRenZhengStep1VC.h"
+#import "FuQiJiaoRenZhengStep2VC.h"
+#import "FuQiJiaoRenZhengStep3VC.h"
+#import "FuQiJiaoRenZhengStep4VC.h"
+
 #import "FuQiJiaoViewController.h"
 
 //消息

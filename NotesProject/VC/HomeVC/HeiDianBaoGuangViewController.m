@@ -130,7 +130,7 @@
         cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
-    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row]];
+    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row] cellType:HeiDianBaoGuang];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
