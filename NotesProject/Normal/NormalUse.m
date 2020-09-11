@@ -1623,6 +1623,11 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:key];
 }
++(id)getJinBiStr:(NSString *)key
+{
+    NSDictionary * jinBiInfo = [NormalUse defaultsGetObjectKey:JinBiShuoMing];
+    return [NormalUse getobjectForKey:[jinBiInfo objectForKey:key]];
+}
 +(BOOL)alsoShowTabbar
 {
     return YES;

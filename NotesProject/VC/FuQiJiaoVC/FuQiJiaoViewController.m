@@ -15,18 +15,24 @@
 @property(nonatomic,strong)UIPageControl * pageControl;
 @property(nonatomic,strong)NSArray * bannerArray;
 
+@property(nonatomic,strong)UIScrollView * mainScrollView;
 @property(nonatomic,strong)UIScrollView * contentScrollView;
 
+@property(nonatomic,strong)UIView * buttonItemView;
 @property(nonatomic,strong)NSMutableArray * listButtonArray;
 @property(nonatomic,strong)UIView * sliderView;
+
 
 @property(nonatomic,strong)NSMutableArray * tableViewArray;//存放tableview
 @property(nonatomic,strong)NSMutableArray * pageIndexArray;//存放pageindex
 @property(nonatomic,strong)NSMutableArray * dataSourceArray;//存放数据源
 
 
+@property(nonatomic,strong)UIButton * liJiRenZhengButton;
 
+@property(nonatomic,strong)NSNumber * auth_couple;//夫妻交认证状态
 
+@property(nonatomic,assign)CGFloat  lastcontentOffset;
 
 
 @end
@@ -37,6 +43,42 @@
 {
     [super viewWillAppear:animated];
     [self xianShiTabBar];
+    
+    //获取当前用户角色
+    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [HTTPModel getUserRole:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if(status==1)
+            {
+                //0 未认证 1 已认证 2 审核中
+                //"auth_nomal":0,//茶馆儿认证：无
+                //auth_agent":1,//经纪人认证：有
+                //auth_goddess":1,//女神认证：有
+                //auth_global":0,//全球陪玩:无
+                //auth_peripheral":0//外围认证：无
+                //auth_couple  :夫妻交认证
+                
+                NSDictionary * info = responseObject;
+                
+                self.auth_couple = [info objectForKey:@"auth_couple"];
+                if ([self.auth_couple isKindOfClass:[NSNumber class]]) {
+                    
+                    if (self.auth_couple.intValue==1) {
+                        
+                        self.liJiRenZhengButton.hidden = YES;
+                    }
+                    else
+                    {
+                        self.liJiRenZhengButton.hidden = NO;
+
+                    }
+                }
+                
+            }
+        }];
+
+    }
 }
 
 - (void)viewDidLoad {
@@ -47,11 +89,24 @@
     
     self.topTitleLale.text = @"夫妻交友";
     
-    UIButton * liJiRenZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 0, 72*BiLiWidth, self.topNavView.height)];
-    [liJiRenZhengButton setImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
-    //[liJiRenZhengButton setBackgroundImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
-    [liJiRenZhengButton addTarget:self action:@selector(liJiRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.topNavView addSubview:liJiRenZhengButton];
+    self.liJiRenZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 0, 72*BiLiWidth, self.topNavView.height)];
+    [self.liJiRenZhengButton setImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
+    [self.liJiRenZhengButton addTarget:self action:@selector(liJiRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.liJiRenZhengButton.hidden = YES;
+    [self.topNavView addSubview:self.liJiRenZhengButton];
+    
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height+BottomHeight_PingMu))];
+    self.mainScrollView.tag = 1002;
+    self.mainScrollView.delegate = self;
+    [self.view addSubview:self.mainScrollView];
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainScrollView.mj_header = mjHeader;
+    
+    
+    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    self.mainScrollView.mj_footer = mjFooter;
+
     
     [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -64,7 +119,7 @@
                 self.pageControl.numberOfPages = self.bannerArray.count;
 
                 //顶部轮播图
-                self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 146*BiLiWidth)];
+                self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 146*BiLiWidth)];
                 self.pageView.currentWidth = 305;
                 self.pageView.currentHeight = 146;
                 self.pageView.normalHeight = 134;
@@ -74,7 +129,7 @@
                 self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
                 self.pageView.orginPageCount = 3; //原始页数
                 self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-                [self.view addSubview:self.pageView] ;
+                [self.mainScrollView addSubview:self.pageView] ;
 
             }
                 
@@ -83,12 +138,16 @@
     }];
 
     
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.topNavView.top+self.topNavView.height+146*BiLiWidth+8*BiLiWidth, 200*BiLiWidth, 10)];
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, 146*BiLiWidth+8*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth)];
     self.pageControl.currentPage = 0;      //设置当前页指示点
     self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
     self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
     self.pageControl.numberOfPages = self.bannerArray.count;
-    [self.view addSubview:self.pageControl];
+    [self.mainScrollView addSubview:self.pageControl];
+    
+    self.buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0, self.pageControl.top+self.pageControl.height+10*BiLiWidth, WIDTH_PingMu, 40*BiLiWidth)];
+    [self.buttonItemView setBackgroundColor:[UIColor whiteColor]];
+    [self.mainScrollView addSubview:self.buttonItemView];
     
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"热门推荐", nil];
@@ -100,7 +159,7 @@
         if (i==0) {
             
             size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,self.pageControl.top+self.pageControl.height+27.5*BiLiWidth, size.width, 18*BiLiWidth)];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,0, size.width, 40*BiLiWidth)];
             [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
             [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
@@ -109,8 +168,8 @@
         }
         else
         {
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, self.pageControl.top+self.pageControl.height+32.5*BiLiWidth, size.width, 14*BiLiWidth)];
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, 0, size.width, 40*BiLiWidth)];
             [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
             [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
@@ -119,17 +178,17 @@
         }
         button.tag = i;
         [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:button];
+        [self.buttonItemView addSubview:button];
         originx = button.left+button.width+11.5*BiLiWidth;
         
         [self.listButtonArray addObject:button];
     }
     
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(19.5*BiLiWidth,self.pageControl.top+self.pageControl.height+40*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(19.5*BiLiWidth,self.buttonItemView.height-15*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
     self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
     self.sliderView.layer.masksToBounds = YES;
     self.sliderView.alpha = 0.8;
-    [self.view addSubview:self.sliderView];
+    [self.buttonItemView addSubview:self.sliderView];
     //渐变设置
     UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
     UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -141,12 +200,14 @@
     gradientLayer.locations = @[@0,@1];
     [self.sliderView.layer addSublayer:gradientLayer];
     
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.sliderView.top+self.sliderView.height+20*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.sliderView.top+self.sliderView.height+20*BiLiWidth+BottomHeight_PingMu))];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.buttonItemView.top+self.buttonItemView.height+20*BiLiWidth, WIDTH_PingMu, self.mainScrollView.height-(self.buttonItemView.top+self.buttonItemView.height+20*BiLiWidth))];
     self.contentScrollView.pagingEnabled = YES;
     self.contentScrollView.tag = 1001;
     self.contentScrollView.delegate = self;
-    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*2, self.contentScrollView.height)];
-    [self.view addSubview:self.contentScrollView];
+    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*2, 0)];
+    self.contentScrollView.showsVerticalScrollIndicator = NO;
+    self.contentScrollView.showsHorizontalScrollIndicator = NO;
+    [self.mainScrollView addSubview:self.contentScrollView];
     
     
     self.pageIndexArray = [NSMutableArray array];
@@ -166,20 +227,11 @@
         tableView.dataSource = self;
         tableView.tag = i;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.scrollEnabled = NO;
         [self.contentScrollView addSubview:tableView];
         
         [self.tableViewArray addObject:tableView];
         
-        
-        MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
-        mjHeader.lastUpdatedTimeLabel.hidden = YES;
-        tableView.mj_header = mjHeader;
-        
-        
-        MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
-        tableView.mj_footer = mjFooter;
-        
-
     }
     [self firstGetZuiXinShangChuanList];
     [self firstGetRenMenTuiJianList];
@@ -202,20 +254,40 @@
             
             NSArray * dataArray = [responseObject objectForKey:@"data"];
             NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+
             [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
             
-            UITableView * tableView = [self.tableViewArray objectAtIndex:0];
-            [tableView.mj_header endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
             if (dataArray.count>=10) {
                 
-                [tableView.mj_footer endRefreshing];
+                [self.mainScrollView.mj_footer endRefreshing];
             }
             else
             {
-                [tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
             }
             
+            UITableView * tableView = [self.tableViewArray objectAtIndex:0];
             [tableView reloadData];
+            
+            int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+
+            if (index==0) {
+                
+                int cellNumber;
+                if (sourceArray.count%2==0) {
+                    
+                    cellNumber = (int)sourceArray.count/2;
+                }
+                else
+                {
+                    cellNumber = (int)sourceArray.count/2+1;
+                }
+                tableView.height = cellNumber*200*BiLiWidth;
+                [self setTableViewHeightAndScollViewContentSize:tableView];
+
+            }
+
             
             
         }
@@ -239,19 +311,37 @@
             NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
             [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
 
-            UITableView * tableView = [self.tableViewArray objectAtIndex:1];
-            [tableView.mj_header endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
             if (dataArray.count>=10) {
                 
-                [tableView.mj_footer endRefreshing];
+                [self.mainScrollView.mj_footer endRefreshing];
             }
             else
             {
-                [tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
             }
 
+            UITableView * tableView = [self.tableViewArray objectAtIndex:1];
             [tableView reloadData];
             
+            int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+
+            if (index==1) {
+                
+                int cellNumber;
+                if (sourceArray.count%2==0) {
+                    
+                    cellNumber = (int)sourceArray.count/2;
+                }
+                else
+                {
+                    cellNumber = (int)sourceArray.count/2+1;
+                }
+                tableView.height = cellNumber*200*BiLiWidth;
+                [self setTableViewHeightAndScollViewContentSize:tableView];
+
+            }
+
 
         }
         
@@ -296,18 +386,35 @@
                 }
                 [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
 
-                UITableView * tableView = [self.tableViewArray objectAtIndex:0];
                 if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
+                    [self.mainScrollView.mj_footer endRefreshing];
                 }
                 else
                 {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                    [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
                 }
-
+                
+                UITableView * tableView = [self.tableViewArray objectAtIndex:0];
                 [tableView reloadData];
 
+                int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+
+                if (index==0) {
+                    
+                    int cellNumber;
+                    if (sourceArray.count%2==0) {
+                        
+                        cellNumber = (int)sourceArray.count/2;
+                    }
+                    else
+                    {
+                        cellNumber = (int)sourceArray.count/2+1;
+                    }
+                    tableView.height = cellNumber*200*BiLiWidth;
+                    [self setTableViewHeightAndScollViewContentSize:tableView];
+
+                }
 
                 
             }
@@ -337,17 +444,35 @@
                 }
                 [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
 
-                UITableView * tableView = [self.tableViewArray objectAtIndex:1];
                 if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
+                    [self.mainScrollView.mj_footer endRefreshing];
                 }
                 else
                 {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
+                    [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
                 }
-
+                
+                UITableView * tableView = [self.tableViewArray objectAtIndex:1];
                 [tableView reloadData];
+                
+                int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
+
+                if (index==1) {
+                    
+                    int cellNumber;
+                    if (sourceArray.count%2==0) {
+                        
+                        cellNumber = (int)sourceArray.count/2;
+                    }
+                    else
+                    {
+                        cellNumber = (int)sourceArray.count/2+1;
+                    }
+                    tableView.height = cellNumber*200*BiLiWidth;
+                    [self setTableViewHeightAndScollViewContentSize:tableView];
+
+                }
 
             }
             
@@ -358,7 +483,54 @@
     }
     
 }
+-(void)setTableViewHeightAndScollViewContentSize:(UITableView *)tableView
+{
+    self.contentScrollView.height = tableView.height+tableView.top;
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.contentScrollView.top+self.contentScrollView.height)];
+}
 #pragma mark---scrollviewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.tag==1002) {
+        
+        CGFloat hight = scrollView.frame.size.height;
+        CGFloat contentOffset = scrollView.contentOffset.y;
+        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
+        CGFloat offset = contentOffset - self.lastcontentOffset;
+        self.lastcontentOffset = contentOffset;
+        
+        // NSLog(@"上拉行为");
+        if (offset > 0 && contentOffset > 0) {
+            
+            //如果mainScrollview上滑到 buttonItemView的位置 则把buttonItemView添加到当前view上(实现悬浮效果)
+            if (scrollView.contentOffset.y>=146*BiLiWidth+28*BiLiWidth) {
+                
+                self.buttonItemView.top = self.topNavView.top+self.topNavView.height;
+                [self.view addSubview:self.buttonItemView];
+            }
+            
+        }
+        //NSLog(@"下拉行为");
+        if (offset < 0 && distanceFromBottom > hight) {
+            
+            //如果mainScrollview下滑到 buttonItemView的位置 则把buttonItemView添加到scrollview上(让buttonItemView和scrollview一起滚动)
+            
+            if (scrollView.contentOffset.y<=146*BiLiWidth+28*BiLiWidth) {
+                
+                self.buttonItemView.top = self.pageControl.top+self.pageControl.height+10*BiLiWidth;
+                [self.mainScrollView addSubview:self.buttonItemView];
+                
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    
+}
 -(void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
     if (scrollView.tag==1001) {
@@ -459,41 +631,53 @@
 
 -(void)liJiRenZhengButtonClick
 {
-    FuQiJiaoRenZhengStep1VC * vc = [[FuQiJiaoRenZhengStep1VC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.auth_couple.intValue==0) {
+        
+        FuQiJiaoRenZhengStep1VC * vc = [[FuQiJiaoRenZhengStep1VC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else
+    {
+        FuQiJiaoRenZhengStep4VC * vc = [[FuQiJiaoRenZhengStep4VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
 }
 #pragma mark -- 分类buttonclick
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
     [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
     
-    float originx = 13*BiLiWidth;
-    CGSize size;
+    UITableView * tableView = [self.tableViewArray objectAtIndex:selectButton.tag];
+    [self setTableViewHeightAndScollViewContentSize:tableView];
+    
+    if (tableView.height<self.mainScrollView.height) {
+        
+        self.buttonItemView.top = self.pageControl.top+self.pageControl.height+10*BiLiWidth;
+        [self.mainScrollView addSubview:self.buttonItemView];
+    }
     
     for (int i=0; i<self.listButtonArray.count; i++) {
         
         UIButton * button = [self.listButtonArray objectAtIndex:i];
         if (button.tag==selectButton.tag) {
-            
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
-            button.frame  = CGRectMake(originx,self.pageControl.top+self.pageControl.height+27.5*BiLiWidth, size.width, 18*BiLiWidth);
+        
             button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
-            
+
             [UIView animateWithDuration:0.5 animations:^{
+                
                 self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+
             }];
 
             
         }
         else
         {
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-            button.frame  = CGRectMake(originx, self.pageControl.top+self.pageControl.height+32.5*BiLiWidth, size.width, 14*BiLiWidth);
             button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
         }
-        
-        originx = button.left+button.width+11.5*BiLiWidth;
-        
         
     }
 }

@@ -63,14 +63,14 @@
    xinXiLeiXingLable.text = @"信息类型";
    [self.mainScrollView addSubview:xinXiLeiXingLable];
 
-   self.xinXiLeiXingTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, xinXiLeiXingLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
-   self.xinXiLeiXingTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-   [NormalUse setTextFieldPlaceholder:@"填写信息类型" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.xinXiLeiXingTF];
-   self.xinXiLeiXingTF.textAlignment = NSTextAlignmentRight;
-   self.xinXiLeiXingTF.keyboardType = UIKeyboardTypeNumberPad;
-   self.xinXiLeiXingTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-   self.xinXiLeiXingTF.textColor = RGBFormUIColor(0x343434);
-   [self.mainScrollView addSubview:self.xinXiLeiXingTF];
+   self.xinXiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-213.5*BiLiWidth, xinXiLeiXingLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
+   self.xinXiButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [self.xinXiButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
+    [self.xinXiButton setTitle:@"选择信息类型>" forState:UIControlStateNormal];
+    self.xinXiButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.xinXiButton.titleLabel.font = [UIFont systemFontOfSize:13*BiLiWidth];
+    [self.xinXiButton addTarget:self action:@selector(xinXiButtonClick) forControlEvents:UIControlEventTouchUpInside];
+   [self.mainScrollView addSubview:self.xinXiButton];
 
    UIView * lineViewXinXi = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, xinXiLeiXingLable.top+xinXiLeiXingLable.height, 270*BiLiWidth, 1)];
    lineViewXinXi.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -102,8 +102,7 @@
     diquLable.text = @"所在地区";
     [self.mainScrollView addSubview:diquLable];
 
-    self.diQuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, diquLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
-    self.diQuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.diQuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-213.5*BiLiWidth, diquLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
     [self.diQuButton setTitle:@"选择所在地区>" forState:UIControlStateNormal];
     [self.diQuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
     self.diQuButton.titleLabel.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -194,7 +193,7 @@
     fuWuXiangMuLable.text = @"服务项目";
     [self.mainScrollView addSubview:fuWuXiangMuLable];
     
-    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.ageTF.left, fuWuXiangMuLable.top, self.ageTF.width, 39.5*BiLiWidth)];
+    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-213.5*BiLiWidth, fuWuXiangMuLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
     self.fuWuXiangMuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.fuWuXiangMuButton setTitle:@"选择服务项目>" forState:UIControlStateNormal];
     [self.fuWuXiangMuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
@@ -665,6 +664,14 @@
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
+-(void)xinXiButtonClick
+{
+    LeiXiangSelectViewController * vc = [[LeiXiangSelectViewController alloc] init];
+    vc.type = @"xinxi";
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
 -(void)xiangMuButtonClick
 {
     LeiXiangSelectViewController * vc = [[LeiXiangSelectViewController alloc] init];
@@ -727,7 +734,12 @@
 
 -(void)nextButtonClick
 {
-    
+    if(![NormalUse isValidString:self.xinXiButton.titleLabel.text]||[@"选择信息类型>" isEqualToString:self.xinXiButton.titleLabel.text])
+    {
+        [NormalUse showToastView:@"请设置服务项目" view:self.view];
+         return;
+    }
+
     if (![NormalUse isValidString:self.biaoTiTF.text]) {
         
         [NormalUse showToastView:@"请填写标题信息" view:self.view];
@@ -763,7 +775,7 @@
     }
     
 
-    if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text])
+    if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text]||[@"选择服务项目>" isEqualToString:self.fuWuXiangMuButton.titleLabel.text])
     {
         [NormalUse showToastView:@"请设置服务项目" view:self.view];
          return;
@@ -1057,7 +1069,7 @@
             {
                 
                 NSMutableDictionary * dicInfo = [[NSMutableDictionary alloc] init];
-                [dicInfo setObject:self.xinXiLeiXingTF.text forKey:@"message_type"];
+                [dicInfo setObject:self.xinXiButton.titleLabel.text forKey:@"message_type"];
                 [dicInfo setObject:self.biaoTiTF.text forKey:@"title"];
                 NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
                 [dicInfo setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
@@ -1112,8 +1124,18 @@
 #pragma mark--选择服务项目后的代理
 -(void)itemSelected:(NSString *)str type:(NSString *)type
 {
-    [self.fuWuXiangMuButton setTitle:str forState:UIControlStateNormal];
-    [self.fuWuXiangMuButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+    if ([@"xinxi" isEqualToString:type]) {
+        
+        [self.xinXiButton setTitle:str forState:UIControlStateNormal];
+        [self.xinXiButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+
+    }
+    else
+    {
+        [self.fuWuXiangMuButton setTitle:str forState:UIControlStateNormal];
+        [self.fuWuXiangMuButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+
+    }
 }
 
 // 视频转换为MP4

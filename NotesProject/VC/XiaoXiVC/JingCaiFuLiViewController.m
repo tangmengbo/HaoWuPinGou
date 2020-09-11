@@ -151,11 +151,13 @@
     [jiaButton setBackgroundImage:[UIImage imageNamed:@"number_jia"] forState:UIControlStateNormal];
     [jiaButton addTarget:self action:@selector(jiaButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:jiaButton];
-
+    
+    self.ticket_buy_coin = [NormalUse getJinBiStr:@"ticket_buy_coin"];
+    
     self.jinBiGouMaiButton = [[UIButton alloc] initWithFrame:CGRectMake(171.5*BiLiWidth, 0, 137*BiLiWidth, 40*BiLiWidth)];
     self.jinBiGouMaiButton.backgroundColor = RGBFormUIColor(0x333333);
     [self.jinBiGouMaiButton setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
-    [self.jinBiGouMaiButton setTitle:@"50金币购买" forState:UIControlStateNormal];
+    [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%@金币购买",self.ticket_buy_coin] forState:UIControlStateNormal];
     self.jinBiGouMaiButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
     [self.jinBiGouMaiButton addTarget:self action:@selector(jinBiGouMaiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [controlView addSubview:self.jinBiGouMaiButton];
@@ -319,7 +321,7 @@
      
         number --;
         self.numberLable.text = [NSString stringWithFormat:@"%d",number];
-        [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%d金币购买",number*50] forState:UIControlStateNormal];
+        [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%d金币购买",number*self.ticket_buy_coin.intValue] forState:UIControlStateNormal];
 
     }
 }
@@ -327,7 +329,7 @@
 {
     number ++;
     self.numberLable.text = [NSString stringWithFormat:@"%d",number];
-    [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%d金币购买",number*50] forState:UIControlStateNormal];
+    [self.jinBiGouMaiButton setTitle:[NSString stringWithFormat:@"%d金币购买",number*self.ticket_buy_coin.intValue] forState:UIControlStateNormal];
 
 }
 -(void)jinBiGouMaiButtonClick

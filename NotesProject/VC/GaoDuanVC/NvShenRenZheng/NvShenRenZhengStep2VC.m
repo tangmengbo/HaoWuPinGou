@@ -805,7 +805,7 @@
     }
     
 
-    if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text])
+    if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text]||[@"选择服务项目>" isEqualToString:self.fuWuXiangMuButton.titleLabel.text])
     {
         [NormalUse showToastView:@"请设置服务项目" view:self.view];
          return;

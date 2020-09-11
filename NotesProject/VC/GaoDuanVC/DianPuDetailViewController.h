@@ -16,16 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIButton * guanZhuButton;
 
+@property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
+
+
 @property(nonatomic,strong)UIButton * pingFenButton;
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;
 
-@property(nonatomic,strong)UIView * itemButtonContentView;
-@property(nonatomic,strong)UIButton * pingFenButton1;
-@property(nonatomic,strong)UIButton * zuiXinButton1;
-@property(nonatomic,strong)UIButton * zuiReButton1;
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
 
-@property(nonatomic,strong)NSString * zuiXinOrZuiRe;//1 最新 2 最热
+
 
 
 

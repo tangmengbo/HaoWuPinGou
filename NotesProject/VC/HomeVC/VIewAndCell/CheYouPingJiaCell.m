@@ -43,6 +43,7 @@
         [self addSubview:self.tiYanTimeLable];
         
         self.toolButton = [[UIButton alloc] initWithFrame:CGRectMake(291*BiLiWidth,9.5,55.5*BiLiWidth,42*BiLiWidth)];
+        [self.toolButton setBackgroundImage:[UIImage imageNamed:@"yiYanZheng"] forState:UIControlStateNormal];
         [self addSubview:self.toolButton];
 
         
@@ -102,20 +103,7 @@
 
 -(void)initContentView:(NSDictionary *)info
 {
-    if ([@"yanCheBaoGao" isEqualToString:self.type]) {
-        
-        self.toolButton.frame = CGRectMake(278*BiLiWidth, self.nickLable.top, 69*BiLiWidth, 22*BiLiWidth);
-        self.toolButton.layer.cornerRadius = 11*BiLiWidth;
-        self.toolButton.layer.borderWidth = 1;
-        self.toolButton.layer.borderColor = [RGBFormUIColor(0xFF6C6D) CGColor];
-        [self.toolButton setTitle:@"查看详情" forState:UIControlStateNormal];
-        self.toolButton.titleLabel.font = [UIFont systemFontOfSize:10*BiLiWidth];
-        [self.toolButton setTitleColor:RGBFormUIColor(0xFF6C6D) forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.toolButton setBackgroundImage:[UIImage imageNamed:@"yiYanZheng"] forState:UIControlStateNormal];
-    }
+    
     if ([NormalUse isValidString:[info objectForKey:@"avatar"]]) {
         
         [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatar"]]];

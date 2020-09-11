@@ -8,14 +8,24 @@
 
 #import "WaiWeiListViewController.h"
 
-@interface WaiWeiListViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface WaiWeiListViewController ()<UITableViewDelegate,UITableViewDataSource,WSPageViewDelegate,WSPageViewDataSource>
 {
     int page;
 }
+@property(nonatomic,strong)UIScrollView * mainScrollView;
+@property(nonatomic,strong)NSArray * bannerArray;
+
+@property(nonatomic,strong)UIView * buttonContentView;
+@property(nonatomic,strong)UIButton * zuiXinButton;
+@property(nonatomic,strong)UIButton * zuiReButton;
 
 @property(nonatomic,strong)NSMutableArray * sourceArray;
-@property(nonatomic,strong)UITableView * mainTableView;
+@property(nonatomic,strong)UITableView * tableView;
 
+@property(nonatomic,strong)WSPageView * pageView;
+@property(nonatomic,strong)UIPageControl * pageControl;
+
+@property(nonatomic,assign)CGFloat  lastcontentOffset;
 @end
 
 @implementation WaiWeiListViewController
@@ -23,44 +33,131 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.sourceArray = [NSMutableArray array];
-    
+    self.topNavView.hidden = YES;
     page = 1;
     
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-(TopHeight_PingMu+58*BiLiWidth+BottomHeight_PingMu))];
-    self.mainTableView.delegate = self;
-    self.mainTableView.dataSource = self;
-    self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.mainTableView];
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
+        if (status==1) {
+
+            self.bannerArray = responseObject;
+            [self initContentView];
+
+        }
+    }];
+
+    
+}
+-(void)initContentView
+{
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-(TopHeight_PingMu+58*BiLiWidth+BottomHeight_PingMu))];
+    self.mainScrollView.tag = 1002;
+    self.mainScrollView.delegate = self;
+    [self.view addSubview:self.mainScrollView];
     
     MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
     mjHeader.lastUpdatedTimeLabel.hidden = YES;
-    self.mainTableView.mj_header = mjHeader;
-    [self.mainTableView.mj_header beginRefreshing];
+    self.mainScrollView.mj_header = mjHeader;
+    [self.mainScrollView.mj_header beginRefreshing];
     
     MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
-    self.mainTableView.mj_footer = mjFooter;
+    self.mainScrollView.mj_footer = mjFooter;
+
+    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
+    self.pageView .currentWidth = 305;
+    self.pageView .currentHeight = 147;
+    self.pageView .normalHeight = 134;
+    self.pageView .delegate = self;
+    self.pageView .dataSource = self;
+    self.pageView .minimumPageAlpha = 1;   //非当前页的透明比例
+    self.pageView .minimumPageScale = 0.8;  //非当前页的缩放比例
+    self.pageView .orginPageCount = 3; //原始页数
+    self.pageView .autoTime = 4;    //自动切换视图的时间,默认是5.0
+    [self.mainScrollView addSubview:self.pageView] ;
+    
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.height-20*BiLiWidth, 200*BiLiWidth, 10)];
+    self.pageControl.currentPage = 0;      //设置当前页指示点
+    self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
+    self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
+    self.pageControl.numberOfPages = self.bannerArray.count;
+    [self.pageView addSubview:self.pageControl];
+    
+    self.buttonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.pageView.top+self.pageView.height, WIDTH_PingMu, 40*BiLiWidth)];
+    self.buttonContentView.backgroundColor = [UIColor whiteColor];
+    [self.mainScrollView addSubview:self.buttonContentView];
+    
+    self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(15*BiLiWidth, 0, 40*BiLiWidth, 40*BiLiWidth)];
+    [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
+    [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+    [self.zuiXinButton addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    [self.buttonContentView addSubview:self.zuiXinButton];
+    
+    self.zuiReButton = [[UIButton alloc] initWithFrame:CGRectMake(self.zuiXinButton.left+self.zuiXinButton.width+15*BiLiWidth, 0, 40*BiLiWidth, 40*BiLiWidth)];
+    [self.zuiReButton setTitle:@"最热" forState:UIControlStateNormal];
+    [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+    [self.zuiReButton addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.zuiReButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    [self.buttonContentView addSubview:self.zuiReButton];
+
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.buttonContentView.top+self.buttonContentView.height, WIDTH_PingMu, 0)];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.mainScrollView addSubview:self.tableView];
+    
+    
 }
+#pragma mark--最新 最热button点击
+-(void)zuiXinButtonClick
+{
+    [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+    [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+    self.field = @"";
+    [self.mainScrollView.mj_header beginRefreshing];
+
+}
+-(void)zuiReButtonClick
+{
+    [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+    [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+    self.field = @"hot_value";
+    [self.mainScrollView.mj_header beginRefreshing];
+
+
+}
+
 -(void)loadNewLsit
 {
-    page = 0;
-    [HTTPModel getSanDaGirlList:[[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"type_id",[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    page = 1;
+    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+    [info setObject:@"2" forKey:@"type_id"];
+    [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [info setObject:self.field forKey:@"field"];
+    }
+    [HTTPModel getSanDaGirlList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
             self->page++;
             NSArray * dataArray = [responseObject objectForKey:@"data"];
-            [self.mainTableView.mj_header endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
             if (dataArray.count>=10) {
                 
-                [self.mainTableView.mj_footer endRefreshing];
+                [self.mainScrollView.mj_footer endRefreshing];
             }
             else
             {
-                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+                [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
             }
             self.sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
-            [self.mainTableView reloadData];
+            [self.tableView reloadData];
+            self.tableView.scrollEnabled = NO;
+            [self setTableViewHeightAndScollViewContentSize];
+            
         }
         else
         {
@@ -71,7 +168,16 @@
 }
 -(void)loadMoreList
 {
-    [HTTPModel getSanDaGirlList:[[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"type_id",[NSString stringWithFormat:@"%d",page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    
+    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+    [info setObject:@"2" forKey:@"type_id"];
+    [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [info setObject:self.field forKey:@"field"];
+    }
+
+    [HTTPModel getSanDaGirlList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -84,13 +190,15 @@
             }
             if (dataArray.count>=10) {
                 
-                [self.mainTableView.mj_footer endRefreshing];
+                [self.mainScrollView.mj_footer endRefreshing];
             }
             else
             {
-                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+                [self.mainScrollView.mj_footer endRefreshingWithNoMoreData];
             }
-            [self.mainTableView reloadData];
+            [self.tableView reloadData];
+            [self setTableViewHeightAndScollViewContentSize];
+
         }
         else
         {
@@ -99,18 +207,89 @@
     }];
 
 }
+-(void)setTableViewHeightAndScollViewContentSize
+{
+    int cellNumber;
+    if (self.sourceArray.count%2==0) {
+        
+        cellNumber = (int)self.sourceArray.count/2;
+    }
+    else
+    {
+        cellNumber = (int)self.sourceArray.count/2+1;
+    }
+    
+    self.tableView.height =  200*BiLiWidth*cellNumber;
+    
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.tableView.top+self.tableView.height)];
+
+}
+#pragma mark---scrollviewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.tag==1002) {
+        
+        CGFloat hight = scrollView.frame.size.height;
+        CGFloat contentOffset = scrollView.contentOffset.y;
+        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
+        CGFloat offset = contentOffset - self.lastcontentOffset;
+        self.lastcontentOffset = contentOffset;
+        
+        // NSLog(@"上拉行为");
+        if (offset > 0 && contentOffset > 0) {
+            
+            //如果mainScrollview上滑到 buttonItemView的位置 则把buttonItemView添加到当前view上(实现悬浮效果)
+            if (scrollView.contentOffset.y>=147*BiLiWidth) {
+                
+                self.buttonContentView.top = 0;
+                [self.view addSubview:self.buttonContentView];
+            }
+            
+        }
+        //NSLog(@"下拉行为");
+        if (offset < 0 && distanceFromBottom > hight) {
+            
+            //如果mainScrollview下滑到 buttonItemView的位置 则把buttonItemView添加到scrollview上(让buttonItemView和scrollview一起滚动)
+            
+            if (scrollView.contentOffset.y<=147*BiLiWidth) {
+                
+                self.buttonContentView.top = self.pageView.top+self.pageView.height;
+                [self.mainScrollView addSubview:self.buttonContentView];
+                
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    
+}
+
 #pragma mark UItableView Delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return self.sourceArray.count;
+    int cellNumber;
+    if (self.sourceArray.count%2==0) {
+        
+        cellNumber = (int)self.sourceArray.count/2;
+    }
+    else
+    {
+        cellNumber = (int)self.sourceArray.count/2+1;
+    }
+    
+    return cellNumber;
+
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return  144*BiLiWidth+17*BiLiWidth;
+    return  200*BiLiWidth;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,15 +299,56 @@
     {
         cell = [[NvShenListTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
-    cell.backgroundColor = [UIColor clearColor];
-    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row]];
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if ((indexPath.row+1)*2<=self.sourceArray.count) {
+        
+        [cell initData:[self.sourceArray objectAtIndex:indexPath.row*2] info2:[self.sourceArray objectAtIndex:indexPath.row*2+1]];
+    }
+    else
+    {
+        [cell initData:[self.sourceArray objectAtIndex:indexPath.row*2] info2:nil];
+    }
+    cell.type = @"4";
+
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-//    vc. = [self.sourceArray objectAtIndex:indexPath.row];
-//    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+#pragma mark NewPagedFlowView Delegate
+- (CGSize)sizeForPageInFlowView:(WSPageView *)flowView {
+    
+    return CGSizeMake(WIDTH_PingMu-60*BiLiWidth,flowView.frame.size.height);
+}
+
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+    
+}
+- (void)didScrollToPage:(float)contentOffsetX inFlowView:(WSPageView *)flowView pageNumber:(int)pageNumber{
+    
+    self.pageControl.currentPage = pageNumber;
+}
+
+#pragma mark NewPagedFlowView Datasource
+- (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
+    
+    return self.bannerArray.count;
+}
+
+- (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
+    
+    WSIndexBanner *bannerView = (WSIndexBanner *)[flowView dequeueReusableCell];
+    if (!bannerView)
+    {
+        bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 147*BiLiWidth)];
+    }
+    NSDictionary * info = [self.bannerArray objectAtIndex:index];
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+    return bannerView;
+    
 }
 
 @end

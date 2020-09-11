@@ -22,9 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSDictionary * info;
 
 @property(nonatomic,strong)UILabel * jinBiLable;
+@property(nonatomic,strong)UILabel * yuELable;
 
 @property(nonatomic,strong)Lable_ImageButton * lableButton1;
 @property(nonatomic,strong)Lable_ImageButton * lableButton2;
+
+
 
 @end
 

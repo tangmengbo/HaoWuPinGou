@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "YanCheBaoGaoTableViewCell.h"
 
 @interface HomeViewController ()<WSPageViewDelegate,WSPageViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
@@ -173,6 +174,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    /*更新公告
+    GongGaoAlertView * gongGaoView = [[GongGaoAlertView alloc] initWithFrame:CGRectZero messageInfo:nil];
+    gongGaoView.closeView = ^{
+        
+    };
+    gongGaoView.toUpload = ^{
+        
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:gongGaoView];
+     */
+    
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top+BottomHeight_PingMu))];
     self.mainScrollView.delegate = self;
     self.mainScrollView.tag = 1002;
@@ -180,9 +192,10 @@
     self.mainScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.mainScrollView];
 
-    
+    [NormalUse xianShiGifLoadingView:self];
     [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
+        [NormalUse quXiaoGifLoadingView:self];
         if (status==1) {
             
             self.bannerArray = responseObject;
@@ -190,6 +203,8 @@
 
         }
     }];
+    
+
     
 //    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"18740118239",@"mobile",@"123456",@"password", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
 //        
@@ -1161,15 +1176,14 @@
     if (tableView.tag==3) {
         
         NSString *tableIdentifier = [NSString stringWithFormat:@"CheYouPingJiaCell"] ;
-        CheYouPingJiaCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        YanCheBaoGaoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
         if (cell == nil)
         {
-            cell = [[CheYouPingJiaCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+            cell = [[YanCheBaoGaoTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
         cell.backgroundColor = [UIColor clearColor];
         NSMutableArray * sourcerray;
         sourcerray = [self.dataSourceArray objectAtIndex:3];
-        cell.type = @"yanCheBaoGao";
         [cell initContentView:[sourcerray objectAtIndex:indexPath.row]];
         
         return cell;
@@ -1211,35 +1225,39 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray * sourcerray;
-    if (tableView.tag==0) {
+    if (tableView.tag!=3) {
         
-         sourcerray = [self.dataSourceArray objectAtIndex:0];
-    }
-    else if (tableView.tag==1)
-    {
-        sourcerray = [self.dataSourceArray objectAtIndex:1];
+        NSMutableArray * sourcerray;
+        if (tableView.tag==0) {
+            
+             sourcerray = [self.dataSourceArray objectAtIndex:0];
+        }
+        else if (tableView.tag==1)
+        {
+            sourcerray = [self.dataSourceArray objectAtIndex:1];
+
+        }
+        else if (tableView.tag==2)
+        {
+            sourcerray = [self.dataSourceArray objectAtIndex:2];
+
+        }
+        else
+        {
+            sourcerray = [self.dataSourceArray objectAtIndex:3];
+
+        }
+        NSDictionary * info = [sourcerray objectAtIndex:indexPath.row];
+        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+        NSNumber * idNumber = [info objectForKey:@"id"];
+        if ([idNumber isKindOfClass:[NSNumber class]]) {
+            
+            vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+
+        }
+        [self.navigationController pushViewController:vc animated:YES];
 
     }
-    else if (tableView.tag==2)
-    {
-        sourcerray = [self.dataSourceArray objectAtIndex:2];
-
-    }
-    else
-    {
-        sourcerray = [self.dataSourceArray objectAtIndex:3];
-
-    }
-    NSDictionary * info = [sourcerray objectAtIndex:indexPath.row];
-    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-    NSNumber * idNumber = [info objectForKey:@"id"];
-    if ([idNumber isKindOfClass:[NSNumber class]]) {
-        
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-
-    }
-    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark UIButtonClick
 

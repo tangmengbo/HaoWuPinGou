@@ -16,143 +16,172 @@
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
+    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
         
-        self.selectedBackgroundView = [[UIView alloc] init];
-        self.selectedBackgroundView.backgroundColor = RGBFormUIColor(0xF4F4F4);
+        self.contentView1 = [[UIView alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 0, 165*BiLiWidth, 192*BiLiWidth)];
+        self.contentView1.layer.cornerRadius = 5*BiLiWidth;
+        self.contentView1.layer.masksToBounds = YES;
+        self.contentView1.layer.borderWidth = 1;
+        self.contentView1.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
+        [self addSubview:self.contentView1];
+        
+        self.headerImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 165*BiLiWidth, 137*BiLiWidth)];
+        self.headerImageView1.contentMode = UIViewContentModeScaleAspectFill;
+        self.headerImageView1.autoresizingMask = UIViewAutoresizingNone;
+        self.headerImageView1.clipsToBounds = YES;
+        [self.contentView1 addSubview:self.headerImageView1];
+        
+        self.cityLable1 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView1.top+self.headerImageView1.height+10*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
+        self.cityLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.cityLable1.textColor = RGBFormUIColor(0x333333);
+        [self.contentView1 addSubview:self.cityLable1];
+        
+        self.ageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView1.width-52*BiLiWidth, self.cityLable1.top, 50*BiLiWidth, 14*BiLiWidth)];
+        self.ageLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.ageLable1.textColor = RGBFormUIColor(0x333333);
+        self.ageLable1.textAlignment = NSTextAlignmentRight;
+        [self.contentView1 addSubview:self.ageLable1];
+        
+        self.messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.messageLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        self.messageLable1.textColor = RGBFormUIColor(0x333333);
+        [self.contentView1 addSubview:self.messageLable1];
 
+        self.button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
+        [self.button1 addTarget:self action:@selector(button1Click) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView1 addSubview:self.button1];
         
-        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
-        self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
-        self.headerImageView.clipsToBounds = YES;
-        self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
-        [self addSubview:self.headerImageView];
+        self.contentView2 = [[UIView alloc] initWithFrame:CGRectMake(self.contentView1.left+self.contentView1.width+4.5*BiLiWidth, 0, 165*BiLiWidth, 192*BiLiWidth)];
+        self.contentView2.layer.cornerRadius = 5*BiLiWidth;
+        self.contentView2.layer.masksToBounds = YES;
+        self.contentView2.layer.borderWidth = 1;
+        self.contentView2.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
+        [self addSubview:self.contentView2];
         
-        self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
-        self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
-        self.faBuTimeLable.textColor = RGBFormUIColor(0xF6BC61);
-        self.faBuTimeLable.backgroundColor = RGBFormUIColor(0x333333);
-        self.faBuTimeLable.textAlignment = NSTextAlignmentCenter;
-        self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
-        [self.headerImageView addSubview:self.faBuTimeLable];
+        self.headerImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 165*BiLiWidth, 137*BiLiWidth)];
+        self.headerImageView2.contentMode = UIViewContentModeScaleAspectFill;
+        self.headerImageView2.autoresizingMask = UIViewAutoresizingNone;
+        self.headerImageView2.clipsToBounds = YES;
+        [self.contentView2 addSubview:self.headerImageView2];
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
-        self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-        self.titleLable.textColor = RGBFormUIColor(0x333333);
-        [self addSubview:self.titleLable];
+        self.cityLable2 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView1.top+self.headerImageView1.height+10*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
+        self.cityLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.cityLable2.textColor = RGBFormUIColor(0x333333);
+        [self.contentView2 addSubview:self.cityLable2];
         
-        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+27*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
-        self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.leiXingLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.leiXingLable];
+        self.ageLable2 = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView1.width-62*BiLiWidth, self.cityLable1.top, 50*BiLiWidth, 14*BiLiWidth)];
+        self.ageLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.ageLable2.textColor = RGBFormUIColor(0x333333);
+        self.ageLable2.textAlignment = NSTextAlignmentRight;
+        [self.contentView2 addSubview:self.ageLable2];
         
-        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
-        self.diQuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.diQuLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.diQuLable];
 
+        self.messageLable2 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.messageLable2.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        self.messageLable2.textColor = RGBFormUIColor(0x999999);
+        [self.contentView2 addSubview:self.messageLable2];
         
-        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
-        self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.fuWuLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.fuWuLable];
-
-        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+6*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
-        self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.pingFenLable.textColor = RGBFormUIColor(0x999999);
-        self.pingFenLable.text = @"综合评分: ";
-        [self addSubview:self.pingFenLable];
-        
-        self.pingFenStarView = [[UIView alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width+3.5*BiLiWidth, self.pingFenLable.top-1*BiLiWidth, 72*BiLiWidth, 12*BiLiWidth)];
-        [self addSubview:self.pingFenStarView];
-
-        
-        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
-        self.xiaoFeiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.xiaoFeiLable];
-
+        self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
+        [self.button2 addTarget:self action:@selector(button2Click) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView2 addSubview:self.button2];
 
 
     }
     return self;
 }
--(void)contentViewSetData:(NSDictionary *)info
+-(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
-    if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
+    self.info1 = info1;
+    if ([[info1 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
+        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
         
     }
-    if ([[info objectForKey:@"images"] isKindOfClass:[NSArray class]])
+    if ([[info1 objectForKey:@"images"] isKindOfClass:[NSArray class]])
     {
-        NSArray * images = [info objectForKey:@"images"];
+        NSArray * images = [info1 objectForKey:@"images"];
         if ([NormalUse isValidArray:images]) {
             
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
-
-        }
-    }
-    
-    
-    CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
-    self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
-    self.faBuTimeLable.width = size.width+5*BiLiWidth;
-    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
-    
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.faBuTimeLable.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.faBuTimeLable.layer.mask = maskLayer;
-    
-    self.titleLable.text =[info objectForKey:@"title"] ;
-    
-    self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
-    self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
-    self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];
-    NSNumber *  trade_money = [info objectForKey:@"trade_money"];
-    if ([trade_money isKindOfClass:[NSNumber class]]) {
-        
-        self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d",trade_money.intValue];
-    }
-    
-    [self.pingFenStarView removeAllSubviews];
-    
-    
-    NSNumber * complex_score = [info objectForKey:@"complex_score"];
-    if ([complex_score isKindOfClass:[NSNumber class]]) {
-        
-        for(int i=1;i<=5;i++)
-        {
-            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15*BiLiWidth*(i-1), 0, 12*BiLiWidth, 12*BiLiWidth)];
-            [self.pingFenStarView addSubview:imageView];
+            [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
             
-            if (i<=complex_score.intValue) {
-                
-                imageView.image = [UIImage imageNamed:@"star_yellow"];
-
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"star_hui"];
-
-            }
-
         }
-        
     }
 
+    self.cityLable1.text = [info1 objectForKey:@"city_name"];
+    NSNumber * age = [info1 objectForKey:@"age"];
+    if ([age isKindOfClass:[NSNumber class]]) {
+        
+        self.ageLable1.text = [NSString stringWithFormat:@"%d岁",age.intValue];
+    }
+    NSNumber * min_price = [info1 objectForKey:@"min_price"];
+    NSNumber * max_price = [info1 objectForKey:@"max_price"];
+    if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
+        
+        self.messageLable1.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
+    }
     
-    
+    if ([NormalUse isValidDictionary:info2]) {
+        
+        self.info2 = info2;
+        self.contentView2.hidden = NO;
+
+        if ([[info2 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
+            
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
+            
+        }
+        if ([[info2 objectForKey:@"images"] isKindOfClass:[NSArray class]])
+        {
+            NSArray * images = [info2 objectForKey:@"images"];
+            if ([NormalUse isValidArray:images]) {
+                
+                [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+                
+            }
+        }
+        self.cityLable2.text = [info2 objectForKey:@"city_name"];
+        NSNumber * age = [info2 objectForKey:@"age"];
+        if ([age isKindOfClass:[NSNumber class]]) {
+            
+            self.ageLable2.text = [NSString stringWithFormat:@"%d岁",age.intValue];
+        }
+        NSNumber * min_price = [info2 objectForKey:@"min_price"];
+        NSNumber * max_price = [info2 objectForKey:@"max_price"];
+        if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
+            
+            self.messageLable2.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
+        }
+
+    }
+    else
+    {
+        self.contentView2.hidden = YES;
+    }
+}
+#pragma mark--buttonClick
+-(void)button1Click
+{
+    NSNumber * girlId = [self.info1 objectForKey:@"id"];
+    SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+    vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+    vc.type = self.type;
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+}
+-(void)button2Click
+{
+    NSNumber * girlId = [self.info2 objectForKey:@"id"];
+    SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+    vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+    vc.type = self.type;
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
 @end

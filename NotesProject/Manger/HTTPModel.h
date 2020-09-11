@@ -179,7 +179,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getYanZhengList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-//验车报告
+//验车报告 帖子详情页面时传入，post_id在经纪人和茶小二帖子时传入。girl_id在女神、外围、全球详情时传入
 +(void)getYanCheBaoGaoList:(NSDictionary *_Nullable)parameter
                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
@@ -253,5 +253,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //夫妻交列表
 +(void)getFuQiJiaoList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//个人信息
++(void)getUserInfo:(NSDictionary *_Nullable)parameter
+          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 @end

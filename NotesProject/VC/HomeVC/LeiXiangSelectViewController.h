@@ -11,7 +11,7 @@
 @protocol LeiXiangSelectViewControllerDelegate
 @optional
 
-- (void)itemSelected:(NSString * _Nonnull)str type:(NSString *)type;
+- (void)itemSelected:(NSString * _Nonnull)str type:(NSString * _Nonnull)type;
 
 @end
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)id<LeiXiangSelectViewControllerDelegate>delegate;
 
 
-@property(nonatomic,strong)NSString * type;//meizi fuwu
+@property(nonatomic,strong)NSString * type;//meizi fuwu xinxi
 @property(nonatomic,strong)NSArray * sourceArray;
 
 @end

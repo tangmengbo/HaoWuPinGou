@@ -42,7 +42,7 @@
 
 @property(nonatomic,strong)NSArray * guanFangTuiJianDianPuArray;//官方推荐列表
 
-@property(nonatomic,strong)NSArray * jingJiRenListArray;//官方推荐列表
+@property(nonatomic,strong)NSMutableArray * jingJiRenListArray;//官方推荐列表
 
 @end
 
@@ -66,6 +66,7 @@
                 //auth_goddess":1,//女神认证：有
                 //auth_global":0,//全球陪玩:无
                 //auth_peripheral":0//外围认证：无
+                //auth_couple  :夫妻交认证
                 
                 NSDictionary * info = responseObject;
                 
@@ -100,17 +101,6 @@
     
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
-    
-//    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-11*BiLiWidth-55*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
-//    locationImageView.image = [UIImage imageNamed:@"home_location"];
-//    [self.topNavView addSubview:locationImageView];
-//
-//    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
-//    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-//    self.locationLable.adjustsFontSizeToFitWidth = YES;
-//    self.locationLable.textColor = RGBFormUIColor(0x333333);
-//    self.locationLable.text = @"深圳市";
-//    [self.topNavView addSubview:self.locationLable];
     
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
@@ -179,6 +169,15 @@
     self.mainTableView.tag = 1002;
    [self.contentScrollView addSubview:self.mainTableView];
     
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainTableView.mj_header = mjHeader;
+    [self.mainTableView.mj_header beginRefreshing];
+    
+    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    self.mainTableView.mj_footer = mjFooter;
+
+    
     nvShenListVC = [[NvShenListViewController alloc] init];
     nvShenListVC.view.frame = CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, self.contentScrollView.height);
     [self.contentScrollView addSubview:nvShenListVC.view];
@@ -245,11 +244,70 @@
             
         }
     }];
+
+}
+-(void)loadNewLsit
+{
+    page = 1;
+    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+    [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [info setObject:self.field forKey:@"field"];
+    }
+
+    [HTTPModel getJingJiRenList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self->page++;
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            self.jingJiRenListArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.mainTableView.mj_header endRefreshing];
+            if (dataArray.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+
+            
+            [self.mainTableView reloadData];
+        }
+    }];
+
+}
+-(void)loadMoreList
+{
+    page = 1;
+    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+    [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [info setObject:self.field forKey:@"field"];
+    }
+
     [HTTPModel getJingJiRenList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
-            self.jingJiRenListArray = [responseObject objectForKey:@"data"];
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            for (NSDictionary * info in dataArray) {
+                
+                [self.jingJiRenListArray addObject:info];
+            }
+            if (dataArray.count>=10) {
+                
+                [self.mainTableView.mj_footer endRefreshing];
+            }
+            else
+            {
+                [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+            }
+
             [self.mainTableView reloadData];
         }
     }];
@@ -286,6 +344,16 @@
         originx = button.left+button.width+11.5*BiLiWidth;
 
         
+    }
+    
+    if (selectButton.tag==0 && self.itemButtonContentView.tag==1) {
+        
+        self.itemButtonContentView.hidden = NO;
+    }
+    else
+    {
+        self.itemButtonContentView.hidden = YES;
+
     }
 }
 #pragma mark--经纪人认证 女神认证 全国空降 陪玩
@@ -329,6 +397,7 @@
         NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
         vc.alsoShowBackButton = YES;
         [self.navigationController pushViewController:vc animated:YES];
+        
 
     }
     
@@ -413,6 +482,7 @@
             if (scrollView.contentOffset.y>=500*BiLiWidth) {
                 
                 self.itemButtonContentView.hidden = NO;
+                self.itemButtonContentView.tag = 1;
             }
 
         }
@@ -422,6 +492,8 @@
                 
                 
             self.itemButtonContentView.hidden = YES;
+                self.itemButtonContentView.tag = 0;
+
                        
             }
         }
@@ -478,28 +550,30 @@
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 501*BiLiWidth+24*BiLiWidth)];
     headerView.backgroundColor = [UIColor whiteColor];
     //顶部轮播图
-    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
     if ([NormalUse isValidArray:self.bannerArray]) {
         
-        self.pageView.currentWidth = 305;
-        self.pageView.currentHeight = 147;
-        self.pageView.normalHeight = 134;
-        self.pageView.delegate = self;
-        self.pageView.dataSource = self;
-        self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-        self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-        self.pageView.orginPageCount = 3; //原始页数
-        self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-        [headerView addSubview:self.pageView] ;
-
+        WSPageView * pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
+        
+        pageView.currentWidth = 305;
+        pageView.currentHeight = 147;
+        pageView.normalHeight = 134;
+        pageView.delegate = self;
+        pageView.dataSource = self;
+        pageView.minimumPageAlpha = 1;   //非当前页的透明比例
+        pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
+        pageView.orginPageCount = 3; //原始页数
+        pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
+        [headerView addSubview:pageView] ;
+        
+        
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, pageView.top+pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
+        self.pageControl.currentPage = 0;      //设置当前页指示点
+        self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
+        self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
+        self.pageControl.numberOfPages = self.bannerArray.count;
+        [headerView addSubview:self.pageControl];
     }
-    
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.top+self.pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
-    self.pageControl.currentPage = 0;      //设置当前页指示点
-    self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
-    self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
-    self.pageControl.numberOfPages = self.bannerArray.count;
-    [headerView addSubview:self.pageControl];
+   
     
     //分类scrollview
     MyScrollView * fenLeiScrollView = [[MyScrollView alloc] initWithFrame:CGRectMake(0, self.pageControl.top+self.pageControl.height+25*BiLiWidth, WIDTH_PingMu, 57*BiLiWidth)];
@@ -777,6 +851,14 @@
     return headerView;
     
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
+{
+    return nil;
+}
 #pragma mark--UIButtonClick
 -(void)guanFangTuiJianClick:(UIButton *)button
 {
@@ -791,6 +873,7 @@
 }
 -(void)zuiXinButtonClick
 {
+    self.field = @"";
     self.zuiXinOrZuiRe = @"1";
     [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
     [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
@@ -798,9 +881,11 @@
     [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     
+    [self loadNewLsit];
 }
 -(void)zuiReButtonClick
 {
+    self.field = @"hot_value";
     self.zuiXinOrZuiRe = @"2";
 
     [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
@@ -809,6 +894,7 @@
     [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
     [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
 
+    [self loadNewLsit];
 }
 
 

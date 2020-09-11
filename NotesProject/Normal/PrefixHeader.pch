@@ -59,6 +59,7 @@
 #import "HomeListCell.h"
 #import "TiYanBaoGaoCell.h"
 #import "CheYouPingJiaCell.h"
+#import "GongGaoAlertView.h"
 
 #import "CityListViewController.h"
 #import "LeiXiangSelectViewController.h"
@@ -87,6 +88,7 @@
 #import "JingJiRenRenZhengStep2VC.h"
 #import "JingJiRenRenZhengStep3VC.h"
 
+#import "SanDaJiaoSeDetailViewController.h"
 #import "PeiWanListViewController.h"
 #import "WaiWeiListViewController.h"
 #import "NvShenListViewController.h"
@@ -110,6 +112,8 @@
 #import "XiaoXiViewController.h"
 
 //我的
+#import "MyJieSuoListViewController.h"
+#import "HuiYuanViewController.h"
 #import "SetShouShiMiMaViewController.h"
 #import "XiaoXiViewController.h"
 #import "SheZhiViewController.h"

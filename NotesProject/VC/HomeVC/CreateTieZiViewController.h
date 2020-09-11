@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 //1：经纪人发布到店铺的帖子 0默认普通帖子
 @property(nonatomic,strong)NSString * from_flg;
 
-@property(nonatomic,strong)UITextField * xinXiLeiXingTF;
+@property(nonatomic,strong)UIButton * xinXiButton;
 @property(nonatomic,strong)UITextField * biaoTiTF;
 @property(nonatomic,strong)UIButton * diQuButton;
 @property(nonatomic,strong)UITextField * ageTF;

@@ -126,7 +126,7 @@
         }
         else if ([NormalUse isValidString:[info2 objectForKey:@"images"]])
         {
-            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
         }
         
         NSString * titleStr = [NormalUse getobjectForKey:[info2 objectForKey:@"city_name"]];
@@ -146,11 +146,15 @@
 -(void)pushTuTieZiDetail1
 {
     TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+    NSNumber * post_id = [self.info1 objectForKey:@"id"];
+    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
     [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 }
 -(void)pushTuTieZiDetail2
 {
     TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+    NSNumber * post_id = [self.info2 objectForKey:@"id"];
+    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
     [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
 }

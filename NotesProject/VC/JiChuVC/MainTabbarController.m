@@ -152,7 +152,7 @@
     self.lab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, self.lab1.top, self.tab1.width, 11)];
     self.lab4.font = [UIFont systemFontOfSize:11];
     self.lab4.textColor = RGBFormUIColor(0xDDDDDD);
-    self.lab4.text = @"消息";
+    self.lab4.text = @"活动";
     self.lab4.textAlignment = NSTextAlignmentCenter;
     [self.tab4 addSubview:self.lab4];
 

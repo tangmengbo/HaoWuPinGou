@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GaoDuanViewController : MainBaseViewController
+{
+    int page;
+}
+
+@property(nonatomic,strong)NSString * field;//默认最新 hot_value热度
+
 
 @property(nonatomic,strong)UIView * sliderView;
 

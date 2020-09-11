@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NvShenListViewController : MainBaseViewController
 
+@property(nonatomic,strong)NSString * field;//默认最新 hot_value热度
+
 @end
 
 NS_ASSUME_NONNULL_END

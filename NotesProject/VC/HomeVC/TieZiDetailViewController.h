@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * messageContentView;
 
-
+@property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
 @property(nonatomic,strong)UILabel * tipLable;
 
 @property(nonatomic,strong)UIButton * jiBenXinXiButton;
@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSArray * pingLunArray;
 @property(nonatomic,strong)UIButton * cheYouPingJiaButton;
+
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
 @property(nonatomic,strong)UITableView * cheYouPingJiaTableView;
 
 @property(nonatomic,strong)UIView * sliderView;

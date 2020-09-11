@@ -21,7 +21,7 @@
     {
         
         self.selectedBackgroundView = [[UIView alloc] init];
-        self.selectedBackgroundView.backgroundColor = RGBFormUIColor(0xF4F4F4);
+        self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
 
         
         self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
@@ -110,10 +110,17 @@
         maskLayer.frame = self.faBuTimeLable.bounds;
         maskLayer.path = maskPath.CGPath;
         self.faBuTimeLable.layer.mask = maskLayer;
+        
+        self.faBuTimeLable.hidden = NO;
+
+    }
+    else
+    {
+        self.faBuTimeLable.hidden = YES;
 
     }
     
-    self.titleLable.text =[info objectForKey:@"title"] ;
+    self.titleLable.text = [info objectForKey:@"title"] ;
     
     self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];

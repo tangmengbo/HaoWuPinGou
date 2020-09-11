@@ -29,6 +29,14 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     [self registerAPNs];
     
+    [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSDictionary * info = [NormalUse removeNullFromDictionary:responseObject];
+            [NormalUse defaultsSetObject:info forKey:JinBiShuoMing];
+        }
+    }];
     //用户已经登录
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         

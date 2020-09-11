@@ -52,6 +52,19 @@
         }];
 
     }
+    else if ([@"xinxi" isEqualToString:self.type])
+    {
+        [HTTPModel getXinXiLeiXing:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                self.sourceArray = responseObject;
+                [self initView];
+            }
+
+        }];
+
+    }
 
 }
 -(void)initView

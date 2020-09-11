@@ -19,6 +19,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        self.selectedBackgroundView = [[UIView alloc] init];
+        self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
+
         self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, 21.5*BiLiWidth, 48*BiLiWidth, 48*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;

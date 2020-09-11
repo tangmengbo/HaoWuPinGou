@@ -99,7 +99,19 @@
     self.jinBiLable.textColor = RGBFormUIColor(0x333333);
     [tipImageView addSubview:self.jinBiLable];
     
-    NSString * jinBiStr = @"200 金币";
+    NSString * jinBiStr;
+    NSString * type = [self.info objectForKey:@"type"];
+    if ([@"1" isEqualToString:type]) {
+        
+        jinBiStr = [NSString stringWithFormat:@"%@ 金币",[NormalUse getJinBiStr:@"normal_auth_coin"]];
+    }
+    else
+    {
+        jinBiStr = [NSString stringWithFormat:@"%@ 金币",[NormalUse getJinBiStr:@"agent_auth_coin"]];
+
+    }
+    
+     
     NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:jinBiStr];
     [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(jinBiStr.length-2, 2)];
     [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(jinBiStr.length-2, 2)];
@@ -119,10 +131,6 @@
     yuELable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:yuELable];
     
-    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:@"当前可用金币：10000"];
-    [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
-    [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
-    yuELable.attributedText = str1;
 
     UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, yuELable.top+yuELable.height+36*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
     [tiJiaoButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -145,6 +153,19 @@
     [tiJiaoButton addSubview:tiJiaoLable];
     
     
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSNumber * coin = [responseObject objectForKey:@"coin"];
+            
+            NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前可用金币：%d",coin.intValue]];
+            [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
+            [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
+            yuELable.attributedText = str1;
+
+        }
+    }];
 
     
 }

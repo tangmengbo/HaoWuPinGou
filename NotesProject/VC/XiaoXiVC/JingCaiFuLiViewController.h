@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UITextView * contentTextView;
 
+@property(nonatomic,strong)NSString * ticket_buy_coin;
+
 
 @end
 

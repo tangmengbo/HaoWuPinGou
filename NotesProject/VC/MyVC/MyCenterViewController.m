@@ -10,6 +10,8 @@
 
 @interface MyCenterViewController ()
 
+@property(nonatomic,strong)NSDictionary * userInfo;
+
 @end
 
 @implementation MyCenterViewController
@@ -19,6 +21,54 @@
     [super viewWillAppear:animated];
     
     [self xianShiTabBar];
+    
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            self.userInfo = responseObject;
+            [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:self.userInfo] forKey:UserInformation];
+            
+            NSNumber * total_unlock_num = [self.userInfo objectForKey:@"total_unlock_num"];//总解锁次数
+            NSNumber * had_unlock_num = [self.userInfo objectForKey:@"had_unlock_num"];//已解锁次数
+            self.mianFeiJieSuoButton.button_lable.text = [NSString stringWithFormat:@"%d/%d",had_unlock_num.intValue,total_unlock_num.intValue];
+            
+            NSNumber * total_post_num = [self.userInfo objectForKey:@"total_post_num"];//总发帖次数
+            NSNumber * had_post_num = [self.userInfo objectForKey:@"had_post_num"];//已发帖数
+            self.mianFeiFaBuButton.button_lable.text = [NSString stringWithFormat:@"%d/%d",had_post_num.intValue,total_post_num.intValue];
+
+            
+            NSNumber * favorite_num = [self.userInfo objectForKey:@"favorite_num"];//总收藏数
+            NSNumber * follow_num = [self.userInfo objectForKey:@"follow_num"];//总关注数
+            self.shouCangGuanZhuButton.button_lable.text = [NSString stringWithFormat:@"%d/%d",favorite_num.intValue,follow_num.intValue];
+
+            self.nickLable.text = [self.userInfo objectForKey:@"nickname"];
+            [self.headerImageView sd_setImageWithURL:[self.userInfo objectForKey:@"avatar"] placeholderImage:[UIImage imageNamed:@"moRen_header"]];
+            NSNumber * coin = [self.userInfo objectForKey:@"coin"];
+            self.yuELable.text = [NSString stringWithFormat:@"%d",coin.intValue];
+
+            //auth_vip 2终身会员 1年会员 0非会员
+            NSNumber * auth_vip = [self.userInfo objectForKey:@"auth_vip"];
+            if ([auth_vip isKindOfClass:[NSNumber class]]) {
+                
+                if (auth_vip.intValue==0) {
+                    
+                    self.huiYuanTitleLable.text = @"开通会员";
+                    self.huiYuanDaoQiLable.text = @"暂未开通会员";
+
+
+                }
+                else
+                {
+                    self.huiYuanTitleLable.text = @"会员到期时间";
+                    self.huiYuanDaoQiLable.text = @"";
+
+                }
+            }
+            
+        }
+    }];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,6 +80,7 @@
         self.mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     [self.view addSubview:self.mainScrollView];
+    
     
     [self initContentView];
 }
@@ -71,20 +122,59 @@
     [sheZhiButton addTarget:self action:@selector(sheZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:sheZhiButton];
     
-    UIButton * huiYuanButton = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView.top+self.headerImageView.height+33.5*BiLiWidth, 160*BiLiWidth, 78*BiLiWidth)];
+    
+    self.mianFeiJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiJieSuoButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
+    self.mianFeiJieSuoButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+    self.mianFeiJieSuoButton.button_lable.textColor = RGBFormUIColor(0x343434);
+    self.mianFeiJieSuoButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    self.mianFeiJieSuoButton.button_lable1.frame = CGRectMake(0, 28*BiLiWidth, self.mianFeiJieSuoButton.width, 12*BiLiWidth);
+    self.mianFeiJieSuoButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.mianFeiJieSuoButton.button_lable1.textColor = RGBFormUIColor(0x9A9A9A);
+    self.mianFeiJieSuoButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+    self.mianFeiJieSuoButton.button_lable1.text = @"免费解锁";
+    [self.mainScrollView addSubview:self.mianFeiJieSuoButton];
+    
+    self.mianFeiFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-50*BiLiWidth)/2, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiFaBuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
+    self.mianFeiFaBuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+    self.mianFeiFaBuButton.button_lable.textColor = RGBFormUIColor(0x343434);
+    self.mianFeiFaBuButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    self.mianFeiFaBuButton.button_lable1.frame = CGRectMake(0, 28*BiLiWidth, self.mianFeiJieSuoButton.width, 12*BiLiWidth);
+    self.mianFeiFaBuButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.mianFeiFaBuButton.button_lable1.textColor = RGBFormUIColor(0x9A9A9A);
+    self.mianFeiFaBuButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+    self.mianFeiFaBuButton.button_lable1.text = @"免费发布";
+    [self.mainScrollView addSubview:self.mianFeiFaBuButton];
+
+    self.shouCangGuanZhuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-50*BiLiWidth-36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.shouCangGuanZhuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
+    self.shouCangGuanZhuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+    self.shouCangGuanZhuButton.button_lable.textColor = RGBFormUIColor(0x343434);
+    self.shouCangGuanZhuButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    self.shouCangGuanZhuButton.button_lable1.frame = CGRectMake(0, 28*BiLiWidth, self.mianFeiJieSuoButton.width, 12*BiLiWidth);
+    self.shouCangGuanZhuButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.shouCangGuanZhuButton.button_lable1.textColor = RGBFormUIColor(0x9A9A9A);
+    self.shouCangGuanZhuButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+    self.shouCangGuanZhuButton.button_lable1.text = @"收藏关注";
+    [self.mainScrollView addSubview:self.shouCangGuanZhuButton];
+
+
+    
+    
+    UIButton * huiYuanButton = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.shouCangGuanZhuButton.top+self.shouCangGuanZhuButton.height+18.5*BiLiWidth, 160*BiLiWidth, 78*BiLiWidth)];
     [huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_huiYuanBottom"] forState:UIControlStateNormal];
+    [huiYuanButton addTarget:self action:@selector(huiYuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:huiYuanButton];
     
-    UILabel * huiYuanTitleLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, 23*BiLiWidth, 90*BiLiWidth, 14*BiLiWidth)];
-    huiYuanTitleLable.textColor = RGBFormUIColor(0x865A0A);
-    huiYuanTitleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    huiYuanTitleLable.text = @"会员到期时间";
-    [huiYuanButton addSubview:huiYuanTitleLable];
+    self.huiYuanTitleLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, 23*BiLiWidth, 90*BiLiWidth, 14*BiLiWidth)];
+    self.huiYuanTitleLable.textColor = RGBFormUIColor(0x865A0A);
+    self.huiYuanTitleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    [huiYuanButton addSubview:self.huiYuanTitleLable];
     
-    self.huiYuanDaoQiLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, huiYuanTitleLable.top+huiYuanTitleLable.height+8*BiLiWidth, 90*BiLiWidth, 11*BiLiWidth)];
+    self.huiYuanDaoQiLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, self.huiYuanTitleLable.top+self.huiYuanTitleLable.height+8*BiLiWidth, 90*BiLiWidth, 11*BiLiWidth)];
     self.huiYuanDaoQiLable.textColor = RGBFormUIColor(0xC49A47);
     self.huiYuanDaoQiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    self.huiYuanDaoQiLable.text = @"2020-12-12";
     [huiYuanButton addSubview:self.huiYuanDaoQiLable];
 
     
@@ -95,7 +185,6 @@
     self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(94.5*BiLiWidth, 39*BiLiWidth, 60*BiLiWidth, 17*BiLiWidth)];
     self.yuELable.textColor = RGBFormUIColor(0xFECF61);
     self.yuELable.font = [UIFont systemFontOfSize:17*BiLiWidth];
-    self.yuELable.text = @"12234";
     self.yuELable.adjustsFontSizeToFitWidth = YES;
     [chongZhiButton addSubview:self.yuELable];
     
@@ -182,14 +271,20 @@
     SheZhiViewController * vc = [[SheZhiViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
+-(void)huiYuanButtonClick
+{
+    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+    vc.info = self.userInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(void)myJieSuoButtonClick
 {
-    SetShouShiMiMaViewController * vc = [[SetShouShiMiMaViewController alloc] init];
+    MyJieSuoListViewController * vc = [[MyJieSuoListViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)kaiJiangButtonClick
 {
-    JingCaiFuLiViewController * vc = [[JingCaiFuLiViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.tabbar setItemSelected:3];
 }
 @end

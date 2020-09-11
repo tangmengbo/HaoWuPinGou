@@ -59,6 +59,35 @@
 #define LoginToken @"LoginTokenDefaults" //当前用户token
 #define CurrentCity @"CurrentCityDefaults" //当前城市
 #define UserRole @"UserRoleDefaults"//当前用户角色
+#define JinBiShuoMing @"JinBIShuoMingDefaults"//项目金币说明
+/*
+ "cny_to_coin":"10",//人民币兑换金币比率 1人民币对应 10金币
+ "vip_auth_coin":"10000",//VIP所需金币
+ "normal_auth_coin":"1000",//茶小二认证所需金币
+ "agent_auth_coin":"500",//经纪人认证所需金币
+ "goddess_auth_coin":"1000",//女神认证所需金币
+ "peripheral_auth_coin":"1000",//外围女认证所需金币
+ "global_auth_coin":"10000",//全球陪玩认证所需金币
+ "cash_out_percentage":"30",//提现手续费百分比
+ "share_percentage":"300",//分享提成奖励金币
+ "unlock_mobile_coin":"200",//联系方式解锁所需金币
+ "made_requirement_coin":"300",//定制需求所需金币
+ "cash_out_limit":"500",//提现最低额度
+ "publish_post_coin":"100",//发布帖子所需金币
+ "vip_forever_coin":"1000000",//终身会员金币
+ "vip_year_coin":"100000",//年会员金币
+ "ticket_buy_coin":"50",//购买彩票码金币
+ "vip_funlock_num":"15",//终身会员当天解锁次数
+ "vip_fpost_num":"15",//终身会员当天发帖次数
+ "vip_ypost_num":"10",//年会员当天发帖次数
+ "vip_yunlock_num":"10",//年会员当天解锁次数
+ "vip_fpack_coin":"1000",//开通终身会员送的金币
+ "vip_ypack_coin":"500",//开通年会员送的金币
+ "couple_auth_coin":"10000",//夫妻交友认证金币
+ "enabled_post_normal":"1",//茶馆儿是否允许免费发帖
+ "enabled_post_agent":"1"//经纪人是否允许免费发帖
+
+ */
 
 
 #endif /* Consdfine_h */

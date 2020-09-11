@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UILabel * messageLable;
 
-@property(nonatomic,strong)NSString * type;// yanCheBaoGao
 
 @property(nonatomic,strong)UIButton * toolButton;
 

@@ -179,6 +179,8 @@
 
 +(id)defaultsGetObjectKey:(NSString *)key;
 
++(id)getJinBiStr:(NSString *)key;
+
 +(BOOL)alsoShowTabbar;
 
 

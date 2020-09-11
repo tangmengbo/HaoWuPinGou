@@ -10,6 +10,11 @@
 
 @interface NvShenRenZhengStep3VC ()
 
+@property(nonatomic,strong)NSString * goddess_auth_coin;//女神认证所需金币
+@property(nonatomic,strong)NSString * peripheral_auth_coin;//外围女认证所需金币
+@property(nonatomic,strong)NSString * global_auth_coin;//全球陪玩认证所需金币
+
+
 @end
 
 @implementation NvShenRenZhengStep3VC
@@ -17,10 +22,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSNumber * coin = [responseObject objectForKey:@"coin"];
+            
+            NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"当前可用金币：%d",coin.intValue]];
+            [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
+            [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
+            self.yuELable.attributedText = str1;
+
+        }
+    }];
+    
+    self.goddess_auth_coin = [NormalUse getJinBiStr:@"goddess_auth_coin"];
+    self.peripheral_auth_coin = [NormalUse getJinBiStr:@"peripheral_auth_coin"];
+    self.global_auth_coin = [NormalUse getJinBiStr:@"global_auth_coin"];
+
     self.topTitleLale.text = @"认证";
     
-    needJinBiValue = 200;
+     if ([@"1" isEqualToString:self.renZhengType])
+     {
+         needJinBiValue = self.goddess_auth_coin.intValue;
+
+     }
+     else if ([@"2" isEqualToString:self.renZhengType])
+     {
+         needJinBiValue = self.peripheral_auth_coin.intValue;
+
+     }
+    else
+    {
+        needJinBiValue = self.global_auth_coin.intValue;
+    }
+    
     self.loadingFullScreen= @"yes";
+    
     [self initTopStepView];
 }
 
@@ -135,18 +174,14 @@
     
 
     
-    UILabel * yuELable = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+9*BiLiWidth, WIDTH_PingMu, 18*BiLiWidth)];
-    yuELable.font = [UIFont systemFontOfSize:18*BiLiWidth];
-    yuELable.textColor = RGBFormUIColor(0xFED062);
-    yuELable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:yuELable];
+    self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(0, tipImageView.top+tipImageView.height+9*BiLiWidth, WIDTH_PingMu, 18*BiLiWidth)];
+    self.yuELable.font = [UIFont systemFontOfSize:18*BiLiWidth];
+    self.yuELable.textColor = RGBFormUIColor(0xFED062);
+    self.yuELable.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.yuELable];
     
-    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:@"当前可用金币：10000"];
-    [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x343434) range:NSMakeRange(0, 7)];
-    [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 7)];
-    yuELable.attributedText = str1;
     
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(26.5*BiLiWidth, yuELable.top+yuELable.height+20*BiLiWidth, 100*BiLiWidth, 13*BiLiWidth)];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(26.5*BiLiWidth, self.yuELable.top+self.yuELable.height+20*BiLiWidth, 100*BiLiWidth, 13*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     tipLable.textColor = RGBFormUIColor(0x333333);
     tipLable.textAlignment = NSTextAlignmentCenter;
@@ -176,6 +211,10 @@
 
         }
 
+        if(auth_peripheral.intValue!=0 && auth_global.intValue!=0)
+        {
+            tipLable.hidden = YES;
+        }
 
     }
     else if ([@"2" isEqualToString:self.renZhengType])
@@ -190,6 +229,11 @@
         {
             renZhengStr2 = @"全球陪玩";
 
+        }
+        
+        if(auth_goddess.intValue!=0 && auth_global.intValue!=0)
+        {
+            tipLable.hidden = YES;
         }
 
 
@@ -209,6 +253,10 @@
 
         }
 
+        if(auth_goddess.intValue!=0 && auth_peripheral.intValue!=0)
+        {
+            tipLable.hidden = YES;
+        }
 
     }
 
@@ -293,20 +341,25 @@
         self.lableButton1.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
         self.lableButton1.button_lable.textColor = RGBFormUIColor(0x333333);
         
-        needJinBiValue = needJinBiValue+200;
         
         if ([@"1" isEqualToString:self.renZhengType]) {
             
             self.renZhengType1 = @"2";
+            needJinBiValue = needJinBiValue+self.peripheral_auth_coin.intValue;
+
 
         }
         else if ([@"2" isEqualToString:self.renZhengType])
         {
             self.renZhengType1 = @"1";
+            needJinBiValue = needJinBiValue+self.goddess_auth_coin.intValue;
+
         }
         else
         {
             self.renZhengType1 = @"1";
+            needJinBiValue = needJinBiValue+self.goddess_auth_coin.intValue;
+
 
         }
 
@@ -318,9 +371,25 @@
         self.lableButton1.button_imageView1.backgroundColor = [UIColor clearColor];
         self.lableButton1.button_lable.textColor = RGBFormUIColor(0x999999);
         
-        needJinBiValue = needJinBiValue-200;
         
         self.renZhengType1 = @"";
+        if ([@"1" isEqualToString:self.renZhengType]) {
+            
+            needJinBiValue = needJinBiValue-self.peripheral_auth_coin.intValue;
+
+
+        }
+        else if ([@"2" isEqualToString:self.renZhengType])
+        {
+            needJinBiValue = needJinBiValue-self.goddess_auth_coin.intValue;
+
+        }
+        else
+        {
+            needJinBiValue = needJinBiValue-self.goddess_auth_coin.intValue;
+
+
+        }
 
 
     }
@@ -341,20 +410,24 @@
         self.lableButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
         self.lableButton2.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
         self.lableButton2.button_lable.textColor = RGBFormUIColor(0x333333);
-        needJinBiValue = needJinBiValue+200;
         
         if ([@"1" isEqualToString:self.renZhengType]) {
             
             self.renZhengType2 = @"3";
+            needJinBiValue = needJinBiValue+self.global_auth_coin.intValue;
+
 
         }
         else if ([@"2" isEqualToString:self.renZhengType])
         {
             self.renZhengType2 = @"3";
+            needJinBiValue = needJinBiValue+self.global_auth_coin.intValue;
+
         }
         else
         {
             self.renZhengType2 = @"2";
+            needJinBiValue = needJinBiValue+self.peripheral_auth_coin.intValue;
 
         }
 
@@ -365,9 +438,25 @@
         self.lableButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
         self.lableButton2.button_imageView1.backgroundColor = [UIColor clearColor];
         self.lableButton2.button_lable.textColor = RGBFormUIColor(0x999999);
-        needJinBiValue = needJinBiValue-200;
 
         self.renZhengType2 = @"";
+        if ([@"1" isEqualToString:self.renZhengType]) {
+            
+            needJinBiValue = needJinBiValue-self.global_auth_coin.intValue;
+
+
+        }
+        else if ([@"2" isEqualToString:self.renZhengType])
+        {
+            needJinBiValue = needJinBiValue-self.global_auth_coin.intValue;
+
+        }
+        else
+        {
+            needJinBiValue = needJinBiValue-self.peripheral_auth_coin.intValue;
+
+        }
+
 
     }
     NSString * jinBiStr = [NSString stringWithFormat:@"%d 金币",needJinBiValue];
