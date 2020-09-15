@@ -12,17 +12,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FuQiJiaoHomeCell : UITableViewCell
 
+@property(nonatomic,strong)NSDictionary * info1;
+@property(nonatomic,strong)NSDictionary * info2;
+
 @property(nonatomic,strong)UIView * contentView1;
 @property(nonatomic,strong)UIImageView * headerImageView1;
 @property(nonatomic,strong)UILabel * cityLable1;
 @property(nonatomic,strong)UIImageView * zuanShiImageView1;
 @property(nonatomic,strong)UILabel * messageLable1;
+@property(nonatomic,strong)UIButton * button1;
 
 @property(nonatomic,strong)UIView * contentView2;
 @property(nonatomic,strong)UIImageView * headerImageView2;
 @property(nonatomic,strong)UILabel * cityLable2;
 @property(nonatomic,strong)UIImageView * zuanShiImageView2;
 @property(nonatomic,strong)UILabel * messageLable2;
+@property(nonatomic,strong)UIButton * button2;
 
 
 

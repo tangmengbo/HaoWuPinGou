@@ -142,6 +142,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //黑店详情
 +(void)getHeiDianDetail:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//发布黑店曝光
++(void)faBuHeiDianBaoGuang:(NSDictionary *_Nullable)parameter
+                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //茶小二&经纪人认证
 +(void)jingJiRenRenZheng:(NSDictionary *_Nullable)parameter
@@ -254,8 +257,38 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getFuQiJiaoList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//夫妻交详情
++(void)getFuQiJiaoDetail:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //个人信息
 +(void)getUserInfo:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//我的发布_帖子(信息)
++(void)getMyXinXiList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//我的发布_黑店曝光
++(void)getMyHeiDianBaoGuangList:(NSDictionary *_Nullable)parameter
+                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//我的发布_定制服务
++(void)getMyDingZhiFuWuList:(NSDictionary *_Nullable)parameter
+                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//我的发布_验证
++(void)getMyYanZhengList:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//发布体验报告
+//type_id 1经纪人，茶小二帖子 2女神、外围、全球帖子
++(void)faBuTiYanBaoGao:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//我的收藏列表
++(void)getMyShouCangList:(NSDictionary *_Nullable)parameter
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//我的关注列表
++(void)getMyGuanZhuList:(NSDictionary *_Nullable)parameter
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 
 @end

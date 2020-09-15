@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyJieSuoListCell : UITableViewCell
+@interface MyJieSuoTieZiListCell : UITableViewCell
 
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * titleLable;

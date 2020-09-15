@@ -67,7 +67,7 @@
 #import "TiYanBaoGaoDetailViewController.h"
 #import "CreateTieZiViewController.h"
 
-
+#import "CreateHeiDianBaoGuangViewController.h"
 #import "TieZiDetailViewController.h"
 #import "HeiDianDetailViewController.h"
 #import "TiYanBaoGaoViewController.h"
@@ -101,6 +101,7 @@
 #import "FuQiJiaoRenZhengStep3VC.h"
 #import "FuQiJiaoRenZhengStep4VC.h"
 
+#include "FuQiJiaoDetailViewController.h"
 #import "FuQiJiaoViewController.h"
 
 //消息
@@ -112,6 +113,9 @@
 #import "XiaoXiViewController.h"
 
 //我的
+#import "MyShouCangGuanZhuViewController.h"
+#import "FaBuYanZhengViewController.h"
+#import "MyFaBuViewController.h"
 #import "MyJieSuoListViewController.h"
 #import "HuiYuanViewController.h"
 #import "SetShouShiMiMaViewController.h"

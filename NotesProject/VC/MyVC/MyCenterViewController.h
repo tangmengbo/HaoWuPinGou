@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton * mianFeiFaBuButton;
 @property(nonatomic,strong)Lable_ImageButton * shouCangGuanZhuButton;
 
+@property(nonatomic,strong)UIButton * huiYuanButton;
 @property(nonatomic,strong)UILabel * huiYuanTitleLable;
 @property(nonatomic,strong)UILabel * huiYuanDaoQiLable;
 @property(nonatomic,strong)UILabel * yuELable;

@@ -53,15 +53,25 @@
                 
                 if (auth_vip.intValue==0) {
                     
-                    self.huiYuanTitleLable.text = @"开通会员";
-                    self.huiYuanDaoQiLable.text = @"暂未开通会员";
+                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_weiKaiTong"] forState:UIControlStateNormal];
 
 
                 }
-                else
+                else if(auth_vip.intValue==1)
                 {
+                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
+
                     self.huiYuanTitleLable.text = @"会员到期时间";
                     self.huiYuanDaoQiLable.text = @"";
+
+                }
+                else if (auth_vip.intValue==2)
+                {
+                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
+                    
+                    self.huiYuanTitleLable.text = @"会员到期时间";
+                    self.huiYuanDaoQiLable.text = @"";
+
 
                 }
             }
@@ -99,11 +109,9 @@
     self.nickLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left+self.headerImageView.width+14*BiLiWidth, TopHeight_PingMu+19*BiLiWidth, 150*BiLiWidth, 17*BiLiWidth)];
     self.nickLable.textColor = RGBFormUIColor(0x333333);
     self.nickLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
-    self.nickLable.text = @"去玩而且二";
     [self.mainScrollView addSubview:self.nickLable];
     self.nickLable.text = [NormalUse getCurrentUserName];
     
-    self.nickLable =
     
     self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+6.5*BiLiWidth, 150*BiLiWidth, 12*BiLiWidth)];
     self.messageLable.textColor = RGBFormUIColor(0x999999);
@@ -162,23 +170,22 @@
 
     
     
-    UIButton * huiYuanButton = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.shouCangGuanZhuButton.top+self.shouCangGuanZhuButton.height+18.5*BiLiWidth, 160*BiLiWidth, 78*BiLiWidth)];
-    [huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_huiYuanBottom"] forState:UIControlStateNormal];
-    [huiYuanButton addTarget:self action:@selector(huiYuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:huiYuanButton];
+    self.huiYuanButton = [[UIButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.shouCangGuanZhuButton.top+self.shouCangGuanZhuButton.height+18.5*BiLiWidth, 160*BiLiWidth, 78*BiLiWidth)];
+    [self.huiYuanButton addTarget:self action:@selector(huiYuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollView addSubview:self.huiYuanButton];
     
     self.huiYuanTitleLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, 23*BiLiWidth, 90*BiLiWidth, 14*BiLiWidth)];
     self.huiYuanTitleLable.textColor = RGBFormUIColor(0x865A0A);
     self.huiYuanTitleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    [huiYuanButton addSubview:self.huiYuanTitleLable];
+    [self.huiYuanButton addSubview:self.huiYuanTitleLable];
     
     self.huiYuanDaoQiLable = [[UILabel alloc] initWithFrame:CGRectMake(8.5*BiLiWidth, self.huiYuanTitleLable.top+self.huiYuanTitleLable.height+8*BiLiWidth, 90*BiLiWidth, 11*BiLiWidth)];
     self.huiYuanDaoQiLable.textColor = RGBFormUIColor(0xC49A47);
     self.huiYuanDaoQiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    [huiYuanButton addSubview:self.huiYuanDaoQiLable];
+    [self.huiYuanButton addSubview:self.huiYuanDaoQiLable];
 
     
-    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(huiYuanButton.left+huiYuanButton.width+16*BiLiWidth, huiYuanButton.top, huiYuanButton.width, huiYuanButton.height)];
+    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top, self.huiYuanButton.width, self.huiYuanButton.height)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
     [self.mainScrollView addSubview:chongZhiButton];
 
@@ -188,7 +195,7 @@
     self.yuELable.adjustsFontSizeToFitWidth = YES;
     [chongZhiButton addSubview:self.yuELable];
     
-    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, huiYuanButton.top+huiYuanButton.height+24*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
+    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.huiYuanButton.top+self.huiYuanButton.height+24*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
     lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
     [self.mainScrollView addSubview:lineView];
 
@@ -206,6 +213,7 @@
     
     
     Lable_ImageButton  * myFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myJieSuoButton.top+myJieSuoButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [myFaBuButton addTarget:self action:@selector(myFaBuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     myFaBuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     myFaBuButton.button_imageView.image = [UIImage imageNamed:@"my_faBu"];
     myFaBuButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
@@ -218,6 +226,7 @@
 
     
     Lable_ImageButton  * myShouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [myShouCangButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
     myShouCangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     myShouCangButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
     myShouCangButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
@@ -275,6 +284,16 @@
 {
     HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
     vc.info = self.userInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)myFaBuButtonClick
+{
+    MyFaBuViewController * vc = [[MyFaBuViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)myShouCangButtonClick
+{
+    MyShouCangGuanZhuViewController * vc = [[MyShouCangGuanZhuViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)myJieSuoButtonClick

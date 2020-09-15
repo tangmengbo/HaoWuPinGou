@@ -10,9 +10,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HeiDianDetailViewController : MainBaseViewController
+@interface HeiDianDetailViewController : MainBaseViewController<JYCarouselDelegate>
+
 
 @property(nonatomic,strong)NSString * idStr;
+
+
+@property(nonatomic,strong)UIScrollView * mainScrollView;
+
+@property(nonatomic,strong)UIView * messageContentView;
+
+@property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
+@property(nonatomic,strong)UILabel * tipLable;
+
+@property(nonatomic,strong)UIButton * jiBenXinXiButton;
+@property(nonatomic,strong)UIView * jiBenXinXiContentView;
+
+@property(nonatomic,strong)UIButton * xiangQingJieShaoButton;
+@property(nonatomic,strong)UIView * xiangQingJieShaoContentView;
+
+@property(nonatomic,strong)NSArray * pingLunArray;
+@property(nonatomic,strong)UIButton * cheYouPingJiaButton;
+
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
+@property(nonatomic,strong)UITableView * cheYouPingJiaTableView;
+
+@property(nonatomic,strong)UIView * sliderView;
+
+@property(nonatomic,strong)UIScrollView * bottomContentScollView;
 
 @end
 

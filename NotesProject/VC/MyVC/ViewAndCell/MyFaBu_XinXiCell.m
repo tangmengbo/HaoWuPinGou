@@ -1,14 +1,14 @@
 //
-//  MyJieSuoListCell.m
+//  MyFaBu_XinXiCell.m
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/11.
+//  Created by 唐蒙波 on 2020/9/15.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "MyJieSuoListCell.h"
+#import "MyFaBu_XinXiCell.h"
 
-@implementation MyJieSuoListCell
+@implementation MyFaBu_XinXiCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -23,7 +23,6 @@
         self.selectedBackgroundView = [[UIView alloc] init];
         self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
 
-        
         self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
@@ -39,10 +38,13 @@
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, 190*BiLiWidth, 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self addSubview:self.titleLable];
+        
+        self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-65*BiLiWidth, 0, 50*BiLiWidth, 17*BiLiWidth)];
+        [self addSubview:self.statusImageView];
         
         self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+27*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
@@ -111,8 +113,23 @@
     self.faBuTimeLable.layer.mask = maskLayer;
         
 
-    
     self.titleLable.text = [info objectForKey:@"title"] ;
+    
+    //1 已审核 0审核中 2已拒绝
+    NSNumber * status = [info objectForKey:@"status"];
+    if (status.intValue==0) {
+        
+        self.statusImageView.backgroundColor = [UIColor yellowColor];
+    }
+    else if (status.intValue==1)
+    {
+         self.statusImageView.backgroundColor = [UIColor greenColor];
+    }
+    else if (status.intValue==2)
+    {
+         self.statusImageView.backgroundColor = [UIColor redColor];
+    }
+
     
     self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];

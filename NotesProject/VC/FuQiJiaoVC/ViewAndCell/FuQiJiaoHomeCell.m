@@ -47,6 +47,10 @@
         self.messageLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.messageLable1.textColor = RGBFormUIColor(0x999999);
         [self.contentView1 addSubview:self.messageLable1];
+        
+        self.button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
+        [self.button1 addTarget:self action:@selector(button1Click) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView1 addSubview:self.button1];
 
        
         self.contentView2 = [[UIView alloc] initWithFrame:CGRectMake(self.contentView1.left+self.contentView1.width+4.5*BiLiWidth, 0, 165*BiLiWidth, 192*BiLiWidth)];
@@ -75,12 +79,19 @@
         self.messageLable2.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.messageLable2.textColor = RGBFormUIColor(0x999999);
         [self.contentView2 addSubview:self.messageLable2];
+        
+        self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
+        [self.button2 addTarget:self action:@selector(button2Click) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView2 addSubview:self.button2];
+
 
     }
     return self;
 }
 -(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
+    
+    self.info1 = info1;
     if ([[info1 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
         [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
@@ -110,6 +121,8 @@
     }
     
     if ([NormalUse isValidDictionary:info2]) {
+        
+        self.info2 = info2;
         
         self.contentView2.hidden = NO;
 
@@ -146,6 +159,21 @@
     {
         self.contentView2.hidden = YES;
     }
+}
+-(void)button1Click
+{
+    FuQiJiaoDetailViewController * vc = [[FuQiJiaoDetailViewController alloc] init];
+    NSNumber * couple_id = [self.info1 objectForKey:@"id"];
+    vc.couple_id = [NSString stringWithFormat:@"%d",couple_id.intValue];
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+}
+-(void)button2Click
+{
+    FuQiJiaoDetailViewController * vc = [[FuQiJiaoDetailViewController alloc] init];
+    NSNumber * couple_id = [self.info2 objectForKey:@"id"];
+    vc.couple_id = [NSString stringWithFormat:@"%d",couple_id.intValue];
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

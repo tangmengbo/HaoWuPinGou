@@ -740,7 +740,7 @@
     {
         //NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
         NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.post_id,@"ids", nil];
-        [HTTPModel tieZiFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel tieZiUnFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
             if (status==1) {

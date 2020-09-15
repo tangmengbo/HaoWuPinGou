@@ -47,7 +47,8 @@
 }
 -(void)rightClick
 {
-    
+    CreateHeiDianBaoGuangViewController * vc = [[CreateHeiDianBaoGuangViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)loadNewLsit
 {

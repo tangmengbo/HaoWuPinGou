@@ -10,6 +10,8 @@
 #import "FuQiJiaoHomeCell.h"
 
 @interface FuQiJiaoViewController ()<UITableViewDelegate,UITableViewDataSource,WSPageViewDelegate,WSPageViewDataSource>
+{
+}
 
 @property(nonatomic,strong,nullable)WSPageView *pageView;
 @property(nonatomic,strong)UIPageControl * pageControl;
@@ -216,7 +218,7 @@
     
     for (int i=0; i<array.count; i++) {
         
-        NSNumber * pageIndexNumber = [NSNumber numberWithInt:0];
+        NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
         [self.pageIndexArray addObject:pageIndexNumber];
         
         NSMutableArray * sourceArray = [[NSMutableArray alloc] init];
@@ -244,7 +246,7 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"apge",@"time",@"order", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"time",@"order", nil]
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -373,6 +375,7 @@
                        callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
+                
                 
                 NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
                 pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];

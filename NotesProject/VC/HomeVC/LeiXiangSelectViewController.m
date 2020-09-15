@@ -129,6 +129,7 @@
     if (self.selectButtonArray.count==0) {
         
         [NormalUse showToastView:@"请选择类型" view:self.view];
+        return;
     }
     UIButton * button = [self.selectButtonArray objectAtIndex:0];
     NSString * str = [self.sourceArray objectAtIndex:button.tag];

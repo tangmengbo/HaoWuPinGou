@@ -108,7 +108,7 @@
         self.starLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
 
     }
-    self.cityLable.text = [info objectForKey:@"city_name"];
+    self.cityLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     
     [self.contentScrollView removeAllSubviews];
     
