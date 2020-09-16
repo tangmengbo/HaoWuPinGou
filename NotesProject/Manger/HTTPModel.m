@@ -954,6 +954,40 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
 
 }
+//定制详情
++(void)getDingZhiDetail:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/home/made_detail",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+}
 //项目金币列表
 +(void)getAppJinBiList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -1207,6 +1241,44 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
     
 }
+//黑店评价
++(void)heiDianPingJia:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/home/black_comment",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
 //发布黑店曝光
 
 +(void)faBuHeiDianBaoGuang:(NSDictionary *_Nullable)parameter
@@ -1322,7 +1394,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
            callback(-1, nil, NET_ERROR_MSG);
        }];
 }
-//收藏帖子
+//收藏帖子 type_id  1帖子 2三大角色 3夫妻交友
 +(void)tieZiFollow:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
@@ -1468,7 +1540,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         
     }];
 }
-//帖子列表home/index
+//帖子列表
 +(void)getTieZiList:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
@@ -1824,6 +1896,45 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 }
 
 
+//经纪人创建店铺
++(void)createDianPu:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/Upscale/editShop",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
+
 //经纪人店铺详情
 +(void)getDianPuDetail:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -2087,7 +2198,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
     
 }
-//解锁 type_id  1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务
+//解锁 type_id  1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务 7夫妻交友
 //related_id 对应的信息ID
 +(void)unlockMobile:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback

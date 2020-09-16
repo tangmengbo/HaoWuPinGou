@@ -105,7 +105,8 @@
         }
     }
     
-    if (1==1) {
+    NSNumber * is_report = [info objectForKey:@"is_report"];
+    if (is_report.intValue==0) {
         
         self.faBuYanZhengButton.layer.borderWidth = 1;
         self.faBuYanZhengButton.layer.borderColor = [RGBFormUIColor(0xFF0877) CGColor];

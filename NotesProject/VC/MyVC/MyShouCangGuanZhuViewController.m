@@ -237,6 +237,8 @@
         self->shouCangPage = 1;
         [HTTPModel getMyShouCangList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->shouCangPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.shouCangTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.shouCangArray removeAllObjects];
@@ -263,7 +265,6 @@
                     
                     [wself.shouCangArray addObject:info];
                 }
-                [wself.shouCangTableView.mj_header endRefreshing];
                 [wself.shouCangTableView reloadData];
             }
             else
@@ -301,6 +302,8 @@
             }
             else
             {
+                [wself.shouCangTableView.mj_footer endRefreshing];
+
                 [NormalUse showToastView:msg view:wself.view];
             }
         }];
@@ -327,6 +330,8 @@
         self->guanZhuPage = 1;
         [HTTPModel getMyGuanZhuList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->guanZhuPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.guanZhuTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.guanZhuAray removeAllObjects];
@@ -352,7 +357,6 @@
                     
                     [wself.guanZhuAray addObject:info];
                 }
-                [wself.guanZhuTableView.mj_header endRefreshing];
                 [wself.guanZhuTableView reloadData];
             }
             else
@@ -472,19 +476,63 @@
 {
     if (tableView.tag==0) {
         
+        //1 普通贴子 2女神 3外围 4全球 5夫妻交友
         NSDictionary * info = [self.shouCangArray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"post_id"];
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-        [self.navigationController pushViewController:vc animated:YES];
-
-
+        NSNumber * type_id = [info objectForKey:@"type_id"];
+        if (type_id.intValue==1) {
+            
+            TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+            NSNumber * idNumber = [info objectForKey:@"post_id"];
+            vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            
+        }
+        else if(type_id.intValue==2)
+        {
+            NSNumber * girlId = [info objectForKey:@"post_id"];
+            SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+            vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+            vc.type = @"3";
+            [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+            
+        }
+        else if(type_id.intValue==3)
+        {
+            NSNumber * girlId = [info objectForKey:@"post_id"];
+            SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+            vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+            vc.type = @"4";
+            [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+            
+        }
+        else if(type_id.intValue==4)
+        {
+            NSNumber * girlId = [info objectForKey:@"post_id"];
+            SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+            vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+            vc.type = @"5";
+            [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+            
+        }
+        else if (type_id.intValue==5)
+        {
+            FuQiJiaoDetailViewController * vc = [[FuQiJiaoDetailViewController alloc] init];
+            NSNumber * couple_id = [info objectForKey:@"post_id"];
+            vc.couple_id = [NSString stringWithFormat:@"%d",couple_id.intValue];
+            [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+            
+        }
+        
+        
+        
+        
     }
     else if (tableView.tag==1)
     {
         NSDictionary * info = [self.guanZhuAray objectAtIndex:indexPath.row];
         DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"post_id"];
+        NSNumber * idNumber = [info objectForKey:@"id"];
         vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
         [self.navigationController pushViewController:vc animated:YES];
 

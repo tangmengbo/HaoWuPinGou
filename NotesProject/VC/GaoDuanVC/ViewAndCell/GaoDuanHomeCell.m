@@ -142,6 +142,23 @@
 
     }
     
+    if([NormalUse isValidArray:post_list])
+    {
+        self.jiaoYiBaoZhengImageView.top = self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth;
+        self.renZhengLable.top = self.jiaoYiBaoZhengImageView.top+1;
+        self.chengJiaoLable.top = self.renZhengLable.top;
+        self.lineView.top =  self.chengJiaoLable.top+self.chengJiaoLable.height+20*BiLiWidth;
+
+    }
+    else
+    {
+        self.jiaoYiBaoZhengImageView.top = self.contentScrollView.top;
+        self.renZhengLable.top = self.jiaoYiBaoZhengImageView.top+1;
+        self.chengJiaoLable.top = self.renZhengLable.top;
+        self.lineView.top =  self.chengJiaoLable.top+self.chengJiaoLable.height+20*BiLiWidth;
+
+    }
+    
     NSNumber * post_num = [info objectForKey:@"post_num"];
     if ([post_num isKindOfClass:[NSNumber class]]) {
         

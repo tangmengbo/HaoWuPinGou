@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UILabel * dingZhiTimeLable;
 @property(nonatomic,strong)UILabel * leiXingLable;
 @property(nonatomic,strong)UILabel * fuWuXiangMuLable;
+@property(nonatomic,strong)UILabel * createTimeLable;
 @property(nonatomic,strong)UIImageView * statusImageView;
 
 -(void)contentViewSetData:(NSDictionary *)info;

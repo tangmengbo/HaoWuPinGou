@@ -7,6 +7,7 @@ target 'JianZhi' do
         pod 'RongCloudIM/IMKit'
         pod 'AFNetworking', '~> 3.1.0'
         pod 'ZWPlaceHolder'
+        pod 'ZWLimitCounter'
 
 
 

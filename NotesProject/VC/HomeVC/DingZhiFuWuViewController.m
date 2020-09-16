@@ -161,7 +161,12 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary * info = [self.sourceArray objectAtIndex:indexPath.row];
     
+    DingZhiFuWuDetailViewController * vc = [[DingZhiFuWuDetailViewController alloc] init];
+    NSNumber * idNumber = [info objectForKey:@"id"];
+    vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark --UIButtonClick
 -(void)createDingZhiFuWu

@@ -67,6 +67,14 @@
         self.fuWuXiangMuLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.fuWuXiangMuLable.textColor = RGBFormUIColor(0x666666);
         [self.neiRongView addSubview:self.fuWuXiangMuLable];
+        
+        
+        self.createTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, self.fuWuXiangMuLable.top+self.fuWuXiangMuLable.height+9*BiLiWidth, self.dingZhiNeiRongLable.width, 13*BiLiWidth)];
+        self.createTimeLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
+        self.createTimeLable.textColor = RGBFormUIColor(0x666666);
+        [self.neiRongView addSubview:self.createTimeLable];
+
+        
 
         self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentMessageView.width-71*BiLiWidth, self.neiRongView.top+self.neiRongView.height+17.5*BiLiWidth, 50*BiLiWidth, 17*BiLiWidth)];
         [self.contentMessageView addSubview:self.statusImageView];
@@ -81,7 +89,7 @@
 
     self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     
-    NSString * neiRongStr = [info objectForKey:@"description"];
+    NSString * neiRongStr = [info objectForKey:@"describe"];
     if (![NormalUse isValidString:neiRongStr]) {
         
         neiRongStr = @"无特殊需求";
@@ -113,8 +121,9 @@
 
     
     self.dingZhiTimeLable.text = [NSString stringWithFormat:@"预定时间：%@ - %@",start_date,end_date];
-    self.leiXingLable.text = [info objectForKey:@"love_type"];
-    self.fuWuXiangMuLable.text = [info objectForKey:@"service_type"];
+    self.leiXingLable.text = [NSString stringWithFormat:@"妹子类型：%@",[info objectForKey:@"love_type"]];
+    self.fuWuXiangMuLable.text = [NSString stringWithFormat:@"服务项目：%@",[info objectForKey:@"service_type"]];
+    self.createTimeLable.text = [NSString stringWithFormat:@"发布时间：%@",[info objectForKey:@"create_at"]];
     
     //1 已审核 0审核中 2已拒绝
     NSNumber * status = [info objectForKey:@"status"];
@@ -138,7 +147,9 @@
     
     self.fuWuXiangMuLable.top = self.leiXingLable.top+self.leiXingLable.height+9*BiLiWidth;
     
-    self.neiRongView.height = self.fuWuXiangMuLable.top+self.fuWuXiangMuLable.height+9*BiLiWidth;
+    self.createTimeLable.top = self.fuWuXiangMuLable.top+self.fuWuXiangMuLable.height+9*BiLiWidth;
+    
+    self.neiRongView.height = self.createTimeLable.top+self.createTimeLable.height+9*BiLiWidth;
     
     self.statusImageView.top = self.neiRongView.top+self.neiRongView.height+17.5*BiLiWidth;
     
@@ -167,7 +178,7 @@
     //设置自适应
     [lable  sizeToFit];
     
-    return lable.height+55*BiLiWidth+148*BiLiWidth;
+    return lable.height+55*BiLiWidth+148*BiLiWidth+21*BiLiWidth;
 
 }
 

@@ -291,7 +291,7 @@
     [self.pickRootView addGestureRecognizer:tapGesture];
     
     self.datePickView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-162, WIDTH_PingMu, 162)];
-    self.datePickView.datePickerMode=UIDatePickerModeDate;
+    self.datePickView.datePickerMode=UIDatePickerModeDateAndTime;
     [self.pickRootView addSubview:self.datePickView];
     self.datePickView.maximumDate = [NSDate date];
     

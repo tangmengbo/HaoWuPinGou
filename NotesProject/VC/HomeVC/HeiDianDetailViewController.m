@@ -7,6 +7,7 @@
 //
 
 #import "HeiDianDetailViewController.h"
+#import "HeiDianPingJiaViewController.h"
 
 @interface HeiDianDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
@@ -36,8 +37,8 @@
 
 -(void)rightClick
 {
-    JvBaoViewController * vc = [[JvBaoViewController alloc] init];
-    vc.post_id = self.idStr;
+    HeiDianPingJiaViewController * vc = [[HeiDianPingJiaViewController alloc] init];
+    vc.black_id = self.idStr;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -74,7 +75,7 @@
     }
     [self.view addSubview:self.mainScrollView];
     
-    [self.rightButton setTitle:@"投诉" forState:UIControlStateNormal];
+    [self.rightButton setTitle:@"评价" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.topNavView.backgroundColor = [UIColor clearColor];
     [self.view bringSubviewToFront:self.topNavView];

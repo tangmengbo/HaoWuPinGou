@@ -27,6 +27,7 @@ PODS:
   - SDWebImage (3.8.3):
     - SDWebImage/Core (= 3.8.3)
   - SDWebImage/Core (3.8.3)
+  - ZWLimitCounter (0.0.4)
   - ZWPlaceHolder (0.0.2)
 
 DEPENDENCIES:
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - MWPhotoBrowser
   - RongCloudIM/IMKit
   - RongCloudIM/IMLib
+  - ZWLimitCounter
   - ZWPlaceHolder
 
 SPEC REPOS:
@@ -47,6 +49,7 @@ SPEC REPOS:
     - MWPhotoBrowser
     - RongCloudIM
     - SDWebImage
+    - ZWLimitCounter
     - ZWPlaceHolder
 
 SPEC CHECKSUMS:
@@ -57,8 +60,9 @@ SPEC CHECKSUMS:
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   RongCloudIM: 741d6f0e655b8fd77c63ee34071d4f9bf146aae6
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
+  ZWLimitCounter: 382d8a4f063980f18022749672b89e0558087007
   ZWPlaceHolder: d55cce10c9930b48c31bf48e7f4748974a31f7e0
 
-PODFILE CHECKSUM: b546451d7d08274a1954bbb4b4cc97021db6a718
+PODFILE CHECKSUM: 3fe9c42a6a09bda394f3e127b24d20ae7867f956
 
 COCOAPODS: 1.9.1

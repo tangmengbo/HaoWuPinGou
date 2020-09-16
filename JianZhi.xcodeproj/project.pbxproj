@@ -73,6 +73,9 @@
 		5F6673512510B999000C6810 /* MyShouCangGuanZhuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673502510B999000C6810 /* MyShouCangGuanZhuViewController.m */; };
 		5F6673542510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673532510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m */; };
 		5F6673572510BD19000C6810 /* MyShouCangGuanZhu_guanZhuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673562510BD19000C6810 /* MyShouCangGuanZhu_guanZhuCell.m */; };
+		5F6673602511BF4E000C6810 /* DingZhiFuWuDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66735F2511BF4E000C6810 /* DingZhiFuWuDetailViewController.m */; };
+		5F6673632511E20D000C6810 /* HeiDianPingJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673622511E20D000C6810 /* HeiDianPingJiaViewController.m */; };
+		5F6673662511ED24000C6810 /* CreateDianPuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673652511ED24000C6810 /* CreateDianPuViewController.m */; };
 		5F6858C7250B2DAF007BDA9E /* HuiYuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858C6250B2DAF007BDA9E /* HuiYuanViewController.m */; };
 		5F6858CA250B476B007BDA9E /* MyJieSuoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858C9250B476B007BDA9E /* MyJieSuoListViewController.m */; };
 		5F6858CD250B478E007BDA9E /* MyJieSuo_TieZiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858CC250B478E007BDA9E /* MyJieSuo_TieZiListCell.m */; };
@@ -279,6 +282,12 @@
 		5F6673532510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShouCangGuanZhu_ShouCangCell.m; sourceTree = "<group>"; };
 		5F6673552510BD19000C6810 /* MyShouCangGuanZhu_guanZhuCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShouCangGuanZhu_guanZhuCell.h; sourceTree = "<group>"; };
 		5F6673562510BD19000C6810 /* MyShouCangGuanZhu_guanZhuCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShouCangGuanZhu_guanZhuCell.m; sourceTree = "<group>"; };
+		5F66735E2511BF4E000C6810 /* DingZhiFuWuDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DingZhiFuWuDetailViewController.h; sourceTree = "<group>"; };
+		5F66735F2511BF4E000C6810 /* DingZhiFuWuDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DingZhiFuWuDetailViewController.m; sourceTree = "<group>"; };
+		5F6673612511E20D000C6810 /* HeiDianPingJiaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeiDianPingJiaViewController.h; sourceTree = "<group>"; };
+		5F6673622511E20D000C6810 /* HeiDianPingJiaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianPingJiaViewController.m; sourceTree = "<group>"; };
+		5F6673642511ED24000C6810 /* CreateDianPuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateDianPuViewController.h; sourceTree = "<group>"; };
+		5F6673652511ED24000C6810 /* CreateDianPuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateDianPuViewController.m; sourceTree = "<group>"; };
 		5F6858C5250B2DAF007BDA9E /* HuiYuanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HuiYuanViewController.h; sourceTree = "<group>"; };
 		5F6858C6250B2DAF007BDA9E /* HuiYuanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HuiYuanViewController.m; sourceTree = "<group>"; };
 		5F6858C8250B476B007BDA9E /* MyJieSuoListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyJieSuoListViewController.h; sourceTree = "<group>"; };
@@ -467,10 +476,14 @@
 				5F34DCE224EF769500DE15A1 /* HeiDianBaoGuangViewController.m */,
 				5F12E7A724F8E14C00B2EDFA /* HeiDianDetailViewController.h */,
 				5F12E7A824F8E14C00B2EDFA /* HeiDianDetailViewController.m */,
+				5F6673612511E20D000C6810 /* HeiDianPingJiaViewController.h */,
+				5F6673622511E20D000C6810 /* HeiDianPingJiaViewController.m */,
 				5F66734C25109FA6000C6810 /* CreateHeiDianBaoGuangViewController.h */,
 				5F66734D25109FA6000C6810 /* CreateHeiDianBaoGuangViewController.m */,
 				5F34DCEA24EF7A5900DE15A1 /* DingZhiFuWuViewController.h */,
 				5F34DCEB24EF7A5900DE15A1 /* DingZhiFuWuViewController.m */,
+				5F66735E2511BF4E000C6810 /* DingZhiFuWuDetailViewController.h */,
+				5F66735F2511BF4E000C6810 /* DingZhiFuWuDetailViewController.m */,
 				5F2650E324FCDCAC00171684 /* CreateDingZhiFuWuViewController.h */,
 				5F2650E424FCDCAC00171684 /* CreateDingZhiFuWuViewController.m */,
 				5F2650E624FD03BC00171684 /* LeiXiangSelectViewController.h */,
@@ -489,6 +502,8 @@
 				5F34DCC624EE4DE100DE15A1 /* ViewAndCell */,
 				5F22EBC224ECF371002DCF61 /* GaoDuanViewController.h */,
 				5F22EBC324ECF371002DCF61 /* GaoDuanViewController.m */,
+				5F6673642511ED24000C6810 /* CreateDianPuViewController.h */,
+				5F6673652511ED24000C6810 /* CreateDianPuViewController.m */,
 				5F26511024FE57D600171684 /* DianPuDetailViewController.h */,
 				5F26511124FE57D600171684 /* DianPuDetailViewController.m */,
 				5F24D2462500946900476CFA /* NvShenListViewController.h */,
@@ -1182,8 +1197,10 @@
 				5F26510F24FE45BD00171684 /* RAFileManager.m in Sources */,
 				5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */,
 				5FE3EA72235599D200C77F4D /* ViewController.m in Sources */,
+				5F6673602511BF4E000C6810 /* DingZhiFuWuDetailViewController.m in Sources */,
 				5F22EBC724ECF389002DCF61 /* FuQiJiaoViewController.m in Sources */,
 				5F6858C7250B2DAF007BDA9E /* HuiYuanViewController.m in Sources */,
+				5F6673662511ED24000C6810 /* CreateDianPuViewController.m in Sources */,
 				5F34DCEF24EF7D5000DE15A1 /* DingZhiFuWuTableViewCell.m in Sources */,
 				5FE3EC3C2355AB8000C77F4D /* AgreementViewController.m in Sources */,
 				5F22EBD324ECFAB3002DCF61 /* WSIndexBanner.m in Sources */,
@@ -1267,6 +1284,7 @@
 				5FE3EC142355A3E400C77F4D /* TZPhotoPreviewController.m in Sources */,
 				5F34DCC524EE15CA00DE15A1 /* HomeListCell.m in Sources */,
 				5FE3EC5B2355B1B500C77F4D /* SheZhiViewController.m in Sources */,
+				5F6673632511E20D000C6810 /* HeiDianPingJiaViewController.m in Sources */,
 				5F2650EE24FDDC0A00171684 /* TiYanBaoGaoCell.m in Sources */,
 				5F7EF465251062DE0052B948 /* MyJieSuo_DingZhiFuWuCell.m in Sources */,
 				5F6858CD250B478E007BDA9E /* MyJieSuo_TieZiListCell.m in Sources */,
@@ -1436,7 +1454,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cora.tectacles;
 				PRODUCT_NAME = YoYo;
 				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev;
@@ -1474,7 +1492,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cora.tectacles;
 				PRODUCT_NAME = YoYo;
 				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev;

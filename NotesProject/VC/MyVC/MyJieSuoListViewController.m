@@ -207,6 +207,8 @@
         self->jingJiRenPage = 1;
         [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->jingJiRenPage],@"page",@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.jingJiRenTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.jingJiRenArray removeAllObjects];
@@ -233,7 +235,6 @@
                     
                     [wself.jingJiRenArray addObject:info];
                 }
-                [wself.jingJiRenTableView.mj_header endRefreshing];
                 [wself.jingJiRenTableView reloadData];
             }
             else
@@ -271,6 +272,8 @@
             }
             else
             {
+                [wself.jingJiRenTableView.mj_footer endRefreshing];
+
                 [NormalUse showToastView:msg view:wself.view];
             }
         }];
@@ -297,6 +300,8 @@
         self->tieZiPage = 1;
         [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->tieZiPage],@"page",@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.tieZiTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.tieZiArray removeAllObjects];
@@ -322,7 +327,6 @@
                     
                     [wself.tieZiArray addObject:info];
                 }
-                [wself.tieZiTableView.mj_header endRefreshing];
                 [wself.tieZiTableView reloadData];
             }
             else
@@ -386,6 +390,8 @@
            self->nvShenPage = 1;
            [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->nvShenPage],@"page",@"3",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.nvShenTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.nvShenArray removeAllObjects];
@@ -411,7 +417,6 @@
                        
                        [wself.nvShenArray addObject:info];
                    }
-                   [wself.nvShenTableView.mj_header endRefreshing];
                    [wself.nvShenTableView reloadData];
                }
                else
@@ -476,6 +481,8 @@
            self->WaiWeiPage = 1;
            [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->WaiWeiPage],@"page",@"4",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.waiWeiTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.waiWeiArray removeAllObjects];
@@ -500,7 +507,6 @@
                        
                        [wself.waiWeiArray addObject:info];
                    }
-                   [wself.waiWeiTableView.mj_header endRefreshing];
                    [wself.waiWeiTableView reloadData];
                }
                else
@@ -563,6 +569,8 @@
            self->peiWanPage = 1;
            [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->peiWanPage],@"page",@"5",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.peiWanTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.peiWanArray removeAllObjects];
@@ -588,7 +596,6 @@
                        
                        [wself.peiWanArray addObject:info];
                    }
-                   [wself.peiWanTableView.mj_header endRefreshing];
                    [wself.peiWanTableView reloadData];
                }
                else
@@ -652,6 +659,8 @@
            self->dingZhiPage = 1;
            [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->dingZhiPage],@"page",@"6",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.dingZhiTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.dingZhiArray removeAllObjects];
@@ -677,7 +686,6 @@
                        
                        [wself.dingZhiArray addObject:info];
                    }
-                   [wself.dingZhiTableView.mj_header endRefreshing];
                    [wself.dingZhiTableView reloadData];
                }
                else

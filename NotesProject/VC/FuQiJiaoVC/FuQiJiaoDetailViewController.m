@@ -444,7 +444,7 @@
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
     
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    [info setObject:@"2" forKey:@"type_id"];
+    [info setObject:@"7" forKey:@"type_id"];
     [info setObject:self.couple_id forKey:@"related_id"];
     [HTTPModel unlockMobile:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -726,7 +726,7 @@
     button.enabled = NO;
     if (button.tag==0) {
         
-        [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.couple_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.couple_id,@"post_id",@"3",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
 
@@ -745,8 +745,8 @@
     else
     {
         //NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
-        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.couple_id,@"ids", nil];
-        [HTTPModel tieZiFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.couple_id,@"post_id",@"3",@"type_id", nil];
+        [HTTPModel tieZiUnFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
             if (status==1) {

@@ -369,7 +369,8 @@
     }
     else if (button.tag==1)//已认证
     {
-        
+        CreateDianPuViewController * vc = [[CreateDianPuViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     else if(button.tag==2)//审核中
     {
@@ -499,7 +500,7 @@
         }
 
     }
-
+  
 
 }
 #pragma mark UItableViewDelegate
@@ -510,8 +511,17 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
-    return  197*BiLiWidth+48*BiLiWidth+21*BiLiWidth+8*BiLiWidth;
+    NSDictionary * info = [self.jingJiRenListArray objectAtIndex:indexPath.row];
+    if ([NormalUse isValidArray:[info objectForKey:@"post_list"]]) {
+        
+        return  197*BiLiWidth+48*BiLiWidth+21*BiLiWidth+8*BiLiWidth;
+
+    }
+    else
+    {
+        return  197*BiLiWidth+48*BiLiWidth+21*BiLiWidth+8*BiLiWidth-132*BiLiWidth;
+
+    }
     
     
 }

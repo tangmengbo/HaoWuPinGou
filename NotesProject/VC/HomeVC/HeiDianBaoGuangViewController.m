@@ -138,8 +138,8 @@
 {
     NSDictionary * info = [self.sourceArray objectAtIndex:indexPath.row];
     HeiDianDetailViewController * vc = [[HeiDianDetailViewController alloc] init];
-    NSString * idStr = [info objectForKey:@"id"];
-    vc.idStr = idStr;
+    NSNumber * idNumber = [info objectForKey:@"id"];
+    vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

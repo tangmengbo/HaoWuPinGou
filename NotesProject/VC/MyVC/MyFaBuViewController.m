@@ -178,6 +178,8 @@
         self->xinXiPage = 1;
         [HTTPModel getMyXinXiList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->xinXiPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.xinXiTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.xinXiArray removeAllObjects];
@@ -204,7 +206,6 @@
                     
                     [wself.xinXiArray addObject:info];
                 }
-                [wself.xinXiTableView.mj_header endRefreshing];
                 [wself.xinXiTableView reloadData];
             }
             else
@@ -243,6 +244,8 @@
             else
             {
                 [NormalUse showToastView:msg view:wself.view];
+                [wself.xinXiTableView.mj_footer endRefreshing];
+
             }
         }];
 
@@ -268,6 +271,8 @@
         self->heiDianBaoGuangPage = 1;
         [HTTPModel getMyHeiDianBaoGuangList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->heiDianBaoGuangPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [wself.heiDianBaoGuangTableView.mj_header endRefreshing];
+
             if (status==1) {
                 
                 [wself.heiDianBaoGuangArray removeAllObjects];
@@ -293,7 +298,6 @@
                     
                     [wself.heiDianBaoGuangArray addObject:info];
                 }
-                [wself.heiDianBaoGuangTableView.mj_header endRefreshing];
                 [wself.heiDianBaoGuangTableView reloadData];
             }
             else
@@ -357,6 +361,8 @@
            self->dingZhiFuWuPage = 1;
            [HTTPModel getMyDingZhiFuWuList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->dingZhiFuWuPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.dingZhiFuWuTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.dingZhiFuWuArray removeAllObjects];
@@ -382,7 +388,6 @@
                        
                        [wself.dingZhiFuWuArray addObject:info];
                    }
-                   [wself.dingZhiFuWuTableView.mj_header endRefreshing];
                    [wself.dingZhiFuWuTableView reloadData];
                }
                else
@@ -447,6 +452,8 @@
            self->yanZhengPage = 1;
            [HTTPModel getMyYanZhengList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->yanZhengPage],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
+               [wself.yanZhengTableView.mj_header endRefreshing];
+
                if (status==1) {
                    
                    [wself.yanZhengArray removeAllObjects];
@@ -471,7 +478,6 @@
                        
                        [wself.yanZhengArray addObject:info];
                    }
-                   [wself.yanZhengTableView.mj_header endRefreshing];
                    [wself.yanZhengTableView reloadData];
                }
                else
@@ -652,7 +658,13 @@
        }
        else if (tableView.tag==2)
        {
+           NSDictionary * info = [self.dingZhiFuWuArray objectAtIndex:indexPath.row];
            
+           DingZhiFuWuDetailViewController * vc = [[DingZhiFuWuDetailViewController alloc] init];
+           NSNumber * idNumber = [info objectForKey:@"id"];
+           vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
+           [self.navigationController pushViewController:vc animated:YES];
+
        }
        else if (tableView.tag==3)
        {

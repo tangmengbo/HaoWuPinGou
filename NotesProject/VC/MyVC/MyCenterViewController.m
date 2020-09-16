@@ -156,6 +156,7 @@
     [self.mainScrollView addSubview:self.mianFeiFaBuButton];
 
     self.shouCangGuanZhuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-50*BiLiWidth-36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    [self.shouCangGuanZhuButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.shouCangGuanZhuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
     self.shouCangGuanZhuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.shouCangGuanZhuButton.button_lable.textColor = RGBFormUIColor(0x343434);
@@ -225,20 +226,20 @@
     [self.mainScrollView addSubview:myFaBuButton];
 
     
-    Lable_ImageButton  * myShouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
-    [myShouCangButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    myShouCangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    myShouCangButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
-    myShouCangButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-    myShouCangButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    myShouCangButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    myShouCangButton.button_lable.text = @"我的收藏";
-    myShouCangButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    myShouCangButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-    [self.mainScrollView addSubview:myShouCangButton];
+//    Lable_ImageButton  * myShouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+//    [myShouCangButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    myShouCangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+//    myShouCangButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
+//    myShouCangButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
+//    myShouCangButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//    myShouCangButton.button_lable.textColor = RGBFormUIColor(0x333333);
+//    myShouCangButton.button_lable.text = @"我的收藏";
+//    myShouCangButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+//    myShouCangButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+//    [self.mainScrollView addSubview:myShouCangButton];
 
     
-    Lable_ImageButton  * myKeFuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myShouCangButton.top+myShouCangButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    Lable_ImageButton  * myKeFuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
     myKeFuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     myKeFuButton.button_imageView.image = [UIImage imageNamed:@"my_keFu"];
     myKeFuButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);

@@ -331,6 +331,8 @@
     self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
     self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
+    [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+
     [self.messageContentView addSubview:self.jieSuoButton];
     
     NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
@@ -340,7 +342,7 @@
             
             NSDictionary * contact = [self.tieZiInfo objectForKey:@"contact"];
 
-            [self.self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
            // [16]    (null)    @"mobile" : (long)0    [19]    (null)    @"qq" : (no summary)
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
@@ -718,7 +720,7 @@
     button.enabled = NO;
     if (button.tag==0) {
         
-        [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.girl_id,@"post_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel tieZiFollow:[[NSDictionary alloc]initWithObjectsAndKeys:self.girl_id,@"post_id",@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
 
@@ -736,9 +738,8 @@
     }
     else
     {
-        //NSArray * array = [[NSArray alloc] initWithObjects:self.post_id, nil];
-        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.girl_id,@"ids", nil];
-        [HTTPModel tieZiFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.girl_id,@"post_id",@"2",@"type_id", nil];
+        [HTTPModel tieZiUnFollow:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
             button.enabled = YES;
             if (status==1) {

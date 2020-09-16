@@ -114,6 +114,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //定制需求
 +(void)dingZhiXuQiu:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//定制详情
++(void)getDingZhiDetail:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //项目金币列表
 +(void)getAppJinBiList:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -142,6 +146,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //黑店详情
 +(void)getHeiDianDetail:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//黑店评价
++(void)heiDianPingJia:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //发布黑店曝光
 +(void)faBuHeiDianBaoGuang:(NSDictionary *_Nullable)parameter
                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -210,6 +218,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getSanDaGirlDetail:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//经纪人创建店铺
++(void)createDianPu:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //经纪人店铺详情
 +(void)getDianPuDetail:(NSDictionary *_Nullable)parameter

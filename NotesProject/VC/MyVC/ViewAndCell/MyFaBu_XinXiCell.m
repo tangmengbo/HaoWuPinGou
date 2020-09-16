@@ -101,10 +101,10 @@
     
     
         
-    CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
+    CGSize size = [NormalUse setSize:[info objectForKey:@"friendly_date"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
     self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
     self.faBuTimeLable.width = size.width+5*BiLiWidth;
-    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+    self.faBuTimeLable.text = [info objectForKey:@"friendly_date"];
     
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];

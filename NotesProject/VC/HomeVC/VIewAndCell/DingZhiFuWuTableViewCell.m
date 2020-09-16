@@ -20,6 +20,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        
+        self.selectedBackgroundView = [[UIView alloc] init];
+        self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
+
         self.contentMessageView = [[UIView alloc] initWithFrame:CGRectMake(19*BiLiWidth, 0, WIDTH_PingMu-38*BiLiWidth, 185*BiLiWidth)];
         self.contentMessageView.layer.borderWidth = 1;
         self.contentMessageView.layer.borderColor = [RGBFormUIColor(0xEEEEEE) CGColor];
@@ -78,6 +82,7 @@
         self.dingZhiTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, self.dingZhiNeiRongLable.top+self.dingZhiNeiRongLable.height+8.5*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
         self.dingZhiTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.dingZhiTimeLable.textColor = RGBFormUIColor(0x666666);
+        self.dingZhiTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.neiRongView addSubview:self.dingZhiTimeLable];
 
 

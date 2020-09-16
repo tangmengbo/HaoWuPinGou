@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLSFirebaseMode</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -39,6 +37,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CLSFirebaseMode</key>
+	<true/>
 	<key>FacebookAppID</key>
 	<string>464878661087571</string>
 	<key>FacebookDisplayName</key>
@@ -58,7 +58,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>YoYo needs your permission to access the camera and take photos when modifying the user&apos;s profile picture (video USES the camera).</string>
+	<string>YoYo needs your permission to access the camera and take photos when modifying the user's profile picture (video USES the camera).</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>YoYo need your consent to access your location so that you can use your location information when creating a dynamic (update data)</string>
 	<key>NSMicrophoneUsageDescription</key>
