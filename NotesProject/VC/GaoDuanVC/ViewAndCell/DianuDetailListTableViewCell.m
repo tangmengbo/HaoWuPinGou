@@ -44,10 +44,17 @@
         self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_black"];
         [self.contentView1 addSubview:self.zuanShiImageView1];
         
-        self.messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView1.width-62*BiLiWidth, self.cityLable1.top, 50*BiLiWidth, 14*BiLiWidth)];
         self.messageLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.messageLable1.textColor = RGBFormUIColor(0x999999);
+        self.messageLable1.textColor = RGBFormUIColor(0x333333);
+        self.messageLable1.textAlignment = NSTextAlignmentRight;
         [self.contentView1 addSubview:self.messageLable1];
+        
+        self.priceLable1 = [[UILabel alloc] initWithFrame:CGRectMake(self.cityLable1.left, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.priceLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        self.priceLable1.textColor = RGBFormUIColor(0x999999);
+        [self.contentView1 addSubview:self.priceLable1];
+
         
         UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
         [button1 addTarget:self action:@selector(pushTuTieZiDetail1) forControlEvents:UIControlEventTouchUpInside];
@@ -77,11 +84,17 @@
         self.zuanShiImageView2.image = [UIImage imageNamed:@"vip_black"];
         [self.contentView2 addSubview:self.zuanShiImageView2];
         
-        self.messageLable2 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.messageLable2 = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView2.width-62*BiLiWidth, self.cityLable1.top, 50*BiLiWidth, 14*BiLiWidth)];
         self.messageLable2.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.messageLable2.textColor = RGBFormUIColor(0x999999);
+        self.messageLable2.textColor = RGBFormUIColor(0x333333);
+        self.messageLable2.textAlignment = NSTextAlignmentRight;
         [self.contentView2 addSubview:self.messageLable2];
         
+        self.priceLable2 = [[UILabel alloc] initWithFrame:CGRectMake(self.cityLable2.left, self.cityLable2.top+self.cityLable2.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
+        self.priceLable2.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        self.priceLable2.textColor = RGBFormUIColor(0x999999);
+        [self.contentView2 addSubview:self.priceLable2];
+
         UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
         [button2 addTarget:self action:@selector(pushTuTieZiDetail2) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView2 addSubview:button2];
@@ -114,6 +127,8 @@
     NSNumber * age = [info1 objectForKey:@"age"];
     self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
     
+    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@~%@",[info1 objectForKey:@"min_price"],[info1 objectForKey:@"max_price"]];
+    
     if ([NormalUse isValidDictionary:info2]) {
         
         self.contentView2.hidden = NO;
@@ -137,6 +152,9 @@
         
         NSNumber * age = [info2 objectForKey:@"age"];
         self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
+        
+        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@~%@",[info2 objectForKey:@"min_price"],[info2 objectForKey:@"max_price"]];
+
     }
     else
     {

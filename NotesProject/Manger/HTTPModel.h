@@ -301,5 +301,8 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getMyGuanZhuList:(NSDictionary *_Nullable)parameter
                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//经纪人查看自己的店铺详情
++(void)jingJiRenGetDianPuDetail:(NSDictionary *_Nullable)parameter
+                       callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 @end

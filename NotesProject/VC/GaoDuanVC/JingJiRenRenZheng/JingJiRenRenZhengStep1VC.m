@@ -128,12 +128,12 @@
     UILabel * chanPinShuLiangLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView1.top+lineView1.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     chanPinShuLiangLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     chanPinShuLiangLable.textColor = RGBFormUIColor(0x343434);
-    chanPinShuLiangLable.text = @"产品数量";
+    chanPinShuLiangLable.text = @"小姐数量";
     [self.view addSubview:chanPinShuLiangLable];
 
     self.chanPinShuLiangTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, chanPinShuLiangLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.chanPinShuLiangTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写产品数量" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
+    [NormalUse setTextFieldPlaceholder:@"填写小姐数量" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
     self.chanPinShuLiangTF.textAlignment = NSTextAlignmentRight;
     self.chanPinShuLiangTF.keyboardType = UIKeyboardTypeNumberPad;
     self.chanPinShuLiangTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -239,7 +239,7 @@
     }
     if(![NormalUse isValidString:self.chanPinShuLiangTF.text])
     {
-        [NormalUse showToastView:@"请填写产品数量" view:self.view];
+        [NormalUse showToastView:@"请填写小姐数量" view:self.view];
         return;
     }
     if(![NormalUse isValidString:self.beginPriceTF.text])

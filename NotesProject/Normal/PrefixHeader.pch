@@ -116,6 +116,7 @@
 #import "XiaoXiViewController.h"
 
 //我的
+#import "JingJiRenDianPuDetailViewController.h"
 #import "MyShouCangGuanZhuViewController.h"
 #import "FaBuYanZhengViewController.h"
 #import "MyFaBuViewController.h"

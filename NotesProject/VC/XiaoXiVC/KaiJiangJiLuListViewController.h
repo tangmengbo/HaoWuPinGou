@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KaiJiangJiLuListViewController : MainBaseViewController
 
+@property(nonatomic,strong)NSMutableArray * showOrHiddenCellArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

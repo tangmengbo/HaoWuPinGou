@@ -119,15 +119,15 @@
     NSNumber * status = [info objectForKey:@"status"];
     if (status.intValue==0) {
         
-        self.statusImageView.backgroundColor = [UIColor yellowColor];
+        self.statusImageView.image = [UIImage imageNamed:@"shengHe_ing"];
     }
     else if (status.intValue==1)
     {
-         self.statusImageView.backgroundColor = [UIColor greenColor];
+         self.statusImageView.image = [UIImage imageNamed:@"shengHe_success"];
     }
     else if (status.intValue==2)
     {
-         self.statusImageView.backgroundColor = [UIColor redColor];
+         self.statusImageView.image = [UIImage imageNamed:@"shengHe_fail"];
     }
 
     

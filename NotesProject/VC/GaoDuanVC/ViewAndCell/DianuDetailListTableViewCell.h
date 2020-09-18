@@ -20,12 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UILabel * cityLable1;
 @property(nonatomic,strong)UIImageView * zuanShiImageView1;
 @property(nonatomic,strong)UILabel * messageLable1;
+@property(nonatomic,strong)UILabel * priceLable1;
 
 @property(nonatomic,strong)UIView * contentView2;
 @property(nonatomic,strong)UIImageView * headerImageView2;
 @property(nonatomic,strong)UILabel * cityLable2;
 @property(nonatomic,strong)UIImageView * zuanShiImageView2;
 @property(nonatomic,strong)UILabel * messageLable2;
+@property(nonatomic,strong)UILabel * priceLable2;
+
 
 
 

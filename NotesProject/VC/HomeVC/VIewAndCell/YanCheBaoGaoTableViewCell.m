@@ -35,7 +35,7 @@
         self.nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.nickLable.textColor = RGBFormUIColor(0x343434);
         self.nickLable.adjustsFontSizeToFitWidth = YES;
-        [self.headerImageView addSubview:self.nickLable];
+        [self addSubview:self.nickLable];
         
         self.tiYanTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
         self.tiYanTimeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
@@ -119,7 +119,7 @@
     }
 
     self.nickLable.text = [info objectForKey:@"nickname"];
-    self.tiYanTimeLable.text = [NSString stringWithFormat:@"体验时间：%@",[info objectForKey:@"create_at"]];
+    self.tiYanTimeLable.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"create_at"]];
     NSNumber * avg_value = [info objectForKey:@"avg_value"];
     self.pingFenLable.text = [NSString stringWithFormat:@"%.1f",avg_value.floatValue];
     

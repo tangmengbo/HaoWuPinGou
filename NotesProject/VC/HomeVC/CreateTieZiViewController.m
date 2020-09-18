@@ -47,6 +47,7 @@
 {
     [self.biaoTiTF resignFirstResponder];
     [self.ageTF resignFirstResponder];
+    [self.chanPinShuLiangTF resignFirstResponder];
     [self.beginPriceTF resignFirstResponder];
     [self.endPriceTF resignFirstResponder];
     [self.telTF resignFirstResponder];
@@ -119,12 +120,12 @@
     UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView2.top+lineView2.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     ageLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
     ageLable.textColor = RGBFormUIColor(0x333333);
-    ageLable.text = @"女神年龄";
+    ageLable.text = @"小姐年龄";
     [self.mainScrollView addSubview:ageLable];
 
     self.ageTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, ageLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.ageTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写产品年龄" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.ageTF];
+    [NormalUse setTextFieldPlaceholder:@"填写小姐年龄" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.ageTF];
     self.ageTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.ageTF.textColor = RGBFormUIColor(0x343434);
     self.ageTF.textAlignment = NSTextAlignmentRight;
@@ -138,12 +139,12 @@
     UILabel * chanPinShuLiangLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView3.top+lineView3.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     chanPinShuLiangLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
     chanPinShuLiangLable.textColor = RGBFormUIColor(0x333333);
-    chanPinShuLiangLable.text = @"产品数量";
+    chanPinShuLiangLable.text = @"小姐数量";
     [self.mainScrollView addSubview:chanPinShuLiangLable];
 
     self.chanPinShuLiangTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, chanPinShuLiangLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.chanPinShuLiangTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [NormalUse setTextFieldPlaceholder:@"填写产品数量" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
+    [NormalUse setTextFieldPlaceholder:@"填写小姐数量" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.chanPinShuLiangTF];
     self.chanPinShuLiangTF.textAlignment = NSTextAlignmentRight;
     self.chanPinShuLiangTF.keyboardType = UIKeyboardTypeNumberPad;
     self.chanPinShuLiangTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -755,6 +756,12 @@
         [NormalUse showToastView:@"请填写年龄" view:self.view];
         return;
     }
+    if (![NormalUse isValidString:self.chanPinShuLiangTF.text]) {
+        
+        [NormalUse showToastView:@"请填写小姐数量" view:self.view];
+        return;
+    }
+    
     if(![NormalUse isValidString:self.beginPriceTF.text])
     {
         [NormalUse showToastView:@"请设置最低价格" view:self.view];

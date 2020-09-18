@@ -20,6 +20,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([@"meizi" isEqualToString:self.type]) {
+        
+        self.topTitleLale.text = @"妹子类型";
+    }
+    else if([@"fuwu" isEqualToString:self.type])
+    {
+        self.topTitleLale.text = @"服务类型";
+
+    }
+    else if ([@"xinxi" isEqualToString:self.type])
+    {
+        self.topTitleLale.text = @"信息类型";
+
+    }
+    
+    
     [self.rightButton setTitle:@"保存" forState:UIControlStateNormal];
     self.buttonArray = [NSMutableArray array];
     self.selectButtonArray = [NSMutableArray array];
@@ -81,14 +97,15 @@
         
         CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
         
-        if (originx+size.width+8*BiLiWidth>WIDTH_PingMu-12*BiLiWidth) {
+        if (originx+size.width+20*BiLiWidth>WIDTH_PingMu-12*BiLiWidth) {
             
             originx = 12*BiLiWidth;
-            originy = originy+20*BiLiWidth+yDistance;
+            originy = originy+40*BiLiWidth+yDistance;
         }
-        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, self.topNavView.top+self.topNavView.height+originy,size.width+8*BiLiWidth , 20*BiLiWidth)];
+        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, self.topNavView.top+self.topNavView.height+originy,size.width+20*BiLiWidth , 40*BiLiWidth)];
         [button setTitle:leiXingStr forState:UIControlStateNormal];
         [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+        [button setBackgroundColor:RGBFormUIColor(0xEEEEEE)];
         button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
         button.tag=i;
         button.layer.cornerRadius = 20*BiLiWidth;
@@ -115,12 +132,15 @@
         
         [self.selectButtonArray removeObject:selectButton];
         [selectButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+        [selectButton setBackgroundColor:RGBFormUIColor(0xEEEEEE)];
     }
     else
     {
         NSLog(@"%d",(int)selectButton.tag);
         [self.selectButtonArray addObject:selectButton];
-        [selectButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [selectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [selectButton setBackgroundColor:RGBFormUIColor(0x333333)];
+
         
     }
 }

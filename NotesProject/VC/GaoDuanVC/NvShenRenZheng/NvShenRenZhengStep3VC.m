@@ -152,7 +152,7 @@
     [self.view addSubview:step4TipLable];
     
     UIImageView * tipImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-318*BiLiWidth)/2, step4TipLable.top+step4TipLable.height+30*BiLiWidth, 318*BiLiWidth, 206*BiLiWidth)];
-    tipImageView.image = [UIImage imageNamed:@"jiaoLaYaJin"];
+    tipImageView.image = [UIImage imageNamed:@"jiaoLaYaJin_nvShen"];
     [self.view addSubview:tipImageView];
     
     self.jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 160*BiLiWidth, 150*BiLiWidth, 24*BiLiWidth)];

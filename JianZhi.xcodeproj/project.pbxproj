@@ -76,6 +76,8 @@
 		5F6673602511BF4E000C6810 /* DingZhiFuWuDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66735F2511BF4E000C6810 /* DingZhiFuWuDetailViewController.m */; };
 		5F6673632511E20D000C6810 /* HeiDianPingJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673622511E20D000C6810 /* HeiDianPingJiaViewController.m */; };
 		5F6673662511ED24000C6810 /* CreateDianPuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6673652511ED24000C6810 /* CreateDianPuViewController.m */; };
+		5F66736C251455CC000C6810 /* JingJiRenDianPuDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66736B251455CC000C6810 /* JingJiRenDianPuDetailViewController.m */; };
+		5F66737025148EB7000C6810 /* KaiJiagJiLuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66736F25148EB7000C6810 /* KaiJiagJiLuListCell.m */; };
 		5F6858C7250B2DAF007BDA9E /* HuiYuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858C6250B2DAF007BDA9E /* HuiYuanViewController.m */; };
 		5F6858CA250B476B007BDA9E /* MyJieSuoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858C9250B476B007BDA9E /* MyJieSuoListViewController.m */; };
 		5F6858CD250B478E007BDA9E /* MyJieSuo_TieZiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6858CC250B478E007BDA9E /* MyJieSuo_TieZiListCell.m */; };
@@ -288,6 +290,10 @@
 		5F6673622511E20D000C6810 /* HeiDianPingJiaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianPingJiaViewController.m; sourceTree = "<group>"; };
 		5F6673642511ED24000C6810 /* CreateDianPuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateDianPuViewController.h; sourceTree = "<group>"; };
 		5F6673652511ED24000C6810 /* CreateDianPuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateDianPuViewController.m; sourceTree = "<group>"; };
+		5F66736A251455CC000C6810 /* JingJiRenDianPuDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingJiRenDianPuDetailViewController.h; sourceTree = "<group>"; };
+		5F66736B251455CC000C6810 /* JingJiRenDianPuDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingJiRenDianPuDetailViewController.m; sourceTree = "<group>"; };
+		5F66736E25148EB7000C6810 /* KaiJiagJiLuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KaiJiagJiLuListCell.h; sourceTree = "<group>"; };
+		5F66736F25148EB7000C6810 /* KaiJiagJiLuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KaiJiagJiLuListCell.m; sourceTree = "<group>"; };
 		5F6858C5250B2DAF007BDA9E /* HuiYuanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HuiYuanViewController.h; sourceTree = "<group>"; };
 		5F6858C6250B2DAF007BDA9E /* HuiYuanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HuiYuanViewController.m; sourceTree = "<group>"; };
 		5F6858C8250B476B007BDA9E /* MyJieSuoListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyJieSuoListViewController.h; sourceTree = "<group>"; };
@@ -534,6 +540,7 @@
 		5F22EBBC24ECF317002DCF61 /* XiaoXiVC */ = {
 			isa = PBXGroup;
 			children = (
+				5F66736D25148E94000C6810 /* ViewAndCell */,
 				5F34DCF324EFCEF000DE15A1 /* JingCaiFuLiViewController.h */,
 				5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */,
 				5F0B382624F63AB400FC935A /* KaiJiangJiLuListViewController.h */,
@@ -554,6 +561,8 @@
 				5F6858CE250B4793007BDA9E /* ViewAndCell */,
 				5F22EBCB24ECF3A8002DCF61 /* MyCenterViewController.h */,
 				5F22EBCC24ECF3A8002DCF61 /* MyCenterViewController.m */,
+				5F66736A251455CC000C6810 /* JingJiRenDianPuDetailViewController.h */,
+				5F66736B251455CC000C6810 /* JingJiRenDianPuDetailViewController.m */,
 				5F6858C8250B476B007BDA9E /* MyJieSuoListViewController.h */,
 				5F6858C9250B476B007BDA9E /* MyJieSuoListViewController.m */,
 				5F7EF466251077EC0052B948 /* MyFaBuViewController.h */,
@@ -682,6 +691,15 @@
 			children = (
 				5F34DCD724EE801E00DE15A1 /* FuQiJiaoHomeCell.h */,
 				5F34DCD824EE801E00DE15A1 /* FuQiJiaoHomeCell.m */,
+			);
+			path = ViewAndCell;
+			sourceTree = "<group>";
+		};
+		5F66736D25148E94000C6810 /* ViewAndCell */ = {
+			isa = PBXGroup;
+			children = (
+				5F66736E25148EB7000C6810 /* KaiJiagJiLuListCell.h */,
+				5F66736F25148EB7000C6810 /* KaiJiagJiLuListCell.m */,
 			);
 			path = ViewAndCell;
 			sourceTree = "<group>";
@@ -1176,6 +1194,7 @@
 				5FE3EAD42355A0EE00C77F4D /* UIView+Additions.m in Sources */,
 				5F26510524FE3F8500171684 /* NvShenRenZhengStep3VC.m in Sources */,
 				5F34DCDD24EF716500DE15A1 /* MyScrollView.m in Sources */,
+				5F66736C251455CC000C6810 /* JingJiRenDianPuDetailViewController.m in Sources */,
 				5F2650D824FC8C9A00171684 /* JYWeakTimer.m in Sources */,
 				5F2650FF24FE3F6600171684 /* NvShenRenZhengStep1VC.m in Sources */,
 				5FD8504E25087772009286CE /* FuQiJiaoRenZhengStep4VC.m in Sources */,
@@ -1242,6 +1261,7 @@
 				5FE3EC192355A3E400C77F4D /* TZPhotoPreviewCell.m in Sources */,
 				5F6673512510B999000C6810 /* MyShouCangGuanZhuViewController.m in Sources */,
 				5FE3EC072355A3E400C77F4D /* UIViewController+LLMediaExt.m in Sources */,
+				5F66737025148EB7000C6810 /* KaiJiagJiLuListCell.m in Sources */,
 				5F0B382824F63AB400FC935A /* KaiJiangJiLuListViewController.m in Sources */,
 				5F2650DA24FC8C9A00171684 /* JYCarousel.m in Sources */,
 				5FE3EC0B2355A3E400C77F4D /* LLImagePickerModel.m in Sources */,

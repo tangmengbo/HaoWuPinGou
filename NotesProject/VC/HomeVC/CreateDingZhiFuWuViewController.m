@@ -8,7 +8,7 @@
 
 #import "CreateDingZhiFuWuViewController.h"
 
-@interface CreateDingZhiFuWuViewController ()
+@interface CreateDingZhiFuWuViewController ()<CityListViewControllerDelegate>
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
@@ -67,7 +67,7 @@
 
 -(void)initTopMessageView
 {
-    self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(25*BiLiWidth, 24*BiLiWidth, 100*BiLiWidth, 19*BiLiWidth)];
+    self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(25*BiLiWidth, 24*BiLiWidth, 200*BiLiWidth, 19*BiLiWidth)];
     self.cityLable.font = [UIFont systemFontOfSize:19*BiLiWidth];
     self.cityLable.textColor = RGBFormUIColor(0x343434);
     self.cityLable.text = [NormalUse defaultsGetObjectKey:CurrentCity];
@@ -75,13 +75,14 @@
     
     Lable_ImageButton * cityButton  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(259.5*BiLiWidth, 19.5*BiLiWidth, 35*BiLiWidth, 27*BiLiWidth)];
     cityButton.button_imageView.frame = CGRectMake((cityButton.width-14*BiLiWidth)/2, 0, 14*BiLiWidth, 14*BiLiWidth);
-    cityButton.button_imageView.backgroundColor = RGBFormUIColor(0x1396DC);
+    cityButton.button_imageView.image = [UIImage imageNamed:@"location_image"];
     cityButton.button_lable.frame = CGRectMake(0, cityButton.button_imageView.top+cityButton.button_imageView.height+4*BiLiWidth, cityButton.width, 9*BiLiWidth);
     cityButton.button_lable.font = [UIFont systemFontOfSize:9*BiLiWidth];
     cityButton.button_lable.textAlignment = NSTextAlignmentCenter;
     cityButton.button_lable.textColor = RGBFormUIColor(0x1396DC);
     cityButton.button_lable.text = @"当前位置";
     cityButton.button_lable.adjustsFontSizeToFitWidth = YES;
+    [cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.whiteContentView addSubview:cityButton];
     
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(25*BiLiWidth, 56*BiLiWidth, 273.5*BiLiWidth, 1)];
@@ -280,6 +281,18 @@
 
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, tiJiaoButton.top+tiJiaoButton.height+20*BiLiWidth)];
     [self initPickView];
+}
+-(void)cityButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    self.cityLable.text = [info objectForKey:@"cityName"];
 }
 -(void)initPickView
 {
@@ -505,7 +518,17 @@
 
 
     NSMutableDictionary  * dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:[NormalUse defaultsGetObjectKey:CurrentCity] forKey:@"city_code"];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        
+        NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+        [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
+
+    }
+    else
+    {
+        [dic setObject:[NormalUse defaultsGetObjectKey:CurrentCity] forKey:@"city_code"];
+
+    }
     [dic setObject:beginStr forKey:@"start_date"];
     [dic setObject:endStr forKey:@"end_date"];
     [dic setObject:self.beginPriceTF.text forKey:@"min_price"];

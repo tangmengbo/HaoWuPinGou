@@ -122,6 +122,10 @@
         imageView.autoresizingMask = UIViewAutoresizingNone;
         imageView.clipsToBounds = YES;
         imageView.layer.cornerRadius = 5*BiLiWidth;
+        imageView.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jinDianKanKanButtonClick)];
+        [imageView addGestureRecognizer:tap];
         
         if ([NormalUse isValidString:[info objectForKey:@"images"]]) {
             

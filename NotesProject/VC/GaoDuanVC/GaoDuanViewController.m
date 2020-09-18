@@ -369,7 +369,8 @@
     }
     else if (button.tag==1)//已认证
     {
-        CreateDianPuViewController * vc = [[CreateDianPuViewController alloc] init];
+        CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
+        vc.from_flg = @"1";
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if(button.tag==2)//审核中
@@ -636,7 +637,7 @@
                 if (auth_agent.intValue==1) {
                     
                     [button1 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button1.backgroundColor = [UIColor redColor];
+                    [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenFaBuXinXi"] forState:UIControlStateNormal];
 
 
                 }

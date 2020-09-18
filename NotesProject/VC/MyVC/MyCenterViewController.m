@@ -22,6 +22,36 @@
     
     [self xianShiTabBar];
     
+    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+    NSString * defaultsKey = [UserRole stringByAppendingString:token];
+    NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+    if ([NormalUse isValidDictionary:userRoleDic]) {
+        
+        NSNumber * auth_agent = [userRoleDic objectForKey:@"auth_agent"];
+        
+        if (auth_agent.intValue==1) {
+            
+            self.jingJiRenButton.hidden = NO;
+            self.myJieSuoButton.top = self.jingJiRenButton.top+self.jingJiRenButton.height;
+            self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
+            self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
+            self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.kaiJiangButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth;
+
+        }
+        else
+        {
+            self.jingJiRenButton.hidden = YES;
+            self.myJieSuoButton.top = self.jingJiRenButton.top;
+            self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
+            self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
+            self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.kaiJiangButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth;
+
+        }
+
+    }
+    
     [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
@@ -156,7 +186,7 @@
     [self.mainScrollView addSubview:self.mianFeiFaBuButton];
 
     self.shouCangGuanZhuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-50*BiLiWidth-36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
-    [self.shouCangGuanZhuButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.shouCangGuanZhuButton addTarget:self action:@selector(shouCangGuanZhuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.shouCangGuanZhuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
     self.shouCangGuanZhuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.shouCangGuanZhuButton.button_lable.textColor = RGBFormUIColor(0x343434);
@@ -199,75 +229,78 @@
     UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.huiYuanButton.top+self.huiYuanButton.height+24*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
     lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
     [self.mainScrollView addSubview:lineView];
+    
+    self.jingJiRenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height+9*BiLiWidth, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.jingJiRenButton addTarget:self action:@selector(jingJiRenButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.jingJiRenButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.jingJiRenButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.jingJiRenButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
+    self.jingJiRenButton.button_lable.frame = CGRectMake(self.jingJiRenButton.button_imageView.left+self.jingJiRenButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.jingJiRenButton.height);
+    self.jingJiRenButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.jingJiRenButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.jingJiRenButton.button_lable.text = @"经纪人";
+    self.jingJiRenButton.button_imageView1.frame = CGRectMake(self.jingJiRenButton.width-9*BiLiWidth-12*BiLiWidth, (self.jingJiRenButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.jingJiRenButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.jingJiRenButton];
 
-    Lable_ImageButton  * myJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height+9*BiLiWidth, WIDTH_PingMu, 50*BiLiWidth)];
-    [myJieSuoButton addTarget:self action:@selector(myJieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    myJieSuoButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    myJieSuoButton.button_imageView.image = [UIImage imageNamed:@"my_jieSuo"];
-    myJieSuoButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-    myJieSuoButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    myJieSuoButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    myJieSuoButton.button_lable.text = @"我的解锁";
-    myJieSuoButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    myJieSuoButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-    [self.mainScrollView addSubview:myJieSuoButton];
-    
-    
-    Lable_ImageButton  * myFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myJieSuoButton.top+myJieSuoButton.height, WIDTH_PingMu, 50*BiLiWidth)];
-    [myFaBuButton addTarget:self action:@selector(myFaBuButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    myFaBuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    myFaBuButton.button_imageView.image = [UIImage imageNamed:@"my_faBu"];
-    myFaBuButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-    myFaBuButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    myFaBuButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    myFaBuButton.button_lable.text = @"我的发布";
-    myFaBuButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    myFaBuButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-    [self.mainScrollView addSubview:myFaBuButton];
 
+    self.myJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height+9*BiLiWidth, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.myJieSuoButton addTarget:self action:@selector(myJieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.myJieSuoButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.myJieSuoButton.button_imageView.image = [UIImage imageNamed:@"my_jieSuo"];
+    self.myJieSuoButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.myJieSuoButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.myJieSuoButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.myJieSuoButton.button_lable.text = @"我的解锁";
+    self.myJieSuoButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.myJieSuoButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.myJieSuoButton];
     
-//    Lable_ImageButton  * myShouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
-//    [myShouCangButton addTarget:self action:@selector(myShouCangButtonClick) forControlEvents:UIControlEventTouchUpInside];
-//    myShouCangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-//    myShouCangButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
-//    myShouCangButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-//    myShouCangButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-//    myShouCangButton.button_lable.textColor = RGBFormUIColor(0x333333);
-//    myShouCangButton.button_lable.text = @"我的收藏";
-//    myShouCangButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-//    myShouCangButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-//    [self.mainScrollView addSubview:myShouCangButton];
-
     
-    Lable_ImageButton  * myKeFuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myFaBuButton.top+myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
-    myKeFuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    myKeFuButton.button_imageView.image = [UIImage imageNamed:@"my_keFu"];
-    myKeFuButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-    myKeFuButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    myKeFuButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    myKeFuButton.button_lable.text = @"联系客服";
-    myKeFuButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    myKeFuButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-    [self.mainScrollView addSubview:myKeFuButton];
+    self.myFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myJieSuoButton.top+self.myJieSuoButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.myFaBuButton addTarget:self action:@selector(myFaBuButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.myFaBuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.myFaBuButton.button_imageView.image = [UIImage imageNamed:@"my_faBu"];
+    self.myFaBuButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.myFaBuButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.myFaBuButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.myFaBuButton.button_lable.text = @"我的发布";
+    self.myFaBuButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.myFaBuButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.myFaBuButton];
 
     
-    Lable_ImageButton  * tuiGuangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, myKeFuButton.top+myKeFuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
-    tuiGuangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    tuiGuangButton.button_imageView.image = [UIImage imageNamed:@"my_tuiGuang"];
-    tuiGuangButton.button_lable.frame = CGRectMake(myJieSuoButton.button_imageView.left+myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, myJieSuoButton.height);
-    tuiGuangButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    tuiGuangButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    tuiGuangButton.button_lable.text = @"推广赚钱";
-    tuiGuangButton.button_imageView1.frame = CGRectMake(myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    tuiGuangButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
-    [self.mainScrollView addSubview:tuiGuangButton];
 
-    UIButton * kaiJiangButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-330*BiLiWidth)/2, tuiGuangButton.top+tuiGuangButton.height+8*BiLiWidth, 330*BiLiWidth, 76.5*BiLiWidth)];
-    [kaiJiangButton setBackgroundImage:[UIImage imageNamed:@"my_kaiJiang"] forState:UIControlStateNormal];
-    [kaiJiangButton addTarget:self action:@selector(kaiJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:kaiJiangButton];
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, kaiJiangButton.top+kaiJiangButton.height+40*BiLiWidth)];
+    self.myKeFuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myFaBuButton.top+self.myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    self.myKeFuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.myKeFuButton.button_imageView.image = [UIImage imageNamed:@"my_keFu"];
+    self.myKeFuButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.myKeFuButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.myKeFuButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.myKeFuButton.button_lable.text = @"联系客服";
+    self.myKeFuButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.myKeFuButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.myKeFuButton];
+
+    
+    self.tuiGuangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myKeFuButton.top+self.myKeFuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    self.tuiGuangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.tuiGuangButton.button_imageView.image = [UIImage imageNamed:@"my_tuiGuang"];
+    self.tuiGuangButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.tuiGuangButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.tuiGuangButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.tuiGuangButton.button_lable.text = @"推广赚钱";
+    self.tuiGuangButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.tuiGuangButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.tuiGuangButton];
+
+    
+    self.kaiJiangButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-330*BiLiWidth)/2, self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth, 330*BiLiWidth, 76.5*BiLiWidth)];
+    [self.kaiJiangButton setBackgroundImage:[UIImage imageNamed:@"my_kaiJiang"] forState:UIControlStateNormal];
+    [self.kaiJiangButton addTarget:self action:@selector(kaiJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollView addSubview:self.kaiJiangButton];
+    
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiJiangButton.top+self.kaiJiangButton.height+40*BiLiWidth)];
     
 }
 #pragma mark--UIButton
@@ -287,14 +320,20 @@
     vc.info = self.userInfo;
     [self.navigationController pushViewController:vc animated:YES];
 }
+-(void)shouCangGuanZhuButtonClick
+{
+    MyShouCangGuanZhuViewController * vc = [[MyShouCangGuanZhuViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
 -(void)myFaBuButtonClick
 {
     MyFaBuViewController * vc = [[MyFaBuViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
--(void)myShouCangButtonClick
+-(void)jingJiRenButtonClick
 {
-    MyShouCangGuanZhuViewController * vc = [[MyShouCangGuanZhuViewController alloc] init];
+    JingJiRenDianPuDetailViewController * vc = [[JingJiRenDianPuDetailViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)myJieSuoButtonClick

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) UIView * whiteContentView;
 
 @property(nonatomic,strong)UILabel * cityLable;
+@property(nonatomic,strong)NSDictionary * cityInfo;
 
 @property(nonatomic,strong)UIButton * beginTimeButton;
 @property(nonatomic,strong)UILabel * beginWeekLable;

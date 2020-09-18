@@ -184,7 +184,7 @@
     }
     else
     {
-        originY = 42*BiLiHeight;
+        originY = 47*BiLiHeight;
     }
     Lable_ImageButton * shuoMingButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(23*BiLiWidth, controlView.top+controlView.height+originY, 69*BiLiWidth, 14*BiLiWidth)];
     shuoMingButton.button_imageView.frame = CGRectMake(0, 0, 14*BiLiWidth, 14*BiLiWidth);
@@ -207,7 +207,7 @@
     [bottomImageView addSubview:gouMaiJiLuButton];
     [gouMaiJiLuButton addTarget:self action:@selector(gouMaiJiLuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(23*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiHeight, WIDTH_PingMu-46*BiLiWidth, HEIGHT_PingMu-(gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiWidth+BottomHeight_PingMu+10*BiLiWidth))];
+    self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(23*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+70*BiLiHeight, WIDTH_PingMu-46*BiLiWidth, HEIGHT_PingMu-(gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiWidth+BottomHeight_PingMu+10*BiLiWidth))];
     self.contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
     self.contentTextView.textColor = RGBFormUIColor(0x868686);
     self.contentTextView.editable = NO;
@@ -355,7 +355,12 @@
             
             [NormalUse showToastView:@"购买成功" view:self.view];
         }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
     }];
+    
 }
 -(void)shuoMingButton
 {

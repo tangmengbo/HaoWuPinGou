@@ -2676,6 +2676,42 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
        }];
 }
 
+//appi/Upscale/shopDetail
+//经纪人查看自己的店铺详情
++(void)jingJiRenGetDianPuDetail:(NSDictionary *_Nullable)parameter
+                       callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/Upscale/shopDetail",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
 @end
 
 
