@@ -8,10 +8,10 @@
 
 #import "TiYanBaoGaoDetailViewController.h"
 
-@interface TiYanBaoGaoDetailViewController ()<WSPageViewDelegate,WSPageViewDataSource>
+@interface TiYanBaoGaoDetailViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource>
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
-@property(nonatomic,strong) WSPageView * pageView;
+@property(nonatomic,strong) NewPagedFlowView * pageView;
 @property(nonatomic,strong) UIPageControl * pageControl;
 @property(nonatomic,strong)NSArray * images;
 
@@ -36,18 +36,17 @@
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height))];
     [self.view addSubview:self.mainScrollView];
     
-    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 146*BiLiWidth)];
-    self.pageView.currentWidth = 305;
-    self.pageView.currentHeight = 146;
-    self.pageView.normalHeight = 134;
+    self.pageView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
     self.pageView.delegate = self;
     self.pageView.dataSource = self;
-    self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-    self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-    self.pageView.orginPageCount = 3; //原始页数
-    self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-    [self.mainScrollView addSubview:self.pageView] ;
-    
+    self.pageView.minimumPageAlpha = 0.1;
+    self.pageView.isCarousel = YES;
+    self.pageView.orientation = NewPagedFlowViewOrientationHorizontal;
+    self.pageView.isOpenAutoScroll = YES;
+    self.pageView.orginPageCount = self.images.count;
+    [self.pageView reloadData];
+    [self.mainScrollView addSubview:self.pageView];
+
     self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.top+self.pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
     self.pageControl.currentPage = 0;      //设置当前页指示点
     self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
@@ -318,37 +317,44 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark NewPagedFlowView Delegate
-- (CGSize)sizeForPageInFlowView:(WSPageView *)flowView {
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     
     return CGSizeMake(WIDTH_PingMu-60*BiLiWidth,flowView.frame.size.height);
 }
 
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    
 }
-- (void)didScrollToPage:(float)contentOffsetX inFlowView:(WSPageView *)flowView pageNumber:(int)pageNumber{
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-
+    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource
-- (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.images.count;
+    
 }
 
-- (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
-    
-    WSIndexBanner *bannerView = (WSIndexBanner *)[flowView dequeueReusableCell];
-    if (!bannerView)
-    {
-        bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 100*BiLiWidth)];
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] init];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
     }
-    NSString * path = [self.images objectAtIndex:index];
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:path]];
-    return bannerView;
+    //在这里下载网络图片
+          NSDictionary * info = [self.images objectAtIndex:index];
+          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+//    bannerView.mainImageView.image = self.imageArray[index];
     
+    return bannerView;
 }
 
 

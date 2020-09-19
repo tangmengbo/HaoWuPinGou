@@ -9,7 +9,7 @@
 #import "GaoDuanViewController.h"
 #import "GaoDuanHomeCell.h"
 
-@interface GaoDuanViewController ()<WSPageViewDelegate,WSPageViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface GaoDuanViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     NvShenListViewController * nvShenListVC;
     WaiWeiListViewController * waiWeiVC;
@@ -24,7 +24,7 @@
 
 @property(nonatomic,strong)UITableView * mainTableView;
 
-@property(nonatomic,strong,nullable)WSPageView *pageView;
+@property(nonatomic,strong,nullable)NewPagedFlowView *pageView;
 @property(nonatomic,strong)UIPageControl * pageControl;
 
 @property(nonatomic,strong)UIButton * pingFenButton;
@@ -104,35 +104,40 @@
     
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
-    float originx = 13*BiLiWidth;
+    float originx = 20*BiLiWidth;
     CGSize size;
     for (int i=0; i<array.count; i++) {
         
         UIButton * button;
+//        if (i==0) {
+            
+            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 17*BiLiWidth)];
+            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+
+
+//        }
+//        else
+//        {
+//            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
+//            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth)];
+//            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+//            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+//            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//
+//
+//        }
         if (i==0) {
             
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 18*BiLiWidth)];
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
-
-
+            button.transform = CGAffineTransformMakeScale(1.3, 1.3);
         }
-        else
-        {
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth)];
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
 
-
-        }
         button.tag = i;
         [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
-        originx = button.left+button.width+11.5*BiLiWidth;
+        originx = button.left+button.width+20*BiLiWidth;
         
         [self.listButtonArray addObject:button];
     }
@@ -317,31 +322,25 @@
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
     [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
-    float originx = 13*BiLiWidth;
-    CGSize size;
     for (int i=0; i<self.listButtonArray.count; i++) {
         
         UIButton * button = [self.listButtonArray objectAtIndex:i];
         if (button.tag==selectButton.tag) {
             
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:18*BiLiWidth];
-            button.frame  = CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 18*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:18*BiLiWidth];
-            
             [UIView animateWithDuration:0.5 animations:^{
+                
+                button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+
                 self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
             }];
 
-
+            
         }
         else
         {
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-            button.frame  = CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            button.transform = CGAffineTransformIdentity;
+
         }
-        
-        originx = button.left+button.width+11.5*BiLiWidth;
 
         
     }
@@ -563,19 +562,17 @@
     //顶部轮播图
     if ([NormalUse isValidArray:self.bannerArray]) {
         
-        WSPageView * pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
-        
-        pageView.currentWidth = 305;
-        pageView.currentHeight = 147;
-        pageView.normalHeight = 134;
+        NewPagedFlowView *pageView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
         pageView.delegate = self;
         pageView.dataSource = self;
-        pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-        pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-        pageView.orginPageCount = 3; //原始页数
-        pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-        [headerView addSubview:pageView] ;
-        
+        pageView.minimumPageAlpha = 0.1;
+        pageView.isCarousel = YES;
+        pageView.orientation = NewPagedFlowViewOrientationHorizontal;
+        pageView.isOpenAutoScroll = YES;
+        pageView.orginPageCount = self.bannerArray.count;
+        [pageView reloadData];
+        [headerView addSubview:pageView];
+
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, pageView.top+pageView.height+8*BiLiWidth, 200*BiLiWidth, 10)];
         self.pageControl.currentPage = 0;      //设置当前页指示点
@@ -910,38 +907,44 @@
 
 
 #pragma mark NewPagedFlowView Delegate
-- (CGSize)sizeForPageInFlowView:(WSPageView *)flowView {
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     
     return CGSizeMake(WIDTH_PingMu-60*BiLiWidth,flowView.frame.size.height);
 }
 
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    
 }
-- (void)didScrollToPage:(float)contentOffsetX inFlowView:(WSPageView *)flowView pageNumber:(int)pageNumber{
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-
+    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource
-- (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.bannerArray.count;
+    
 }
 
-- (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
-    
-    WSIndexBanner *bannerView = (WSIndexBanner *)[flowView dequeueReusableCell];
-    if (!bannerView)
-    {
-        bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 100*BiLiWidth)];
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] init];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
     }
-    NSDictionary * info = [self.bannerArray objectAtIndex:index];
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
-
-    return bannerView;
+    //在这里下载网络图片
+          NSDictionary * info = [self.bannerArray objectAtIndex:index];
+          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+//    bannerView.mainImageView.image = self.imageArray[index];
     
+    return bannerView;
 }
 
 @end

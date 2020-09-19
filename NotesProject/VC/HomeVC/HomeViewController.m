@@ -9,14 +9,13 @@
 #import "HomeViewController.h"
 #import "YanCheBaoGaoTableViewCell.h"
 
-@interface HomeViewController ()<WSPageViewDelegate,WSPageViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface HomeViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
 @property(nonatomic,strong)NSArray * bannerArray;
 
 @property(nonatomic,strong)NSMutableArray * vipFuncationArray;
-@property(nonatomic,strong,nullable)WSPageView *pageView;
 @property(nonatomic,strong)UIPageControl * pageControl;
 
 @property(nonatomic,strong)UILabel * locationLable;
@@ -191,6 +190,15 @@
     self.mainScrollView.showsHorizontalScrollIndicator = NO;
     self.mainScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.mainScrollView];
+    
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainScrollView.mj_header = mjHeader;
+    
+    
+    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    self.mainScrollView.mj_footer = mjFooter;
+
 
     [NormalUse xianShiGifLoadingView:self];
     [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -206,16 +214,6 @@
     
 
     
-//    [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:@"18740118239",@"mobile",@"123456",@"password", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-//        
-//        if (status==1) {
-//            
-//            NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
-//            [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
-//            
-//        }
-//    }];
-
         
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
@@ -241,26 +239,25 @@
 -(void)initContentView
 {
     
-    self.pageView = [[WSPageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
-    self.pageView.currentWidth = 305;
-    self.pageView.currentHeight = 147;
-    self.pageView.normalHeight = 134;
-    self.pageView.delegate = self;
-    self.pageView.dataSource = self;
-    self.pageView.minimumPageAlpha = 1;   //非当前页的透明比例
-    self.pageView.minimumPageScale = 0.8;  //非当前页的缩放比例
-    self.pageView.orginPageCount = self.vipFuncationArray.count; //原始页数
-    self.pageView.autoTime = 4;    //自动切换视图的时间,默认是5.0
-    [self.mainScrollView addSubview:self.pageView] ;
-    
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, self.pageView.top+self.pageView.height+8*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth)];
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 147*BiLiWidth)];
+    pageFlowView.delegate = self;
+    pageFlowView.dataSource = self;
+    pageFlowView.minimumPageAlpha = 0.1;
+    pageFlowView.isCarousel = YES;
+    pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+    pageFlowView.isOpenAutoScroll = YES;
+    pageFlowView.orginPageCount = self.bannerArray.count;
+    [pageFlowView reloadData];
+    [self.mainScrollView addSubview:pageFlowView];
+
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, pageFlowView.top+pageFlowView.height+8*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth)];
     self.pageControl.currentPage = 0;      //设置当前页指示点
     self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
     self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
     self.pageControl.numberOfPages = self.bannerArray.count;
     [self.mainScrollView addSubview:self.pageControl];
     
-    Lable_ImageButton * tiYanBaoGao = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+5*BiLiWidth, 69.5*BiLiWidth, 76.5*BiLiWidth)];
+    Lable_ImageButton * tiYanBaoGao = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(13.5*BiLiWidth, pageFlowView.top+pageFlowView.height+5*BiLiWidth, 69.5*BiLiWidth, 76.5*BiLiWidth)];
     [tiYanBaoGao addTarget:self action:@selector(tiYanBaoGaoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     tiYanBaoGao.button_imageView.frame = CGRectMake(0, 0, 69.5*BiLiWidth, 69.5*BiLiWidth);
     tiYanBaoGao.button_imageView.image = [UIImage imageNamed:@"home_tiYan"];
@@ -312,35 +309,29 @@
     
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"验证榜单",@"验车报告", nil];
-    float originx = 13*BiLiWidth;
+    float originx = 20*BiLiWidth;
     CGSize size;
     for (int i=0; i<array.count; i++) {
         
         UIButton * button;
-        if (i==0) {
-            
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,10*BiLiWidth, size.width, 17*BiLiWidth)];
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        
+        size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+        button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,10*BiLiWidth, size.width, 17*BiLiWidth)];
+        [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+        [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
 
-
-        }
-        else
-        {
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, 15*BiLiWidth, size.width, 12*BiLiWidth)];
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-
-
-        }
         button.tag = i;
         [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.itemButtonContentView addSubview:button];
-        originx = button.left+button.width+11.5*BiLiWidth;
+        [button.titleLabel sizeToFit];
+        originx = button.left+button.width+20*BiLiWidth;
+        
+        if (i==0) {
+            
+            button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        }
+
         
         [self.listButtonArray addObject:button];
         
@@ -367,7 +358,7 @@
 
     
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.dingZhi.top+self.dingZhi.height+64.5*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.dingZhi.top+self.dingZhi.height+64.5*BiLiWidth+BottomHeight_PingMu))];
-    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*array.count, self.contentScrollView.height)];
+    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*array.count, 0)];
     self.contentScrollView.pagingEnabled = YES;
     self.contentScrollView.tag = 1001;
     self.contentScrollView.delegate = self;
@@ -393,18 +384,10 @@
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         tableView.showsHorizontalScrollIndicator = NO;
         tableView.showsVerticalScrollIndicator = NO;
+        tableView.scrollEnabled = NO;
         [self.contentScrollView addSubview:tableView];
         
         [self.tableViewArray addObject:tableView];
-        
-        
-        MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
-        mjHeader.lastUpdatedTimeLabel.hidden = YES;
-        tableView.mj_header = mjHeader;
-        
-        
-        MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
-        tableView.mj_footer = mjFooter;
         
 
     }
@@ -438,14 +421,11 @@
             [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
             
             UITableView * tableView = [self.tableViewArray objectAtIndex:0];
-            [tableView.mj_header endRefreshing];
-            [tableView.mj_footer endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
+            [self.mainScrollView.mj_footer endRefreshing];
             
             [tableView reloadData];
             
-            tableView.scrollEnabled = NO;
-            self.mainScrollView.scrollEnabled = YES;
-
             tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
             
             if (self.contentScrollView.contentOffset.x==0) {
@@ -475,12 +455,9 @@
             [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
 
             UITableView * tableView = [self.tableViewArray objectAtIndex:1];
-            [tableView.mj_header endRefreshing];
-            [tableView.mj_footer endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
+            [self.mainScrollView.mj_footer endRefreshing];
             
-            tableView.scrollEnabled = NO;
-            self.mainScrollView.scrollEnabled = YES;
-
             [tableView reloadData];
             
             tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
@@ -516,11 +493,9 @@
             
             
             UITableView * tableView = [self.tableViewArray objectAtIndex:2];
-            [tableView.mj_header endRefreshing];
-            [tableView.mj_footer endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
+            [self.mainScrollView.mj_footer endRefreshing];
             
-            tableView.scrollEnabled = NO;
-            self.mainScrollView.scrollEnabled = YES;
 
             [tableView reloadData];
             
@@ -554,12 +529,9 @@
             [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
 
             UITableView * tableView = [self.tableViewArray objectAtIndex:3];
-            [tableView.mj_header endRefreshing];
-            [tableView.mj_footer endRefreshing];
+            [self.mainScrollView.mj_header endRefreshing];
+            [self.mainScrollView.mj_footer endRefreshing];
             
-            tableView.scrollEnabled = NO;
-            self.mainScrollView.scrollEnabled = YES;
-
             [tableView reloadData];
             
             float tableViewHeight  = 0;
@@ -628,17 +600,8 @@
                 [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
 
                 UITableView * tableView = [self.tableViewArray objectAtIndex:0];
-                if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
-                }
-                else
-                {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
-                }
-
-                tableView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
+                [self.mainScrollView.mj_footer endRefreshing];
 
                 [tableView reloadData];
 
@@ -680,17 +643,9 @@
                 [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
 
                 UITableView * tableView = [self.tableViewArray objectAtIndex:1];
-                if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
-                }
-                else
-                {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
-                }
-                tableView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
+                [self.mainScrollView.mj_footer endRefreshing];
+                
 
                 [tableView reloadData];
                 
@@ -730,18 +685,8 @@
                 [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
                 
                 UITableView * tableView = [self.tableViewArray objectAtIndex:2];
-                if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
-                }
-                else
-                {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
-                }
-                tableView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-
+                [self.mainScrollView.mj_footer endRefreshing];
                 [tableView reloadData];
                 
                 tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
@@ -780,16 +725,8 @@
                 [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
                 
                 UITableView * tableView = [self.tableViewArray objectAtIndex:3];
-                if (dataArray.count>=10) {
                     
-                    [tableView.mj_footer endRefreshing];
-                }
-                else
-                {
-                    [tableView.mj_footer endRefreshingWithNoMoreData];
-                }
-                tableView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
+                [self.mainScrollView.mj_footer endRefreshing];
 
                 [tableView reloadData];
                
@@ -828,19 +765,16 @@
     UITableView * tableView = [self.tableViewArray objectAtIndex:selectButton.tag];
     [self setMainScrollViewContentSize:tableView];
     
-    float originx = 13*BiLiWidth;
-    CGSize size;
     
     for (int i=0; i<self.listButtonArray.count; i++) {
         
         UIButton * button = [self.listButtonArray objectAtIndex:i];
         if (button.tag==selectButton.tag) {
             
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:17*BiLiWidth];
-            button.frame  = CGRectMake(originx,10*BiLiWidth, size.width, 17*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:17*BiLiWidth];
-            
             [UIView animateWithDuration:0.5 animations:^{
+                
+                button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+
                 self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
             }];
 
@@ -848,263 +782,53 @@
         }
         else
         {
-            size  = [NormalUse setSize:button.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-            button.frame  = CGRectMake(originx, 15*BiLiWidth, size.width, 12*BiLiWidth);
-            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+            button.transform = CGAffineTransformIdentity;
+
         }
         
-        originx = button.left+button.width+11.5*BiLiWidth;
         
         
     }
     
-//    //切换tab后第一次滑动卡顿处理
-    self.mainScrollView.scrollEnabled = YES;
-    for (UITableView * tableView in self.tableViewArray) {
-        
-        tableView.scrollEnabled = NO;
-    }
 
 }
 #pragma mark---scrollviewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.tag==1002) {
-        
+
         CGFloat hight = scrollView.frame.size.height;
         CGFloat contentOffset = scrollView.contentOffset.y;
         CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
         CGFloat offset = contentOffset - self.lastcontentOffset;
         self.lastcontentOffset = contentOffset;
-        
+
        // NSLog(@"上拉行为");
         if (offset > 0 && contentOffset > 0) {
-           
+
             //如果mainScrollview上滑到 buttonItemView的位置 则把buttonItemView添加到当前view上(实现悬浮效果)
             if (scrollView.contentOffset.y>=267*BiLiWidth) {
-                
-                self.itemButtonContentView.top = TopHeight_PingMu;
+
+                self.itemButtonContentView.top = self.topNavView.height+self.topNavView.top;
                 [self.view addSubview:self.itemButtonContentView];
-            }
-            
-            //如果mainScrollview滑动到最底部 让所有的tableview可以滑动(让上拉加载功能可用)
-            if ((int)scrollView.contentOffset.y>=(int)scrollView.contentSize.height-(int)scrollView.height) {
-                
-                scrollView.scrollEnabled = NO;
-                
-                for (UITableView * tableView in self.tableViewArray) {
-                    
-                    tableView.scrollEnabled = YES;
-
-                    
-                }
-
-            }
-            else
-            {
-                scrollView.scrollEnabled = YES;
-                for (UITableView * tableView in self.tableViewArray) {
-                    
-                    tableView.scrollEnabled = NO;
-                }
-
             }
         }
         //NSLog(@"下拉行为");
         if (offset < 0 && distanceFromBottom > hight) {
-            
+
             //如果mainScrollview下滑到 buttonItemView的位置 则把buttonItemView添加到scrollview上(让buttonItemView和scrollview一起滚动)
 
             if (scrollView.contentOffset.y<=267*BiLiWidth) {
-                
+
                 self.itemButtonContentView.top = self.dingZhi.top+self.dingZhi.height+17.5*BiLiWidth;
                 [self.mainScrollView addSubview:self.itemButtonContentView];
 
-                       
-            }
-            //如果mainScrollview下滑到最顶部 让所有的tableview可以滑动(让下拉刷新功能可用)
-            if (scrollView.contentOffset.y<=0) {
-                
-                for (UITableView * tableView in self.tableViewArray) {
-                    
-                    tableView.scrollEnabled = YES;
-                    
-                }
-            }
-            else
-            {
-                for (UITableView * tableView in self.tableViewArray) {
-                    
-                    tableView.scrollEnabled = NO;
-                }
 
             }
 
         }
 
     }
-    if (scrollView.tag==0) {
-        
-        CGFloat hight = scrollView.frame.size.height;
-        CGFloat contentOffset = scrollView.contentOffset.y;
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
-        CGFloat offset = contentOffset - self.tableView1LastContentOffset;
-        self.tableView1LastContentOffset = contentOffset;
-        
-        //NSLog(@"下拉行为");
-        if (offset < 0 && distanceFromBottom > hight && contentOffset < 0) {
-            //如果当前tableview是向下滑动的 但是mainScrollView没有向下滑动到最顶部,则让tableview本身不可滑动
-            if (self.mainScrollView.contentOffset.y!=0) {
-                
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-            }
-            else
-            {
-                scrollView.scrollEnabled = YES;
-            }
-        }
-        // NSLog(@"上拉行为");
-        if (offset > 0 && contentOffset > 0) {
-            //如果当前tableview是向上滑动的 但是mainScrollView没有向上滑动到最底部,则让tableview本身不可滑动
-            if ((int)self.mainScrollView.contentOffset.y>= (int)self.mainScrollView.contentSize.height-(int)self.mainScrollView.height) {
-                
-                scrollView.scrollEnabled = YES;
-            }
-            else
-            {
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-
-            }
-        }
-
-
-        
-    }
-    if (scrollView.tag==1) {
-        
-        CGFloat hight = scrollView.frame.size.height;
-        CGFloat contentOffset = scrollView.contentOffset.y;
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
-        CGFloat offset = contentOffset - self.tableView2LastContentOffset;
-        self.tableView2LastContentOffset = contentOffset;
-        
-        //NSLog(@"下拉行为");
-        if (offset < 0 && distanceFromBottom > hight && contentOffset < 0) {
-            //如果当前tableview是向下滑动的 但是mainScrollView没有向下滑动到最顶部,则让tableview本身不可滑动
-            if (self.mainScrollView.contentOffset.y!=0) {
-                
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-            }
-            else
-            {
-                scrollView.scrollEnabled = YES;
-            }
-        }
-        // NSLog(@"上拉行为");
-        if (offset > 0 && contentOffset > 0) {
-            //如果当前tableview是向上滑动的 但是mainScrollView没有向上滑动到最底部,则让tableview本身不可滑动
-            if ((int)self.mainScrollView.contentOffset.y>= (int)self.mainScrollView.contentSize.height-(int)self.mainScrollView.height) {
-                
-                scrollView.scrollEnabled = YES;
-            }
-            else
-            {
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-
-            }
-        }
-
-        
-    }
-
-    if (scrollView.tag==2) {
-        
-        CGFloat hight = scrollView.frame.size.height;
-        CGFloat contentOffset = scrollView.contentOffset.y;
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
-        CGFloat offset = contentOffset - self.tableView3LastContentOffset;
-        self.tableView3LastContentOffset = contentOffset;
-        
-        //NSLog(@"下拉行为");
-        if (offset < 0 && distanceFromBottom > hight && contentOffset < 0) {
-            //如果当前tableview是向下滑动的 但是mainScrollView没有向下滑动到最顶部,则让tableview本身不可滑动
-            if (self.mainScrollView.contentOffset.y!=0) {
-                
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-            }
-            else
-            {
-                scrollView.scrollEnabled = YES;
-            }
-        }
-        // NSLog(@"上拉行为");
-        if (offset > 0 && contentOffset > 0) {
-            //如果当前tableview是向上滑动的 但是mainScrollView没有向上滑动到最底部,则让tableview本身不可滑动
-            if ((int)self.mainScrollView.contentOffset.y>= (int)self.mainScrollView.contentSize.height-(int)self.mainScrollView.height) {
-                
-                scrollView.scrollEnabled = YES;
-            }
-            else
-            {
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-
-            }
-        }
-
-        
-    }
-    if (scrollView.tag==3) {
-        
-        CGFloat hight = scrollView.frame.size.height;
-        CGFloat contentOffset = scrollView.contentOffset.y;
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentOffset;
-        CGFloat offset = contentOffset - self.tableView4LastContentOffset;
-        self.tableView4LastContentOffset = contentOffset;
-        
-        //NSLog(@"下拉行为");
-        if (offset < 0 && distanceFromBottom > hight && contentOffset < 0) {
-            //如果当前tableview是向下滑动的 但是mainScrollView没有向下滑动到最顶部,则让tableview本身不可滑动
-            if (self.mainScrollView.contentOffset.y!=0) {
-                
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-            }
-            else
-            {
-                scrollView.scrollEnabled = YES;
-            }
-        }
-        // NSLog(@"上拉行为");
-        if (offset > 0 && contentOffset > 0) {
-            //如果当前tableview是向上滑动的 但是mainScrollView没有向上滑动到最底部,则让tableview本身不可滑动
-            if ((int)self.mainScrollView.contentOffset.y>= (int)self.mainScrollView.contentSize.height-(int)self.mainScrollView.height) {
-                
-                scrollView.scrollEnabled = YES;
-            }
-            else
-            {
-                scrollView.scrollEnabled = NO;
-                self.mainScrollView.scrollEnabled = YES;
-
-
-            }
-        }
-
-    }
-
-
 
 }
 
@@ -1316,37 +1040,47 @@
 
 }
 #pragma mark NewPagedFlowView Delegate
-- (CGSize)sizeForPageInFlowView:(WSPageView *)flowView {
+#pragma mark NewPagedFlowView Delegate
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     
     return CGSizeMake(WIDTH_PingMu-60*BiLiWidth,flowView.frame.size.height);
 }
 
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    
 }
-- (void)didScrollToPage:(float)contentOffsetX inFlowView:(WSPageView *)flowView pageNumber:(int)pageNumber{
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
+    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource
-- (NSInteger)numberOfPagesInFlowView:(WSPageView *)flowView {
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.bannerArray.count;
+    
 }
 
-- (UIView *)flowView:(WSPageView *)flowView cellForPageAtIndex:(NSInteger)index{
-    
-    WSIndexBanner *bannerView = (WSIndexBanner *)[flowView dequeueReusableCell];
-    if (!bannerView)
-    {
-        bannerView = [[WSIndexBanner alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu-60*BiLiWidth, 147*BiLiWidth)];
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] init];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
     }
-    NSDictionary * info = [self.bannerArray objectAtIndex:index];
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
-    return bannerView;
+    //在这里下载网络图片
+          NSDictionary * info = [self.bannerArray objectAtIndex:index];
+          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+//    bannerView.mainImageView.image = self.imageArray[index];
     
+    return bannerView;
 }
+
 
 
 @end

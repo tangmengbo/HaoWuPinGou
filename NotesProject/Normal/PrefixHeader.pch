@@ -47,8 +47,8 @@
 #import "GetCountryInfoViewController.h"
 
 #import "Lable_ImageButton.h"
-#import "WSPageView.h"
-#import "WSIndexBanner.h"
+#import "NewPagedFlowView.h"
+
 #import "JYCarousel.h"
 
 #import "UITextView+ZWPlaceHolder.h"//uitextView placehold

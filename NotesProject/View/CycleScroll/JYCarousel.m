@@ -168,6 +168,9 @@
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(i * ViewWidth(_scrollView), 0, ViewWidth(_scrollView), ViewHeight(_scrollView))];
             imageView.userInteractionEnabled = YES;
             imageView.contentMode = self.config.contentMode;
+            imageView.autoresizingMask = UIViewAutoresizingNone;
+            imageView.clipsToBounds = YES;
+
             imageView.reloadTimesForFailedURL = self.config.faileReloadTimes;
             [_scrollView addSubview:imageView];
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageClick:)]];
