@@ -100,7 +100,7 @@
 
     }
     
-    self.weiZhiLable.text = [info objectForKey:@"city_name"];
+    self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     self.faBuTimeLable.text = [info objectForKey:@"create_at"];
     self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
     

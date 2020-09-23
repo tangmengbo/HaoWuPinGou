@@ -66,38 +66,11 @@
         [self addSubview:self.pingFenLable];
 
         
-        self.imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, 76.8*BiLiWidth, 90*BiLiWidth)];
-        self.imageView1.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView1.autoresizingMask = UIViewAutoresizingNone;
-        self.imageView1.clipsToBounds = YES;
-        self.imageView1.layer.cornerRadius = 8*BiLiWidth;
-        [self addSubview:self.imageView1];
-        
-        self.imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(self.imageView1.left+self.imageView1.width+6.5*BiLiWidth, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, 76.8*BiLiWidth, 90*BiLiWidth)];
-        self.imageView2.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView2.autoresizingMask = UIViewAutoresizingNone;
-        self.imageView2.clipsToBounds = YES;
-        self.imageView2.layer.cornerRadius = 8*BiLiWidth;
-        [self addSubview:self.imageView2];
+        self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
+        [self addSubview:self.contentScrollView];
 
         
-        self.imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(self.imageView2.left+self.imageView2.width+6.5*BiLiWidth, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, 76.8*BiLiWidth, 90*BiLiWidth)];
-        self.imageView3.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView3.autoresizingMask = UIViewAutoresizingNone;
-        self.imageView3.clipsToBounds = YES;
-        self.imageView3.layer.cornerRadius = 8*BiLiWidth;
-        [self addSubview:self.imageView3];
-
-        
-        self.imageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(self.imageView3.left+self.imageView3.width+6.5*BiLiWidth, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, 76.8*BiLiWidth, 90*BiLiWidth)];
-        self.imageView4.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView4.autoresizingMask = UIViewAutoresizingNone;
-        self.imageView4.clipsToBounds = YES;
-        self.imageView4.layer.cornerRadius = 8*BiLiWidth;
-        [self addSubview:self.imageView4];
-
-        
-        self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(14*BiLiWidth, self.imageView1.top+self.imageView2.height+18.5*BiLiWidth, WIDTH_PingMu-28*BiLiWidth, 11*BiLiWidth)];
+        self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(14*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+18.5*BiLiWidth, WIDTH_PingMu-28*BiLiWidth, 11*BiLiWidth)];
         self.messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.messageLable.textColor = RGBFormUIColor(0x343434);
         self.messageLable.numberOfLines = 0;
@@ -123,44 +96,33 @@
     NSNumber * avg_value = [info objectForKey:@"avg_value"];
     self.pingFenLable.text = [NSString stringWithFormat:@"%.1f",avg_value.floatValue];
     
-    if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
+    NSArray * array = [info objectForKey:@"images"];
+    if ([NormalUse isValidArray:array]) {
         
-        [self.imageView1 sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
-        self.imageView2.hidden = YES;
-        self.imageView3.hidden = YES;
-        self.imageView4.hidden = YES;
+        self.contentScrollView.hidden = NO;
+        for (int i=0; i<array.count; i++) {
+            
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth+(76.8*BiLiWidth+6.5*BiLiWidth)*i, 0, 76.8*BiLiWidth, 90*BiLiWidth)];
+            imageView.tag = i;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.autoresizingMask = UIViewAutoresizingNone;
+            imageView.clipsToBounds = YES;
+            imageView.layer.cornerRadius = 8*BiLiWidth;
+            imageView.userInteractionEnabled = YES;
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
+            [self.contentScrollView addSubview:imageView];
+
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
+            [imageView addGestureRecognizer:tap];
+            
+            [self.contentScrollView setContentSize:CGSizeMake(imageView.left+imageView.width+11.5*BiLiWidth, self.contentScrollView.height)];
+
+        }
+
     }
     else
     {
-        NSArray * array = [info objectForKey:@"images"];
-        for (int i=0; i<array.count; i++) {
-            
-            if (i==0) {
-                
-                [self.imageView1 sd_setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
-                self.imageView1.hidden = NO;
-
-            }
-            else if (i==1)
-            {
-                [self.imageView2 sd_setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
-                self.imageView2.hidden = NO;
-
-            }
-            else if (i==2)
-            {
-                [self.imageView3 sd_setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
-                self.imageView3.hidden = NO;
-
-            }
-            else if (i==3)
-            {
-                [self.imageView4 sd_setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
-                self.imageView4.hidden = NO;
-
-                break;
-            }
-        }
+        self.contentScrollView.hidden = YES;
     }
     self.messageLable.width = WIDTH_PingMu-28*BiLiWidth;
     NSString * neiRongStr = [NormalUse getobjectForKey:[info objectForKey:@"decription"]];
@@ -174,6 +136,34 @@
     [self.messageLable  sizeToFit];
 
     
+}
+-(void)imageTap:(UITapGestureRecognizer *)tap
+{
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate yinCangTabbar];
+    
+    UIImageView * imageView = (UIImageView *)tap.view;
+    NSArray * array = [self.info objectForKey:@"images"];
+
+    NSMutableArray * photos = [NSMutableArray array];
+    for (NSString * path in array) {
+        
+        MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:path]];
+        [photos addObject:photo];
+
+    }
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+    browser.displayActionButton = NO;
+    browser.alwaysShowControls = NO;
+    browser.displaySelectionButtons = NO;
+    browser.zoomPhotosToFill = YES;
+    browser.displayNavArrows = NO;
+    browser.startOnGrid = NO;
+    browser.enableGrid = YES;
+    [browser setCurrentPhotoIndex:imageView.tag];
+    [[NormalUse getCurrentVC].navigationController pushViewController:browser animated:YES];
+
 }
 +(float)cellHegiht:(NSDictionary *)info;
 {

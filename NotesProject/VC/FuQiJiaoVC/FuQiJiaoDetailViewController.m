@@ -40,7 +40,13 @@
     vc.post_id = self.couple_id;
     [self.navigationController pushViewController:vc animated:YES];
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -323,7 +329,7 @@
     }
 
 
-    NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
+    NSString * unlock_couple_coin = [NormalUse getJinBiStr:@"unlock_couple_coin"];
     
     self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, pingFenView.top+pingFenView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
     [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
@@ -334,7 +340,7 @@
     self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
     self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
-    self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
+    self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_couple_coin]];
     [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.messageContentView addSubview:self.jieSuoButton];
     
@@ -855,6 +861,30 @@
 - (void)carouselViewClick:(NSInteger)index
 {
     
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate yinCangTabbar];
+    
+    NSArray * array = [self.tieZiInfo objectForKey:@"images"];
+
+    NSMutableArray * photos = [NSMutableArray array];
+    for (NSString * path in array) {
+        
+        MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:path]];
+        [photos addObject:photo];
+
+    }
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+    browser.displayActionButton = NO;
+    browser.alwaysShowControls = NO;
+    browser.displaySelectionButtons = NO;
+    browser.zoomPhotosToFill = YES;
+    browser.displayNavArrows = NO;
+    browser.startOnGrid = NO;
+    browser.enableGrid = YES;
+    [browser setCurrentPhotoIndex:index];
+    [[NormalUse getCurrentVC].navigationController pushViewController:browser animated:YES];
+
 }
 
 

@@ -20,10 +20,58 @@
 @property(nonatomic,strong)UILabel * numberLable;
 @property(nonatomic,strong)UIButton * jinBiGouMaiButton;
 
+
+@property(nonatomic,strong)Lable_ImageButton * haoYouShangXianButton;
+
+@property(nonatomic,strong)UIButton * haoYouShangXianLingQuButton;
+
+@property(nonatomic,strong)UIButton * vipLingQuButton;
+
+@property(nonatomic,strong)UIView * guiZeShuoMingKuangView;
+
 @end
 
 @implementation JingCaiFuLiViewController
 
+-(UIView *)guiZeShuoMingKuangView
+{
+    if (!_guiZeShuoMingKuangView) {
+        
+        _guiZeShuoMingKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _guiZeShuoMingKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_guiZeShuoMingKuangView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_guiZeShuoMingKuangView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_guiZeShuoMingKuangView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"规则说明";
+        [kuangImageView addSubview:tipLable1];
+        
+        self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(39*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiHeight,kuangImageView.width-39*BiLiWidth*2,152*BiLiWidth)];
+        self.contentTextView.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.contentTextView.textColor = RGBFormUIColor(0x343434);
+        self.contentTextView.editable = NO;
+        self.contentTextView.backgroundColor = [UIColor clearColor];
+        [kuangImageView addSubview:self.contentTextView];
+    }
+    return _guiZeShuoMingKuangView;
+}
+
+-(void)closeTipKuangView
+{
+    self.guiZeShuoMingKuangView.hidden = YES;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -35,53 +83,7 @@
     [super viewDidLoad];
     
     number = 1;
-    [HTTPModel getHuoDongHomeInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            self.messageInfo = responseObject;
-            
-            NSNumber * base_coinNumber = [self.messageInfo objectForKey:@"base_coin"];
-            NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
-            
-            CGSize size = [NormalUse setSize:base_coinStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:22*BiLiWidth];
-            self.jinBiLable.left = (WIDTH_PingMu-size.width)/2;
-            self.jinBiLable.width = size.width;
-            self.jinBiLable.text = base_coinStr;
-            self.danWeiLable.left = self.jinBiLable.left+self.jinBiLable.width+12*BiLiWidth;
-            //当前时间
-            NSString *timeSpNow = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970])];
-            NSNumber * draw_time = [self.messageInfo objectForKey:@"draw_time"];//开奖时间
-            NSTimeInterval timeSpNowInt = [timeSpNow doubleValue];
-            NSTimeInterval timeSpInt = [draw_time doubleValue];
-            
-            self->shengYuTime = (int)difftime(timeSpInt, timeSpNowInt);
-            
-            if (self->shengYuTime>0) {
-                
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
-
-            }
-            else
-            {
-                NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离下次开奖时间还有%@天%@时%@分%@秒",@"00",@"00",@"00",@"00"]];
-                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(10, 2)];
-                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(13, 2)];
-                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(16, 2)];
-                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(19, 2)];
-                self.daoJiShiLable.attributedText = str;
-
-            }
-            
-            NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
-            NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
-            self.contentTextView.attributedText = attrStr;
-            [self.contentTextView sizeToFit];
-            
-            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.contentTextView.top+self.contentTextView.height)];
-
-        }
-    }];
+    
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-BottomHeight_PingMu)];
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu*767/360)];
@@ -90,6 +92,11 @@
     } else {
     }
     [self.view addSubview:self.mainScrollView];
+    
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainScrollView.mj_header = mjHeader;
+
     
     UIImageView * bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, WIDTH_PingMu*767/360)];
     bottomImageView.image = [UIImage imageNamed:@"fuLi_bg"];
@@ -207,16 +214,10 @@
     [bottomImageView addSubview:gouMaiJiLuButton];
     [gouMaiJiLuButton addTarget:self action:@selector(gouMaiJiLuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    self.contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(23*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+70*BiLiHeight, WIDTH_PingMu-46*BiLiWidth, HEIGHT_PingMu-(gouMaiJiLuButton.top+gouMaiJiLuButton.height+60*BiLiWidth+BottomHeight_PingMu+10*BiLiWidth))];
-    self.contentTextView.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    self.contentTextView.textColor = RGBFormUIColor(0x868686);
-    self.contentTextView.editable = NO;
-    self.contentTextView.backgroundColor = [UIColor clearColor];
-    [bottomImageView addSubview:self.contentTextView];
     
 
 
-    /*
+    
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(32*BiLiWidth, gouMaiJiLuButton.top+gouMaiJiLuButton.height+90*BiLiWidth, 100*BiLiWidth, 15*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     tipLable.textColor = RGBFormUIColor(0x333333);
@@ -226,49 +227,51 @@
     //VIP免费领取1组兑奖号码
     Lable_ImageButton * vipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+20*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
     vipButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
-    vipButton.button_imageView.backgroundColor = [UIColor redColor];
+    vipButton.button_imageView.image = [UIImage imageNamed:@"vip_lingQuChouJiang"];
     vipButton.button_lable.frame = CGRectMake(vipButton.button_imageView.left+vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
     vipButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     vipButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    vipButton.button_lable.text = @"VIP免费领取1组兑奖号码";
+    vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
     vipButton.button_lable1.frame = CGRectMake(vipButton.button_lable.left, vipButton.button_lable.top+vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
     vipButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
     vipButton.button_lable1.textColor = RGBFormUIColor(0x999999);
-    vipButton.button_lable1.text = @"VIP用户每日可免费领取1组兑奖号码";
+    vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
     [bottomImageView addSubview:vipButton];
 
-    UIButton * vipLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
-    vipLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
-    vipLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
-    [vipLingQuButton setTitle:@"领取" forState:UIControlStateNormal];
-    [vipLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    vipLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    [vipButton addSubview:vipLingQuButton];
+    self.vipLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
+    self.vipLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
+    self.vipLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
+    [self.vipLingQuButton setTitle:@"领取" forState:UIControlStateNormal];
+    [self.vipLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.vipLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
+    [vipButton addSubview:self.vipLingQuButton];
     
     
     //好友每日上线1次获得50金币
-    Lable_ImageButton * haoYouShangXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, vipButton.top+vipButton.height+23*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
-    haoYouShangXianButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
-    haoYouShangXianButton.button_imageView.backgroundColor = [UIColor redColor];
-    haoYouShangXianButton.button_lable.frame = CGRectMake(vipButton.button_imageView.left+vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
-    haoYouShangXianButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    haoYouShangXianButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    haoYouShangXianButton.button_lable.text = @"好友每日上线1次获得50金币";
-    haoYouShangXianButton.button_lable1.frame = CGRectMake(vipButton.button_lable.left, vipButton.button_lable.top+vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
-    haoYouShangXianButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
-    haoYouShangXianButton.button_lable1.textColor = RGBFormUIColor(0x999999);
-    haoYouShangXianButton.button_lable1.text = @"今日上线人数0人";
-    [bottomImageView addSubview:haoYouShangXianButton];
+    self.haoYouShangXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, vipButton.top+vipButton.height+23*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
+    self.haoYouShangXianButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
+    self.haoYouShangXianButton.button_imageView.image = [UIImage imageNamed:@"haoYouShangXian_lingJinBi"];
+    self.haoYouShangXianButton.button_lable.frame = CGRectMake(vipButton.button_imageView.left+vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
+    self.haoYouShangXianButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.haoYouShangXianButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.haoYouShangXianButton.button_lable.text = [NSString stringWithFormat:@"好友每日上线1次获得%@金币",[NormalUse getJinBiStr:@"ticket_coin_day"]];
+    self.haoYouShangXianButton.button_lable1.frame = CGRectMake(vipButton.button_lable.left, vipButton.button_lable.top+vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
+    self.haoYouShangXianButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
+    self.haoYouShangXianButton.button_lable1.textColor = RGBFormUIColor(0x999999);
+    [bottomImageView addSubview:self.haoYouShangXianButton];
 
-    UIButton * haoYouShangXianLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
-    haoYouShangXianLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
-    haoYouShangXianLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
-    [haoYouShangXianLingQuButton setTitle:@"领取" forState:UIControlStateNormal];
-    [haoYouShangXianLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    haoYouShangXianLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    [haoYouShangXianButton addSubview:haoYouShangXianLingQuButton];
+    self.haoYouShangXianLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
+    self.haoYouShangXianLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
+    self.haoYouShangXianLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
+    [self.haoYouShangXianLingQuButton setTitle:@"领取" forState:UIControlStateNormal];
+    [self.haoYouShangXianLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.haoYouShangXianLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
+    [self.haoYouShangXianButton addSubview:self.haoYouShangXianLingQuButton];
     
     
+    [self.mainScrollView.mj_header beginRefreshing];
+
+    /*
     //每4小时可领取50金币一次
     Lable_ImageButton * fourHoursLingQuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, haoYouShangXianButton.top+haoYouShangXianButton.height+23*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
     fourHoursLingQuButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
@@ -293,8 +296,96 @@
 
 
     */
-}
+    
+    self.guiZeShuoMingKuangView.hidden = YES;
 
+}
+-(void)loadNewLsit
+{
+    [HTTPModel getHuoDongHomeInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self.mainScrollView.mj_header endRefreshing];
+        if (status==1) {
+            
+            self.messageInfo = responseObject;
+            
+            NSNumber * friend_online_nums = [self.messageInfo objectForKey:@"friend_online_nums"];
+            self.haoYouShangXianButton.button_lable1.text = [NSString stringWithFormat:@"今日上线人数%d人",friend_online_nums.intValue];
+            
+            NSNumber * can_get_ticket = [self.messageInfo objectForKey:@"can_get_ticket"];
+            if (can_get_ticket.intValue==0) {
+             
+                self.vipLingQuButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+                [self.vipLingQuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+                self.vipLingQuButton.enabled = NO;
+            }
+            else
+            {
+                self.vipLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
+                [self.vipLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                self.vipLingQuButton.enabled = YES;
+
+
+            }
+            NSNumber * can_get_coin = [self.messageInfo objectForKey:@"can_get_ticket"];
+            if (can_get_coin.intValue==0) {
+                
+                [self.haoYouShangXianLingQuButton setBackgroundColor:RGBFormUIColor(0xEEEEEE)];
+                [self.haoYouShangXianLingQuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+                self.haoYouShangXianLingQuButton.enabled = NO;
+            }
+            else
+            {
+                self.haoYouShangXianLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
+                [self.haoYouShangXianLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                self.haoYouShangXianLingQuButton.enabled = YES;
+            }
+
+            
+            
+            NSNumber * base_coinNumber = [self.messageInfo objectForKey:@"base_coin"];
+            NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
+            
+            CGSize size = [NormalUse setSize:base_coinStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:22*BiLiWidth];
+            self.jinBiLable.left = (WIDTH_PingMu-size.width)/2;
+            self.jinBiLable.width = size.width;
+            self.jinBiLable.text = base_coinStr;
+            self.danWeiLable.left = self.jinBiLable.left+self.jinBiLable.width+12*BiLiWidth;
+            //当前时间
+            NSString *timeSpNow = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970])];
+            NSNumber * draw_time = [self.messageInfo objectForKey:@"draw_time"];//开奖时间
+            NSTimeInterval timeSpNowInt = [timeSpNow doubleValue];
+            NSTimeInterval timeSpInt = [draw_time doubleValue];
+            
+            self->shengYuTime = (int)difftime(timeSpInt, timeSpNowInt);
+            
+            if (self->shengYuTime>0) {
+                
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
+
+            }
+            else
+            {
+                NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"距离下次开奖时间还有%@天%@时%@分%@秒",@"00",@"00",@"00",@"00"]];
+                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(10, 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(13, 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(16, 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFA217) range:NSMakeRange(19, 2)];
+                self.daoJiShiLable.attributedText = str;
+
+            }
+            
+            NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
+            NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+            self.contentTextView.attributedText = attrStr;
+            [self.contentTextView sizeToFit];
+            
+            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.contentTextView.top+self.contentTextView.height)];
+
+        }
+    }];
+
+}
 #pragma mark -- NSTimer_Action
 -(void)timerRecord
 {
@@ -364,6 +455,7 @@
 }
 -(void)shuoMingButton
 {
+    self.guiZeShuoMingKuangView.hidden = NO;
 
 }
 -(void)kaiJiangListButtonClick

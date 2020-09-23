@@ -329,7 +329,6 @@
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource

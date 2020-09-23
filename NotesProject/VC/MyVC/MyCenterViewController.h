@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton  * myFaBuButton;
 @property(nonatomic,strong)Lable_ImageButton  * myKeFuButton;
 @property(nonatomic,strong)Lable_ImageButton  * tuiGuangButton;
+@property(nonatomic,strong)Lable_ImageButton  * tianXieYaoQingMaButton;
+
 @property(nonatomic,strong)UIButton * kaiJiangButton;
 
 @property(nonatomic,strong)UIButton * huiYuanButton;

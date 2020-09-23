@@ -62,7 +62,6 @@
 #define JinBiShuoMing @"JinBIShuoMingDefaults"//项目金币说明
 /*
  "cny_to_coin":"10",//人民币兑换金币比率 1人民币对应 10金币
- "vip_auth_coin":"10000",//VIP所需金币
  "normal_auth_coin":"1000",//茶小二认证所需金币
  "agent_auth_coin":"500",//经纪人认证所需金币
  "goddess_auth_coin":"1000",//女神认证所需金币
@@ -85,8 +84,16 @@
  "vip_ypack_coin":"500",//开通年会员送的金币
  "couple_auth_coin":"10000",//夫妻交友认证金币
  "enabled_post_normal":"1",//茶馆儿是否允许免费发帖
- "enabled_post_agent":"1"//经纪人是否允许免费发帖
-
+ "enabled_post_agent":"1",//经纪人是否允许免费发帖
+ "unlock_post_coin":"100",//解锁普通帖子金币
+ "unlock_agent_coin":"600",//解锁经纪人金币
+ "unlock_couple_coin":"200",//解锁夫妻交友金币
+ "unlock_peripheral_coin":"200",//解锁外围角色金币
+ "unlock_global_coin":"200",//解锁全球角色金币
+ "unlock_goddess_coin":"200",//解锁女神角色金币
+ "unlock_demand_coin":"200",//解锁需求定制金币
+ "vip_ticket_nums_day":"1",//VIP每天可以领取的兑奖码
+ "ticket_coin_day":"50"//每个好友每天上线后可领取的金币数
  */
 
 

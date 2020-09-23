@@ -191,7 +191,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return  197*BiLiWidth+48*BiLiWidth+21*BiLiWidth+8*BiLiWidth;
+    return  202*BiLiWidth;
     
     
 }
@@ -393,14 +393,27 @@
         messageLable.attributedText = attributedString;
         //设置自适应
         [messageLable  sizeToFit];
-
-        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 109*BiLiWidth, 18*BiLiWidth)];
-        jiaoYiBaoZhengImageView.backgroundColor = [UIColor greenColor];
-        [headerView addSubview:jiaoYiBaoZhengImageView];
         
-        NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
+        
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 109*BiLiWidth, 18*BiLiWidth)];
+        jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
+        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x343434);
+        [headerView addSubview:jiaoYiBaoZhengLable];
+        NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
 
-        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
+        if (is_mark.intValue==1) {
+            
+            jiaoYiBaoZhengLable.text = [NSString stringWithFormat:@"交易保证金:%@",[self.dianPuInfo objectForKey:@"mark_cny"]];
+        }
+        else
+        {
+            jiaoYiBaoZhengLable.text = @"无交易保证金";
+
+        }
+        
+        NSString * unlock_agent_coin = [NormalUse getJinBiStr:@"unlock_agent_coin"];
+
+        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengLable.top+jiaoYiBaoZhengLable.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
         [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
         self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -409,21 +422,44 @@
         self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
-        self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
+        self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_agent_coin]];
         [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.jieSuoButton];
         
         NSNumber * is_unlock = [self.dianPuInfo objectForKey:@"is_unlock"];
         if([is_unlock isKindOfClass:[NSNumber class]])
         {
+            
             if (is_unlock.intValue==1) {
                 
+                NSDictionary * contact = [self.dianPuInfo objectForKey:@"contact"];
                 [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-                self.jieSuoButton.button_lable.text = @"已经解锁成功";
+                NSString * wechat = [contact objectForKey:@"wechat"];
+                NSString * qq = [contact objectForKey:@"qq"];
+                NSNumber * mobile = [contact objectForKey:@"mobile"];
+                NSString * lianXieFangShiStr = @"";
+                if ([NormalUse isValidString:wechat]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+                }
+                if ([NormalUse isValidString:qq]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+                }
+                
+                if ([NormalUse isValidString:mobile]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                    
+                }
+                self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+                self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+                self.jieSuoButton.button_lable.text = lianXieFangShiStr;
                 self.jieSuoButton.button_lable1.text = @"";
-
-
+                
+                
             }
+            
         }
         
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+28*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];

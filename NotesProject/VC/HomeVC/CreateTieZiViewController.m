@@ -738,9 +738,9 @@
     if(![NormalUse isValidString:self.xinXiButton.titleLabel.text]||[@"选择信息类型>" isEqualToString:self.xinXiButton.titleLabel.text])
     {
         [NormalUse showToastView:@"请设置服务项目" view:self.view];
-         return;
+        return;
     }
-
+    
     if (![NormalUse isValidString:self.biaoTiTF.text]) {
         
         [NormalUse showToastView:@"请填写标题信息" view:self.view];
@@ -765,12 +765,12 @@
     if(![NormalUse isValidString:self.beginPriceTF.text])
     {
         [NormalUse showToastView:@"请设置最低价格" view:self.view];
-         return;
+        return;
     }
     if(![NormalUse isValidString:self.endPriceTF.text])
     {
         [NormalUse showToastView:@"请设置最高价格" view:self.view];
-         return;
+        return;
     }
     NSString * beginPrice = self.beginPriceTF.text;
     NSString * endPrice = self.endPriceTF.text;
@@ -778,22 +778,22 @@
     if(endPrice.intValue<beginPrice.intValue)
     {
         [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
-         return;
+        return;
     }
     
-
+    
     if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text]||[@"选择服务项目>" isEqualToString:self.fuWuXiangMuButton.titleLabel.text])
     {
         [NormalUse showToastView:@"请设置服务项目" view:self.view];
-         return;
+        return;
     }
     
     
     if(![NormalUse isValidString:self.weiXinTF.text]&&![NormalUse isValidString:self.qqTF.text]&&![NormalUse isValidString:self.telTF.text])
     {
         [NormalUse showToastView:@"请填写联系方式" view:self.view];
-         return;
-
+        return;
+        
     }
     
     if(![NormalUse isValidString:self.yanZhiStarValue])
@@ -812,45 +812,107 @@
         [NormalUse showToastView:@"请选择环境评分" view:self.view];
         return;
     }
-
+    
     if (![NormalUse isValidArray:self.photoArray]) {
         
         [NormalUse showToastView:@"请选择照片" view:self.view];
-         return;
-
+        return;
+        
     }
     
     
     if (![NormalUse isValidString:self.xiangQingTextView.text]) {
         
         [NormalUse showToastView:@"请填写描述类容" view:self.view];
-         return;
+        return;
     }
     
     
-    [self xianShiLoadingView:@"提交中..." view:self.view];
     
-    uploadVideoIndex = 0;
-    self.videoPathId = nil;
-    [self.videoPathArray removeAllObjects];
 
-    uploadImageIndex = 0;
-    self.imagePathId = nil;
-    [self.photoPathArray removeAllObjects];
-    
-    if ([NormalUse isValidArray:self.videoArray]) {
+    BOOL alsoKouFei = NO;//是否需要扣费
+    if ([@"1" isEqualToString:self.from_flg]) {
         
-        self.videoPathArray = [NSMutableArray array];
-        [self uploadVideo];
+        NSString *  enabled_post_agent = [NormalUse getJinBiStr:@"enabled_post_agent"];//经纪人是否允许免费发帖
+
+        if ([@"1" isEqualToString:enabled_post_agent]) {
+          
+            alsoKouFei = NO;
+        }
+        else
+        {
+            alsoKouFei = YES;
+        }
     }
     else
     {
-        self.photoPathArray = [NSMutableArray array];
-        [self uploadImage];
+        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+        NSString * defaultsKey = [UserRole stringByAppendingString:token];
+        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+
+        NSString * enabled_post_normal = [NormalUse getJinBiStr:@"enabled_post_normal"];//1茶小二可以免费发帖
+
+        if (auth_nomal.intValue==1 && [@"1" isEqualToString:enabled_post_normal])
+        {
+            alsoKouFei = NO;
+        }
+        else
+        {
+            alsoKouFei = YES;
+        }
+        
     }
+    
+    if (!alsoKouFei)
+    {
+        [self xianShiLoadingView:@"提交中..." view:self.view];
+        uploadVideoIndex = 0;
+        self.videoPathId = nil;
+        [self.videoPathArray removeAllObjects];
+        
+        uploadImageIndex = 0;
+        self.imagePathId = nil;
+        [self.photoPathArray removeAllObjects];
+        
+        if ([NormalUse isValidArray:self.videoArray]) {
+            
+            self.videoPathArray = [NSMutableArray array];
+            [self uploadVideo];
+        }
+        else
+        {
+            self.photoPathArray = [NSMutableArray array];
+            [self uploadImage];
+        }
+        
+    }
+    else
+    {
+        CreateTieZiKouFeiViewController * vc = [[CreateTieZiKouFeiViewController alloc] init];
+        vc.message_type = self.xinXiButton.titleLabel.text;
+        vc.titleStr = self.biaoTiTF.text;
+        NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+        vc.city_code = [NSString stringWithFormat:@"%d",cityCode.intValue];
+        vc.age = self.ageTF.text;
+        vc.nums = self.chanPinShuLiangTF.text;
+        vc.min_price = self.beginPriceTF.text;
+        vc.max_price = self.endPriceTF.text;
+        vc.service_type = self.fuWuXiangMuButton.titleLabel.text;
+        vc.mobile = [NormalUse getobjectForKey:self.telTF.text];
+        vc.qq = [NormalUse getobjectForKey:self.qqTF.text];
+        vc.wechat = [NormalUse getobjectForKey:self.weiXinTF.text];
+        vc.face_value = self.yanZhiStarValue;
+        vc.skill_value = self.jiShuStarValue;
+        vc.ambience_value = self.huanJingStarValue;
+        vc.decription = self.xiangQingTextView.text;
+        vc.from_flg = self.from_flg;
+        vc.photoArray = self.photoArray;
+        vc.videoArray = self.videoArray;
+        [self.navigationController pushViewController:vc animated:YES];
 
-
-
+    }
+    
 }
 -(void)uploadVideo
 {

@@ -183,5 +183,7 @@
 
 +(BOOL)alsoShowTabbar;
 
++(UIImage *)shengChengErWeiMa:(NSString *)pathStr;
+
 
 @end

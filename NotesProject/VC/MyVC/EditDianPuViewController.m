@@ -6,15 +6,15 @@
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "CreateDianPuViewController.h"
+#import "EditDianPuViewController.h"
 
-@interface CreateDianPuViewController ()<UIScrollViewDelegate>
+@interface EditDianPuViewController ()<UIScrollViewDelegate>
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
 @end
 
-@implementation CreateDianPuViewController
+@implementation EditDianPuViewController
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

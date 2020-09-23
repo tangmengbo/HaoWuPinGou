@@ -7,6 +7,7 @@
 //
 
 #import "CreateDingZhiFuWuViewController.h"
+#import "CreateDingZhiFuWuKouFeiViewController.h"
 
 @interface CreateDingZhiFuWuViewController ()<CityListViewControllerDelegate>
 
@@ -70,7 +71,8 @@
     self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(25*BiLiWidth, 24*BiLiWidth, 200*BiLiWidth, 19*BiLiWidth)];
     self.cityLable.font = [UIFont systemFontOfSize:19*BiLiWidth];
     self.cityLable.textColor = RGBFormUIColor(0x343434);
-    self.cityLable.text = [NormalUse defaultsGetObjectKey:CurrentCity];
+    self.cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
+    self.cityLable.text = [self.cityInfo objectForKey:@"cityName"];
     [self.whiteContentView addSubview:self.cityLable];
     
     Lable_ImageButton * cityButton  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(259.5*BiLiWidth, 19.5*BiLiWidth, 35*BiLiWidth, 27*BiLiWidth)];
@@ -511,49 +513,28 @@
         [NormalUse showToastView:@"请填写描述类容" view:self.view];
          return;
     }
+    
     NSDateFormatter *selectDateFormatter = [[NSDateFormatter alloc] init];
     selectDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString * beginStr = [selectDateFormatter stringFromDate:self.beginDate];
     NSString * endStr = [selectDateFormatter stringFromDate:self.endDate];
 
 
-    NSMutableDictionary  * dic = [[NSMutableDictionary alloc] init];
-    if ([NormalUse isValidDictionary:self.cityInfo]) {
-        
-        NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
-        [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
-
-    }
-    else
-    {
-        [dic setObject:[NormalUse defaultsGetObjectKey:CurrentCity] forKey:@"city_code"];
-
-    }
-    [dic setObject:beginStr forKey:@"start_date"];
-    [dic setObject:endStr forKey:@"end_date"];
-    [dic setObject:self.beginPriceTF.text forKey:@"min_price"];
-    [dic setObject:self.endPriceTF.text forKey:@"max_price"];
-    [dic setObject:self.leiXingStr forKey:@"love_type"];
-    [dic setObject:self.xiangMuStr forKey:@"service_type"];
-    [dic setObject:[NormalUse getobjectForKey:self.telTF.text] forKey:@"mobie"];
-    [dic setObject:[NormalUse getobjectForKey:self.qqTF.text] forKey:@"qq"];
-    [dic setObject:[NormalUse getobjectForKey:self.weiXinTF.text] forKey:@"wechat"];
-    [dic setObject:self.describleTextView.text forKey:@"describe"];
-
+    CreateDingZhiFuWuKouFeiViewController * vc = [[CreateDingZhiFuWuKouFeiViewController alloc] init];
+    NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+    vc.city_code = [NSString stringWithFormat:@"%d",cityCode.intValue];
+    vc.start_date = beginStr;
+    vc.end_date = endStr;
+    vc.min_price = self.beginPriceTF.text;
+    vc.max_price = self.endPriceTF.text;
+    vc.love_type = self.leiXingStr;
+    vc.service_type = self.xiangMuStr;
+    vc.mobie = self.telTF.text;
+    vc.qq = self.qqTF.text;
+    vc.wechat = self.weiXinTF.text;
+    vc.describe = self.describleTextView.text;
+    [self.navigationController pushViewController:vc animated:YES];
     
-    [HTTPModel dingZhiXuQiu:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-       
-        if (status==1) {
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            [NormalUse showToastView:@"发布成功" view:[NormalUse getCurrentVC].view];
-        }
-        else
-        {
-            [NormalUse showToastView:msg view:self.view];
-        }
-        
-    }];
 
 
 }

@@ -8,6 +8,7 @@
 
 #import "GaoDuanViewController.h"
 #import "GaoDuanHomeCell.h"
+#import "GaoDuanShaiXuanView.h"
 
 @interface GaoDuanViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -44,9 +45,32 @@
 
 @property(nonatomic,strong)NSMutableArray * jingJiRenListArray;//官方推荐列表
 
+@property(nonatomic,strong)GaoDuanShaiXuanView * gaoDuanShaiXuanView;
+
+@property(nonatomic,strong)NSString * field;
+@property(nonatomic,strong)NSString * order;
+
 @end
 
 @implementation GaoDuanViewController
+
+-(GaoDuanShaiXuanView *)gaoDuanShaiXuanView
+{
+    if (!_gaoDuanShaiXuanView) {
+        
+        _gaoDuanShaiXuanView = [[GaoDuanShaiXuanView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-240*BiLiWidth-BottomHeight_PingMu, WIDTH_PingMu, 240*BiLiWidth)];
+        [[UIApplication sharedApplication].keyWindow addSubview:_gaoDuanShaiXuanView];
+        
+        __weak typeof(self) wself = self;
+        [_gaoDuanShaiXuanView setPaiXuSelect:^(NSString * _Nonnull field, NSString * _Nonnull order) {
+            
+            wself.field = field;
+            wself.order = order;
+            [wself loadNewLsit];
+        }];
+    }
+    return _gaoDuanShaiXuanView;
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -202,26 +226,26 @@
     
     self.zuiXinOrZuiRe = @"1";
     
-    self.pingFenButton1 = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 14.5*BiLiWidth, 50*BiLiWidth, 12*BiLiWidth)];
+    self.pingFenButton1 = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0*BiLiWidth, 50*BiLiWidth, self.itemButtonContentView.height)];
     [self.pingFenButton1 setTitle:@"评分最高" forState:UIControlStateNormal];
     [self.pingFenButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     self.pingFenButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
     [self.pingFenButton1 addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.itemButtonContentView addSubview:self.pingFenButton1];
     
-    self.zuiXinButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+33*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiXinButton1 setTitle:@"最新" forState:UIControlStateNormal];
-    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-    self.zuiXinButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiXinButton1 addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.itemButtonContentView addSubview:self.zuiXinButton1];
-    
-    self.zuiReButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+79*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiReButton1 setTitle:@"最热" forState:UIControlStateNormal];
-    [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-    self.zuiReButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiReButton1 addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.itemButtonContentView addSubview:self.zuiReButton1];
+//    self.zuiXinButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+33*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
+//    [self.zuiXinButton1 setTitle:@"最新" forState:UIControlStateNormal];
+//    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+//    self.zuiXinButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    [self.zuiXinButton1 addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.itemButtonContentView addSubview:self.zuiXinButton1];
+//
+//    self.zuiReButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+79*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
+//    [self.zuiReButton1 setTitle:@"最热" forState:UIControlStateNormal];
+//    [self.zuiReButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+//    self.zuiReButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    [self.zuiReButton1 addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.itemButtonContentView addSubview:self.zuiReButton1];
 
     self.itemButtonContentView.hidden = YES;
     
@@ -260,6 +284,11 @@
         
         [info setObject:self.field forKey:@"field"];
     }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [info setObject:self.order forKey:@"order"];
+
+    }
 
     [HTTPModel getJingJiRenList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -293,6 +322,12 @@
         
         [info setObject:self.field forKey:@"field"];
     }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [info setObject:self.order forKey:@"order"];
+
+    }
+
 
     [HTTPModel getJingJiRenList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -640,8 +675,7 @@
                 }
                 else if (auth_agent.intValue==2)
                 {
-                    [button1 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button1.backgroundColor = [UIColor greenColor];
+                    [button1 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_jingJiRenRenZheng"] forState:UIControlStateNormal];
 
                 }
                 else
@@ -658,14 +692,12 @@
                 button2.tag = auth_goddess.intValue;
                 if (auth_goddess.intValue==1) {
                     
-                    [button2 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button2.backgroundColor = [UIColor redColor];
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nvShenYiRenZheng"] forState:UIControlStateNormal];
 
                 }
                 else if (auth_goddess.intValue==2)
                 {
-                    [button2 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button2.backgroundColor = [UIColor greenColor];
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
 
                 }
                 else
@@ -681,14 +713,12 @@
                 button3.tag = auth_peripheral.intValue;
                 if (auth_peripheral.intValue==1) {
                     
-                    [button3 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button3.backgroundColor = [UIColor redColor];
+                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
 
                 }
                 else if (auth_peripheral.intValue==2)
                 {
-                    [button3 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button3.backgroundColor = [UIColor greenColor];
+                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
 
                 }
                 else
@@ -704,14 +734,12 @@
                 button4.tag = auth_global.intValue;
                 if (auth_global.intValue==1) {
                     
-                    [button4 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button4.backgroundColor = [UIColor redColor];
+                    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
 
                 }
                 else if (auth_global.intValue==2)
                 {
-                    [button4 setBackgroundImage:nil forState:UIControlStateNormal];
-                    button4.backgroundColor = [UIColor greenColor];
+                    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
 
                 }
                 else
@@ -830,31 +858,31 @@
     [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:self.pingFenButton];
     
-    self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+33*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
-    self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiXinButton addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:self.zuiXinButton];
+//    self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+33*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
+//    [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
+//    self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    [self.zuiXinButton addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:self.zuiXinButton];
+//
+//    self.zuiReButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+79*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
+//    [self.zuiReButton setTitle:@"最热" forState:UIControlStateNormal];
+//    self.zuiReButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    [self.zuiReButton addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:self.zuiReButton];
     
-    self.zuiReButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+79*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-    [self.zuiReButton setTitle:@"最热" forState:UIControlStateNormal];
-    self.zuiReButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.zuiReButton addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:self.zuiReButton];
-    
-    if ([@"1" isEqualToString:self.zuiXinOrZuiRe]) {
-        
-        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-        [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-
-
-    }
-    else
-    {
-        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-        [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-
-    }
+//    if ([@"1" isEqualToString:self.zuiXinOrZuiRe]) {
+//
+//        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+//        [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+//
+//
+//    }
+//    else
+//    {
+//        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
+//        [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+//
+//    }
     
     return headerView;
     
@@ -878,6 +906,7 @@
 }
 -(void)pingFenButtonClick
 {
+    self.gaoDuanShaiXuanView.hidden = NO;
 }
 -(void)zuiXinButtonClick
 {
@@ -921,7 +950,6 @@
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource

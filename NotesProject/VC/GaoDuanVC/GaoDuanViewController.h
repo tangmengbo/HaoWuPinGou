@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
     int page;
 }
 
-@property(nonatomic,strong)NSString * field;//默认最新 hot_value热度
-
 
 @property(nonatomic,strong)UIView * sliderView;
 
 @property(nonatomic,strong)NSArray * bannerArray;
+
+@property(nonatomic,strong)UIView * headerView;
 
 @end
 

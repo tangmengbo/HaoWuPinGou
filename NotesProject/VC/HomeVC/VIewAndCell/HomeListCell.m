@@ -22,9 +22,22 @@
         
         self.selectedBackgroundView = [[UIView alloc] init];
         self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
+        
+        
+        self.contentMessageView = [[UIView alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, WIDTH_PingMu-20*BiLiWidth, 144*BiLiWidth+7*BiLiWidth)];
+        self.contentMessageView.layer.borderWidth = 1;
+        self.contentMessageView.layer.borderColor = [RGBFormUIColor(0xEEEEEE) CGColor];
+        self.contentMessageView.layer.cornerRadius = 5*BiLiWidth;
+        self.contentMessageView.layer.masksToBounds = NO;
+        self.contentMessageView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:self.contentMessageView];
+        self.contentMessageView.layer.shadowOpacity = 0.2f;
+        self.contentMessageView.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.contentMessageView.layer.shadowOffset = CGSizeMake(0, 0);//CGSizeZero; //设置偏移量为0,四周都有阴影
+
 
         
-        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
+        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth+7*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
@@ -39,7 +52,7 @@
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 5*BiLiWidth, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self addSubview:self.titleLable];

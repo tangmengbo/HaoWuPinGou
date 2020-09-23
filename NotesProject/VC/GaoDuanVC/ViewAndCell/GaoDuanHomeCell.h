@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIButton * jinRuButton;
 @property(nonatomic,strong)UIScrollView * contentScrollView;
 @property(nonatomic,strong)UIImageView * jiaoYiBaoZhengImageView;
+@property(nonatomic,strong)UILabel * jiaoYiBaoZhengLable;
 @property(nonatomic,strong)UILabel * renZhengLable;
 @property(nonatomic,strong)UILabel * chengJiaoLable;
 

@@ -100,14 +100,14 @@
                 if(flag)
                 {
                     AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                    [delegate setYiDengLuTabBar];
+                    [delegate setQiDongTabbar];
 
                 }
                 else
                 {
                     [self.gesturePasswordView setIncorrectTip];
                     
-                    [NormalUse showToastView:msg view:self.view];
+                    [NormalUse showToastView:@"手势密码错误" view:self.view];
 
                 }
 

@@ -49,40 +49,40 @@
 -(void)initView
 {
     NSDictionary * userinfo = [self.dingZhiInfo objectForKey:@"userinfo"];
-    UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(21.5*BiLiWidth, 13.5*BiLiWidth, 38*BiLiWidth, 38*BiLiWidth)];
+    UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*BiLiWidth, 14*BiLiWidth, 48*BiLiWidth, 48*BiLiWidth)];
     headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerImageView.autoresizingMask = UIViewAutoresizingNone;
     headerImageView.clipsToBounds = YES;
-    headerImageView.layer.cornerRadius = 19*BiLiWidth;
+    headerImageView.layer.cornerRadius = 24*BiLiWidth;
     [self.mainScrollView addSubview:headerImageView];
     
     [headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"moRen_header"]];
     
-    UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+10*BiLiWidth, 15.5*BiLiWidth, 150*BiLiWidth, 15*BiLiWidth)];
+    UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+13.5*BiLiWidth, headerImageView.top+6.5*BiLiWidth, 150*BiLiWidth, 15*BiLiWidth)];
     titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     titleLable.textColor = RGBFormUIColor(0x333333);
     [self.mainScrollView addSubview:titleLable];
     
     titleLable.text = [userinfo objectForKey:@"nickname"];
     
-    UILabel * weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-120*BiLiWidth, titleLable.top, 100*BiLiWidth, titleLable.height)];
-    weiZhiLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+    UILabel * weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-115*BiLiWidth, titleLable.top, 100*BiLiWidth, titleLable.height)];
+    weiZhiLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     weiZhiLable.textColor = RGBFormUIColor(0x999999);
     weiZhiLable.textAlignment = NSTextAlignmentRight;
     [self.mainScrollView addSubview:weiZhiLable];
     
     weiZhiLable.text = [NormalUse getobjectForKey:[self.dingZhiInfo objectForKey:@"city_name"]];
     
-    UILabel * faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+6.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth)];
-    faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+    UILabel * faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+10*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
+    faBuTimeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     faBuTimeLable.textColor = RGBFormUIColor(0x999999);
     [self.mainScrollView addSubview:faBuTimeLable];
     
     faBuTimeLable.text = [self.dingZhiInfo objectForKey:@"create_at"];
     
-    UILabel * priceLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+15*BiLiWidth, 200*BiLiWidth, 20*BiLiWidth)];
-    priceLable.font = [UIFont systemFontOfSize:20*BiLiWidth];
-    priceLable.textColor = RGBFormUIColor(0x343434);
+    UILabel * priceLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+25*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
+    priceLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+    priceLable.textColor = RGBFormUIColor(0xFFA217);
     [self.mainScrollView addSubview:priceLable];
     
     if ([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"min_price"]] && [NormalUse isValidString:[self.dingZhiInfo objectForKey:@"max_price"]]) {
@@ -91,9 +91,9 @@
 
     }
     
-    UILabel * describleLable = [[UILabel alloc] initWithFrame:CGRectMake(priceLable.left, priceLable.top+priceLable.height+15*BiLiWidth, WIDTH_PingMu-priceLable.left*2, 0)];
-    describleLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    describleLable.textColor = RGBFormUIColor(0x343434);
+    UILabel * describleLable = [[UILabel alloc] initWithFrame:CGRectMake(priceLable.left, priceLable.top+priceLable.height+19*BiLiWidth, WIDTH_PingMu-priceLable.left*2, 0)];
+    describleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    describleLable.textColor = RGBFormUIColor(0x33333);
     describleLable.numberOfLines = 0;
     [self.mainScrollView addSubview:describleLable];
     
@@ -112,9 +112,9 @@
     //设置自适应
     [describleLable  sizeToFit];
 
-    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(priceLable.left, describleLable.top+describleLable.height+15*BiLiWidth, WIDTH_PingMu-priceLable.left*2, 12*BiLiWidth)];
-    timeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    timeLable.textColor = RGBFormUIColor(0x343434);
+    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(priceLable.left, describleLable.top+describleLable.height+8*BiLiWidth, WIDTH_PingMu-priceLable.left*2, 14*BiLiWidth)];
+    timeLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    timeLable.textColor = RGBFormUIColor(0x333333);
     [self.mainScrollView addSubview:timeLable];
     
     if ([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"start_date"]] && [NormalUse isValidString:[self.dingZhiInfo objectForKey:@"end_date"]]) {
@@ -124,55 +124,54 @@
     }
 
     
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(timeLable.left, timeLable.top+timeLable.height+20*BiLiWidth, 200*BiLiWidth, 20*BiLiWidth)];
-    tipLable.font = [UIFont systemFontOfSize:20*BiLiWidth];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(timeLable.left, timeLable.top+timeLable.height+33*BiLiWidth, 200*BiLiWidth, 20*BiLiWidth)];
+    tipLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
     tipLable.textColor = RGBFormUIColor(0x333333);
     tipLable.text = @"需求描述";
     [self.mainScrollView addSubview:tipLable];
     
-    UILabel * meiZiLeiXingTip = [[UILabel alloc] initWithFrame:CGRectMake(40*BiLiWidth, tipLable.top+tipLable.height+15*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
-    meiZiLeiXingTip.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    meiZiLeiXingTip.textColor = RGBFormUIColor(0x343434);
+    UILabel * meiZiLeiXingTip = [[UILabel alloc] initWithFrame:CGRectMake(tipLable.left, tipLable.top+tipLable.height+13.5*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
+    meiZiLeiXingTip.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    meiZiLeiXingTip.textColor = RGBFormUIColor(0x999999);
     meiZiLeiXingTip.text = @"喜欢的妹子类型";
     [self.mainScrollView addSubview:meiZiLeiXingTip];
     
-    float originx = 40*BiLiWidth;
+    float originx = 18*BiLiWidth;
     float originy = meiZiLeiXingTip.top+meiZiLeiXingTip.height+10*BiLiWidth;
     float xDisTance =  10*BiLiWidth;
-    float yDistance = 20*BiLiWidth;
+    float yDistance = 10*BiLiWidth;
 
     NSArray * love_typeArray = [self.dingZhiInfo objectForKey:@"love_type"];
     for (int i=0; i<love_typeArray.count; i++) {
         
         NSString * leiXingStr = [love_typeArray objectAtIndex:i];
         
-        CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+        CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:11*BiLiWidth];
         
-        if (originx+size.width>WIDTH_PingMu-40*BiLiWidth) {
+        if (originx+size.width+32*BiLiWidth>WIDTH_PingMu-36*BiLiWidth) {
             
-            originx = 40*BiLiWidth;
-            originy = originy+20*BiLiWidth+yDistance;
+            originx = 18*BiLiWidth;
+            originy = originy+24*BiLiWidth+yDistance;
         }
-        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, originy,size.width+10*BiLiWidth, 20*BiLiWidth)];
+        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, originy,size.width+32*BiLiWidth, 24*BiLiWidth)];
         [button setTitle:leiXingStr forState:UIControlStateNormal];
-        [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        [button setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
         button.tag=i;
-        button.layer.cornerRadius = 10*BiLiWidth;
-        button.layer.borderWidth = 1;
-        button.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
+        button.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        button.layer.cornerRadius = 12*BiLiWidth;
         [self.mainScrollView addSubview:button];
         
         originx = originx+button.width+xDisTance;
     }
 
-    UILabel * fuWuLeiXingTip = [[UILabel alloc] initWithFrame:CGRectMake(40*BiLiWidth, originy+20*BiLiWidth+30*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
-    fuWuLeiXingTip.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    fuWuLeiXingTip.textColor = RGBFormUIColor(0x343434);
+    UILabel * fuWuLeiXingTip = [[UILabel alloc] initWithFrame:CGRectMake(18*BiLiWidth, originy+20*BiLiWidth+24*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
+    fuWuLeiXingTip.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    fuWuLeiXingTip.textColor = RGBFormUIColor(0x999999);
     fuWuLeiXingTip.text = @"想要的服务项目";
     [self.mainScrollView addSubview:fuWuLeiXingTip];
     
-    originx = 40*BiLiWidth;
+    originx = 18*BiLiWidth;
     originy = fuWuLeiXingTip.top+fuWuLeiXingTip.height+10*BiLiWidth;
     
     NSArray * service_typeArray = [self.dingZhiInfo objectForKey:@"service_type"];
@@ -180,30 +179,29 @@
         
         NSString * leiXingStr = [service_typeArray objectAtIndex:i];
         
-        CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+        CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:11*BiLiWidth];
         
-        if (originx+size.width>WIDTH_PingMu-40*BiLiWidth) {
+        if (originx+size.width+32*BiLiWidth>WIDTH_PingMu-36*BiLiWidth) {
             
-            originx = 40*BiLiWidth;
-            originy = originy+20*BiLiWidth+yDistance;
+            originx = 18*BiLiWidth;
+            originy = originy+24*BiLiWidth+yDistance;
         }
-        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, originy,size.width+10*BiLiWidth, 20*BiLiWidth)];
+        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, originy,size.width+32*BiLiWidth, 24*BiLiWidth)];
         [button setTitle:leiXingStr forState:UIControlStateNormal];
-        [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        [button setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+        button.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        button.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
         button.tag=i;
-        button.layer.cornerRadius = 10*BiLiWidth;
-        button.layer.borderWidth = 1;
-        button.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
+        button.layer.cornerRadius = 12*BiLiWidth;
         [self.mainScrollView addSubview:button];
         
         originx = originx+button.width+xDisTance;
     }
 
 
-    NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
+    NSString * unlock_demand_coin = [NormalUse getJinBiStr:@"unlock_demand_coin"];
     
-    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, originy+20*BiLiWidth+50*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
+    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, originy+24*BiLiWidth+25*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
     [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
     self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
     self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -212,7 +210,7 @@
     self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
     self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
-    self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
+    self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_demand_coin]];
     [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:self.jieSuoButton];
     

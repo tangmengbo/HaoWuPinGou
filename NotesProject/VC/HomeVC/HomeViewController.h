@@ -7,6 +7,7 @@
 //
 
 #import "MainBaseViewController.h"
+#import "HomeShaiXuanView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * sliderView;
 
+@property(nonatomic,strong)UIView * chaXiaoErFaTieRenZhengView1;
 @property(nonatomic,strong)UIView * chaXiaoErFaTieRenZhengView;//茶小二发帖,认证
+
+@property(nonatomic,strong)HomeShaiXuanView * shaiXuanView;//筛选条件view
 
 
 

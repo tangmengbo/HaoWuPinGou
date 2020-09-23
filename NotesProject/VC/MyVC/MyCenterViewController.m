@@ -7,6 +7,10 @@
 //
 
 #import "MyCenterViewController.h"
+#import "ZhangHuDetailViewController.h"
+#import "EditUserMessageViewController.h"
+#import "TuiGuangZhuanQianViewController.h"
+
 
 @interface MyCenterViewController ()
 
@@ -36,7 +40,8 @@
             self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
             self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
-            self.kaiJiangButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth;
+            self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
+            self.kaiJiangButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth;
 
         }
         else
@@ -46,7 +51,8 @@
             self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
             self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
-            self.kaiJiangButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth;
+            self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
+            self.kaiJiangButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth;
 
         }
 
@@ -133,8 +139,12 @@
     self.headerImageView.clipsToBounds = YES;
     self.headerImageView.layer.cornerRadius = 61*BiLiWidth/2;
     self.headerImageView.layer.masksToBounds = YES;
+    self.headerImageView.userInteractionEnabled = YES;
     [self.mainScrollView addSubview:self.headerImageView];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NormalUse getCurrentAvatarpath]] placeholderImage:[UIImage imageNamed:@"moRen_header"]];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editUserMessage)];
+    [self.headerImageView addGestureRecognizer:tap];
     
     self.nickLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left+self.headerImageView.width+14*BiLiWidth, TopHeight_PingMu+19*BiLiWidth, 150*BiLiWidth, 17*BiLiWidth)];
     self.nickLable.textColor = RGBFormUIColor(0x333333);
@@ -218,6 +228,7 @@
     
     UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top, self.huiYuanButton.width, self.huiYuanButton.height)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
+    [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:chongZhiButton];
 
     self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(94.5*BiLiWidth, 39*BiLiWidth, 60*BiLiWidth, 17*BiLiWidth)];
@@ -233,7 +244,7 @@
     self.jingJiRenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height+9*BiLiWidth, WIDTH_PingMu, 50*BiLiWidth)];
     [self.jingJiRenButton addTarget:self action:@selector(jingJiRenButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.jingJiRenButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.jingJiRenButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
-    self.jingJiRenButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
+    self.jingJiRenButton.button_imageView.image = [UIImage imageNamed:@"my_jingJiRen"];
     self.jingJiRenButton.button_lable.frame = CGRectMake(self.jingJiRenButton.button_imageView.left+self.jingJiRenButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.jingJiRenButton.height);
     self.jingJiRenButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.jingJiRenButton.button_lable.textColor = RGBFormUIColor(0x333333);
@@ -284,6 +295,7 @@
 
     
     self.tuiGuangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myKeFuButton.top+self.myKeFuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.tuiGuangButton addTarget:self action:@selector(tuiGuangButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.tuiGuangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     self.tuiGuangButton.button_imageView.image = [UIImage imageNamed:@"my_tuiGuang"];
     self.tuiGuangButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
@@ -295,7 +307,20 @@
     [self.mainScrollView addSubview:self.tuiGuangButton];
 
     
-    self.kaiJiangButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-330*BiLiWidth)/2, self.tuiGuangButton.top+self.tuiGuangButton.height+8*BiLiWidth, 330*BiLiWidth, 76.5*BiLiWidth)];
+    self.tianXieYaoQingMaButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.tuiGuangButton.top+self.tuiGuangButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.tianXieYaoQingMaButton addTarget:self action:@selector(tianXieYaoQingMaButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.tianXieYaoQingMaButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.tianXieYaoQingMaButton.button_imageView.image = [UIImage imageNamed:@"my_shouCang"];
+    self.tianXieYaoQingMaButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.tianXieYaoQingMaButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.tianXieYaoQingMaButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.tianXieYaoQingMaButton.button_lable.text = @"填写邀请码";
+    self.tianXieYaoQingMaButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.tianXieYaoQingMaButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.tianXieYaoQingMaButton];
+
+    
+    self.kaiJiangButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-330*BiLiWidth)/2, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth, 330*BiLiWidth, 76.5*BiLiWidth)];
     [self.kaiJiangButton setBackgroundImage:[UIImage imageNamed:@"my_kaiJiang"] forState:UIControlStateNormal];
     [self.kaiJiangButton addTarget:self action:@selector(kaiJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:self.kaiJiangButton];
@@ -304,6 +329,12 @@
     
 }
 #pragma mark--UIButton
+-(void)editUserMessage
+{
+    EditUserMessageViewController * vc = [[EditUserMessageViewController alloc] init];
+    vc.userInfo = self.userInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(void)xiaoXiButonClick
 {
     XiaoXiViewController * vc = [[XiaoXiViewController alloc] init];
@@ -318,6 +349,13 @@
 {
     HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
     vc.info = self.userInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)myZhangHuButtonClick
+{
+    ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+    NSNumber * coin = [self.userInfo objectForKey:@"coin"];
+    vc.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)shouCangGuanZhuButtonClick
@@ -345,5 +383,14 @@
 {
     AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate.tabbar setItemSelected:3];
+}
+-(void)tuiGuangButtonClick
+{
+    TuiGuangZhuanQianViewController * vc = [[TuiGuangZhuanQianViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tianXieYaoQingMaButtonClick
+{
+    
 }
 @end

@@ -319,7 +319,22 @@
         
     }
 
-    NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
+    NSString * unlock_mobile_coin;
+
+    if([@"3" isEqualToString:self.type])
+    {
+       unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_goddess_coin"];
+    }
+    else if ([@"4" isEqualToString:self.type])
+    {
+        unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_peripheral_coin"];
+
+    }
+    else if ([@"5" isEqualToString:self.type])
+    {
+        unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_global_coin"];
+
+    }
 
     self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, pingFenView.top+pingFenView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
     [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];

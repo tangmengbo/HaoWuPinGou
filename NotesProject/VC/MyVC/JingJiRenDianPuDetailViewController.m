@@ -8,6 +8,7 @@
 
 #import "JingJiRenDianPuDetailViewController.h"
 #import "DianuDetailListTableViewCell.h"
+#import "EditDianPuViewController.h"
 
 
 @interface JingJiRenDianPuDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -61,6 +62,8 @@
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mainTableView];
     
+    [self.rightButton setTitle:@"编辑" forState:UIControlStateNormal];
+    
 //    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
 //    mjHeader.lastUpdatedTimeLabel.hidden = YES;
 //    self.mainTableView.mj_header = mjHeader;
@@ -100,6 +103,11 @@
 
     }];
     
+}
+-(void)rightClick
+{
+    EditDianPuViewController * vc = [[EditDianPuViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)loadNewLsit
 {
@@ -203,7 +211,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return  197*BiLiWidth+48*BiLiWidth+21*BiLiWidth+8*BiLiWidth;
+    return  202*BiLiWidth;
     
     
 }

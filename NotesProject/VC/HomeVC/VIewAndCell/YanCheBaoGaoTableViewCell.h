@@ -20,10 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UILabel * pingFenTipLable;
 @property(nonatomic,strong)UILabel * pingFenLable;
 
-@property(nonatomic,strong)UIImageView * imageView1;
-@property(nonatomic,strong)UIImageView * imageView2;
-@property(nonatomic,strong)UIImageView * imageView3;
-@property(nonatomic,strong)UIImageView * imageView4;
+@property(nonatomic,strong)UIScrollView * contentScrollView;
+
+//@property(nonatomic,strong)UIImageView * imageView1;
+//@property(nonatomic,strong)UIImageView * imageView2;
+//@property(nonatomic,strong)UIImageView * imageView3;
+//@property(nonatomic,strong)UIImageView * imageView4;
 
 @property(nonatomic,strong)UILabel * messageLable;
 

@@ -45,6 +45,9 @@
 {
     [super viewWillAppear:animated];
     [self xianShiTabBar];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+
     
     //获取当前用户角色
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
@@ -699,7 +702,6 @@
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource

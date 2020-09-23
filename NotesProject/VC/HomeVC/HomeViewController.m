@@ -8,8 +8,9 @@
 
 #import "HomeViewController.h"
 #import "YanCheBaoGaoTableViewCell.h"
+#import "HomeShaiXuanView.h"
 
-@interface HomeViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface HomeViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,CityListViewControllerDelegate>
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
@@ -43,49 +44,196 @@
 
 @property(nonatomic,strong)UIScrollView * contentScrollView;
 
+@property(nonatomic,strong)NSString * field;
+@property(nonatomic,strong)NSString * order;
+@property(nonatomic,strong)NSString * message_type;
+
+
+
 
 @end
 
 @implementation HomeViewController
 
+-(HomeShaiXuanView *)shaiXuanView
+{
+    if (!_shaiXuanView) {
+        
+        __weak typeof(self) wself = self;
+        _shaiXuanView = [[HomeShaiXuanView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
+        
+        [_shaiXuanView setPaiXuSelect:^(NSString * _Nonnull field, NSString * _Nonnull order) {
+          
+            wself.field = field;
+            wself.order = order;
+            
+            [wself firstGetTieZiList];
+            [wself firstGetRedList];
+            [wself firstGetYanZhengBangDanList];
+            [wself firstGetYanCheBaoGaoList];
+
+        }];
+        [_shaiXuanView setLeiXingSelect:^(NSString * _Nonnull message_type) {
+            
+            wself.message_type = message_type;
+            [wself firstGetTieZiList];
+            [wself firstGetRedList];
+            [wself firstGetYanZhengBangDanList];
+            [wself firstGetYanCheBaoGaoList];
+
+        }];
+        [[UIApplication sharedApplication].keyWindow addSubview:_shaiXuanView];
+                
+    }
+    
+    return _shaiXuanView;
+    
+}
+-(UIView *)chaXiaoErFaTieRenZhengView1
+{
+    if (!_chaXiaoErFaTieRenZhengView1) {
+        
+        _chaXiaoErFaTieRenZhengView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _chaXiaoErFaTieRenZhengView1.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_chaXiaoErFaTieRenZhengView1];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-210*BiLiWidth, WIDTH_PingMu, 210*BiLiWidth)];
+        kuangImageView.backgroundColor = [UIColor whiteColor];
+        kuangImageView.userInteractionEnabled = YES;
+        [_chaXiaoErFaTieRenZhengView1 addSubview:kuangImageView];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:kuangImageView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = kuangImageView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        kuangImageView.layer.mask = maskLayer;
+
+        
+        
+        Lable_ImageButton * renZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(62*BiLiWidth, 35.5*BiLiWidth, 74*BiLiWidth, 84*BiLiWidth)];
+        renZhengButton.button_imageView.frame = CGRectMake(9*BiLiWidth, 0, 57*BiLiWidth, 57*BiLiWidth);
+        renZhengButton.button_imageView.image = [UIImage imageNamed:@"home_RenZheng"];
+        renZhengButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, renZhengButton.width, 14*BiLiWidth);
+        renZhengButton.button_lable.textAlignment = NSTextAlignmentCenter;
+        renZhengButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        renZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
+        renZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
+        renZhengButton.button_lable.text = @"滴滴约认证";
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:renZhengButton];
+        
+        Lable_ImageButton * faTieButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-58.5*BiLiWidth-59*BiLiWidth, 35.5*BiLiWidth, 58.5*BiLiWidth, 84*BiLiWidth)];
+        faTieButton.button_imageView.frame = CGRectMake(0.75*BiLiWidth, 0, 57*BiLiWidth, 57*BiLiWidth);
+        faTieButton.button_imageView.image = [UIImage imageNamed:@"home_FaTie"];
+        faTieButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, faTieButton.width, 14*BiLiWidth);
+        faTieButton.button_lable.textAlignment = NSTextAlignmentCenter;
+        faTieButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        faTieButton.button_lable.textColor = RGBFormUIColor(0x343434);
+        faTieButton.button_lable.adjustsFontSizeToFitWidth = YES;
+        faTieButton.button_lable.text = @"发布帖子";
+        [faTieButton addTarget:self action:@selector(faTieButtonClick1) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:faTieButton];
+
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, kuangImageView.height-54*BiLiWidth, WIDTH_PingMu, 1)];
+        lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        [kuangImageView addSubview:lineView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height,WIDTH_PingMu, 53*BiLiWidth)];
+        [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
+        [closeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+        closeButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        [closeButton addTarget:self action:@selector(closeTipKuangView1) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:closeButton];
+
+
+    }
+    return _chaXiaoErFaTieRenZhengView1;
+}
+-(void)closeTipKuangView1
+{
+    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
+}
+-(void)faTieButtonClick1
+{
+    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
+    self.chaXiaoErFaTieRenZhengView.hidden = NO;
+}
 -(UIView *)chaXiaoErFaTieRenZhengView
 {
     if (!_chaXiaoErFaTieRenZhengView) {
         
-        
-        _chaXiaoErFaTieRenZhengView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-BottomHeight_PingMu)];
+        _chaXiaoErFaTieRenZhengView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
         _chaXiaoErFaTieRenZhengView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
         [self.view addSubview:_chaXiaoErFaTieRenZhengView];
         
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeChaXiaoErFaTieRenZhengView)];
-        [_chaXiaoErFaTieRenZhengView addGestureRecognizer:tap];
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_chaXiaoErFaTieRenZhengView addSubview:kuangImageView];
         
-        UIView * contentView = [[UIView alloc] initWithFrame:CGRectMake(0, _chaXiaoErFaTieRenZhengView.height-200*BiLiWidth, WIDTH_PingMu, 200*BiLiWidth)];
-        contentView.backgroundColor = [UIColor whiteColor];
-        [_chaXiaoErFaTieRenZhengView addSubview:contentView];
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_chaXiaoErFaTieRenZhengView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33.5*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 80*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 4;
+        tipLable2.text = @"您当前是未认证用户，发布的信息不会得到官方认证。若需要获得官方认证，请先进行身份认证或者开通会员！";
+        [kuangImageView addSubview:tipLable2];
+        
+        
+        UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, tipLable2.top+tipLable2.height+25*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+        [faTieButton setTitle:@"继续发帖" forState:UIControlStateNormal];
+        faTieButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        faTieButton.layer.cornerRadius = 20*BiLiWidth;
+        [faTieButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+        faTieButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [faTieButton addTarget:self action:@selector(faTieButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:faTieButton];
+
+        UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(faTieButton.left+faTieButton.width+11.5*BiLiWidth, faTieButton.top, 115*BiLiWidth, 40*BiLiWidth)];
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:renZhengButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = renZhengButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [renZhengButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, renZhengButton.width, renZhengButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"去认证";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [renZhengButton addSubview:sureLable];
+        
 
         
-        UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-100*BiLiWidth)/3, 150*BiLiWidth/2, 50*BiLiWidth, 50*BiLiWidth)];
-        [renZhengButton setTitle:@"认证茶小二" forState:UIControlStateNormal];
-        [renZhengButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        renZhengButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
-        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng) forControlEvents:UIControlEventTouchUpInside];
-        [contentView addSubview:renZhengButton];
-        
-        UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake(renZhengButton.left+renZhengButton.width+(WIDTH_PingMu-100*BiLiWidth)/3, 150*BiLiWidth/2, 50*BiLiWidth, 50*BiLiWidth)];
-        [faTieButton setTitle:@"发布帖子" forState:UIControlStateNormal];
-        [faTieButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        faTieButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
-        [faTieButton addTarget:self action:@selector(faTieButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [contentView addSubview:faTieButton];
 
     }
     return _chaXiaoErFaTieRenZhengView;
 }
--(void)removeChaXiaoErFaTieRenZhengView
+-(void)closeTipKuangView
 {
     self.chaXiaoErFaTieRenZhengView.hidden = YES;
 }
+
 -(void)chaXiaoErRenZheng
 {
     NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
@@ -110,24 +258,28 @@
 
         }
     }
+    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
     self.chaXiaoErFaTieRenZhengView.hidden = YES;
 
 
 }
 -(void)faTieButtonClick
 {
-    
     CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
     vc.from_flg = @"0";
     [self.navigationController pushViewController:vc animated:YES];
     self.chaXiaoErFaTieRenZhengView.hidden = YES;
 
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     [self xianShiTabBar];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+
     
     //获取当前用户角色
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
@@ -173,16 +325,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /*更新公告
-    GongGaoAlertView * gongGaoView = [[GongGaoAlertView alloc] initWithFrame:CGRectZero messageInfo:nil];
-    gongGaoView.closeView = ^{
-        
-    };
-    gongGaoView.toUpload = ^{
-        
-    };
-    [[UIApplication sharedApplication].keyWindow addSubview:gongGaoView];
-     */
+    [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject,@"message", nil];
+            GongGaoAlertView * gongGaoView = [[GongGaoAlertView alloc] initWithFrame:CGRectZero messageInfo:dic];
+            gongGaoView.closeView = ^{
+                
+            };
+            gongGaoView.toUpload = ^{
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:gongGaoView];
+
+        }
+    }];
+     
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top+BottomHeight_PingMu))];
     self.mainScrollView.delegate = self;
@@ -223,17 +382,31 @@
     locationImageView.image = [UIImage imageNamed:@"home_location"];
     [self.topNavView addSubview:locationImageView];
     
-    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 50*BiLiWidth, locationImageView.height)];
+    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 150*BiLiWidth, locationImageView.height)];
     self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.locationLable.adjustsFontSizeToFitWidth = YES;
     self.locationLable.textColor = RGBFormUIColor(0x333333);
     [self.topNavView addSubview:self.locationLable];
     
-    [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        self.locationLable.text = [responseObject objectForKey:@"cityName"];
-        [NormalUse defaultsSetObject:[responseObject objectForKey:@"cityName"] forKey:CurrentCity];
-    }];
+    UIButton * citySelectButton = [[UIButton alloc] initWithFrame:CGRectMake(locationImageView.left, locationImageView.top, 200*BiLiWidth, locationImageView.height)];
+    [citySelectButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.topNavView addSubview:citySelectButton];
+    
+    NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
+    
+    if (![NormalUse isValidDictionary:cityInfo]) {
+     
+        self.locationLable.text = [cityInfo objectForKey:@"cityName"];
+
+    }
+    else
+    {
+        [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            self.locationLable.text = [responseObject objectForKey:@"cityName"];
+            [NormalUse defaultsSetObject:responseObject forKey:CurrentCity];
+        }];
+
+    }
 
 }
 -(void)initContentView
@@ -345,6 +518,11 @@
     self.sliderView.alpha = 0.8;
     [self.itemButtonContentView addSubview:self.sliderView];
     
+    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-14*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-13.5*BiLiWidth)/2, 14*BiLiWidth, 13.5*BiLiWidth)];
+    shaiXuanButton.backgroundColor = [UIColor greenColor];
+    [shaiXuanButton addTarget:self action:@selector(tiJianShaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.itemButtonContentView addSubview:shaiXuanButton];
+    
     //渐变设置
     UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
     UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -397,7 +575,7 @@
     [self firstGetYanCheBaoGaoList];
     
     UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-60*BiLiWidth-BottomHeight_PingMu, 50*BiLiWidth, 50*BiLiWidth)];
-    [faTieButton setBackgroundColor:[UIColor greenColor]];
+    [faTieButton setBackgroundImage:[UIImage imageNamed:@"guanFangMessage_image"] forState:UIControlStateNormal];
     faTieButton.layer.cornerRadius = 25*BiLiWidth;
     [faTieButton addTarget:self action:@selector(faTieOrRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:faTieButton];
@@ -408,7 +586,22 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page", nil]
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [dic setObject:self.field forKey:@"field"];
+    }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [dic setObject:self.order forKey:@"order"];
+    }
+    if ([NormalUse isValidString:self.message_type]) {
+        
+        [dic setObject:self.message_type forKey:@"message_type"];
+    }
+    [dic setObject:@"1" forKey:@"page"];
+
+    [HTTPModel getTieZiList:dic
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -426,7 +619,7 @@
             
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
             
             if (self.contentScrollView.contentOffset.x==0) {
                 
@@ -442,7 +635,22 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page", nil]
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [dic setObject:self.field forKey:@"field"];
+    }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [dic setObject:self.order forKey:@"order"];
+    }
+    if ([NormalUse isValidString:self.message_type]) {
+        
+        [dic setObject:self.message_type forKey:@"message_type"];
+    }
+    [dic setObject:@"1" forKey:@"page"];
+
+    [HTTPModel getRedList:dic
                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -460,7 +668,7 @@
             
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
             if (self.contentScrollView.contentOffset.x==WIDTH_PingMu) {
                 
@@ -479,7 +687,22 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
 
-    [HTTPModel getYanZhengList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [dic setObject:self.field forKey:@"field"];
+    }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [dic setObject:self.order forKey:@"order"];
+    }
+    if ([NormalUse isValidString:self.message_type]) {
+        
+        [dic setObject:self.message_type forKey:@"message_type"];
+    }
+    [dic setObject:@"1" forKey:@"page"];
+
+    [HTTPModel getYanZhengList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -499,7 +722,7 @@
 
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
             if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*2) {
                 
@@ -516,7 +739,22 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
     
-    [HTTPModel getYanCheBaoGaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([NormalUse isValidString:self.field]) {
+        
+        [dic setObject:self.field forKey:@"field"];
+    }
+    if ([NormalUse isValidString:self.order]) {
+        
+        [dic setObject:self.order forKey:@"order"];
+    }
+    if ([NormalUse isValidString:self.message_type]) {
+        
+        [dic setObject:self.message_type forKey:@"message_type"];
+    }
+    [dic setObject:@"1" forKey:@"page"];
+
+    [HTTPModel getYanCheBaoGaoList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -580,9 +818,27 @@
     int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
     if (index==0) {
         
-        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidString:self.field]) {
+            
+            [dic setObject:self.field forKey:@"field"];
+        }
+        if ([NormalUse isValidString:self.order]) {
+            
+            [dic setObject:self.order forKey:@"order"];
+        }
+        if ([NormalUse isValidString:self.message_type]) {
+            
+            [dic setObject:self.message_type forKey:@"message_type"];
+        }
 
-        [HTTPModel getTieZiList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page", nil]
+        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
+        
+        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+
+
+        [HTTPModel getTieZiList:dic
                        callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -605,7 +861,7 @@
 
                 [tableView reloadData];
 
-                tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
                 
                 if (self.contentScrollView.contentOffset.x==0) {
@@ -624,8 +880,25 @@
     else if(index==1)
     {
         
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidString:self.field]) {
+            
+            [dic setObject:self.field forKey:@"field"];
+        }
+        if ([NormalUse isValidString:self.order]) {
+            
+            [dic setObject:self.order forKey:@"order"];
+        }
+        if ([NormalUse isValidString:self.message_type]) {
+            
+            [dic setObject:self.message_type forKey:@"message_type"];
+        }
+
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
-        [HTTPModel getRedList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page", nil]
+        
+        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+
+        [HTTPModel getRedList:dic
                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -649,7 +922,7 @@
 
                 [tableView reloadData];
                 
-                tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
                 if (self.contentScrollView.contentOffset.x==WIDTH_PingMu) {
                     
@@ -666,8 +939,25 @@
     else if(index==2)
     {
         
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidString:self.field]) {
+            
+            [dic setObject:self.field forKey:@"field"];
+        }
+        if ([NormalUse isValidString:self.order]) {
+            
+            [dic setObject:self.order forKey:@"order"];
+        }
+        if ([NormalUse isValidString:self.message_type]) {
+            
+            [dic setObject:self.message_type forKey:@"message_type"];
+        }
+
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
-        [HTTPModel getYanZhengList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page", nil]
+        
+        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+
+        [HTTPModel getYanZhengList:dic
                           callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -689,7 +979,7 @@
                 [self.mainScrollView.mj_footer endRefreshing];
                 [tableView reloadData];
                 
-                tableView.height = (144*BiLiWidth+17*BiLiWidth)*sourceArray.count;
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
                 
                 if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*2) {
                     
@@ -706,8 +996,25 @@
     }
     else if(index==3)
     {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidString:self.field]) {
+            
+            [dic setObject:self.field forKey:@"field"];
+        }
+        if ([NormalUse isValidString:self.order]) {
+            
+            [dic setObject:self.order forKey:@"order"];
+        }
+        if ([NormalUse isValidString:self.message_type]) {
+            
+            [dic setObject:self.message_type forKey:@"message_type"];
+        }
+
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
-        [HTTPModel getYanCheBaoGaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page", nil]
+        
+        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+
+        [HTTPModel getYanCheBaoGaoList:dic
                               callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -889,7 +1196,7 @@
     }
     else
     {
-        return  144*BiLiWidth+17*BiLiWidth;
+        return  144*BiLiWidth+20*BiLiWidth;
 
     }
     
@@ -985,6 +1292,10 @@
 }
 #pragma mark UIButtonClick
 
+-(void)tiJianShaiXuanButtonClick
+{
+    self.shaiXuanView.hidden = NO;
+}
 -(void)faTieOrRenZhengButtonClick
 {
     NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
@@ -996,7 +1307,7 @@
         
         if (auth_nomal.intValue==0) {//未认证
             
-            self.chaXiaoErFaTieRenZhengView.hidden = NO;
+            self.chaXiaoErFaTieRenZhengView1.hidden = NO;
         }
         else if (auth_nomal.intValue==1)//已认证
         {
@@ -1004,7 +1315,7 @@
         }
         else if (auth_nomal.intValue==2)//审核中
         {
-            self.chaXiaoErFaTieRenZhengView.hidden = NO;
+            self.chaXiaoErFaTieRenZhengView1.hidden = NO;
 
         }
 
@@ -1015,7 +1326,19 @@
 -(void)shaiXuanButtonClick
 {
     CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.locationLable.text = [info objectForKey:@"cityName"];
+    [NormalUse defaultsSetObject:info forKey:@"CityInfoDefaults"];
+    
+    [self firstGetTieZiList];
+    [self firstGetRedList];
+    [self firstGetYanZhengBangDanList];
+    [self firstGetYanCheBaoGaoList];
+
 }
 -(void)tiYanBaoGaoButtonClick
 {
@@ -1055,7 +1378,6 @@
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
     
     self.pageControl.currentPage = pageNumber;
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 #pragma mark NewPagedFlowView Datasource

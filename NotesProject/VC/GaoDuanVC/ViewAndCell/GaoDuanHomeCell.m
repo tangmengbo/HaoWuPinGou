@@ -52,19 +52,27 @@
         self.jinRuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 24*BiLiWidth, 72*BiLiWidth, 24*BiLiWidth)];
         self.jinRuButton.layer.cornerRadius = 12*BiLiWidth;
         self.jinRuButton.layer.borderWidth = 1;
-        self.jinRuButton.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
+        self.jinRuButton.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
         [self.jinRuButton setTitle:@"进店看看" forState:UIControlStateNormal];
-        [self.jinRuButton setTitleColor:RGBFormUIColor(0xDDDDDD) forState:UIControlStateNormal];
+        [self.jinRuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
         self.jinRuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         [self.jinRuButton addTarget:self action:@selector(jinDianKanKanButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_jinRuButton];
 
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+18*BiLiWidth, WIDTH_PingMu, 132*BiLiWidth)];
+//        self.contentScrollView.backgroundColor = [UIColor greenColor];
         [self addSubview:self.contentScrollView];
         
         self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 109*BiLiWidth, 16.5*BiLiWidth)];
-        self.jiaoYiBaoZhengImageView.backgroundColor = [UIColor greenColor];
+        self.jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [self addSubview:self.jiaoYiBaoZhengImageView];
+        
+        self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(22*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-22*BiLiWidth, 14*BiLiWidth)];
+        self.jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
+        self.jiaoYiBaoZhengLable.textColor = [UIColor whiteColor];
+        self.jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
+        [self.jiaoYiBaoZhengImageView addSubview:self.jiaoYiBaoZhengLable];
+
         
         self.renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-144*BiLiWidth,self.jiaoYiBaoZhengImageView.top+1, 60*BiLiWidth, 14.5*BiLiWidth)];
         self.renZhengLable.textColor = RGBFormUIColor(0x656565);
@@ -109,6 +117,7 @@
 
     }
     self.cityLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
+    
     
     [self.contentScrollView removeAllSubviews];
     
@@ -163,6 +172,16 @@
 
     }
     
+    NSNumber * is_mark = [info objectForKey:@"is_mark"];
+    if (is_mark.intValue==1) {
+        
+        self.jiaoYiBaoZhengLable.text = [NSString stringWithFormat:@"交易保证金:%@",[info objectForKey:@"mark_cny"]];
+    }
+    else
+    {
+        self.jiaoYiBaoZhengLable.text = @"无交易保证金";
+    }
+
     NSNumber * post_num = [info objectForKey:@"post_num"];
     if ([post_num isKindOfClass:[NSNumber class]]) {
         

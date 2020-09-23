@@ -59,6 +59,17 @@ singleton_interface(HTTPModel)
 //发送验证码
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//绑定手机号
++(void)bangDingMobile:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//重置密码
++(void)chognZhiMiMa:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//编辑用户信息
++(void)editUserInfo:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 
 //获取初始化账号
 +(void)registerInit:(NSDictionary *_Nullable)parameter
@@ -94,6 +105,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //投诉帖子
 +(void)tieZiTouSu:(NSDictionary *_Nullable)parameter
          callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//系统公告
++(void)getXiTongGongGao:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //获取信息类型
 +(void)getXinXiLeiXing:(NSDictionary *_Nullable)parameter
@@ -303,6 +318,14 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 //经纪人查看自己的店铺详情
 +(void)jingJiRenGetDianPuDetail:(NSDictionary *_Nullable)parameter
+                       callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//   0官方 1审核 2活动 默认官方消息
++(void)getXiaoXiMessageList:(NSDictionary *_Nullable)parameter
+                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//官方消息详情
++(void)getGuanFangMessageDetail:(NSDictionary *_Nullable)parameter
                        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 @end

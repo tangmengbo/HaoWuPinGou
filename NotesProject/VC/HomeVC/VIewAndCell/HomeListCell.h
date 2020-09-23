@@ -24,6 +24,9 @@ typedef enum {
 
 } CellType;
 
+@property(nonatomic,strong)UIView * contentMessageView;
+
+
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * titleLable;
 @property(nonatomic,strong)UILabel * faBuTimeLable;

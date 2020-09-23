@@ -10,6 +10,7 @@
 #import "GetCountryInfoViewController.h"
 #import "SheZhiViewController.h"
 #import "MyNavigationViewController.h"
+#import "QiDongViewController.h"
 
 
 NSString *NTESNotificationLogout = @"NTESNotificationLogout";
@@ -37,6 +38,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
             [NormalUse defaultsSetObject:info forKey:JinBiShuoMing];
         }
     }];
+    
     //用户已经登录
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
@@ -56,19 +58,21 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
                 else
                 {
                     //直接进入
-                    [self setYiDengLuTabBar];
+                    [self setQiDongTabbar];
                 }
 
             }
             else
             {
                 //直接进入
-                [self setYiDengLuTabBar];
+                [self setQiDongTabbar];
             }
         }];
     }
     else
     {
+        [self setQiDongTabbar];
+
         //未登录用户先 获取初始化账号
         [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
@@ -87,7 +91,6 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
                         
                         NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
                         [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
-                        [self setYiDengLuTabBar];
 
                     }
                 }];
@@ -132,6 +135,13 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 {
     SetShouShiMiMaViewController * vc = [[SetShouShiMiMaViewController alloc] init];
     vc.shouShiType = GesturePasswordStatusLogin;
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nav;
+
+}
+-(void)setQiDongTabbar
+{
+    QiDongViewController * vc = [[QiDongViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;
 

@@ -20,9 +20,9 @@
 @property(nonatomic,strong)MainTabbarController * tabbar;
 
 
--(void)setYinDaoTabbar;
--(void)setWeiDengLuTabBar;
 -(void)setYiDengLuTabBar;
+-(void)setShouShiYanZhengTabbar;
+-(void)setQiDongTabbar;
 
 - (void)yinCangTabbar;
 -(void)xianShiTabBar;

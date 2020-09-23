@@ -35,7 +35,7 @@
 #import "LLImagePickerManager.h"
 #import "LLImagePickerModel.h"
 
-
+#import "AutoScrollLabel.h"
 //融云
 #import <RongIMKit/RongIMKit.h>
 #import "RongYManager.h"
@@ -61,6 +61,8 @@
 #import "TiYanBaoGaoCell.h"
 #import "CheYouPingJiaCell.h"
 #import "GongGaoAlertView.h"
+
+#import "CreateTieZiKouFeiViewController.h"
 
 #import "CityListViewController.h"
 #import "LeiXiangSelectViewController.h"
@@ -90,7 +92,7 @@
 #import "JingJiRenRenZhengStep2VC.h"
 #import "JingJiRenRenZhengStep3VC.h"
 
-#import "CreateDianPuViewController.h"
+#import "EditDianPuViewController.h"
 #import "SanDaJiaoSeDetailViewController.h"
 #import "PeiWanListViewController.h"
 #import "WaiWeiListViewController.h"

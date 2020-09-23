@@ -23,7 +23,7 @@
         [self addSubview:contentImageView];
         
         UIButton* closeButton = [[UIButton alloc] initWithFrame:CGRectMake(contentImageView.width-50*BiLiWidth, 20*BiLiWidth, 40*BiLiWidth, 50*BiLiWidth)];
-        [closeButton setBackgroundColor:[UIColor blueColor]];
+        [closeButton setBackgroundColor:[UIColor clearColor]];
         [closeButton addTarget:self action:@selector(closeButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [contentImageView addSubview:closeButton];
         
@@ -39,8 +39,13 @@
         messageTextView.font = [UIFont systemFontOfSize:14*BiLiWidth];
         messageTextView.textAlignment = NSTextAlignmentCenter;
         messageTextView.editable = NO;
-        messageTextView.text = @"1.最新版本上线，请大家即时更新；2.关于VIP领取双倍金币；3.新鲜出炉的好茶等您品尝。";
         [contentImageView addSubview:messageTextView];
+        
+        NSString * content = [mesageInfo objectForKey:@"message"];
+        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+        messageTextView.attributedText = attrStr;
+        [messageTextView sizeToFit];
+
         
         UIButton * uploadButton = [[UIButton alloc] initWithFrame:CGRectMake((contentImageView.width-240*BiLiWidth)/2, contentImageView.height-89*BiLiWidth, 240*BiLiWidth, 40*BiLiWidth)];
         [uploadButton addTarget:self action:@selector(uploadButtonClick) forControlEvents:UIControlEventTouchUpInside];

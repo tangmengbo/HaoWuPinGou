@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GouMaiJiLuListViewController : MainBaseViewController
 
+@property(nonatomic,strong)UIImageView *noMessageTipImageView;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
