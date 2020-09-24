@@ -67,10 +67,6 @@
 	<string>YoYo needs your consent to access the album so that you can select photos, video from the album when creating dynamic (changing user profile picture)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>YoYo needs your consent to access the album so that you can select photos, video from the album when creating dynamic (changing user profile picture)</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>Flash</string>
 	<key>UIMainStoryboardFile</key>

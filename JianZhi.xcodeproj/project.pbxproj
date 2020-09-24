@@ -106,6 +106,8 @@
 		5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */; };
 		5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46624E6895200E835AB /* HTTPModel.m */; };
 		5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */; };
+		5FBAD7CB251C3423004C153E /* ZYNetworkAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAD7CA251C3423004C153E /* ZYNetworkAccessibility.m */; };
+		5FBAD7CE251C6986004C153E /* CityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAD7CD251C6986004C153E /* CityListCell.m */; };
 		5FC165822519AE7000FA99D2 /* QiDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165812519AE7000FA99D2 /* QiDongViewController.m */; };
 		5FC165852519C5DA00FA99D2 /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */; };
 		5FC1658A2519F54800FA99D2 /* HomeShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */; };
@@ -371,6 +373,10 @@
 		5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
 		5F91C46824E6895200E835AB /* HTTPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPModel.h; sourceTree = "<group>"; };
 		5F91C46924E6895200E835AB /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
+		5FBAD7C9251C3423004C153E /* ZYNetworkAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYNetworkAccessibility.h; sourceTree = "<group>"; };
+		5FBAD7CA251C3423004C153E /* ZYNetworkAccessibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYNetworkAccessibility.m; sourceTree = "<group>"; };
+		5FBAD7CC251C6986004C153E /* CityListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityListCell.h; sourceTree = "<group>"; };
+		5FBAD7CD251C6986004C153E /* CityListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CityListCell.m; sourceTree = "<group>"; };
 		5FC165802519AE7000FA99D2 /* QiDongViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QiDongViewController.h; sourceTree = "<group>"; };
 		5FC165812519AE7000FA99D2 /* QiDongViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QiDongViewController.m; sourceTree = "<group>"; };
 		5FC165832519C5DA00FA99D2 /* AutoScrollLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
@@ -740,6 +746,8 @@
 				5FD850562509BB8C009286CE /* GongGaoAlertView.m */,
 				5FC165882519F54800FA99D2 /* HomeShaiXuanView.h */,
 				5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */,
+				5FBAD7CC251C6986004C153E /* CityListCell.h */,
+				5FBAD7CD251C6986004C153E /* CityListCell.m */,
 			);
 			path = VIewAndCell;
 			sourceTree = "<group>";
@@ -859,6 +867,15 @@
 				5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */,
 			);
 			path = Manger;
+			sourceTree = "<group>";
+		};
+		5FBAD7C8251C3423004C153E /* ZYNetworkAccessibility */ = {
+			isa = PBXGroup;
+			children = (
+				5FBAD7C9251C3423004C153E /* ZYNetworkAccessibility.h */,
+				5FBAD7CA251C3423004C153E /* ZYNetworkAccessibility.m */,
+			);
+			path = ZYNetworkAccessibility;
 			sourceTree = "<group>";
 		};
 		5FC1657F2519AE5600FA99D2 /* QiDongVC */ = {
@@ -986,6 +1003,7 @@
 		5FE3EAD62355A12600C77F4D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				5FBAD7C8251C3423004C153E /* ZYNetworkAccessibility */,
 				5F26510924FE45BD00171684 /* VideoRecord */,
 				5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */,
 				5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */,
@@ -1330,6 +1348,7 @@
 				5FE3EC2C2355A4D700C77F4D /* NormalUse.m in Sources */,
 				5F34DCF524EFCEF000DE15A1 /* JingCaiFuLiViewController.m in Sources */,
 				5FE3EC972355B28100C77F4D /* RongYManager.m in Sources */,
+				5FBAD7CE251C6986004C153E /* CityListCell.m in Sources */,
 				5FE3EC132355A3E400C77F4D /* UIView+Layout.m in Sources */,
 				5F24D2482500946900476CFA /* NvShenListViewController.m in Sources */,
 				5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */,
@@ -1414,6 +1433,7 @@
 				5FE3ECBE2355B7AB00C77F4D /* XinXiListTableViewCell.m in Sources */,
 				5FE3EC122355A3E400C77F4D /* NSBundle+TZImagePicker.m in Sources */,
 				5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */,
+				5FBAD7CB251C3423004C153E /* ZYNetworkAccessibility.m in Sources */,
 				5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */,
 				5F7EF45A250F3D8D0052B948 /* FaBuYanZhengViewController.m in Sources */,
 				5F084FAA25187B6500F2D64C /* ZhangHuDetailViewController.m in Sources */,
@@ -1593,10 +1613,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = NotesProject/KKlive.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: Jiabing An (5ZLQGZTG49)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4NM655V86S;
+				DEVELOPMENT_TEAM = 2PQ7385HCJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
@@ -1617,7 +1637,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cora.tectacles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = YoYo;
 				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1631,10 +1651,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = NotesProject/KKlive.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: Jiabing An (5ZLQGZTG49)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4NM655V86S;
+				DEVELOPMENT_TEAM = 2PQ7385HCJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
@@ -1655,7 +1675,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cora.tectacles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = YoYo;
 				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -36,7 +36,6 @@
 
 
 
-
 //当前设置的宽、高
 #define WIDTH_PingMu [UIScreen mainScreen].bounds.size.width
 #define HEIGHT_PingMu [UIScreen mainScreen].bounds.size.height
@@ -96,5 +95,7 @@
  "ticket_coin_day":"50"//每个好友每天上线后可领取的金币数
  */
 
+
+//开发者账号 360057466@qq.com JYcx2019
 
 #endif /* Consdfine_h */

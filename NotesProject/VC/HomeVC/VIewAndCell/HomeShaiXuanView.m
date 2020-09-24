@@ -14,9 +14,9 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.frame = CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu);
+        self.frame = CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, HEIGHT_PingMu);
         
-        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap)];
         [self addGestureRecognizer:tap];
@@ -37,7 +37,19 @@
 }
 -(void)viewTap
 {
-    self.hidden = YES;
+    self.paiXuSelect(self.field, self.order);
+    
+    self.leiXingSelect(self.message_type);
+
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.top = HEIGHT_PingMu;
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+
+        
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 -(void)initContentView
 {
@@ -169,8 +181,7 @@
         self.order = @"asc";
 
     }
-    self.paiXuSelect(self.field, self.order);
-    
+
     for (UIButton * button in self.paiButtonXuArray) {
         
         if (button.tag==selectButton.tag) {
@@ -190,7 +201,6 @@
 -(void)leiXingButtonClick:(UIButton *)selectButton
 {
     self.message_type = [self.leiXingSourceArray objectAtIndex:selectButton.tag];
-    self.leiXingSelect(self.message_type);
     
     for (UIButton * button in self.leiXingButtonArray) {
         

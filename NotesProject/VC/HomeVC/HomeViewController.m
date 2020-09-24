@@ -9,6 +9,8 @@
 #import "HomeViewController.h"
 #import "YanCheBaoGaoTableViewCell.h"
 #import "HomeShaiXuanView.h"
+#import "ZYNetworkAccessibility.h"
+
 
 @interface HomeViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,CityListViewControllerDelegate>
 
@@ -60,7 +62,7 @@
     if (!_shaiXuanView) {
         
         __weak typeof(self) wself = self;
-        _shaiXuanView = [[HomeShaiXuanView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
+        _shaiXuanView = [[HomeShaiXuanView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, 0)];
         
         [_shaiXuanView setPaiXuSelect:^(NSString * _Nonnull field, NSString * _Nonnull order) {
           
@@ -320,10 +322,9 @@
     
     
 }
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
@@ -394,7 +395,7 @@
     
     NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
     
-    if (![NormalUse isValidDictionary:cityInfo]) {
+    if ([NormalUse isValidDictionary:cityInfo]) {
      
         self.locationLable.text = [cityInfo objectForKey:@"cityName"];
 
@@ -519,7 +520,7 @@
     [self.itemButtonContentView addSubview:self.sliderView];
     
     UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-14*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-13.5*BiLiWidth)/2, 14*BiLiWidth, 13.5*BiLiWidth)];
-    shaiXuanButton.backgroundColor = [UIColor greenColor];
+    [shaiXuanButton setBackgroundImage:[UIImage imageNamed:@"icon_post_fild"] forState:UIControlStateNormal];
     [shaiXuanButton addTarget:self action:@selector(tiJianShaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.itemButtonContentView addSubview:shaiXuanButton];
     
@@ -1294,7 +1295,12 @@
 
 -(void)tiJianShaiXuanButtonClick
 {
-    self.shaiXuanView.hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.shaiXuanView.top  =0;
+        self.shaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    }];
+    
 }
 -(void)faTieOrRenZhengButtonClick
 {

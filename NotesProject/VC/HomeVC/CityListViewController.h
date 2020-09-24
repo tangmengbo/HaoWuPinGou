@@ -7,11 +7,12 @@
 //
 
 #import "MainBaseViewController.h"
+#import "CityListCell.h"
 
 @protocol CityListViewControllerDelegate
 @optional
 
-- (void)citySelect:(NSDictionary *)info;
+- (void)citySelect:(NSDictionary * _Nonnull)info;
 
 @end
 

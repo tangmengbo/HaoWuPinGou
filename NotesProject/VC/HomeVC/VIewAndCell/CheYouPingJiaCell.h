@@ -12,16 +12,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CheYouPingJiaCell : UITableViewCell
 
+@property(nonatomic,strong)NSDictionary * info;
+
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * nickLable;
 @property(nonatomic,strong)UILabel * tiYanTimeLable;
 @property(nonatomic,strong)UILabel * pingFenTipLable;
 @property(nonatomic,strong)UILabel * pingFenLable;
 
-@property(nonatomic,strong)UIImageView * imageView1;
-@property(nonatomic,strong)UIImageView * imageView2;
-@property(nonatomic,strong)UIImageView * imageView3;
-@property(nonatomic,strong)UIImageView * imageView4;
+@property(nonatomic,strong)UIScrollView * contentScrollView;
+
+//@property(nonatomic,strong)UIImageView * imageView1;
+//@property(nonatomic,strong)UIImageView * imageView2;
+//@property(nonatomic,strong)UIImageView * imageView3;
+//@property(nonatomic,strong)UIImageView * imageView4;
 
 @property(nonatomic,strong)UILabel * messageLable;
 

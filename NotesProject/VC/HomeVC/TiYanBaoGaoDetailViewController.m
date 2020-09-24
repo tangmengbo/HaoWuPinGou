@@ -59,7 +59,10 @@
     headerImageView.autoresizingMask = UIViewAutoresizingNone;
     headerImageView.clipsToBounds = YES;
     headerImageView.layer.cornerRadius = 24*BiLiWidth;
-    headerImageView.backgroundColor = [UIColor redColor];
+    if([NormalUse isValidArray:self.images])
+    {
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:0]]];
+    }
     [self.mainScrollView addSubview:headerImageView];
     
     UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+22*BiLiWidth, 200*BiLiWidth, 15*BiLiWidth)];
@@ -349,8 +352,8 @@
         bannerView.layer.masksToBounds = YES;
     }
     //在这里下载网络图片
-          NSDictionary * info = [self.images objectAtIndex:index];
-          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+//          NSDictionary * info = [self.images objectAtIndex:index];
+          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:index]]];
 //    bannerView.mainImageView.image = self.imageArray[index];
     
     return bannerView;

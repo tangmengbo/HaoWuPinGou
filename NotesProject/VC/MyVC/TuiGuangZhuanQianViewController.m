@@ -35,10 +35,10 @@
 
     
     UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-219*BiLiWidth)/2, 150*BiLiWidth, 219*BiLiWidth, 39*BiLiWidth)];
-    titleImageView.image = [UIImage imageNamed:@"tuiGuang_wenZiTip"];
+    //titleImageView.image = [UIImage imageNamed:@"tuiGuang_wenZiTip"];
     [self.view addSubview:titleImageView];
     
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(48*BiLiWidth, titleImageView.top+titleImageView.height+16*BiLiWidth, WIDTH_PingMu-48*BiLiWidth*2, 30*BiLiWidth)];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(48*BiLiWidth, titleImageView.top+titleImageView.height-30*BiLiWidth, WIDTH_PingMu-48*BiLiWidth*2, 30*BiLiWidth)];
     tipLable.textAlignment = NSTextAlignmentCenter;
     tipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     tipLable.numberOfLines = 2;
