@@ -112,6 +112,7 @@
 
     if (!self.pageControl) {
         self.pageControl = [[JYPageControl alloc] init];
+        
     }
     if (!_backImageView) {
         _backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ViewWidth(self), ViewHeight(self))];

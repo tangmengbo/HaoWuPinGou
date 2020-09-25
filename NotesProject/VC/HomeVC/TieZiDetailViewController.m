@@ -44,6 +44,7 @@
 {
     JvBaoViewController * vc = [[JvBaoViewController alloc] init];
     vc.post_id = self.post_id;
+    vc.role = @"1";
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -148,6 +149,14 @@
             [self.images addObject:image];
         }
     }
+    
+    self.pageControll = [[FengZhuangUIPageControll alloc] initWithFrame:CGRectMake(WIDTH_PingMu-self.images.count*18,scrollLunBo.height-20*BiLiWidth-60*BiLiWidth, self.images.count*18, 15)];
+    self.pageControll.currentPageIndicatorTintColor = RGBFormUIColor(0xFFFFFF);
+    self.pageControll.pageIndicatorTintColor = RGBFormUIColor(0x999999);
+    self.pageControll.numberOfPages = self.images.count;
+    self.pageControll.currentPage = 0;
+    [scrollLunBo addSubview:self.pageControll];
+
     [scrollLunBo startCarouselWithArray:self.images];
 
     
@@ -156,6 +165,7 @@
     autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
     autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
     [self.mainScrollView addSubview:autoLabel];
+
 
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth)];
@@ -893,6 +903,15 @@
 #pragma mark--JYCarouselDelegate
 -(void)carouseScrollToIndex:(NSInteger)index
 {
+    if (index>0) {
+        
+        self.pageControll.currentPage = index-1;
+
+    }else
+    {
+        self.pageControll.currentPage = 0;
+    }
+
     sliderIndex = index;
     if ([[self.images objectAtIndex:index] isKindOfClass:[UIImage class]]) {
         

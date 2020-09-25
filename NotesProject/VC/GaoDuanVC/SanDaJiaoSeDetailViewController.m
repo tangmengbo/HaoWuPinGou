@@ -9,8 +9,16 @@
 #import "SanDaJiaoSeDetailViewController.h"
 
 @interface SanDaJiaoSeDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,JYCarouselDelegate>
+{
+    NSInteger sliderIndex;
+
+}
 
 @property(nonatomic,strong)NSDictionary * tieZiInfo;
+
+@property(nonatomic,strong)NSMutableArray * images;
+
+@property(nonatomic,strong)UIButton * videoButton;
 
 
 @end
@@ -40,6 +48,9 @@
     
     [super viewDidLoad];
     
+    [self.rightButton setTitle:@"投诉" forState:UIControlStateNormal];
+    self.topTitleLale.text = @"详情";
+
     [self yinCangTabbar];
     
     [NormalUse xianShiGifLoadingView:self];
@@ -61,21 +72,20 @@
         
     }];
     
-    self.backImageView.frame = CGRectMake(self.backImageView.left, (self.topNavView.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
-    self.backImageView.image = [UIImage imageNamed:@"white_back"];
-
-    
-    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height))];
     if (@available(iOS 11.0, *)) {
         self.mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     [self.view addSubview:self.mainScrollView];
     
-    [self.rightButton setTitle:@"投诉" forState:UIControlStateNormal];
-    [self.rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.topNavView.backgroundColor = [UIColor clearColor];
-    [self.view bringSubviewToFront:self.topNavView];
 
+}
+-(void)rightClick
+{
+    JvBaoViewController * vc = [[JvBaoViewController alloc] init];
+    vc.post_id = self.girl_id;
+    vc.role = @"2";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)initTopMessageView
@@ -119,12 +129,43 @@
     scrollLunBo.layer.masksToBounds = YES;
     [self.mainScrollView addSubview:scrollLunBo];
     
+    self.videoButton = [[UIButton alloc] initWithFrame:CGRectMake((scrollLunBo.width-50*BiLiWidth)/2, (scrollLunBo.height-60*BiLiWidth-50*BiLiWidth)/2, 50*BiLiWidth, 50*BiLiWidth)];
+    [self.videoButton setBackgroundImage:[UIImage imageNamed:@"boFang"] forState:UIControlStateNormal];
+    self.videoButton.hidden = YES;
+    [self.videoButton addTarget:self action:@selector(videoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [scrollLunBo addSubview:self.videoButton];
+
+    
+    self.images = [NSMutableArray array];
     if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"images"]]) {
         
-        NSMutableArray * images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
-        [scrollLunBo startCarouselWithArray:images];
-
+        self.images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
     }
+    
+    if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"videos"]])
+    {
+        for (NSString * path in [self.tieZiInfo objectForKey:@"videos"]) {
+            
+           UIImage * image = [self getVideoPreViewImage:[NSURL URLWithString:path]];
+            [self.images addObject:image];
+        }
+    }
+    
+    self.pageControll = [[FengZhuangUIPageControll alloc] initWithFrame:CGRectMake(WIDTH_PingMu-self.images.count*18,scrollLunBo.height-20*BiLiWidth-60*BiLiWidth, self.images.count*18, 15)];
+    self.pageControll.currentPageIndicatorTintColor = RGBFormUIColor(0xFFFFFF);
+    self.pageControll.pageIndicatorTintColor = RGBFormUIColor(0x999999);
+    self.pageControll.numberOfPages = self.images.count;
+    self.pageControll.currentPage = 0;
+    [scrollLunBo addSubview:self.pageControll];
+
+    [scrollLunBo startCarouselWithArray:self.images];
+
+    AutoScrollLabel * autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
+    autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
+    [self.mainScrollView addSubview:autoLabel];
+
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
@@ -856,15 +897,93 @@
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.bottomContentScollView.top+self.bottomContentScollView.height)];
 
 }
+// 获取网络视频第一帧
+- (UIImage*) getVideoPreViewImage:(NSURL *)path
+{
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:path options:nil];
+    AVAssetImageGenerator *assetGen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    
+    assetGen.appliesPreferredTrackTransform = YES;
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    NSError *error = nil;
+    CMTime actualTime;
+    CGImageRef image = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    UIImage *videoImage = [[UIImage alloc] initWithCGImage:image];
+    CGImageRelease(image);
+    return videoImage;
+}
 
 #pragma mark--JYCarouselDelegate
 -(void)carouseScrollToIndex:(NSInteger)index
 {
-    
+    if (index>0) {
+        
+        self.pageControll.currentPage = index-1;
+
+    }else
+    {
+        self.pageControll.currentPage = 0;
+    }
+
+    sliderIndex = index;
+    if ([[self.images objectAtIndex:index] isKindOfClass:[UIImage class]]) {
+        
+        self.videoButton.hidden = NO;
+    }
+    else
+    {
+        self.videoButton.hidden = YES;
+    }
+
+}
+-(void)videoButtonClick
+{
+    [self carouselViewClick:sliderIndex];
 }
 - (void)carouselViewClick:(NSInteger)index
 {
     
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate yinCangTabbar];
+    
+    
+    NSMutableArray * photos = [NSMutableArray array];
+    
+    NSArray * images = [self.tieZiInfo objectForKey:@"images"];
+    if ([NormalUse isValidArray:images]) {
+        
+        for (int i=0;i<images.count;i++) {
+            
+            MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[images objectAtIndex:i]]];
+            [photos addObject:photo];
+        }
+
+    }
+    
+    NSArray * videos = [self.tieZiInfo objectForKey:@"videos"];
+    if ([NormalUse isValidArray:videos]) {
+        
+        for (int i=0;i<videos.count;i++) {
+            
+            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[videos objectAtIndex:i]]]];
+            photo.videoURL = [NSURL URLWithString:[videos objectAtIndex:i]];
+            [photos addObject:photo];
+        }
+
+    }
+
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+    browser.displayActionButton = NO;
+    browser.alwaysShowControls = NO;
+    browser.displaySelectionButtons = NO;
+    browser.zoomPhotosToFill = YES;
+    browser.displayNavArrows = NO;
+    browser.startOnGrid = NO;
+    browser.enableGrid = YES;
+    [browser setCurrentPhotoIndex:index];
+    [[NormalUse getCurrentVC].navigationController pushViewController:browser animated:YES];
+
 }
 
 

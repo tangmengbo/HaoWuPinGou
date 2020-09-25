@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
+@property(nonatomic,strong)FengZhuangUIPageControll * pageControll;
+
+
 @property(nonatomic,strong)UIView * messageContentView;
 
 

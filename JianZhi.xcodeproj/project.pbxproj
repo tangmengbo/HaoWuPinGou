@@ -70,6 +70,7 @@
 		5F34DCF524EFCEF000DE15A1 /* JingCaiFuLiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCF424EFCEF000DE15A1 /* JingCaiFuLiViewController.m */; };
 		5F34DCFB24F38E6700DE15A1 /* CityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */; };
 		5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */; };
+		5F4552A4251DE75B00F42614 /* FengZhuangUIPageControll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
 		5F60AC0C24FFABA5005BC151 /* DianuDetailListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */; };
@@ -303,6 +304,8 @@
 		5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CityListViewController.m; sourceTree = "<group>"; };
 		5F34DCFC24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FangLeiFangPianDetailViewController.h; sourceTree = "<group>"; };
 		5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FangLeiFangPianDetailViewController.m; sourceTree = "<group>"; };
+		5F4552A2251DE75B00F42614 /* FengZhuangUIPageControll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FengZhuangUIPageControll.h; sourceTree = "<group>"; };
+		5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FengZhuangUIPageControll.m; sourceTree = "<group>"; };
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
@@ -842,6 +845,8 @@
 				5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */,
 				5F34DCDB24EF716500DE15A1 /* MyScrollView.h */,
 				5F34DCDC24EF716500DE15A1 /* MyScrollView.m */,
+				5F4552A2251DE75B00F42614 /* FengZhuangUIPageControll.h */,
+				5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */,
 				5FC165832519C5DA00FA99D2 /* AutoScrollLabel.h */,
 				5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */,
 			);
@@ -1355,6 +1360,7 @@
 				5F34DCF524EFCEF000DE15A1 /* JingCaiFuLiViewController.m in Sources */,
 				5FE3EC972355B28100C77F4D /* RongYManager.m in Sources */,
 				5FBAD7CE251C6986004C153E /* CityListCell.m in Sources */,
+				5F4552A4251DE75B00F42614 /* FengZhuangUIPageControll.m in Sources */,
 				5FE3EC132355A3E400C77F4D /* UIView+Layout.m in Sources */,
 				5F24D2482500946900476CFA /* NvShenListViewController.m in Sources */,
 				5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */,

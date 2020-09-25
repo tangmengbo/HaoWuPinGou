@@ -36,6 +36,7 @@
 #import "LLImagePickerModel.h"
 
 #import "AutoScrollLabel.h"
+#import "FengZhuangUIPageControll.h"
 //融云
 #import <RongIMKit/RongIMKit.h>
 #import "RongYManager.h"

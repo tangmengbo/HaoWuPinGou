@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * pathId;
 
+@property(nonatomic,strong)NSString * role; //1帖子 2三角色 3夫妻交友
+
 @end
 
 NS_ASSUME_NONNULL_END

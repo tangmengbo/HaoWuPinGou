@@ -285,6 +285,11 @@
         [NormalUse showToastView:@"请填写投诉内容" view:self.view];
         return;
     }
+    if (![NormalUse isValidArray:self.photoArray]) {
+          
+          [NormalUse showToastView:@"请选择照片" view:self.view];
+          return;
+      }
     
     if (self.photoArray.count!=0)
     {
@@ -362,14 +367,14 @@
                 NSString * type ;
                 if (self.wuXiaoLianXiFangShiButton.tag==1) {
                  
-                    type = @"1";
+                    type = @"无效联系方式";
                 }
                 else
                 {
-                    type = @"2";
+                    type = @"骗子";
 
                 }
-                [HTTPModel tieZiTouSu:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id",type,@"type",self.textView.text,@"content",self.pathId,@"images", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                [HTTPModel tieZiTouSu:[[NSDictionary alloc]initWithObjectsAndKeys:self.post_id,@"post_id",type,@"type",self.textView.text,@"content",self.pathId,@"images",self.role,@"role", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                    
                     [self yinCangLoadingView];
 

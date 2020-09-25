@@ -206,14 +206,16 @@
             [self.images addObject:image];
         }
     }
+    
+    self.pageControll = [[FengZhuangUIPageControll alloc] initWithFrame:CGRectMake(WIDTH_PingMu-self.images.count*18,scrollLunBo.height-20*BiLiWidth-60*BiLiWidth, self.images.count*18, 15)];
+    self.pageControll.currentPageIndicatorTintColor = RGBFormUIColor(0xFFFFFF);
+    self.pageControll.pageIndicatorTintColor = RGBFormUIColor(0x999999);
+    self.pageControll.numberOfPages = self.images.count;
+    self.pageControll.currentPage = 0;
+    [scrollLunBo addSubview:self.pageControll];
+
     [scrollLunBo startCarouselWithArray:self.images];
 
-//    if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"images"]]) {
-//
-//        NSMutableArray * images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
-//        [scrollLunBo startCarouselWithArray:images];
-//
-//    }
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-20*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
@@ -950,6 +952,15 @@
 #pragma mark--JYCarouselDelegate
 -(void)carouseScrollToIndex:(NSInteger)index
 {
+    if (index>0) {
+        
+        self.pageControll.currentPage = index-1;
+
+    }else
+    {
+        self.pageControll.currentPage = 0;
+    }
+
     sliderIndex = index;
     if ([[self.images objectAtIndex:index] isKindOfClass:[UIImage class]]) {
         
