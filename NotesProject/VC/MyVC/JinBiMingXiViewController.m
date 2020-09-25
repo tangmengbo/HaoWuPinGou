@@ -10,6 +10,9 @@
 #import "JinBiMingXiCell.h"
 
 @interface JinBiMingXiViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    int page;
+}
 
 
 
@@ -24,6 +27,9 @@
 @property(nonatomic,strong)UIButton * incomeButton;
 @property(nonatomic,strong)UIButton * outcomeButton;
 @property(nonatomic,strong)UIImageView * duiGouImageView;
+
+
+@property(nonatomic,strong)NSString * type_id;// 1收入 2支出 不填则所有
 
 
 
@@ -97,10 +103,12 @@
     self.duiGouImageView.top = self.allButton.top+(self.allButton.height-9*BiLiWidth)/2;
     self.leiXingSelectView.hidden = YES;
     
+    self.type_id = @"";
     self.selectButton.tag = 0;
     self.selectButton.button_lable.text = @"全部";
     self.selectButton.button_lable.textColor  = RGBFormUIColor(0x9A9A9A);
     self.selectButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_downSanJiao"];
+    [self.mainTableView.mj_header beginRefreshing];
 
 }
 -(void)incomeButtonClick
@@ -112,10 +120,12 @@
     self.duiGouImageView.top = self.incomeButton.top+(self.incomeButton.height-9*BiLiWidth)/2;
     self.leiXingSelectView.hidden = YES;
 
+    self.type_id = @"1";
     self.selectButton.tag = 0;
     self.selectButton.button_lable.text = @"收入";
     self.selectButton.button_lable.textColor  = RGBFormUIColor(0x9A9A9A);
     self.selectButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_downSanJiao"];
+    [self.mainTableView.mj_header beginRefreshing];
 
 }
 -(void)outcomeButtonClick
@@ -127,11 +137,13 @@
     self.duiGouImageView.top = self.outcomeButton.top+(self.outcomeButton.height-9*BiLiWidth)/2;
     self.leiXingSelectView.hidden = YES;
 
+    self.type_id = @"2";
     self.selectButton.tag = 0;
     self.selectButton.button_lable.text = @"支出";
     self.selectButton.button_lable.textColor  = RGBFormUIColor(0x9A9A9A);
     self.selectButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_downSanJiao"];
 
+    [self.mainTableView.mj_header beginRefreshing];
 }
 -(void)showSelectView
 {
@@ -156,7 +168,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.topTitleLale.text = @"充值明细";
+    self.topTitleLale.text = @"金币明细";
+    self.type_id = @"";
     
     UIButton * titleKuangButton = [[UIButton alloc] initWithFrame:CGRectMake(15*BiLiWidth, self.topNavView.height+self.topNavView.height, WIDTH_PingMu-30*BiLiWidth, 25*BiLiWidth)];
     titleKuangButton.layer.borderWidth = 1;
@@ -197,30 +210,85 @@
 
         MJRefreshNormalHeader * header1 = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             
-            [HTTPModel getXiaoXiMessageList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            self->page = 1;
+            
+            [HTTPModel getJinBiMingXiList:[[NSDictionary alloc]initWithObjectsAndKeys:self.type_id,@"type_id",[NSString stringWithFormat:@"%d",self->page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                 
                 if (status==1) {
                     
-    //                self.sourceArray = [responseObject objectForKey:@"data"];
-    //
-    //                if (![NormalUse isValidArray:self.sourceArray]) {
+                    self->page = self->page+1;
+                    [self.mainTableView.mj_header endRefreshing];
+
+                    NSArray * data = [responseObject objectForKey:@"data"];
+                    self.sourceArray = [[NSMutableArray alloc] initWithArray:data];
+                    if (data.count>=10) {
                         
+                        [self.mainTableView.mj_footer endRefreshing];
+                    }
+                    else
+                    {
+                        [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+                    }
+                    if ([NormalUse isValidArray:data]) {
+                        
+                        [self.noMessageTipImageView removeFromSuperview];
+
+                    }
+                    else
+                    {
                         [self.mainTableView addSubview:self.noMessageTipImageView];
-    //                }
-    //                else
-    //                {
-    //                    [self.noMessageTipImageView removeFromSuperview];
-    //                }
+
+                    }
                     [self.mainTableView reloadData];
                     [self.mainTableView.mj_header endRefreshing];
 
                 }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+                }
             }];
-
         }];
-        header1.lastUpdatedTimeLabel.hidden = YES;
-        self.mainTableView.mj_header = header1;
-        [self.mainTableView.mj_header beginRefreshing];
+            
+    header1.lastUpdatedTimeLabel.hidden = YES;
+    self.mainTableView.mj_header = header1;
+    [self.mainTableView.mj_header beginRefreshing];
+
+    MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+        [HTTPModel getJinBiMingXiList:[[NSDictionary alloc]initWithObjectsAndKeys:self.type_id,@"type_id",[NSString stringWithFormat:@"%d",self->page],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                page = page+1;
+                
+                [self.mainTableView.mj_header endRefreshing];
+
+                NSArray * data = [responseObject objectForKey:@"data"];
+                if (data.count>=10) {
+                    
+                    [self.mainTableView.mj_footer endRefreshing];
+                }
+                else
+                {
+                    [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+                }
+                for (NSDictionary * info in data) {
+                    
+                    [self.sourceArray addObject:info];
+                }
+                [self.mainTableView reloadData];
+
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+        }];
+
+    }];
+    self.mainTableView.mj_footer = footer;
+
 
 }
 

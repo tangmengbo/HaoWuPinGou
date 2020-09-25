@@ -51,7 +51,9 @@
 }
 -(void)initData:(NSDictionary *)info
 {
-    
+    self.titleLable.text = [info objectForKey:@"type"];
+    self.timeLable.text = [info objectForKey:@"create_at"];
+    self.jinBiLable.text = [info objectForKey:@"coin"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

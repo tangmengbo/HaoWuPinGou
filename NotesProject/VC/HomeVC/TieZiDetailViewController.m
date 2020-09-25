@@ -393,7 +393,8 @@
                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
 
             }
-            self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+            self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+            self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
             self.jieSuoButton.button_lable.text = lianXieFangShiStr;
             self.jieSuoButton.button_lable1.text = @"";
@@ -502,7 +503,8 @@
                  lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
 
              }
-             self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
              self.jieSuoButton.button_lable.text = lianXieFangShiStr;
              self.jieSuoButton.button_lable1.text = @"";

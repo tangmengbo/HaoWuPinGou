@@ -350,8 +350,8 @@
             filePath = "NotesProject/VC/MyVC/MyJieSuoListViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "908"
-            endingLineNumber = "908"
+            startingLineNumber = "910"
+            endingLineNumber = "910"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -430,8 +430,8 @@
             filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "863"
-            endingLineNumber = "863"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
             landmarkName = "-carouselViewClick:"
             landmarkType = "7">
          </BreakpointContent>
@@ -625,22 +625,6 @@
             startingLineNumber = "67"
             endingLineNumber = "67"
             landmarkName = "+setAlertEnable:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DBC0DC29-D809-4127-88F9-D7E6D8B5E192"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/QiDongViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "-getNetWorkStatus"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

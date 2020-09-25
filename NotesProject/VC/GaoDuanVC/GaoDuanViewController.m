@@ -47,6 +47,8 @@
 
 @property(nonatomic,strong)GaoDuanShaiXuanView * gaoDuanShaiXuanView;
 
+@property(nonatomic,strong)NSString * shaiXuanLeiXingStr;//删选的类型
+
 @property(nonatomic,strong)NSString * field;
 @property(nonatomic,strong)NSString * order;
 
@@ -58,15 +60,18 @@
 {
     if (!_gaoDuanShaiXuanView) {
         
-        _gaoDuanShaiXuanView = [[GaoDuanShaiXuanView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-240*BiLiWidth-BottomHeight_PingMu, WIDTH_PingMu, 240*BiLiWidth)];
+        _gaoDuanShaiXuanView = [[GaoDuanShaiXuanView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, HEIGHT_PingMu)];
         [[UIApplication sharedApplication].keyWindow addSubview:_gaoDuanShaiXuanView];
         
         __weak typeof(self) wself = self;
-        [_gaoDuanShaiXuanView setPaiXuSelect:^(NSString * _Nonnull field, NSString * _Nonnull order) {
-            
+        [_gaoDuanShaiXuanView setPaiXuSelect:^(NSString * _Nonnull field, NSString * _Nonnull order, NSString * _Nonnull titleStr) {
+            wself.shaiXuanLeiXingStr = titleStr;
+            [wself.pingFenButton1 setTitle:titleStr forState:UIControlStateNormal];
+            [wself.pingFenButton setTitle:titleStr forState:UIControlStateNormal];
             wself.field = field;
             wself.order = order;
             [wself loadNewLsit];
+            
         }];
     }
     return _gaoDuanShaiXuanView;
@@ -122,6 +127,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.shaiXuanLeiXingStr = @"评分最高";
     
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
@@ -226,7 +233,8 @@
     
     self.zuiXinOrZuiRe = @"1";
     
-    self.pingFenButton1 = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0*BiLiWidth, 50*BiLiWidth, self.itemButtonContentView.height)];
+    self.pingFenButton1 = [[UIButton alloc] initWithFrame:CGRectMake(13*BiLiWidth, 0*BiLiWidth, 100*BiLiWidth, self.itemButtonContentView.height)];
+    self.pingFenButton1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.pingFenButton1 setTitle:@"评分最高" forState:UIControlStateNormal];
     [self.pingFenButton1 setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     self.pingFenButton1.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
@@ -851,8 +859,9 @@
     [headerView addSubview:wangPaiJingJiRenLable];
     
     
-    self.pingFenButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, wangPaiJingJiRenLable.top+wangPaiJingJiRenLable.height+14.5*BiLiWidth, 50*BiLiWidth, 12*BiLiWidth)];
-    [self.pingFenButton setTitle:@"评分最高" forState:UIControlStateNormal];
+    self.pingFenButton = [[UIButton alloc] initWithFrame:CGRectMake(13*BiLiWidth, wangPaiJingJiRenLable.top+wangPaiJingJiRenLable.height+14.5*BiLiWidth, 100*BiLiWidth, 12*BiLiWidth)];
+    self.pingFenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.pingFenButton setTitle:self.shaiXuanLeiXingStr forState:UIControlStateNormal];
     [self.pingFenButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     self.pingFenButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
     [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -906,7 +915,13 @@
 }
 -(void)pingFenButtonClick
 {
-    self.gaoDuanShaiXuanView.hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.gaoDuanShaiXuanView.top = 0;
+        self.gaoDuanShaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+
+    }];
+
 }
 -(void)zuiXinButtonClick
 {

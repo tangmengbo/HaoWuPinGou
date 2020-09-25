@@ -76,7 +76,7 @@
 
         
 
-        self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentMessageView.width-71*BiLiWidth, self.neiRongView.top+self.neiRongView.height+17.5*BiLiWidth, 50*BiLiWidth, 17*BiLiWidth)];
+        self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentMessageView.width-71*BiLiWidth, self.neiRongView.top+self.neiRongView.height+17.5*BiLiWidth, 50*BiLiWidth, 50*BiLiWidth*60/150)];
         [self.contentMessageView addSubview:self.statusImageView];
 
     }

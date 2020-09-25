@@ -58,7 +58,23 @@
 }
 -(void)initData:(NSDictionary *)info
 {
+    self.qiShuLable.text = [info objectForKey:@"period_title"];
+    self.timeLable.text = [info objectForKey:@"draw_time"];
+    NSNumber * ticket_code = [info objectForKey:@"ticket_code"];
+    self.duiJiangHaoMaLable.text = [NSString stringWithFormat:@"%d",ticket_code.intValue];
     
+    NSNumber * is_finish = [info objectForKey:@"is_finish"];
+    if (is_finish.intValue==0) {
+        
+        self.resultLable.text = @"等待开奖";
+        self.resultLable.textColor = RGBFormUIColor(0xFFA20A);
+    }
+    else
+    {
+        self.resultLable.text = @"已开奖";
+        self.resultLable.textColor = RGBFormUIColor(0x666666);
+
+    }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

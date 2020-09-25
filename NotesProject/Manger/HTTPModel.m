@@ -2949,6 +2949,116 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
        }];
 
 }
+//开通会员  vip_type vip_forever永久会员 vip_year年会员
++(void)kaiTongHuiYuan:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/user/buyVip",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
+
+//会员描述信息
++(void)huiYuanMiaoShuXinXi:(NSDictionary *_Nullable)parameter
+                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/user/vipInfoList",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+//金币明细  type_id 1收入 2支出 不填则所有
+
++(void)getJinBiMingXiList:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/user/coin_detail_list",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
 
 @end
 

@@ -52,7 +52,8 @@
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self.contentMessageView addSubview:self.titleLable];
         
-        self.weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(282.5*BiLiWidth, self.titleLable.top, 30*BiLiWidth, self.titleLable.height)];
+        self.weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.contentMessageView.width-115*BiLiWidth, self.titleLable.top, 100*BiLiWidth, self.titleLable.height)];
+        self.weiZhiLable.textAlignment = NSTextAlignmentRight;
         self.weiZhiLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.weiZhiLable.textColor = RGBFormUIColor(0x999999);
         [self.contentMessageView addSubview:self.weiZhiLable];
@@ -73,14 +74,14 @@
         [self.contentMessageView addSubview:self.neiRongView];
 
 
-        self.dingZhiNeiRongLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 15*BiLiWidth, self.neiRongView.width-26*BiLiWidth, 12*BiLiWidth)];
-        self.dingZhiNeiRongLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.dingZhiNeiRongLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 15*BiLiWidth, self.neiRongView.width-26*BiLiWidth, 13*BiLiWidth)];
+        self.dingZhiNeiRongLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.dingZhiNeiRongLable.textColor = RGBFormUIColor(0x666666);
         self.dingZhiNeiRongLable.numberOfLines = 0;
         [self.neiRongView addSubview:self.dingZhiNeiRongLable];
         
-        self.dingZhiTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, self.dingZhiNeiRongLable.top+self.dingZhiNeiRongLable.height+8.5*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
-        self.dingZhiTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        self.dingZhiTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, self.dingZhiNeiRongLable.top+self.dingZhiNeiRongLable.height+8.5*BiLiWidth, 200*BiLiWidth, 13*BiLiWidth)];
+        self.dingZhiTimeLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.dingZhiTimeLable.textColor = RGBFormUIColor(0x666666);
         self.dingZhiTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.neiRongView addSubview:self.dingZhiTimeLable];
@@ -103,6 +104,8 @@
     self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     self.faBuTimeLable.text = [info objectForKey:@"create_at"];
     self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+    
+    self.dingZhiNeiRongLable.width = self.neiRongView.width-26*BiLiWidth;
     
     NSString * neiRongStr = [info objectForKey:@"love_type"];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];

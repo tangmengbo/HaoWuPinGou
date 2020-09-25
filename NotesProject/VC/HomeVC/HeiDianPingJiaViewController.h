@@ -8,6 +8,14 @@
 
 #import "MainBaseViewController.h"
 
+@protocol HeiDianPingJiaViewControllerDelegate
+@optional
+
+- (void)createPingJiaSuccess;
+
+@end
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HeiDianPingJiaViewController : MainBaseViewController<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate>
@@ -16,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     int uploadImageIndex;
 }
+@property(nonatomic,assign)id<HeiDianPingJiaViewControllerDelegate>delegate;
 
 @property(nonatomic,strong)NSString * black_id;
 

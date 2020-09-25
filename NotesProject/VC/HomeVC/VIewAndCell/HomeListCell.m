@@ -138,6 +138,19 @@
     if (cellType==HeiDianBaoGuang) {
         
         self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %@",[info objectForKey:@"trade_price"]];
+        
+        CGSize size = [NormalUse setSize:[info objectForKey:@"friendly_date"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
+        self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;
+        self.faBuTimeLable.width = size.width+5*BiLiWidth;
+        self.faBuTimeLable.text = [info objectForKey:@"friendly_date"];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.faBuTimeLable.bounds byRoundingCorners:UIRectCornerBottomLeft cornerRadii:CGSizeMake(8*BiLiWidth, 0)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.faBuTimeLable.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.faBuTimeLable.layer.mask = maskLayer;
+        
+        self.faBuTimeLable.hidden = NO;
 
     }
     else

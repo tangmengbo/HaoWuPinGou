@@ -63,13 +63,13 @@
 //        self.contentScrollView.backgroundColor = [UIColor greenColor];
         [self addSubview:self.contentScrollView];
         
-        self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 109*BiLiWidth, 16.5*BiLiWidth)];
+        self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
         self.jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [self addSubview:self.jiaoYiBaoZhengImageView];
         
         self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(22*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-22*BiLiWidth, 14*BiLiWidth)];
         self.jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
-        self.jiaoYiBaoZhengLable.textColor = [UIColor whiteColor];
+        self.jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
         self.jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
         [self.jiaoYiBaoZhengImageView addSubview:self.jiaoYiBaoZhengLable];
 

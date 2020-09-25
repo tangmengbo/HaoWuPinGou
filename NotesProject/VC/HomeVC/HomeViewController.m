@@ -322,9 +322,51 @@
     
     
 }
+-(void)registerInit
+{
+    if (![NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+        
+        [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                NSDictionary * info = [NormalUse removeNullFromDictionary:responseObject];
+                [NormalUse defaultsSetObject:info forKey:JinBiShuoMing];
+            }
+        }];
+        
+        //未登录用户先 获取初始化账号
+        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
+                    
+                    //用户基本信息存储到本地
+                    [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:[responseObject objectForKey:@"info"]] forKey:UserInformation];
+                    
+                }
+                //获取初始化账号 成功后调用登录 获取到logintoken
+                [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                    
+                    if (status==1) {
+                                                
+                        NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+                        [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+                        
+                    }
+                }];
+            }
+        }];
+        
+    }
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self registerInit];
     
     [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        

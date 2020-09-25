@@ -8,13 +8,20 @@
 
 #import "HeiDianDetailViewController.h"
 #import "HeiDianPingJiaViewController.h"
+#import "HeiDianDetailPingJiaCell.h"
 
-@interface HeiDianDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface HeiDianDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HeiDianPingJiaViewControllerDelegate>
+{
+    NSInteger sliderIndex;
+}
 
 @property(nonatomic,strong)NSDictionary * tieZiInfo;
 
 @property(nonatomic,strong)UIView * pingFenView;
 
+@property(nonatomic,strong)NSMutableArray * images;
+
+@property(nonatomic,strong)UIButton * videoButton;
 
 
 
@@ -43,11 +50,12 @@
 {
     HeiDianPingJiaViewController * vc = [[HeiDianPingJiaViewController alloc] init];
     vc.black_id = self.idStr;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
--(void)viewWillAppear:(BOOL)animated
+#pragma mark--HeiDianPingJiaViewControllerDelegate
+-(void)createPingJiaSuccess
 {
-    [super viewWillAppear:animated];
     [HTTPModel getHeiDianDetail:[[NSDictionary alloc]initWithObjectsAndKeys:self.idStr,@"id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         [NormalUse quXiaoGifLoadingView:self];
@@ -70,6 +78,14 @@
             }
         }
     }];
+
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
 
 }
 - (void)viewDidLoad {
@@ -169,12 +185,35 @@
     scrollLunBo.layer.masksToBounds = YES;
     [self.mainScrollView addSubview:scrollLunBo];
     
+    self.videoButton = [[UIButton alloc] initWithFrame:CGRectMake((scrollLunBo.width-50*BiLiWidth)/2, (scrollLunBo.height-60*BiLiWidth-50*BiLiWidth)/2, 50*BiLiWidth, 50*BiLiWidth)];
+    [self.videoButton setBackgroundImage:[UIImage imageNamed:@"boFang"] forState:UIControlStateNormal];
+    self.videoButton.hidden = YES;
+    [self.videoButton addTarget:self action:@selector(videoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [scrollLunBo addSubview:self.videoButton];
+
+    
+    self.images = [NSMutableArray array];
     if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"images"]]) {
         
-        NSMutableArray * images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
-        [scrollLunBo startCarouselWithArray:images];
-
+        self.images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
     }
+    
+    if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"videos"]])
+    {
+        for (NSString * path in [self.tieZiInfo objectForKey:@"videos"]) {
+            
+           UIImage * image = [self getVideoPreViewImage:[NSURL URLWithString:path]];
+            [self.images addObject:image];
+        }
+    }
+    [scrollLunBo startCarouselWithArray:self.images];
+
+//    if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"images"]]) {
+//
+//        NSMutableArray * images = [[NSMutableArray alloc] initWithArray:[self.tieZiInfo objectForKey:@"images"]] ;
+//        [scrollLunBo startCarouselWithArray:images];
+//
+//    }
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-20*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
@@ -521,7 +560,8 @@
                  lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
 
              }
-             self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
              self.jieSuoButton.button_lable.text = lianXieFangShiStr;
              self.jieSuoButton.button_lable1.text = @"";
@@ -718,17 +758,17 @@
 {
     
     
-    return  [CheYouPingJiaCell cellHegiht:[self.pingLunArray objectAtIndex:indexPath.row]];
+    return  [HeiDianDetailPingJiaCell cellHegiht:[self.pingLunArray objectAtIndex:indexPath.row]];
     
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"CheYouPingJiaCell"] ;
-    CheYouPingJiaCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+    NSString *tableIdentifier = [NSString stringWithFormat:@"HeiDianDetailPingJiaCell"] ;
+    HeiDianDetailPingJiaCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
     if (cell == nil)
     {
-        cell = [[CheYouPingJiaCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        cell = [[HeiDianDetailPingJiaCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
     [cell initContentView:[self.pingLunArray objectAtIndex:indexPath.row]];
@@ -890,15 +930,85 @@
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.bottomContentScollView.top+self.bottomContentScollView.height)];
 
 }
+// 获取网络视频第一帧
+- (UIImage*) getVideoPreViewImage:(NSURL *)path
+{
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:path options:nil];
+    AVAssetImageGenerator *assetGen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    
+    assetGen.appliesPreferredTrackTransform = YES;
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    NSError *error = nil;
+    CMTime actualTime;
+    CGImageRef image = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    UIImage *videoImage = [[UIImage alloc] initWithCGImage:image];
+    CGImageRelease(image);
+    return videoImage;
+}
+
 
 #pragma mark--JYCarouselDelegate
 -(void)carouseScrollToIndex:(NSInteger)index
 {
-    
+    sliderIndex = index;
+    if ([[self.images objectAtIndex:index] isKindOfClass:[UIImage class]]) {
+        
+        self.videoButton.hidden = NO;
+    }
+    else
+    {
+        self.videoButton.hidden = YES;
+    }
+
+}
+-(void)videoButtonClick
+{
+    [self carouselViewClick:sliderIndex];
 }
 - (void)carouselViewClick:(NSInteger)index
 {
     
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate yinCangTabbar];
+    
+    
+    NSMutableArray * photos = [NSMutableArray array];
+    
+    NSArray * images = [self.tieZiInfo objectForKey:@"images"];
+    if ([NormalUse isValidArray:images]) {
+        
+        for (int i=0;i<images.count;i++) {
+            
+            MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[images objectAtIndex:i]]];
+            [photos addObject:photo];
+        }
+
+    }
+    
+    NSArray * videos = [self.tieZiInfo objectForKey:@"videos"];
+    if ([NormalUse isValidArray:videos]) {
+        
+        for (int i=0;i<videos.count;i++) {
+            
+            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[videos objectAtIndex:i]]]];
+            photo.videoURL = [NSURL URLWithString:[videos objectAtIndex:i]];
+            [photos addObject:photo];
+        }
+
+    }
+
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+    browser.displayActionButton = NO;
+    browser.alwaysShowControls = NO;
+    browser.displaySelectionButtons = NO;
+    browser.zoomPhotosToFill = YES;
+    browser.displayNavArrows = NO;
+    browser.startOnGrid = NO;
+    browser.enableGrid = YES;
+    [browser setCurrentPhotoIndex:index];
+    [[NormalUse getCurrentVC].navigationController pushViewController:browser animated:YES];
+
 }
 
 

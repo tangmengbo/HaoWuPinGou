@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * order; //desc或者 asc(价格从低到高)
 
 
-@property (nonatomic ,copy) void (^paiXuSelect)(NSString * field,NSString * order);
+@property (nonatomic ,copy) void (^paiXuSelect)(NSString * field,NSString * order,NSString * titleStr);
 
 
 @end

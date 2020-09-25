@@ -34,6 +34,7 @@
     self.mainTableView.dataSource = self;
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mainTableView.backgroundColor = RGBFormUIColor(0xEEEEEE);
+    self.mainTableView.sectionIndexColor = RGBFormUIColor(0xFF0877);//修改右边索引字体的颜色
     [self.view addSubview:self.mainTableView];
 
     self.hotCityList = [NormalUse defaultsGetObjectKey:@"HotCityListDefaults"];

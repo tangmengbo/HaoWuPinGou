@@ -10,6 +10,8 @@
 
 @interface HuiYuanViewController ()
 
+
+
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
 @property(nonatomic,strong)UIScrollView * topScrollView;
@@ -21,6 +23,12 @@
 
 @property(nonatomic,strong)UILabel * kaiTongJinBiLable;
 
+@property(nonatomic,strong)UILabel * nianKaTipLable;
+
+@property(nonatomic,strong)UILabel * yongJiuTipLable;
+
+@property(nonatomic,strong)NSString * vip_type;//vip_type vip_forever永久会员 vip_year年会员
+
 @end
 
 @implementation HuiYuanViewController
@@ -31,6 +39,8 @@
     [self yinCangTabbar];
     
     self.topTitleLale.text = @"VIP 会员";
+    
+    self.vip_type = @"vip_year";
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top))];
     self.mainScrollView.showsVerticalScrollIndicator = NO;
@@ -74,32 +84,37 @@
     yongJiuVipButton.button_lable1.text = @"永久卡";
     [self.topScrollView addSubview:yongJiuVipButton];
     
+    self.nianKaTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
+    self.nianKaTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    self.nianKaTipLable.layer.cornerRadius = 25*BiLiWidth/2;
+    self.nianKaTipLable.layer.masksToBounds = YES;
+    self.nianKaTipLable.textAlignment = NSTextAlignmentCenter;
+    self.nianKaTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.nianKaTipLable.textColor = [UIColor whiteColor];
+    self.nianKaTipLable.text = @"已拥有";
+    [nianKaVipButton addSubview:self.nianKaTipLable];
+    
+    self.yongJiuTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
+    self.yongJiuTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    self.yongJiuTipLable.layer.cornerRadius = 25*BiLiWidth/2;
+    self.yongJiuTipLable.layer.masksToBounds = YES;
+    self.yongJiuTipLable.textAlignment = NSTextAlignmentCenter;
+    self.yongJiuTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.yongJiuTipLable.textColor = [UIColor whiteColor];
+    self.yongJiuTipLable.text = @"已拥有";
+    [yongJiuVipButton addSubview:self.yongJiuTipLable];
+
+
     //auth_vip 2终身会员 1年会员 0非会员
     NSNumber * auth_vip = [self.info objectForKey:@"auth_vip"];
     if (auth_vip.intValue!=1) {
         
-        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
-        tipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-        tipLable.layer.cornerRadius = 25*BiLiWidth/2;
-        tipLable.layer.masksToBounds = YES;
-        tipLable.textAlignment = NSTextAlignmentCenter;
-        tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-        tipLable.textColor = [UIColor whiteColor];
-        tipLable.text = @"已拥有";
-        [nianKaVipButton addSubview:tipLable];
+        self.nianKaTipLable.hidden = YES;
+        
     }
      if (auth_vip.intValue != 2)
     {
-        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
-        tipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-        tipLable.layer.cornerRadius = 25*BiLiWidth/2;
-        tipLable.layer.masksToBounds = YES;
-        tipLable.textAlignment = NSTextAlignmentCenter;
-        tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-        tipLable.textColor = [UIColor whiteColor];
-        tipLable.text = @"已拥有";
-        [yongJiuVipButton addSubview:tipLable];
-
+        self.yongJiuTipLable.hidden = YES;
     }
 
     
@@ -223,6 +238,9 @@
     self.button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_yunlock_num"]];
     self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_ypost_num"]];
     self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"¥%@开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+    
+    self.vip_type = @"vip_year";
+
 
 }
 -(void)yongJiuVipClick
@@ -232,9 +250,35 @@
     self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_fpost_num"]];
     self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"¥%@开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
 
+    self.vip_type = @"vip_forever";
+    
+
 }
 -(void)tiJiaoButtonClick
 {
-    
+    [NormalUse showMessageLoadView:@"开通中..." vc:self];
+    [HTTPModel kaiTongHuiYuan:[[NSDictionary alloc]initWithObjectsAndKeys:self.vip_type,@"vip_type", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        [NormalUse removeMessageLoadingView:self];
+        if (status==1) {
+            
+            if ([@"vip_year" isEqualToString:self.vip_type]) {
+                
+                self.nianKaTipLable.hidden = NO;
+            }
+            else
+            {
+                self.yongJiuTipLable.hidden = NO;
+
+            }
+            [NormalUse showToastView:msg view:self.view];
+
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+        
+    }];
 }
 @end

@@ -395,10 +395,16 @@
         [messageLable  sizeToFit];
         
         
-        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 109*BiLiWidth, 18*BiLiWidth)];
-        jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x343434);
-        [headerView addSubview:jiaoYiBaoZhengLable];
+        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
+        jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
+        [headerView addSubview:jiaoYiBaoZhengImageView];
+        
+
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(22*BiLiWidth, 3*BiLiWidth, jiaoYiBaoZhengImageView.width-22*BiLiWidth, 14*BiLiWidth)];
+        jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
+        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
+        [jiaoYiBaoZhengImageView addSubview:jiaoYiBaoZhengLable];
+        
         NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
 
         if (is_mark.intValue==1) {
@@ -413,7 +419,7 @@
         
         NSString * unlock_agent_coin = [NormalUse getJinBiStr:@"unlock_agent_coin"];
 
-        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengLable.top+jiaoYiBaoZhengLable.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
+        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
         [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
         self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -452,7 +458,8 @@
                     lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
                     
                 }
-                self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+                self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+                self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
                 self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
                 self.jieSuoButton.button_lable.text = lianXieFangShiStr;
                 self.jieSuoButton.button_lable1.text = @"";

@@ -43,7 +43,7 @@
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self addSubview:self.titleLable];
         
-        self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-65*BiLiWidth, 0, 50*BiLiWidth, 17*BiLiWidth)];
+        self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-65*BiLiWidth, 0, 50*BiLiWidth, 50*BiLiWidth*60/150)];
         [self addSubview:self.statusImageView];
         
         self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+27*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];

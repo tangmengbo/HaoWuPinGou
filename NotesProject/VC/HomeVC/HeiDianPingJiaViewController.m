@@ -396,6 +396,7 @@
 
                     if (status==1) {
                         
+                        [self.delegate createPingJiaSuccess];
                         [self.navigationController popViewControllerAnimated:YES];
                         [NormalUse showToastView:@"评价成功" view:[NormalUse getCurrentVC].view];
                     }

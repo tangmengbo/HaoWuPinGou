@@ -328,4 +328,16 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getGuanFangMessageDetail:(NSDictionary *_Nullable)parameter
                        callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//开通会员  vip_type vip_forever永久会员 vip_year年会员
++(void)kaiTongHuiYuan:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//会员描述信息
++(void)huiYuanMiaoShuXinXi:(NSDictionary *_Nullable)parameter
+                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//金币明细  type_id 1收入 2支出 不填则所有
++(void)getJinBiMingXiList:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 @end

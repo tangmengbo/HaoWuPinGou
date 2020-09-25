@@ -12,6 +12,7 @@
 @interface QiDongViewController ()
 {
     int timeNumber;
+    BOOL alsoShowAlert;
 }
 @property(nonatomic,strong)UIButton * daojiShiButton;
 @property(nonatomic,strong,nullable)NSTimer * timer;
@@ -28,19 +29,31 @@
         
         if (ZYNetworkRestricted == state) {//没有网络权限
             
-                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"网络连接失败" message:@"检测到网络权限可能未开启，您可以在“设置”中检查蜂窝移动网络" preferredStyle:UIAlertControllerStyleAlert];
+            if(!self->alsoShowAlert)
+            {
+                self->alsoShowAlert = YES;
                 
-                [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                }]];
+                    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"网络连接失败" message:@"检测到网络权限可能未开启，您可以在“设置”中检查蜂窝移动网络" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        self->alsoShowAlert = NO;
+                    }]];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        self->alsoShowAlert = NO;
+
+                        NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                        if([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
+                            [[UIApplication sharedApplication] openURL:settingsURL];
+                            
+                        }
+                    }]];
                 
-                [alertController addAction:[UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                    if([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-                        [[UIApplication sharedApplication] openURL:settingsURL];
-                    }
-                }]];
-            
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil] ;
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil] ;
+
+            }
             
         }
         if (state == ZYNetworkAccessible) {//网络可用

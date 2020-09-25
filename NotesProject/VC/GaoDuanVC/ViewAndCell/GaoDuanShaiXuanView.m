@@ -14,8 +14,9 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-        self.frame = CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu);
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        
+        self.frame = CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, HEIGHT_PingMu);
         [self initContentView];
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap)];
@@ -26,8 +27,15 @@
 }
 -(void)viewTap
 {
-    self.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.top = HEIGHT_PingMu;
+        
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+
+    }];
 }
+
 -(void)initContentView
 {
     
@@ -97,8 +105,7 @@
         self.order = @"asc";
 
     }
-    self.paiXuSelect(self.field, self.order);
-    
-    self.hidden = YES;
+    self.paiXuSelect(self.field, self.order,str);
+    [self viewTap];
 }
 @end

@@ -73,6 +73,8 @@
     NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"滴滴约信息",@"女神",@"外围",@"陪玩",@"定制服务", nil];
     
     self.topButtonScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 50*BiLiWidth)];
+    self.topButtonScrollView.showsVerticalScrollIndicator = NO;
+    self.topButtonScrollView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:self.topButtonScrollView];
     
     float originX = 30*BiLiWidth;

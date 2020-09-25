@@ -45,7 +45,7 @@
     [topImageView addSubview:self.topNavView];
     
     UIImageView * tipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(21*BiLiWidth, topImageView.top+topImageView.height+(45-14.5)*BiLiWidth/2, 14.5*BiLiWidth, 14.5*BiLiWidth)];
-    tipImageView.backgroundColor = [UIColor blackColor];
+    tipImageView.image = [UIImage imageNamed:@"dingZhiFuWu_tip"];
     [self.view addSubview:tipImageView];
     
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(tipImageView.left+tipImageView.width+5*BiLiWidth, topImageView.top+topImageView.height, 200*BiLiWidth, 45*BiLiWidth)];

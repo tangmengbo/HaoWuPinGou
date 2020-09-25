@@ -35,7 +35,7 @@
     UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(22.5*BiLiWidth, self.topNavView.top+self.topNavView.height+10*BiLiWidth, WIDTH_PingMu, 22*BiLiWidth)];
     titleLable.textColor = RGBFormUIColor(0x333333);
     titleLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:22*BiLiWidth];
-    titleLable.text = @"登陆/绑定手机号";
+    titleLable.text = @"更换/绑定手机号";
     [self.view addSubview:titleLable];
     
     self.mainSrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, titleLable.top+titleLable.height+33*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu)];
@@ -143,11 +143,13 @@
         
         if (status==1) {
             
-            [NormalUse showToastView:@"绑定成功" view:self.view];
+            [NormalUse showToastView:@"更换成功" view:self.view];
             [self.delegate gengHuanMobileSuccess:self.mobileStr];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
-                [self.navigationController popViewControllerAnimated:YES];
+                AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                [delegate setYiDengLuTabBar];
             });
         }
         else

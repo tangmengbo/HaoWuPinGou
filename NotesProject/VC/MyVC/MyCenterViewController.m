@@ -98,16 +98,21 @@
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
                     self.huiYuanTitleLable.text = @"会员到期时间";
-                    self.huiYuanDaoQiLable.text = @"";
+                    self.huiYuanTitleLable.textColor = [UIColor whiteColor];
+                    self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
+                    self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
+
 
                 }
                 else if (auth_vip.intValue==2)
                 {
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
                     
-                    self.huiYuanTitleLable.text = @"会员到期时间";
-                    self.huiYuanDaoQiLable.text = @"";
+                    self.huiYuanTitleLable.textColor = [UIColor whiteColor];
+                    self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
 
+                    self.huiYuanTitleLable.text = @"会员到期时间";
+                    self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
 
                 }
             }
@@ -231,7 +236,7 @@
     [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:chongZhiButton];
 
-    self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(94.5*BiLiWidth, 39*BiLiWidth, 60*BiLiWidth, 17*BiLiWidth)];
+    self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(90.5*BiLiWidth, 37*BiLiWidth, 60*BiLiWidth, 17*BiLiWidth)];
     self.yuELable.textColor = RGBFormUIColor(0xFECF61);
     self.yuELable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.yuELable.adjustsFontSizeToFitWidth = YES;

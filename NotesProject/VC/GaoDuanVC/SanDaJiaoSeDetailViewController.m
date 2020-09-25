@@ -378,7 +378,8 @@
 
             }
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
-            self.self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+            self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+            self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.self.jieSuoButton.button_lable.text = lianXieFangShiStr;
             self.self.jieSuoButton.button_lable1.text = @"";
 
@@ -487,7 +488,8 @@
 
              }
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
-             self.jieSuoButton.button_lable.width = 300*BiLiWidth;
+             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
              self.jieSuoButton.button_lable.text = lianXieFangShiStr;
              self.jieSuoButton.button_lable1.text = @"";
 

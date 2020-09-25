@@ -111,6 +111,7 @@
 		5FC165822519AE7000FA99D2 /* QiDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165812519AE7000FA99D2 /* QiDongViewController.m */; };
 		5FC165852519C5DA00FA99D2 /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */; };
 		5FC1658A2519F54800FA99D2 /* HomeShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */; };
+		5FC6816F251D81320030E0D9 /* HeiDianDetailPingJiaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC6816E251D81320030E0D9 /* HeiDianDetailPingJiaCell.m */; };
 		5FC7AD8C24D0080000EEEC66 /* SimulateIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */; };
 		5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8503425079C6F009286CE /* CreateTieZiViewController.m */; };
 		5FD850452508774E009286CE /* FuQiJiaoRenZhengStep1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD850442508774E009286CE /* FuQiJiaoRenZhengStep1VC.m */; };
@@ -383,6 +384,8 @@
 		5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
 		5FC165882519F54800FA99D2 /* HomeShaiXuanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeShaiXuanView.h; sourceTree = "<group>"; };
 		5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeShaiXuanView.m; sourceTree = "<group>"; };
+		5FC6816D251D81320030E0D9 /* HeiDianDetailPingJiaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeiDianDetailPingJiaCell.h; sourceTree = "<group>"; };
+		5FC6816E251D81320030E0D9 /* HeiDianDetailPingJiaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianDetailPingJiaCell.m; sourceTree = "<group>"; };
 		5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulateIDFA.m; sourceTree = "<group>"; };
 		5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulateIDFA.h; sourceTree = "<group>"; };
 		5FD8503325079C6F009286CE /* CreateTieZiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateTieZiViewController.h; sourceTree = "<group>"; };
@@ -738,6 +741,8 @@
 				5F2650ED24FDDC0A00171684 /* TiYanBaoGaoCell.m */,
 				5F2650E024FCADF100171684 /* CheYouPingJiaCell.h */,
 				5F2650E124FCADF100171684 /* CheYouPingJiaCell.m */,
+				5FC6816D251D81320030E0D9 /* HeiDianDetailPingJiaCell.h */,
+				5FC6816E251D81320030E0D9 /* HeiDianDetailPingJiaCell.m */,
 				5FD850582509C141009286CE /* YanCheBaoGaoTableViewCell.h */,
 				5FD850592509C141009286CE /* YanCheBaoGaoTableViewCell.m */,
 				5F34DCED24EF7D5000DE15A1 /* DingZhiFuWuTableViewCell.h */,
@@ -1332,6 +1337,7 @@
 				5F0B382B24F63D9000FC935A /* KaiJiangDetailViewController.m in Sources */,
 				5FE3EAD42355A0EE00C77F4D /* UIView+Additions.m in Sources */,
 				5F26510524FE3F8500171684 /* NvShenRenZhengStep3VC.m in Sources */,
+				5FC6816F251D81320030E0D9 /* HeiDianDetailPingJiaCell.m in Sources */,
 				5F7ED855251B19C600D23823 /* CreateDingZhiFuWuKouFeiViewController.m in Sources */,
 				5F34DCDD24EF716500DE15A1 /* MyScrollView.m in Sources */,
 				5F66738F25184441000C6810 /* GouMaiJiLuCell.m in Sources */,
