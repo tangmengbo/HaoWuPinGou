@@ -42,6 +42,16 @@
     UIView * whiteContentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-240*BiLiWidth, WIDTH_PingMu, 240*BiLiWidth)];
     whiteContentView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteContentView];
+    whiteContentView.layer.shadowOpacity = 0.2f;
+    whiteContentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    whiteContentView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
+    //某个角圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:whiteContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = whiteContentView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    whiteContentView.layer.mask = maskLayer;
+
     
     self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格分从低到高", nil];
     
@@ -55,7 +65,7 @@
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
         [button setBackgroundColor:[UIColor whiteColor]];
-        button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         button.tag=i;
         [button addTarget:self action:@selector(paiXuButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [whiteContentView addSubview:button];

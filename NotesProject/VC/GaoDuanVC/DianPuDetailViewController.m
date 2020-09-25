@@ -13,6 +13,7 @@
 {
     int page;
     float tableViewHeaderHeight;
+    BOOL alsoLock;
 }
 
 @property(nonatomic,strong)UITableView * mainTableView;
@@ -22,10 +23,59 @@
 
 @property(nonatomic,strong)NSString * field;//默认最新 hot_value 最热
 
+@property(nonatomic,strong)UIView * jieSuoTipView;
+
 @end
 
 @implementation DianPuDetailViewController
 
+
+-(UIView *)jieSuoTipView
+{
+    if (!_jieSuoTipView) {
+        
+        _jieSuoTipView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, 155*BiLiWidth)];
+        _jieSuoTipView.backgroundColor = RGBFormUIColor(0xFFFFFF);
+        [self.view addSubview:_jieSuoTipView];
+        _jieSuoTipView.layer.shadowOpacity = 0.2f;
+        _jieSuoTipView.layer.shadowColor = [UIColor blackColor].CGColor;
+        _jieSuoTipView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
+
+        //某个角圆角
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_jieSuoTipView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = _jieSuoTipView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        _jieSuoTipView.layer.mask = maskLayer;
+
+        
+        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 24*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
+        tipLable.text = @"温馨提示";
+        tipLable.textColor = RGBFormUIColor(0xFFA218);
+        tipLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        [_jieSuoTipView addSubview:tipLable];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, tipLable.top+tipLable.height+18*BiLiWidth, WIDTH_PingMu-60*BiLiWidth, 40*BiLiWidth)];
+        tipLable1.text = @"解锁经纪人联系方式即可查看经纪人下所有信息的联系方式～";
+        tipLable1.numberOfLines = 2;
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [_jieSuoTipView addSubview:tipLable1];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-28*BiLiWidth, 13*BiLiWidth, 14.5*BiLiWidth, 14.5*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"dianPu_tip_close"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeJieSuoTipView) forControlEvents:UIControlEventTouchUpInside];
+        [_jieSuoTipView addSubview:closeButton];
+
+    }
+    return _jieSuoTipView;
+}
+-(void)closeJieSuoTipView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.jieSuoTipView.top = HEIGHT_PingMu;
+    }];
+}
 -(Lable_ImageButton *)noMessageTipButotn
 {
     if (!_noMessageTipButotn) {
@@ -42,7 +92,20 @@
     }
     return _noMessageTipButotn;
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (alsoLock) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.jieSuoTipView.top = HEIGHT_PingMu-self.jieSuoTipView.height;
+        }];
 
+
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -438,6 +501,8 @@
             
             if (is_unlock.intValue==1) {
                 
+                alsoLock = NO;
+                
                 NSDictionary * contact = [self.dianPuInfo objectForKey:@"contact"];
                 [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
                 NSString * wechat = [contact objectForKey:@"wechat"];
@@ -464,6 +529,11 @@
                 self.jieSuoButton.button_lable.text = lianXieFangShiStr;
                 self.jieSuoButton.button_lable1.text = @"";
                 
+                
+            }
+            else
+            {
+                alsoLock = YES;
                 
             }
             

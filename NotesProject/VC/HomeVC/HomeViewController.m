@@ -50,12 +50,84 @@
 @property(nonatomic,strong)NSString * order;
 @property(nonatomic,strong)NSString * message_type;
 
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn1;
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn2;
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn3;
+@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn4;
+
+
 
 
 
 @end
 
 @implementation HomeViewController
+
+-(Lable_ImageButton *)noMessageTipButotn1
+{
+    if (!_noMessageTipButotn1) {
+        
+        _noMessageTipButotn1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, 10*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
+        _noMessageTipButotn1.button_imageView.frame = CGRectMake((_noMessageTipButotn1.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
+        _noMessageTipButotn1.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
+        _noMessageTipButotn1.button_lable.frame = CGRectMake(0, _noMessageTipButotn1.button_imageView.top+_noMessageTipButotn1.button_imageView.height+10*BiLiWidth, _noMessageTipButotn1.width, 12*BiLiWidth);
+        _noMessageTipButotn1.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        _noMessageTipButotn1.button_lable.textColor = RGBFormUIColor(0x343434);
+        _noMessageTipButotn1.button_lable.textAlignment = NSTextAlignmentCenter;
+        _noMessageTipButotn1.button_lable.text = @"暂无信息";
+        
+    }
+    return _noMessageTipButotn1;
+}
+-(Lable_ImageButton *)noMessageTipButotn2
+{
+    if (!_noMessageTipButotn2) {
+        
+        _noMessageTipButotn2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, 10*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
+        _noMessageTipButotn2.button_imageView.frame = CGRectMake((_noMessageTipButotn2.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
+        _noMessageTipButotn2.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
+        _noMessageTipButotn2.button_lable.frame = CGRectMake(0, _noMessageTipButotn2.button_imageView.top+_noMessageTipButotn2.button_imageView.height+10*BiLiWidth, _noMessageTipButotn2.width, 12*BiLiWidth);
+        _noMessageTipButotn2.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        _noMessageTipButotn2.button_lable.textColor = RGBFormUIColor(0x343434);
+        _noMessageTipButotn2.button_lable.textAlignment = NSTextAlignmentCenter;
+        _noMessageTipButotn2.button_lable.text = @"暂无信息";
+        
+    }
+    return _noMessageTipButotn2;
+}
+-(Lable_ImageButton *)noMessageTipButotn3
+{
+    if (!_noMessageTipButotn3) {
+        
+        _noMessageTipButotn3 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, 10*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
+        _noMessageTipButotn3.button_imageView.frame = CGRectMake((_noMessageTipButotn3.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
+        _noMessageTipButotn3.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
+        _noMessageTipButotn3.button_lable.frame = CGRectMake(0, _noMessageTipButotn3.button_imageView.top+_noMessageTipButotn3.button_imageView.height+10*BiLiWidth, _noMessageTipButotn3.width, 12*BiLiWidth);
+        _noMessageTipButotn3.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        _noMessageTipButotn3.button_lable.textColor = RGBFormUIColor(0x343434);
+        _noMessageTipButotn3.button_lable.textAlignment = NSTextAlignmentCenter;
+        _noMessageTipButotn3.button_lable.text = @"暂无信息";
+        
+    }
+    return _noMessageTipButotn3;
+}
+-(Lable_ImageButton *)noMessageTipButotn4
+{
+    if (!_noMessageTipButotn4) {
+        
+        _noMessageTipButotn4 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, 10*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
+        _noMessageTipButotn4.button_imageView.frame = CGRectMake((_noMessageTipButotn4.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
+        _noMessageTipButotn4.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
+        _noMessageTipButotn4.button_lable.frame = CGRectMake(0, _noMessageTipButotn4.button_imageView.top+_noMessageTipButotn4.button_imageView.height+10*BiLiWidth, _noMessageTipButotn4.width, 12*BiLiWidth);
+        _noMessageTipButotn4.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        _noMessageTipButotn4.button_lable.textColor = RGBFormUIColor(0x343434);
+        _noMessageTipButotn4.button_lable.textAlignment = NSTextAlignmentCenter;
+        _noMessageTipButotn4.button_lable.text = @"暂无信息";
+        
+    }
+    return _noMessageTipButotn4;
+}
+
 
 -(HomeShaiXuanView *)shaiXuanView
 {
@@ -660,9 +732,21 @@
             [self.mainScrollView.mj_header endRefreshing];
             [self.mainScrollView.mj_footer endRefreshing];
             
+            if([NormalUse isValidArray:dataArray])
+            {
+                [self.noMessageTipButotn1 removeFromSuperview];
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
+
+            }
+            else
+            {
+                [tableView addSubview:self.noMessageTipButotn1];
+                tableView.height = self.noMessageTipButotn1.top+self.noMessageTipButotn1.height;
+            }
+
+            
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
             
             if (self.contentScrollView.contentOffset.x==0) {
                 
@@ -709,9 +793,21 @@
             [self.mainScrollView.mj_header endRefreshing];
             [self.mainScrollView.mj_footer endRefreshing];
             
+            if([NormalUse isValidArray:dataArray])
+            {
+                [self.noMessageTipButotn2 removeFromSuperview];
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
+
+            }
+            else
+            {
+                [tableView addSubview:self.noMessageTipButotn2];
+                tableView.height = self.noMessageTipButotn2.top+self.noMessageTipButotn2.height;
+            }
+
+            
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
             if (self.contentScrollView.contentOffset.x==WIDTH_PingMu) {
                 
@@ -762,10 +858,22 @@
             [self.mainScrollView.mj_header endRefreshing];
             [self.mainScrollView.mj_footer endRefreshing];
             
+            if([NormalUse isValidArray:dataArray])
+            {
+                [self.noMessageTipButotn3 removeFromSuperview];
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
+
+            }
+            else
+            {
+                [tableView addSubview:self.noMessageTipButotn3];
+                tableView.height = self.noMessageTipButotn3.top+self.noMessageTipButotn3.height;
+            }
+
+            
 
             [tableView reloadData];
             
-            tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
 
             if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*2) {
                 
@@ -813,15 +921,27 @@
             [self.mainScrollView.mj_header endRefreshing];
             [self.mainScrollView.mj_footer endRefreshing];
             
+            if([NormalUse isValidArray:dataArray])
+            {
+                [self.noMessageTipButotn4 removeFromSuperview];
+                float tableViewHeight  = 0;
+                for (NSDictionary * info in sourceArray) {
+                    
+                    tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
+                }
+                
+                tableView.height = tableViewHeight;
+
+            }
+            else
+            {
+                [tableView addSubview:self.noMessageTipButotn4];
+                tableView.height = self.noMessageTipButotn4.top+self.noMessageTipButotn4.height;
+            }
+
+            
             [tableView reloadData];
             
-            float tableViewHeight  = 0;
-            for (NSDictionary * info in sourceArray) {
-                
-                tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
-            }
-            
-            tableView.height = tableViewHeight;
             
             if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*3) {
                 
