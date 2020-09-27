@@ -7,6 +7,7 @@
 //
 
 #import "EditDianPuViewController.h"
+#import "EditDianPuShangPinListViewController.h"
 
 @interface EditDianPuViewController ()<UIScrollViewDelegate>
 
@@ -57,6 +58,10 @@
     [self.mainScrollView addSubview:dianPuTouXiangLable];
     
     self.photoArray = [NSMutableArray array];
+    if ([self.dianPuImage isKindOfClass:[UIImage class]]) {
+        
+        [self.photoArray addObject:self.dianPuImage];
+    }
 
     self.photoContentView = [[UIView alloc] initWithFrame:CGRectMake(15*BiLiWidth, dianPuTouXiangLable.frame.origin.y+dianPuTouXiangLable.frame.size.height+20*BiLiWidth, WIDTH_PingMu-30*BiLiWidth, 72*BiLiWidth)];
     [self.mainScrollView addSubview:self.photoContentView];
@@ -75,13 +80,17 @@
     self.dianPuNameTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.dianPuNameTF.textColor = RGBFormUIColor(0x343434);
     self.dianPuNameTF.textAlignment = NSTextAlignmentRight;
+    if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"name"]]) {
+        
+        self.dianPuNameTF.text = [self.dianPuInfo objectForKey:@"name"];
+
+    }
     [self.mainScrollView addSubview:self.dianPuNameTF];
 
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, biaoTiXinXiLable.top+biaoTiXinXiLable.height, 270*BiLiWidth, 1)];
     lineView1.backgroundColor = RGBFormUIColor(0xEEEEEE);
     [self.mainScrollView addSubview:lineView1];
 
-    
     UILabel * diquLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView1.top+lineView1.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     diquLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
     diquLable.textColor = RGBFormUIColor(0x333333);
@@ -91,6 +100,14 @@
     self.diQuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-213.5*BiLiWidth, diquLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
     [self.diQuButton setTitle:@"选择所在地区>" forState:UIControlStateNormal];
     [self.diQuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
+    if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"city_name"]]) {
+        
+        [self.diQuButton setTitle:[self.dianPuInfo objectForKey:@"city_name"] forState:UIControlStateNormal];
+        [self.diQuButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+
+        NSNumber * cityCode  = [self.dianPuInfo objectForKey:@"city_code"];
+        self.cityInfo = [[NSDictionary alloc] initWithObjectsAndKeys:cityCode,@"cityCode",[self.dianPuInfo objectForKey:@"city_name"],@"cityName", nil];
+    }
     self.diQuButton.titleLabel.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.diQuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.diQuButton addTarget:self action:@selector(diQuButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -111,6 +128,10 @@
     self.lianXiFangShiTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.lianXiFangShiTF.textColor = RGBFormUIColor(0x343434);
     self.lianXiFangShiTF.textAlignment = NSTextAlignmentRight;
+    if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"contact"]]) {
+        
+        self.lianXiFangShiTF.text = [self.dianPuInfo objectForKey:@"contact"];
+    }
     [self.mainScrollView addSubview:self.lianXiFangShiTF];
 
     UIView * lineView4 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, lianXiFangShiLable.top+lianXiFangShiLable.height, 270*BiLiWidth, 1)];
@@ -118,55 +139,7 @@
     [self.mainScrollView addSubview:lineView4];
 
 
-//    UILabel * lianXiFangShiLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView2.top+lineView2.height+13*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
-//    lianXiFangShiLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
-//    lianXiFangShiLable.textColor = RGBFormUIColor(0x333333);
-//    lianXiFangShiLable.text = @"联系方式";
-//    [self.mainScrollView addSubview:lianXiFangShiLable];
-//
-//    UILabel * lianXiFangShiTipLable = [[UILabel alloc] initWithFrame:CGRectMake(lianXiFangShiLable.left, lianXiFangShiLable.top+lianXiFangShiLable.height+10*BiLiWidth, 63*BiLiWidth, 25*BiLiWidth)];
-//    lianXiFangShiTipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
-//    lianXiFangShiTipLable.textColor = RGBFormUIColor(0xDEDEDE);
-//    lianXiFangShiTipLable.numberOfLines = 2;
-//    lianXiFangShiTipLable.text = @"(填写一种联系方式即可）";
-//    [self.mainScrollView addSubview:lianXiFangShiTipLable];
-//
-//
-//    self.weiXinTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lineView2.top+lineView2.height, 100*BiLiWidth, 39.5*BiLiWidth)];
-//    self.weiXinTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-//    [NormalUse setTextFieldPlaceholder:@"请填写微信号" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.weiXinTF];
-//    self.weiXinTF.textAlignment = NSTextAlignmentRight;
-//    self.weiXinTF.textColor  = RGBFormUIColor(0x343434);
-//    [self.mainScrollView addSubview:self.weiXinTF];
-//
-//    UIView * lineView6 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, lineView2.top+lineView2.height+39.5*BiLiWidth, 270*BiLiWidth, 1)];
-//    lineView6.backgroundColor = RGBFormUIColor(0xEEEEEE);
-//    [self.mainScrollView addSubview:lineView6];
-//
-//    self.qqTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lineView6.top+lineView6.height, 100*BiLiWidth, 39.5*BiLiWidth)];
-//    self.qqTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-//    [NormalUse setTextFieldPlaceholder:@"请填写QQ号" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.qqTF];
-//    self.qqTF.textColor  = RGBFormUIColor(0x343434);
-//    self.qqTF.textAlignment = NSTextAlignmentRight;
-//    self.qqTF.keyboardType = UIKeyboardTypeNumberPad;
-//    [self.mainScrollView addSubview:self.qqTF];
-//
-//    UIView * lineView7 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, lineView6.top+lineView6.height+39.5*BiLiWidth, 270*BiLiWidth, 1)];
-//    lineView7.backgroundColor = RGBFormUIColor(0xEEEEEE);
-//    [self.mainScrollView addSubview:lineView7];
-//
-//
-//    self.telTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lineView7.top+lineView7.height, 100*BiLiWidth, 39.5*BiLiWidth)];
-//    self.telTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-//    [NormalUse setTextFieldPlaceholder:@"请填写手机号" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.telTF];
-//    self.telTF.textAlignment = NSTextAlignmentRight;
-//    self.telTF.textColor  = RGBFormUIColor(0x343434);
-//    self.telTF.keyboardType = UIKeyboardTypeNumberPad;
-//    [self.mainScrollView addSubview:self.telTF];
-//
-//    UIView * lineView8 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, lineView7.top+lineView7.height+39.5*BiLiWidth, 270*BiLiWidth, 1)];
-//    lineView8.backgroundColor = RGBFormUIColor(0xEEEEEE);
-//    [self.mainScrollView addSubview:lineView8];
+
     
     UILabel * jianJieLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView4.top+lineView4.height+33*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
     jianJieLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
@@ -181,6 +154,10 @@
     self.jianJieTextView.zw_limitCount = 500;
     self.jianJieTextView.layer.cornerRadius = 4*BiLiWidth;
     self.jianJieTextView.placeholder = @"请对店铺进行详细的描述...";
+    if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"description"]]) {
+        
+        self.jianJieTextView.text = [self.dianPuInfo objectForKey:@"description"];
+    }
     self.jianJieTextView.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.jianJieTextView.zw_inputLimitLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.jianJieTextView.zw_inputLimitLabel.backgroundColor = [UIColor clearColor];
@@ -219,6 +196,17 @@
     self.peiFuMoneyTF.keyboardType = UIKeyboardTypeNumberPad;
     [self.mainScrollView addSubview:self.peiFuMoneyTF];
     
+    NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
+    if (is_mark.intValue==1) {
+        
+        self.markButton.tag = 1;
+        self.markButton.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        self.markButton.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
+        self.markButton.button_lable.textColor = RGBFormUIColor(0x333333);
+        self.peiFuMoneyTF.text =  [self.dianPuInfo objectForKey:@"mark_cny"];
+        
+    }
+    
     UIView * peiFuLineView = [[UIView alloc] initWithFrame:CGRectMake(self.peiFuMoneyTF.left, self.peiFuMoneyTF.top+self.peiFuMoneyTF.height, self.peiFuMoneyTF.width, 1)];
     peiFuLineView.backgroundColor = RGBFormUIColor(0x343434);
     [self.mainScrollView addSubview:peiFuLineView];
@@ -247,10 +235,20 @@
     
     UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tiJiaoButton.width, tiJiaoButton.height)];
     tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    tiJiaoLable.text = @"保存";
     tiJiaoLable.textAlignment = NSTextAlignmentCenter;
     tiJiaoLable.textColor = [UIColor whiteColor];
     [tiJiaoButton addSubview:tiJiaoLable];
+    if([NormalUse isValidArray:self.artist_list])
+    {
+        tiJiaoLable.text = @"下一步";
+
+    }
+    else
+    {
+        tiJiaoLable.text = @"保存";
+
+    }
+    
     
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, tiJiaoButton.top+tiJiaoButton.height+200*BiLiWidth)];
 
@@ -292,6 +290,8 @@
 }
 -(void)nextButtonClick
 {
+    [NormalUse showMessageLoadView:@"提交中..." vc:self];
+    
     if(![NormalUse isValidArray:self.photoArray])
     {
         [NormalUse showToastView:@"请设置店铺头像" view:self.view];
@@ -308,12 +308,6 @@
         [NormalUse showToastView:@"请选择所在区域" view:self.view];
         return;
     }
-//    if(![NormalUse isValidString:self.weiXinTF.text]&&![NormalUse isValidString:self.qqTF.text]&&![NormalUse isValidString:self.telTF.text])
-//    {
-//        [NormalUse showToastView:@"请填写联系方式" view:self.view];
-//         return;
-//
-//    }
     if(![NormalUse isValidString:self.lianXiFangShiTF.text])
     {
         [NormalUse showToastView:@"请填写联系方式" view:self.view];
@@ -369,6 +363,11 @@
             [self.photoPathArray addObject:[responseObject objectForKey:@"filename"]];
 
         }
+        else
+        {
+            [NormalUse removeMessageLoadingView:self];
+            [NormalUse showToastView:msg view:self.view];
+        }
         self->uploadImageIndex = self->uploadImageIndex+1;
         if (self->uploadImageIndex<self.photoArray.count) {
             
@@ -404,6 +403,12 @@
                     self.imagePathId = [[self.imagePathId stringByAppendingString:@"|"] stringByAppendingString:[responseObject objectForKey:@"fileId"]];
                 }
             }
+            else
+            {
+                [NormalUse removeMessageLoadingView:self];
+                [NormalUse showToastView:msg view:self.view];
+
+            }
 
 
             if (self->uploadImageIndex<self.photoArray.count) {
@@ -418,9 +423,6 @@
                 [dicInfo setObject:self.dianPuNameTF.text forKey:@"name"];
                 NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
                 [dicInfo setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
-//                [dicInfo setObject:[NormalUse getobjectForKey:self.telTF.text] forKey:@"mobile"];
-//                [dicInfo setObject:[NormalUse getobjectForKey:self.qqTF.text] forKey:@"qq"];
-//                [dicInfo setObject:[NormalUse getobjectForKey:self.weiXinTF.text] forKey:@"wechat"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.lianXiFangShiTF.text] forKey:@"contact"];
                 [dicInfo setObject:self.jianJieTextView.text forKey:@"description"];
                 
@@ -431,13 +433,25 @@
 
                 }
                 
-                
                 [HTTPModel createDianPu:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                     
+                    [NormalUse removeMessageLoadingView:self];
+
                     if (status==1) {
                         
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [NormalUse showToastView:@"创建成功" view:[NormalUse getCurrentVC].view];
+                        if([NormalUse isValidArray:self.artist_list])
+                        {
+                            EditDianPuShangPinListViewController * vc = [[EditDianPuShangPinListViewController alloc] init];
+                            vc.artist_list = self.artist_list;
+                            [self.navigationController pushViewController:vc animated:YES];
+                        }
+                        else
+                        {
+                            [self.navigationController popViewControllerAnimated:YES];
+                            [NormalUse showToastView:@"修改成功" view:[NormalUse getCurrentVC].view];
+
+                        }
+
                     }
                     else
                     {

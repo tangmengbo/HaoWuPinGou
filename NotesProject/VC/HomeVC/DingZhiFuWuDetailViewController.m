@@ -16,9 +16,11 @@
 
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
 
+
 @end
 
 @implementation DingZhiFuWuDetailViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

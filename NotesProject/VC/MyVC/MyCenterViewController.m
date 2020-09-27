@@ -348,6 +348,7 @@
 -(void)sheZhiButtonClick
 {
     SheZhiViewController * vc = [[SheZhiViewController alloc] init];
+    vc.userInfo = self.userInfo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)huiYuanButtonClick

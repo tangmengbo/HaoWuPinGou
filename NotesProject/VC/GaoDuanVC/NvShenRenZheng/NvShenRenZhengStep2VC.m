@@ -238,7 +238,7 @@
     fuWuXiangMuLable.text = @"服务项目";
     [self.mainScrollView addSubview:fuWuXiangMuLable];
     
-    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.ageTF.left, fuWuXiangMuLable.top, self.ageTF.width, 39.5*BiLiWidth)];
+    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.ageTF.left-100*BiLiWidth, fuWuXiangMuLable.top, self.ageTF.width+100*BiLiWidth, 39.5*BiLiWidth)];
     self.fuWuXiangMuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.fuWuXiangMuButton setTitle:@"选择服务项目>" forState:UIControlStateNormal];
     [self.fuWuXiangMuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];

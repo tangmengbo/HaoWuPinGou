@@ -257,7 +257,7 @@
 
     self.itemButtonContentView.hidden = YES;
     
-    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -835,7 +835,8 @@
         UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(0, titleLable.top+titleLable.height+7*BiLiWidth, contentView.width, 11*BiLiWidth)];
         messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         messageLable.textColor = RGBFormUIColor(0x999999);
-        messageLable.text = [info objectForKey:@"name"];
+        NSNumber * deal_num = [info objectForKey:@"deal_num"];
+        messageLable.text = [NSString stringWithFormat:@"成交数量:%d",deal_num.intValue];
         messageLable.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:messageLable];
         

@@ -91,6 +91,7 @@
 -(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
     
+
     self.info1 = info1;
     if ([[info1 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
@@ -114,9 +115,11 @@
     self.zuanShiImageView1.left = self.cityLable1.left+self.cityLable1.width+5*BiLiWidth;
     self.zuanShiImageView1.hidden = YES;
     NSNumber * age_male = [info1 objectForKey:@"age_male"];
+    NSNumber * age_famale = [info1 objectForKey:@"age_famale"];
+
     if ([age_male isKindOfClass:[NSNumber class]]) {
         
-        self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d",age_male.intValue];
+        self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d(男) %d(女)",age_male.intValue,age_famale.intValue];
 
     }
     
@@ -148,9 +151,10 @@
         self.zuanShiImageView2.hidden = YES;
 
         NSNumber * age_male = [info2 objectForKey:@"age_male"];
+        NSNumber * age_famale = [info2 objectForKey:@"age_famale"];
         if ([age_male isKindOfClass:[NSNumber class]]) {
             
-            self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d",age_male.intValue];
+            self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d(男) %d(女)",age_male.intValue,age_famale.intValue];
             
         }
 

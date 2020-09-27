@@ -1,14 +1,14 @@
 //
-//  DianuDetailListTableViewCell.m
+//  JingJiRenBianJiListCell.m
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/2.
+//  Created by 唐蒙波 on 2020/9/27.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "DianuDetailListTableViewCell.h"
+#import "JingJiRenBianJiListCell.h"
 
-@implementation DianuDetailListTableViewCell
+@implementation JingJiRenBianJiListCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -55,10 +55,25 @@
         self.priceLable1.textColor = RGBFormUIColor(0x999999);
         [self.contentView1 addSubview:self.priceLable1];
 
+
         
         UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
-        [button1 addTarget:self action:@selector(pushTuTieZiDetail1) forControlEvents:UIControlEventTouchUpInside];
+        [button1 addTarget:self action:@selector(alsoSelectButton1Click) forControlEvents:UIControlEventTouchUpInside];
+//        [button1 addTarget:self action:@selector(pushTuTieZiDetail1) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView1 addSubview:button1];
+
+        self.alsoSelectButton1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.contentView1.width-40*BiLiWidth+23*BiLiWidth, 0,40*BiLiWidth,24*BiLiWidth)];
+//        [self.alsoSelectButton1 addTarget:self action:@selector(alsoSelectButton1Click) forControlEvents:UIControlEventTouchUpInside];
+        self.alsoSelectButton1.tag = 0;
+        self.alsoSelectButton1.button_imageView.frame = CGRectMake(0, 6*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth);
+        self.alsoSelectButton1.button_imageView.layer.cornerRadius = 6*BiLiWidth;
+        self.alsoSelectButton1.button_imageView.layer.masksToBounds = YES;
+        self.alsoSelectButton1.button_imageView.layer.borderWidth = 1;
+        self.alsoSelectButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.alsoSelectButton1.button_imageView1.frame = CGRectMake(self.alsoSelectButton1.button_imageView.left+1.5*BiLiWidth, self.alsoSelectButton1.button_imageView.top+1.5*BiLiWidth, 9*BiLiWidth, 9*BiLiWidth);
+        self.alsoSelectButton1.button_imageView1.layer.cornerRadius = 4.5*BiLiWidth;
+        self.alsoSelectButton1.button_imageView1.layer.masksToBounds = YES;
+        [self.contentView1 addSubview:self.alsoSelectButton1];
 
 
        
@@ -96,8 +111,22 @@
         [self.contentView2 addSubview:self.priceLable2];
 
         UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
-        [button2 addTarget:self action:@selector(pushTuTieZiDetail2) forControlEvents:UIControlEventTouchUpInside];
+        [button2 addTarget:self action:@selector(alsoSelectButton2Click) forControlEvents:UIControlEventTouchUpInside];
+//        [button2 addTarget:self action:@selector(pushTuTieZiDetail2) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView2 addSubview:button2];
+
+        self.alsoSelectButton2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.contentView2.width-40*BiLiWidth+23*BiLiWidth, 0,40*BiLiWidth,24*BiLiWidth)];
+//        [self.alsoSelectButton2 addTarget:self action:@selector(alsoSelectButton2Click) forControlEvents:UIControlEventTouchUpInside];
+        self.alsoSelectButton2.tag = 0;
+        self.alsoSelectButton2.button_imageView.frame = CGRectMake(0, 6*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth);
+        self.alsoSelectButton2.button_imageView.layer.cornerRadius = 6*BiLiWidth;
+        self.alsoSelectButton2.button_imageView.layer.masksToBounds = YES;
+        self.alsoSelectButton2.button_imageView.layer.borderWidth = 1;
+        self.alsoSelectButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.alsoSelectButton2.button_imageView1.frame = CGRectMake(self.alsoSelectButton1.button_imageView.left+1.5*BiLiWidth, self.alsoSelectButton1.button_imageView.top+1.5*BiLiWidth, 9*BiLiWidth, 9*BiLiWidth);
+        self.alsoSelectButton2.button_imageView1.layer.cornerRadius = 4.5*BiLiWidth;
+        self.alsoSelectButton2.button_imageView1.layer.masksToBounds = YES;
+        [self.contentView2 addSubview:self.alsoSelectButton2];
 
 
     }
@@ -105,8 +134,6 @@
 }
 -(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
-    self.info1 = info1;
-    self.info2 = info2;
     
     if ([self.auth_vip isKindOfClass:[NSNumber class]] && self.auth_vip.intValue==1) {
         
@@ -117,9 +144,12 @@
     else
     {
         self.zuanShiImageView1.hidden = YES;
-        self.zuanShiImageView2.hidden  = YES;
+        self.zuanShiImageView2.hidden  = NO;
 
     }
+
+    self.info1 = info1;
+    self.info2 = info2;
     if ([NormalUse isValidArray:[info1 objectForKey:@"images"]]) {
         
         NSArray * images = [info1 objectForKey:@"images"];
@@ -174,6 +204,52 @@
         self.contentView2.hidden = YES;
     }
 }
+-(void)alsoSelectButton1Click
+{
+    if (self.alsoSelectButton1.tag==0) {
+        
+        self.alsoSelectButton1.tag = 1;
+        self.alsoSelectButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        self.alsoSelectButton1.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
+        self.alsoSelectButton1.button_lable.textColor = RGBFormUIColor(0x333333);
+        
+        
+    }
+    else
+    {
+        self.alsoSelectButton1.tag = 0;
+        self.alsoSelectButton1.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.alsoSelectButton1.button_imageView1.backgroundColor = [UIColor clearColor];
+        self.alsoSelectButton1.button_lable.textColor = RGBFormUIColor(0x999999);
+        
+    }
+    NSNumber * idNumber = [self.info1 objectForKey:@"id"];
+    [self.delegate itemSelect:[NSString stringWithFormat:@"%d",idNumber.intValue]];
+}
+-(void)alsoSelectButton2Click
+{
+    if (self.alsoSelectButton2.tag==0) {
+        
+        self.alsoSelectButton2.tag = 1;
+        self.alsoSelectButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        self.alsoSelectButton2.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
+        self.alsoSelectButton2.button_lable.textColor = RGBFormUIColor(0x333333);
+        
+        
+    }
+    else
+    {
+        self.alsoSelectButton2.tag = 0;
+        self.alsoSelectButton2.button_imageView.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.alsoSelectButton2.button_imageView1.backgroundColor = [UIColor clearColor];
+        self.alsoSelectButton2.button_lable.textColor = RGBFormUIColor(0x999999);
+        
+    }
+    NSNumber * idNumber = [self.info2 objectForKey:@"id"];
+    [self.delegate itemSelect:[NSString stringWithFormat:@"%d",idNumber.intValue]];
+
+}
+
 -(void)pushTuTieZiDetail1
 {
     TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
@@ -188,12 +264,6 @@
     vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
     [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

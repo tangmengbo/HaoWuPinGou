@@ -10,6 +10,7 @@
 
 @interface TuiGuangZhuanQianViewController ()
 
+@property(nonatomic,strong)UIScrollView * mainScrollView;
 @property(nonatomic,strong)UIImage * screenImage;
 
 @end
@@ -21,11 +22,16 @@
     
     [self yinCangTabbar];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+    self.mainScrollView.showsVerticalScrollIndicator = NO;
+    self.mainScrollView.showsHorizontalScrollIndicator = NO;
+    self.mainScrollView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:self.mainScrollView];
     
     UIImageView * bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -10*BiLiWidth, WIDTH_PingMu, WIDTH_PingMu*1839/1172)];
     bottomImageView.image = [UIImage imageNamed:@"tuiGuang_bg"];
-    [self.view addSubview:bottomImageView];
+    [self.mainScrollView addSubview:bottomImageView];
     
     self.statusBarView.backgroundColor = [UIColor blackColor];
     [self.view bringSubviewToFront:self.topNavView];
@@ -36,7 +42,7 @@
     
     UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-219*BiLiWidth)/2, 150*BiLiWidth, 219*BiLiWidth, 39*BiLiWidth)];
     //titleImageView.image = [UIImage imageNamed:@"tuiGuang_wenZiTip"];
-    [self.view addSubview:titleImageView];
+    [self.mainScrollView addSubview:titleImageView];
     
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(48*BiLiWidth, titleImageView.top+titleImageView.height-30*BiLiWidth, WIDTH_PingMu-48*BiLiWidth*2, 30*BiLiWidth)];
     tipLable.textAlignment = NSTextAlignmentCenter;
@@ -44,18 +50,18 @@
     tipLable.numberOfLines = 2;
     tipLable.textColor = [UIColor whiteColor];
     tipLable.text = @"每成功邀请1名用户注册，获得100金币，同时邀请的用户消费金币时您可获得高额抽成";
-    [self.view addSubview:tipLable];
+    [self.mainScrollView addSubview:tipLable];
     
     
     UIImageView * erWeiMaImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-103*BiLiWidth)/2, tipLable.top+tipLable.height+26*BiLiWidth, 103*BiLiWidth, 103*BiLiWidth)];
     erWeiMaImageView.image = [NormalUse shengChengErWeiMa:@"asdahjdhjajsd"];
-    [self.view addSubview:erWeiMaImageView];
+    [self.mainScrollView addSubview:erWeiMaImageView];
     
     UILabel * tuiGuangMaLable = [[UILabel alloc] initWithFrame:CGRectMake(0, erWeiMaImageView.top+erWeiMaImageView.height+28*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];
     tuiGuangMaLable.textAlignment = NSTextAlignmentCenter;
     tuiGuangMaLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     tuiGuangMaLable.textColor = RGBFormUIColor(0xFF2474);
-    [self.view addSubview:tuiGuangMaLable];
+    [self.mainScrollView addSubview:tuiGuangMaLable];
 
     
     NSString * renZhengStr = [NSString stringWithFormat:@"您的推广码 %@",@"12errt"];
@@ -66,7 +72,7 @@
     
     UIButton * fuZhiLianJieButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-123*BiLiWidth*2-21*BiLiWidth)/2, tuiGuangMaLable.top+tuiGuangMaLable.height+50*BiLiWidth, 123*BiLiWidth, 40*BiLiWidth)];
     [fuZhiLianJieButton addTarget:self action:@selector(fuZhiLianJieButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:fuZhiLianJieButton];
+    [self.mainScrollView addSubview:fuZhiLianJieButton];
     //渐变设置
     UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
     UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -89,7 +95,7 @@
     
     UIButton * baoCunTuPianButton = [[UIButton alloc] initWithFrame:CGRectMake(fuZhiLianJieButton.left+fuZhiLianJieButton.width+20*BiLiWidth, tuiGuangMaLable.top+tuiGuangMaLable.height+50*BiLiWidth, 123*BiLiWidth, 40*BiLiWidth)];
     [baoCunTuPianButton addTarget:self action:@selector(baoCunTuPianButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:baoCunTuPianButton];
+    [self.mainScrollView addSubview:baoCunTuPianButton];
     //渐变设置
     gradientLayer1 = [CAGradientLayer layer];
     gradientLayer1.frame = baoCunTuPianButton.bounds;
@@ -107,7 +113,29 @@
     baoCunTuPianLable.textColor = [UIColor whiteColor];
     [baoCunTuPianButton addSubview:baoCunTuPianLable];
 
+    UILabel * tuiGuangXuZhi = [[UILabel alloc] initWithFrame:CGRectMake(33*BiLiWidth, baoCunTuPianButton.top+baoCunTuPianButton.height+75*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
+    tuiGuangXuZhi.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    tuiGuangXuZhi.textColor = [UIColor whiteColor];
+    tuiGuangXuZhi.text = @"推广须知";
+    [self.mainScrollView addSubview:tuiGuangXuZhi];
+    
+    UILabel * tipMessageLable = [[UILabel alloc] initWithFrame:CGRectMake(33*BiLiWidth, tuiGuangXuZhi.top+tuiGuangXuZhi.height+15*BiLiWidth, WIDTH_PingMu-66*BiLiWidth, 13*BiLiWidth)];
+    tipMessageLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    tipMessageLable.textColor = RGBFormUIColor(0xFFFFFF);
+    tipMessageLable.numberOfLines = 0;
+    [self.mainScrollView addSubview:tipMessageLable];
+    
+    NSString * neiRongStr = @"1、发送推广链接给其他新用户，用户第一次安装并打开app后才算邀请成功，或者被邀请的用户也可以在个人中心中输入您的推广码。\n2、注意，请勿使用微信或者QQ等第三方内置浏览器打开，因为包含色情内容会导致被屏蔽，推荐使用手机自带浏览器打开";
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    //调整行间距
+    [paragraphStyle setLineSpacing:2];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+    tipMessageLable.attributedText = attributedString;
+    [tipMessageLable  sizeToFit];
 
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, tipMessageLable.top+tipMessageLable.height+20*BiLiWidth)];
+    
     
 
 }

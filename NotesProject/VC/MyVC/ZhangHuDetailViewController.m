@@ -35,11 +35,11 @@
 {
     [super viewWillAppear:animated];
     
-    [HTTPModel getHuoDongHomeInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
-            NSNumber * base_coinNumber = [responseObject objectForKey:@"base_coin"];
+            NSNumber * base_coinNumber = [responseObject objectForKey:@"coin"];
             NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
             self.yuELable.text = base_coinStr;
 

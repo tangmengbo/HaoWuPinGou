@@ -237,7 +237,7 @@
     self.button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_ypack_coin"]];
     self.button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_yunlock_num"]];
     self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_ypost_num"]];
-    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"¥%@开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
     
     self.vip_type = @"vip_year";
 
@@ -248,7 +248,7 @@
     self.button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_fpack_coin"]];
     self.button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_funlock_num"]];
     self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_fpost_num"]];
-    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"¥%@开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
+    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
 
     self.vip_type = @"vip_forever";
     

@@ -67,10 +67,11 @@
         self.jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [self addSubview:self.jiaoYiBaoZhengImageView];
         
-        self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(22*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-22*BiLiWidth, 14*BiLiWidth)];
+        self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
         self.jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
         self.jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
         self.jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
+        self.jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
         [self.jiaoYiBaoZhengImageView addSubview:self.jiaoYiBaoZhengLable];
 
         
@@ -175,11 +176,15 @@
     NSNumber * is_mark = [info objectForKey:@"is_mark"];
     if (is_mark.intValue==1) {
         
+        self.jiaoYiBaoZhengImageView.hidden = NO;
+
         self.jiaoYiBaoZhengLable.text = [NSString stringWithFormat:@"交易保证金:%@",[info objectForKey:@"mark_cny"]];
     }
     else
     {
-        self.jiaoYiBaoZhengLable.text = @"无交易保证金";
+        self.jiaoYiBaoZhengLable.text = @"";
+        self.jiaoYiBaoZhengImageView.hidden = YES;
+        
     }
 
     NSNumber * post_num = [info objectForKey:@"post_num"];

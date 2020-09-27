@@ -917,32 +917,42 @@
     else if (tableView.tag==2)
     {
         NSDictionary * info = [self.nvShenArray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"id"];
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSNumber * girlId = [info objectForKey:@"id"];
+        SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+        vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+        vc.type = @"3";
+        [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
     }
     else if (tableView.tag==3)
     {
         NSDictionary * info = [self.waiWeiArray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"id"];
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSNumber * girlId = [info objectForKey:@"id"];
+        SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+        vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+        vc.type = @"4";
+        [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
 
     }
     else if (tableView.tag==4)
     {
         NSDictionary * info = [self.peiWanArray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"id"];
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSNumber * girlId = [info objectForKey:@"id"];
+        SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+        vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+        vc.type = @"5";
+        [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
     }
     else
     {
+        NSDictionary * info = [self.dingZhiArray objectAtIndex:indexPath.row];
+        
+        DingZhiFuWuDetailViewController * vc = [[DingZhiFuWuDetailViewController alloc] init];
+        NSNumber * idNumber = [info objectForKey:@"id"];
+        vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
+        [self.navigationController pushViewController:vc animated:YES];
 
     }
 }

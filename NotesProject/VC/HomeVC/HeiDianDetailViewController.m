@@ -236,26 +236,37 @@
     [self.messageContentView addSubview:nickLable];
     
     UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-14.5*BiLiWidth)/2, 16*BiLiWidth, 14.5*BiLiWidth)];
-    vImageView.image = [UIImage imageNamed:@"vip_black"];
     [self.messageContentView addSubview:vImageView];
+
+    NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+        
+        vImageView.image = [UIImage imageNamed:@"vip_black"];
+
+    }
+    else
+    {
+        vImageView.left = nickLable.left+nickLable.width;
+        vImageView.width = 0;
+    }
     
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 56*BiLiWidth, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
+    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
     if ([auth_nomal isKindOfClass:[NSNumber class]]) {
         
-        if (auth_nomal.intValue==0) {
+        if (auth_nomal.intValue==1) {
             
-            guanFangRenZhengImageView.width = 13.5*BiLiWidth*126/39;
-            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+            guanFangRenZhengImageView.width = 56*BiLiWidth;
+            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
 
 
         }
 
     }
-    
+
     UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     cityLable.textColor = RGBFormUIColor(0x9A9A9A);

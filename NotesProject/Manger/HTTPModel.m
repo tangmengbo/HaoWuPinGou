@@ -418,6 +418,82 @@ singleton_implementation(HTTPModel)
         
     }];
 }
+//手机号是否存在
++(void)mobileAlsoExit:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/user/mobile_exist",HTTP_REQUESTURL];
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
+
++(void)jieBangMobile:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/user/unbind_mobile",HTTP_REQUESTURL];
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
+
+}
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
@@ -1228,6 +1304,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
     
 }
+//参数 type 0 闪屏页 1 首页 2高端 3夫妻交 4活动 5我的
 
 +(void)getBannerList:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -2139,7 +2216,42 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
     
 }
+//经纪人删帖(删掉某个旗下小姐)
++(void)jingJiRenShanChuTieZi:(NSDictionary *_Nullable)parameter
+                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/Upscale/delPost",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
 
+}
 //关注店铺
 +(void)dianPuFollow:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -3059,7 +3171,44 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
        }];
 
 }
+//提现申请接口
++(void)tiXianShenQing:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/user/cashOut",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
 
+}
 @end
 
 

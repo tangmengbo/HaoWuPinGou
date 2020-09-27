@@ -56,6 +56,13 @@ singleton_interface(HTTPModel)
 +(void)getCityList:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//手机号是否存在
++(void)mobileAlsoExit:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//解绑手机号
++(void)jieBangMobile:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //发送验证码
 +(void)getVerifyCode:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -237,9 +244,13 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)createDianPu:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
-//经纪人店铺详情
+//经纪人店铺
 +(void)getDianPuDetail:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//经纪人删帖(删掉某个旗下小姐)
++(void)jingJiRenShanChuTieZi:(NSDictionary *_Nullable)parameter
+                   callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //关注店铺
 +(void)dianPuFollow:(NSDictionary *_Nullable)parameter
@@ -340,4 +351,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getJinBiMingXiList:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//提现申请接口
++(void)tiXianShenQing:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 @end

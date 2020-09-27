@@ -59,7 +59,7 @@
     self.mobileCodeButton.button_lable.text = @"+86";
     self.mobileCodeButton.button_lable.textColor = RGBFormUIColor(0x333333);
     self.mobileCodeButton.button_imageView.frame = CGRectMake(34*BiLiWidth, (self.mobileCodeButton.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
-    self.mobileCodeButton.button_imageView.image = [UIImage imageNamed:@"mobileCode_xia"];
+//    self.mobileCodeButton.button_imageView.image = [UIImage imageNamed:@"mobileCode_xia"];
     [self.mainSrollView addSubview:self.mobileCodeButton];
     
     self.mobileTF = [[UITextField alloc] initWithFrame:CGRectMake(self.mobileCodeButton.left+self.mobileCodeButton.width, self.mobileCodeButton.top, WIDTH_PingMu-(self.mobileCodeButton.left+self.mobileCodeButton.width+10*BiLiWidth), self.mobileCodeButton.height)];

@@ -188,11 +188,11 @@
     [self.mainScrollView addSubview:ageLable];
 
     self.maleTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, ageLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
-    self.maleTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.maleTF.textAlignment = NSTextAlignmentCenter;
     [NormalUse setTextFieldPlaceholder:@"填写丈夫年龄" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.maleTF];
     self.maleTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.maleTF.textColor = RGBFormUIColor(0x343434);
-    self.maleTF.textAlignment = NSTextAlignmentLeft;
+    self.maleTF.textAlignment = NSTextAlignmentRight;
     self.maleTF.keyboardType = UIKeyboardTypeNumberPad;
     [self.mainScrollView addSubview:self.maleTF];
 
@@ -207,11 +207,10 @@
     [self.mainScrollView addSubview:famaleAgeLable];
 
     self.famaleTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, famaleAgeLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
-    self.famaleTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.famaleTF.textAlignment = NSTextAlignmentRight;
     [NormalUse setTextFieldPlaceholder:@"填写妻子年龄" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.famaleTF];
     self.famaleTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.famaleTF.textColor = RGBFormUIColor(0x343434);
-    self.famaleTF.textAlignment = NSTextAlignmentLeft;
     self.famaleTF.keyboardType = UIKeyboardTypeNumberPad;
     [self.mainScrollView addSubview:self.famaleTF];
 
@@ -258,7 +257,7 @@
     fuWuXiangMuLable.text = @"服务项目";
     [self.mainScrollView addSubview:fuWuXiangMuLable];
     
-    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.maleTF.left, fuWuXiangMuLable.top, self.maleTF.width, 39.5*BiLiWidth)];
+    self.fuWuXiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.maleTF.left-100*BiLiWidth, fuWuXiangMuLable.top, self.maleTF.width+100*BiLiWidth, 39.5*BiLiWidth)];
     self.fuWuXiangMuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.fuWuXiangMuButton setTitle:@"选择服务项目>" forState:UIControlStateNormal];
     [self.fuWuXiangMuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];

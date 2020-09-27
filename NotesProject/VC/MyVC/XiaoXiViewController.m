@@ -130,6 +130,7 @@
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu*3, self.mainScrollView.height)];
     self.mainScrollView.delegate = self;
     self.mainScrollView.tag = 1002;
+    self.mainScrollView.pagingEnabled = YES;
     [self.view addSubview:self.mainScrollView];
     
     self.tableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, self.mainScrollView.height)];

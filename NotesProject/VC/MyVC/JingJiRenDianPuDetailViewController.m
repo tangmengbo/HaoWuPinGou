@@ -19,6 +19,8 @@
 
 @property(nonatomic,strong)UITableView * mainTableView;
 
+@property(nonatomic,strong)UIImageView * headerImageView;
+
 @property(nonatomic,strong)NSDictionary * dianPuInfo;//店铺信息
 @property(nonatomic,strong)NSMutableArray *  artist_list;//店铺下艺人列表
 
@@ -46,6 +48,46 @@
     return _noMessageTipButotn;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [HTTPModel jingJiRenGetDianPuDetail:nil
+                               callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        if (status==1) {
+            
+            self.dianPuInfo = responseObject;
+            self.topTitleLale.text = [self.dianPuInfo objectForKey:@"name"];
+            
+            self.artist_list = [self.dianPuInfo objectForKey:@"artist_list"];
+            [self.mainTableView reloadData];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                if (self.artist_list.count==0) {
+                    
+                    self.noMessageTipButotn.hidden = NO;
+                }
+                else
+                {
+                    self.noMessageTipButotn.hidden = YES;
+                    
+                }
+
+            });
+
+            // [self loadNewLsit];
+            
+            
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+        
+    }];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,51 +104,26 @@
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mainTableView];
     
-    [self.rightButton setTitle:@"编辑" forState:UIControlStateNormal];
-    
 //    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
 //    mjHeader.lastUpdatedTimeLabel.hidden = YES;
 //    self.mainTableView.mj_header = mjHeader;
-//    
+//
+//
 //    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
 //    self.mainTableView.mj_footer = mjFooter;
 
+    [self.rightButton setTitle:@"编辑" forState:UIControlStateNormal];
+    
 
     
-    [HTTPModel jingJiRenGetDianPuDetail:nil
-                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        if (status==1) {
-
-            self.dianPuInfo = responseObject;
-            self.topTitleLale.text = [self.dianPuInfo objectForKey:@"name"];
-            
-            self.artist_list = [self.dianPuInfo objectForKey:@"artist_list"];
-            if (self.artist_list.count==0) {
-                
-                self.noMessageTipButotn.hidden = NO;
-            }
-            else
-            {
-                self.noMessageTipButotn.hidden = YES;
-                
-            }
-            [self.mainTableView reloadData];
-
-            //[self loadNewLsit];
-            
-
-        }
-        else
-        {
-            [NormalUse showToastView:msg view:self.view];
-        }
-
-    }];
     
 }
 -(void)rightClick
 {
     EditDianPuViewController * vc = [[EditDianPuViewController alloc] init];
+    vc.artist_list = self.artist_list;
+    vc.dianPuInfo = self.dianPuInfo;
+    vc.dianPuImage = self.headerImageView.image;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)loadNewLsit
@@ -225,6 +242,7 @@
     }
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
     if ((indexPath.row+1)*2<=self.artist_list.count) {
         
         [cell initData:[self.artist_list objectAtIndex:indexPath.row*2] info2:[self.artist_list objectAtIndex:indexPath.row*2+1]];
@@ -261,7 +279,21 @@
         
         tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth;
         
-        return messageLable.top+messageLable.height+216*BiLiWidth;
+        NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
+
+        if (is_mark.intValue==1) {
+
+            tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth;
+            return messageLable.top+messageLable.height+216*BiLiWidth;
+
+        }
+        else
+        {
+            tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth-32.5*BiLiWidth;
+
+            return messageLable.top+messageLable.height+216*BiLiWidth-32.5*BiLiWidth;
+
+        }
         
     }
     else
@@ -277,27 +309,27 @@
     
     if ([NormalUse isValidDictionary:self.dianPuInfo]) {
         
-        UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
-        headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-        headerImageView.autoresizingMask = UIViewAutoresizingNone;
-        headerImageView.clipsToBounds = YES;
-        headerImageView.layer.cornerRadius = 24*BiLiWidth;
-        [headerView addSubview:headerImageView];
+        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
+        self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
+        self.headerImageView.clipsToBounds = YES;
+        self.headerImageView.layer.cornerRadius = 24*BiLiWidth;
+        [headerView addSubview:self.headerImageView];
         
         if ([NormalUse isValidArray:[self.dianPuInfo objectForKey:@"image"]]) {
             
             NSArray * images = [self.dianPuInfo objectForKey:@"image"];
-            [headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
             
         }
         else if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"image"]])
         {
-            [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
         }
 
 
         CGSize titleSize = [NormalUse setSize:[self.dianPuInfo objectForKey:@"name"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
-        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+9.5*BiLiWidth, headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
+        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+9.5*BiLiWidth, self.headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
         titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         titleLable.textColor = RGBFormUIColor(0x333333);
         titleLable.text  = [self.dianPuInfo objectForKey:@"name"];
@@ -306,6 +338,21 @@
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];
         vipImageView.image = [UIImage imageNamed:@"vip_black"];
         [headerView addSubview:vipImageView];
+        
+
+        NSNumber * auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
+        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+            
+            vipImageView.image = [UIImage imageNamed:@"vip_black"];
+
+        }
+        else
+        {
+            vipImageView.left = titleLable.left+titleLable.width;
+            vipImageView.width = 0;
+        }
+        
+
         
         Lable_ImageButton * pingFenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+7*BiLiWidth, 37*BiLiWidth, 13*BiLiWidth)];
         pingFenButton.button_imageView.frame = CGRectMake(0, 0, 13*BiLiWidth, 13*BiLiWidth);
@@ -325,44 +372,9 @@
         pingFenButton.button_lable1.text = [NSString stringWithFormat:@"· %@",[NormalUse getobjectForKey:[self.dianPuInfo objectForKey:@"city_name"]]];
         [headerView addSubview:pingFenButton];
         
-        UIView * guanZhuBottomView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-84*BiLiWidth, titleLable.top, 72*BiLiWidth, 24*BiLiWidth)];
-        [headerView addSubview:guanZhuBottomView];
-        //渐变设置
-        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-        CAGradientLayer * gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = guanZhuBottomView.bounds;
-        gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-        gradientLayer.startPoint = CGPointMake(0, 0);
-        gradientLayer.endPoint = CGPointMake(0, 1);
-        gradientLayer.cornerRadius = 12*BiLiWidth;
-        gradientLayer.locations = @[@0,@1];
-        [guanZhuBottomView.layer addSublayer:gradientLayer];
-        
-        self.guanZhuButton = [[UIButton alloc] initWithFrame:guanZhuBottomView.frame];
-        [self.guanZhuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.guanZhuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-        [self.guanZhuButton addTarget:self action:@selector(guanZhuButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:self.guanZhuButton];
-        NSNumber * is_follow = [self.dianPuInfo objectForKey:@"is_follow"];
-        if ([is_follow isKindOfClass:[NSNumber class]]) {
-            
-            if (is_follow.intValue==0) {
-                
-                self.guanZhuButton.tag = 0;
-                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_n"] forState:UIControlStateNormal];
-
-            }
-            else
-            {
-                self.guanZhuButton.tag = 1;
-                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_h"] forState:UIControlStateNormal];
-
-            }
-        }
 
         
-        UILabel * renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
+        UILabel * renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
         renZhengLable.textColor = RGBFormUIColor(0x333333);
         renZhengLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         [headerView addSubview:renZhengLable];
@@ -380,7 +392,7 @@
         }
 
         
-        UILabel * chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(renZhengLable.left+renZhengLable.width, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
+        UILabel * chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(renZhengLable.left+renZhengLable.width, self.headerImageView.top+self.headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
         chengJiaoLable.textColor = RGBFormUIColor(0x333333);
         chengJiaoLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         [headerView addSubview:chengJiaoLable];
@@ -414,9 +426,33 @@
         //设置自适应
         [messageLable  sizeToFit];
 
-        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 109*BiLiWidth, 18*BiLiWidth)];
-        jiaoYiBaoZhengImageView.backgroundColor = [UIColor greenColor];
+        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
+        jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [headerView addSubview:jiaoYiBaoZhengImageView];
+        
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 1.5*BiLiWidth,jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
+        jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
+        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
+        jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
+        jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
+        [jiaoYiBaoZhengImageView addSubview:jiaoYiBaoZhengLable];
+
+        NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
+
+        if (is_mark.intValue==1) {
+            
+            jiaoYiBaoZhengLable.text = [NSString stringWithFormat:@"交易保证金:%@",[self.dianPuInfo objectForKey:@"mark_cny"]];
+        }
+        else
+        {
+            jiaoYiBaoZhengImageView.hidden = YES;
+            jiaoYiBaoZhengImageView.top = messageLable.top+messageLable.height;
+            jiaoYiBaoZhengImageView.height = 0;
+
+        }
+
+
+        
         
         NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
 
@@ -430,22 +466,14 @@
         self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
         self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
-        [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.jieSuoButton];
         
-        NSNumber * is_unlock = [self.dianPuInfo objectForKey:@"is_unlock"];
-        if([is_unlock isKindOfClass:[NSNumber class]])
-        {
-            if (is_unlock.intValue==1) {
-                
-                [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-                self.jieSuoButton.button_lable.text = @"已经解锁成功";
-                self.jieSuoButton.button_lable1.text = @"";
+        [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        self.jieSuoButton.button_lable.text = [NSString stringWithFormat:@"电话:%@",[self.dianPuInfo objectForKey:@"contact"]];
+        self.jieSuoButton.button_lable1.text = @"";
+        self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+        self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
 
-
-            }
-        }
-        
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+28*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
         lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
         [headerView addSubview:lineView];

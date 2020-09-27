@@ -113,7 +113,7 @@
     self.mainScrollView.mj_footer = mjFooter;
 
     
-    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel getBannerList:[[NSDictionary alloc]initWithObjectsAndKeys:@"3",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
@@ -600,6 +600,7 @@
     {
         cell = [[FuQiJiaoHomeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
+   // cell.auth_vip = 
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView.tag==0) {

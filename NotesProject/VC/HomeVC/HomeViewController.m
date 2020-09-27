@@ -438,6 +438,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *datenow = [NSDate date];
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    //用户每天调用一下登录接口
+    if(![@"1" isEqualToString:[NormalUse defaultsGetObjectKey:currentTimeString]])
+    {
+     
+        [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
+        }];
+
+
+    }
+
+
+    
     [self registerInit];
     
     [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -1494,13 +1514,24 @@
 -(void)shaiXuanButtonClick
 {
     CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.alsoFromHome = YES;
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)citySelect:(NSDictionary *)info
 {
     self.locationLable.text = [info objectForKey:@"cityName"];
-    [NormalUse defaultsSetObject:info forKey:@"CityInfoDefaults"];
+    NSString * cityCode = [info objectForKey:@"cityCode"];
+    if (cityCode.intValue==-1001) {
+        
+        [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
+
+    }
+    else
+    {
+        [NormalUse defaultsSetObject:info forKey:@"CityInfoDefaults"];
+
+    }
     
     [self firstGetTieZiList];
     [self firstGetRedList];

@@ -20,6 +20,8 @@
 
 @property(nonatomic,strong)UIButton * videoButton;
 
+@property(nonatomic,strong)AutoScrollLabel * autoLabel;
+
 
 @end
 
@@ -42,7 +44,21 @@
     return _noMessageTipButotn;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+    
+    [self.autoLabel removeFromSuperview];
+    self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
+    self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
+    [self.mainScrollView addSubview:self.autoLabel];
 
+}
 
 - (void)viewDidLoad {
     
@@ -160,11 +176,11 @@
 
     [scrollLunBo startCarouselWithArray:self.images];
 
-    AutoScrollLabel * autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
-    autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
-    autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
-    autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
-    [self.mainScrollView addSubview:autoLabel];
+    self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
+    self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
+    [self.mainScrollView addSubview:self.autoLabel];
 
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth)];
@@ -186,26 +202,37 @@
     [self.messageContentView addSubview:nickLable];
     
     UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-14.5*BiLiWidth)/2, 16*BiLiWidth, 14.5*BiLiWidth)];
-    vImageView.image = [UIImage imageNamed:@"vip_black"];
     [self.messageContentView addSubview:vImageView];
+
+    NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+        
+        vImageView.image = [UIImage imageNamed:@"vip_black"];
+
+    }
+    else
+    {
+        vImageView.left = nickLable.left+nickLable.width;
+        vImageView.width = 0;
+    }
     
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 56*BiLiWidth, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
+    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
     if ([auth_nomal isKindOfClass:[NSNumber class]]) {
         
-        if (auth_nomal.intValue==0) {
+        if (auth_nomal.intValue==1) {
             
-            guanFangRenZhengImageView.width = 13.5*BiLiWidth*126/39;
-            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+            guanFangRenZhengImageView.width = 56*BiLiWidth;
+            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
 
 
         }
 
     }
-    
+
     UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     cityLable.textColor = RGBFormUIColor(0x9A9A9A);
@@ -436,7 +463,8 @@
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
     [self.messageContentView addSubview:self.tipLable];
     
-    
+    self.tipLable.top = self.jieSuoButton.top+self.jieSuoButton.height;
+    self.tipLable.height = 0;
 
     self.jiBenXinXiButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, self.tipLable.top+self.tipLable.height+25*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
     [self.jiBenXinXiButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];

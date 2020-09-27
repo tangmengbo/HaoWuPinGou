@@ -64,11 +64,14 @@
         
         if (status==1) {
             
+            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
+            NSMutableArray * hotArray = [[NSMutableArray alloc] initWithArray:self.hotCityList];
+            [hotArray insertObject:dic atIndex:0];
             self.sourceInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             NSArray * keyArray = [responseObject allKeys];
             self.keyArray = [[NSMutableArray alloc] initWithArray:[keyArray sortedArrayUsingSelector:@selector(compare:)]];
             [self.keyArray insertObject:@"热门" atIndex:0];
-            [self.sourceInfo setValue:self.hotCityList forKey:@"热门"];
+            [self.sourceInfo setValue:hotArray forKey:@"热门"];
             [self.mainTableView reloadData];
         }
     }];

@@ -95,15 +95,15 @@
     self.mobileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.mobileButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
     self.mobileButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    [self.mobileButton addTarget:self action:@selector(bangDingMobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.mobileButton addTarget:self action:@selector(bangDingMobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mobileButton];
     
-    self.editMobileButton = [[UIButton alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+110*BiLiWidth, mobileLable.top, 30*BiLiWidth, self.mobileButton.height)];
-    [self.editMobileButton setTitleColor:RGBFormUIColor(0x00AEFF) forState:UIControlStateNormal];
-    self.editMobileButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.editMobileButton addTarget:self action:@selector(editMobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.editMobileButton setTitle:@"更换" forState:UIControlStateNormal];
-    [self.view addSubview:self.editMobileButton];
+//    self.editMobileButton = [[UIButton alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+110*BiLiWidth, mobileLable.top, 30*BiLiWidth, self.mobileButton.height)];
+//    [self.editMobileButton setTitleColor:RGBFormUIColor(0x00AEFF) forState:UIControlStateNormal];
+//    self.editMobileButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    [self.editMobileButton addTarget:self action:@selector(editMobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.editMobileButton setTitle:@"更换" forState:UIControlStateNormal];
+//    [self.view addSubview:self.editMobileButton];
     
     if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
         
@@ -112,7 +112,7 @@
     }
     else
     {
-        [self.mobileButton setTitle:@"暂未绑定 >" forState:UIControlStateNormal];
+        [self.mobileButton setTitle:@"暂未绑定" forState:UIControlStateNormal];
         self.editMobileButton.hidden = YES;
 
     }

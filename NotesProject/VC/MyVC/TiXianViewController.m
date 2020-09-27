@@ -98,20 +98,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [HTTPModel getHuoDongHomeInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            NSNumber * base_coinNumber = [responseObject objectForKey:@"base_coin"];
-            NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
-            
-            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"金币余额 %@",base_coinStr]];
-            [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x9A9A9A) range:NSMakeRange(0, 4)];
-            [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 4)];
-            self.yueLable.attributedText = str;
-        }
-    }];
-
 }
 
 - (void)viewDidLoad {
@@ -167,12 +153,20 @@
     self.yueLable.adjustsFontSizeToFitWidth = YES;
     [whiteContentView addSubview:self.yueLable];
     
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"金币余额 %@",self.yuEStr]];
+    [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x9A9A9A) range:NSMakeRange(0, 4)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14*BiLiWidth] range:NSMakeRange(0, 4)];
+    self.yueLable.attributedText = str;
+
+    
     self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(whiteContentView.width-30*BiLiWidth-150*BiLiWidth, self.yueLable.top, 150*BiLiWidth, 18*BiLiWidth)];
     self.tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.tipLable.textColor = RGBFormUIColor(0x9A9A9A);
     self.tipLable.textAlignment = NSTextAlignmentRight;
+    self.tipLable.adjustsFontSizeToFitWidth = YES;
     NSString * jinBiRmbBiLi = [NormalUse getJinBiStr:@"cny_to_coin"];
-    self.tipLable.text = [NSString stringWithFormat:@"1金币=%.1f人民币",1/jinBiRmbBiLi.floatValue];
+    self.tipLable.text = [NSString stringWithFormat:@"1金币=%.2f人民币",1/jinBiRmbBiLi.floatValue];
     [whiteContentView addSubview:self.tipLable];
     
     UILabel * shouKuanRenLable = [[UILabel alloc] initWithFrame:CGRectMake(jinBiImageView.left, self.yueLable.top+self.yueLable.height+34*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
@@ -239,8 +233,9 @@
     tiXianMessageLable.textColor = RGBFormUIColor(0x9A9A9A);
     tiXianMessageLable.numberOfLines = 0;
     [self.mainScrollView addSubview:tiXianMessageLable];
-    
-    NSString * neiRongStr = @"没有内容填充～没有内容填充～没有内容填充～没有内容填充～没有内容填充～没有内容填充～没有内容填充～没有内容填充～没有内容填充～";
+   
+    NSString * cash_out_percentage = [NormalUse getJinBiStr:@"cash_out_percentage"];
+    NSString * neiRongStr = [NSString stringWithFormat:@"1、每次提现最低为%@金币\n2、提现收取%@%@BiLiWidth手续费，如提1000金币，则实际到账%d金币\n3、仅支持银行卡提现，收款账户卡号和姓名必须一致，到账时间为24小时内",[NormalUse getJinBiStr:@"cash_out_limit"],cash_out_percentage,@"%",1000-(1000*cash_out_percentage.intValue/100)];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距
@@ -261,7 +256,47 @@
 }
 -(void)tiXianButtonClick
 {
-    self.tipKuangView.hidden = NO;
+    //tiXianShenQing
+    if (![NormalUse isValidString:self.jinBiTF.text]) {
+        
+        [NormalUse showToastView:@"请填写提现金额" view:self.view];
+        return;
+    }
+    NSString * cash_out_limit = [NormalUse getJinBiStr:@"cash_out_limit"];
+    if(self.jinBiTF.text.intValue<cash_out_limit.intValue)
+    {
+        [NormalUse showToastView:[NSString stringWithFormat:@"提现金额不能少于%@",cash_out_limit] view:self.view];
+        return;
+    }
+    if (![NormalUse isValidString:self.yinHangKaHaoTF.text]) {
+        
+        [NormalUse showToastView:@"请填写银行卡号" view:self.view];
+        return;
+    }
+
+    if (![NormalUse isValidString:self.shouKuanRenXingMingTF.text]) {
+        
+        [NormalUse showToastView:@"请填写收款人姓名" view:self.view];
+        return;
+    }
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:self.jinBiTF.text forKey:@"coin"];
+    [dic setObject:self.yinHangKaHaoTF.text forKey:@"bank_card"];
+    [dic setObject:self.shouKuanRenXingMingTF.text forKey:@"username"];
+    [NormalUse showMessageLoadView:@"处理中..." vc:self];
+    [HTTPModel tiXianShenQing:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        [NormalUse removeMessageLoadingView:self];
+        if (status==1) {
+            
+            self.tipKuangView.hidden = NO;
+
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
 }
 #pragma mark--金币输入框监听
 
@@ -272,11 +307,11 @@
 
     if([NormalUse isValidString:str])
     {
-        self.tipLable.text = [NSString stringWithFormat:@"合计:%.1f元",str.intValue/jinBiRmbBiLi.floatValue];
+        self.tipLable.text = [NSString stringWithFormat:@"合计:%.2f元",str.intValue/jinBiRmbBiLi.floatValue];
     }
     else
     {
-        self.tipLable.text = [NSString stringWithFormat:@"1金币=%.1f人民币",1/jinBiRmbBiLi.floatValue];
+        self.tipLable.text = [NSString stringWithFormat:@"1金币=%.2f人民币",1/jinBiRmbBiLi.floatValue];
 
     }
     

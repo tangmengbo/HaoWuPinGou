@@ -20,10 +20,91 @@
 
 @property(nonatomic,strong)UITableView * mainTableView;
 
+@property(nonatomic,strong)UIView * tipKuangView;
+
 @end
 
 @implementation DingZhiFuWuViewController
 
+-(UIView *)tipKuangView
+{
+    if (!_tipKuangView) {
+        
+        _tipKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _tipKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [self.view addSubview:_tipKuangView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-253*BiLiWidth)/2, 287*BiLiWidth, 253*BiLiWidth)];
+        kuangImageView.backgroundColor = RGBFormUIColor(0xFFFFFF);
+        kuangImageView.layer.cornerRadius = 8*BiLiWidth;
+        kuangImageView.layer.masksToBounds = YES;
+        kuangImageView.userInteractionEnabled = YES;
+        [_tipKuangView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_tipKuangView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 0;
+        [kuangImageView addSubview:tipLable2];
+        
+        NSString * neiRongStr  = @"什么是定制服务：\n定制服务为用户提供个性化需求，用户可根据自己的喜好以及时间来发布自己的需求，发布完成后可展示在需求大厅，经纪人、女神、外围等来解锁信息。\n定制服务的发布规则：\n 1、定制服务为用户发布需求，有经纪人、女神、外围等解锁信息，解锁后可联系发帖的用户提供服务。\n 2、定制服务的发布需要支付相应的费用，发布之后不可修改和删除\n 3、定制服务特殊需求尽量描述详细，如是否需要提供上门服务等。";
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        //调整行间距
+        [paragraphStyle setLineSpacing:2];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+        tipLable2.attributedText = attributedString;
+        [tipLable2  sizeToFit];
+
+        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable2.top+tipLable2.height+20*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+        [sureButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:sureButton];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = sureButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [sureButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        sureLable.text = @"确定";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [sureButton addSubview:sureLable];
+        
+        kuangImageView.height = sureButton.top+sureButton.height+20*BiLiWidth;
+        kuangImageView.top = (HEIGHT_PingMu-kuangImageView.height)/2;
+        closeButton.top = kuangImageView.top-33*BiLiWidth/3;
+    }
+    return _tipKuangView;
+}
+
+-(void)closeTipKuangView
+{
+    self.tipKuangView.hidden = YES;
+}
+-(void)showTiShiKuang
+{
+    self.tipKuangView.hidden = NO;
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -50,9 +131,13 @@
     
     UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(tipImageView.left+tipImageView.width+5*BiLiWidth, topImageView.top+topImageView.height, 200*BiLiWidth, 45*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    tipLable.textColor = RGBFormUIColor(0xDDDDDD);
+    tipLable.textColor = RGBFormUIColor(0x999999);
     tipLable.text = @"什么是定制服务？";
     [self.view addSubview:tipLable];
+    
+    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(tipImageView.left, tipImageView.top-10*BiLiWidth, 200*BiLiWidth, 34*BiLiWidth)];
+    [button addTarget:self action:@selector(showTiShiKuang) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
     
 
     

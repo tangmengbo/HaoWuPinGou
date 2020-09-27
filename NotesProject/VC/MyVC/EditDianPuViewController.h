@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
     int uploadImageIndex;
 
 }
-
+@property(nonatomic,strong)NSDictionary * dianPuInfo;
+@property(nonatomic,strong)UIImage * dianPuImage;
+@property(nonatomic,strong)NSArray * artist_list;
 @property(nonatomic,strong)UIView * photoContentView;
 @property(nonatomic,strong)NSMutableArray * photoArray;
 @property(nonatomic,strong)UIImagePickerController * imagePickerController;

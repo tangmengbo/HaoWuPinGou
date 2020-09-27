@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CityListViewController : MainBaseViewController
 
+@property(nonatomic,assign)BOOL alsoFromHome;
+
 @property(nonatomic,assign)id<CityListViewControllerDelegate>delegate;
 
 

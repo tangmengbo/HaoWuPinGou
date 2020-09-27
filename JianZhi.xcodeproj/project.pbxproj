@@ -107,6 +107,12 @@
 		5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */; };
 		5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46624E6895200E835AB /* HTTPModel.m */; };
 		5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */; };
+		5F9FE4C725202814001359CB /* EditDianPuShangPinListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4C625202814001359CB /* EditDianPuShangPinListViewController.m */; };
+		5F9FE4CB25202AB6001359CB /* JingJiRenBianJiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4CA25202AB6001359CB /* JingJiRenBianJiListCell.m */; };
+		5F9FE4CE25207706001359CB /* InputMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4CD25207706001359CB /* InputMobileViewController.m */; };
+		5F9FE4D125207B54001359CB /* InputCheckNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4D025207B54001359CB /* InputCheckNumberViewController.m */; };
+		5F9FE4D425207B66001359CB /* InpurPassWorldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4D325207B66001359CB /* InpurPassWorldViewController.m */; };
+		5F9FE4D725207E9F001359CB /* WangJiMiMaInPutMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4D625207E9F001359CB /* WangJiMiMaInPutMobileViewController.m */; };
 		5FBAD7CB251C3423004C153E /* ZYNetworkAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAD7CA251C3423004C153E /* ZYNetworkAccessibility.m */; };
 		5FBAD7CE251C6986004C153E /* CityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAD7CD251C6986004C153E /* CityListCell.m */; };
 		5FC165822519AE7000FA99D2 /* QiDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165812519AE7000FA99D2 /* QiDongViewController.m */; };
@@ -377,6 +383,18 @@
 		5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
 		5F91C46824E6895200E835AB /* HTTPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPModel.h; sourceTree = "<group>"; };
 		5F91C46924E6895200E835AB /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
+		5F9FE4C525202814001359CB /* EditDianPuShangPinListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditDianPuShangPinListViewController.h; sourceTree = "<group>"; };
+		5F9FE4C625202814001359CB /* EditDianPuShangPinListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditDianPuShangPinListViewController.m; sourceTree = "<group>"; };
+		5F9FE4C925202AB6001359CB /* JingJiRenBianJiListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingJiRenBianJiListCell.h; sourceTree = "<group>"; };
+		5F9FE4CA25202AB6001359CB /* JingJiRenBianJiListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingJiRenBianJiListCell.m; sourceTree = "<group>"; };
+		5F9FE4CC25207706001359CB /* InputMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputMobileViewController.h; sourceTree = "<group>"; };
+		5F9FE4CD25207706001359CB /* InputMobileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputMobileViewController.m; sourceTree = "<group>"; };
+		5F9FE4CF25207B54001359CB /* InputCheckNumberViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputCheckNumberViewController.h; sourceTree = "<group>"; };
+		5F9FE4D025207B54001359CB /* InputCheckNumberViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputCheckNumberViewController.m; sourceTree = "<group>"; };
+		5F9FE4D225207B66001359CB /* InpurPassWorldViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InpurPassWorldViewController.h; sourceTree = "<group>"; };
+		5F9FE4D325207B66001359CB /* InpurPassWorldViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InpurPassWorldViewController.m; sourceTree = "<group>"; };
+		5F9FE4D525207E9F001359CB /* WangJiMiMaInPutMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WangJiMiMaInPutMobileViewController.h; sourceTree = "<group>"; };
+		5F9FE4D625207E9F001359CB /* WangJiMiMaInPutMobileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WangJiMiMaInPutMobileViewController.m; sourceTree = "<group>"; };
 		5FBAD7C9251C3423004C153E /* ZYNetworkAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYNetworkAccessibility.h; sourceTree = "<group>"; };
 		5FBAD7CA251C3423004C153E /* ZYNetworkAccessibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYNetworkAccessibility.m; sourceTree = "<group>"; };
 		5FBAD7CC251C6986004C153E /* CityListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CityListCell.h; sourceTree = "<group>"; };
@@ -653,6 +671,8 @@
 				5F66736B251455CC000C6810 /* JingJiRenDianPuDetailViewController.m */,
 				5F6673642511ED24000C6810 /* EditDianPuViewController.h */,
 				5F6673652511ED24000C6810 /* EditDianPuViewController.m */,
+				5F9FE4C525202814001359CB /* EditDianPuShangPinListViewController.h */,
+				5F9FE4C625202814001359CB /* EditDianPuShangPinListViewController.m */,
 				5F6858C8250B476B007BDA9E /* MyJieSuoListViewController.h */,
 				5F6858C9250B476B007BDA9E /* MyJieSuoListViewController.m */,
 				5F7EF466251077EC0052B948 /* MyFaBuViewController.h */,
@@ -831,6 +851,8 @@
 				5F084FAF2518A19800F2D64C /* ChongZhiMingXiCell.m */,
 				5F084FB42518AD5E00F2D64C /* JinBiMingXiCell.h */,
 				5F084FB52518AD5E00F2D64C /* JinBiMingXiCell.m */,
+				5F9FE4C925202AB6001359CB /* JingJiRenBianJiListCell.h */,
+				5F9FE4CA25202AB6001359CB /* JingJiRenBianJiListCell.m */,
 			);
 			path = ViewAndCell;
 			sourceTree = "<group>";
@@ -858,6 +880,14 @@
 			children = (
 				5F7ED857251B22F300D23823 /* EditUserMessageViewController.h */,
 				5F7ED858251B22F300D23823 /* EditUserMessageViewController.m */,
+				5F9FE4CC25207706001359CB /* InputMobileViewController.h */,
+				5F9FE4CD25207706001359CB /* InputMobileViewController.m */,
+				5F9FE4CF25207B54001359CB /* InputCheckNumberViewController.h */,
+				5F9FE4D025207B54001359CB /* InputCheckNumberViewController.m */,
+				5F9FE4D225207B66001359CB /* InpurPassWorldViewController.h */,
+				5F9FE4D325207B66001359CB /* InpurPassWorldViewController.m */,
+				5F9FE4D525207E9F001359CB /* WangJiMiMaInPutMobileViewController.h */,
+				5F9FE4D625207E9F001359CB /* WangJiMiMaInPutMobileViewController.m */,
 				5F7ED85A251B2BAD00D23823 /* BangDingMobileViewController.h */,
 				5F7ED85B251B2BAD00D23823 /* BangDingMobileViewController.m */,
 				5F7ED85D251B388A00D23823 /* GengHuanMobileViewController.h */,
@@ -1373,6 +1403,7 @@
 				5F26510F24FE45BD00171684 /* RAFileManager.m in Sources */,
 				5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */,
 				5F084FAD2518A17A00F2D64C /* ChongZhiMingXiViewController.m in Sources */,
+				5F9FE4D425207B66001359CB /* InpurPassWorldViewController.m in Sources */,
 				5FE3EA72235599D200C77F4D /* ViewController.m in Sources */,
 				5F6673602511BF4E000C6810 /* DingZhiFuWuDetailViewController.m in Sources */,
 				5F22EBC724ECF389002DCF61 /* FuQiJiaoViewController.m in Sources */,
@@ -1402,6 +1433,7 @@
 				5F2650DD24FC8C9A00171684 /* JYConfiguration.m in Sources */,
 				5FE3EC062355A3E400C77F4D /* UIImage+LLGif.m in Sources */,
 				5FE3EC1B2355A3E400C77F4D /* TZGifPhotoPreviewController.m in Sources */,
+				5F9FE4CB25202AB6001359CB /* JingJiRenBianJiListCell.m in Sources */,
 				5F2650F124FDF5FD00171684 /* JvBaoViewController.m in Sources */,
 				5F34DCE624EF777400DE15A1 /* FangLeiFangPianViewController.m in Sources */,
 				5FD850452508774E009286CE /* FuQiJiaoRenZhengStep1VC.m in Sources */,
@@ -1427,9 +1459,11 @@
 				5FE3EC0B2355A3E400C77F4D /* LLImagePickerModel.m in Sources */,
 				5F7EF45F2510510A0052B948 /* FuQiJiaoDetailViewController.m in Sources */,
 				5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */,
+				5F9FE4C725202814001359CB /* EditDianPuShangPinListViewController.m in Sources */,
 				5F34DCC924EE4E2600DE15A1 /* GaoDuanHomeCell.m in Sources */,
 				5F7ED859251B22F300D23823 /* EditUserMessageViewController.m in Sources */,
 				5F6858CA250B476B007BDA9E /* MyJieSuoListViewController.m in Sources */,
+				5F9FE4D125207B54001359CB /* InputCheckNumberViewController.m in Sources */,
 				5FE3EC042355A3E400C77F4D /* UIImageView+LLMediaExt.m in Sources */,
 				5FE3EC182355A3E400C77F4D /* TZPhotoPickerController.m in Sources */,
 				5F22EBCA24ECF39E002DCF61 /* XiaoXiViewController.m in Sources */,
@@ -1437,6 +1471,7 @@
 				5FE3EC0C2355A3E400C77F4D /* LLImagePickerView.m in Sources */,
 				5F084FA7251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m in Sources */,
 				5FDA455C2490EA0A00130D1E /* MyNavigationViewController.m in Sources */,
+				5F9FE4CE25207706001359CB /* InputMobileViewController.m in Sources */,
 				5F084FA125185DE000F2D64C /* MyXiaoXi_GuanFangCell.m in Sources */,
 				5F7ED862251B3E8200D23823 /* ChongZhiMiMaViewController.m in Sources */,
 				5FE3EC032355A3E400C77F4D /* ACAlertController.m in Sources */,
@@ -1449,6 +1484,7 @@
 				5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */,
 				5F7EF45A250F3D8D0052B948 /* FaBuYanZhengViewController.m in Sources */,
 				5F084FAA25187B6500F2D64C /* ZhangHuDetailViewController.m in Sources */,
+				5F9FE4D725207E9F001359CB /* WangJiMiMaInPutMobileViewController.m in Sources */,
 				5F66734B25108F0B000C6810 /* MyFaBu_DingZhiFuWuCell.m in Sources */,
 				5F26510824FE3F9900171684 /* NvShenRenZhengStep4VC.m in Sources */,
 				5FD850512508A34F009286CE /* SanDaJiaoSeDetailViewController.m in Sources */,

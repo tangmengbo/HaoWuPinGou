@@ -266,6 +266,7 @@
     {
         cell = [[DianuDetailListTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
+    cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ((indexPath.row+1)*2<=self.artist_list.count) {
@@ -304,7 +305,18 @@
         
         tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth;
         
-        return messageLable.top+messageLable.height+216*BiLiWidth;
+        NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
+
+        if (is_mark.intValue==1) {
+
+            return messageLable.top+messageLable.height+216*BiLiWidth;
+
+        }
+        else
+        {
+            return messageLable.top+messageLable.height+216*BiLiWidth-32.5*BiLiWidth;
+
+        }
         
     }
     else
@@ -347,8 +359,22 @@
         [headerView addSubview:titleLable];
         
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];
-        vipImageView.image = [UIImage imageNamed:@"vip_black"];
         [headerView addSubview:vipImageView];
+        
+
+        NSNumber * auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
+        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+            
+            vipImageView.image = [UIImage imageNamed:@"vip_black"];
+
+        }
+        else
+        {
+            vipImageView.left = titleLable.left+titleLable.width;
+            vipImageView.width = 0;
+        }
+        
+
         
         Lable_ImageButton * pingFenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+7*BiLiWidth, 37*BiLiWidth, 13*BiLiWidth)];
         pingFenButton.button_imageView.frame = CGRectMake(0, 0, 13*BiLiWidth, 13*BiLiWidth);
@@ -463,9 +489,11 @@
         [headerView addSubview:jiaoYiBaoZhengImageView];
         
 
-        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(22*BiLiWidth, 3*BiLiWidth, jiaoYiBaoZhengImageView.width-22*BiLiWidth, 14*BiLiWidth)];
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(17*BiLiWidth, 3*BiLiWidth, jiaoYiBaoZhengImageView.width-17*BiLiWidth, 14*BiLiWidth)];
         jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
         jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
+        jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
+        jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
         [jiaoYiBaoZhengImageView addSubview:jiaoYiBaoZhengLable];
         
         NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
@@ -476,7 +504,9 @@
         }
         else
         {
-            jiaoYiBaoZhengLable.text = @"无交易保证金";
+            jiaoYiBaoZhengImageView.hidden = YES;
+            jiaoYiBaoZhengImageView.top = messageLable.top+messageLable.height;
+            jiaoYiBaoZhengImageView.height = 0;
 
         }
         

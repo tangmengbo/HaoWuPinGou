@@ -50,23 +50,23 @@
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self addSubview:self.titleLable];
         
-        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+27*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.leiXingLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.leiXingLable];
         
-        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.diQuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.diQuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.diQuLable];
 
         
-        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.fuWuLable];
 
-        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+6*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
+        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+10*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0x999999);
         self.pingFenLable.text = @"综合评分: ";
@@ -76,7 +76,7 @@
         [self addSubview:self.pingFenStarView];
 
         
-        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+6*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.xiaoFeiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.xiaoFeiLable];
@@ -144,7 +144,11 @@
     
     self.titleLable.text = [info objectForKey:@"title"] ;
     
-    self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
+    if([NormalUse isValidString:[info objectForKey:@"message_type"]])
+    {
+        self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
+
+    }
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
     self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];
         
