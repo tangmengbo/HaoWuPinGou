@@ -187,7 +187,7 @@
 -(void)toolButtonClick
 {
     TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-    NSNumber * idNumber = [self.info objectForKey:@"id"];
+    NSNumber * idNumber = [self.info objectForKey:@"post_id"];
     if ([idNumber isKindOfClass:[NSNumber class]]) {
         
         vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];

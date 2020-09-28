@@ -49,7 +49,7 @@
     tipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     tipLable.numberOfLines = 2;
     tipLable.textColor = [UIColor whiteColor];
-    tipLable.text = @"每成功邀请1名用户注册，获得100金币，同时邀请的用户消费金币时您可获得高额抽成";
+    tipLable.text = [NSString stringWithFormat:@"每成功邀请1名用户注册，获得%@金币，同时邀请的用户消费金币时您可获得高额抽成",[NormalUse getJinBiStr:@"share_coin"]] ;
     [self.mainScrollView addSubview:tipLable];
     
     
@@ -64,7 +64,7 @@
     [self.mainScrollView addSubview:tuiGuangMaLable];
 
     
-    NSString * renZhengStr = [NSString stringWithFormat:@"您的推广码 %@",@"12errt"];
+    NSString * renZhengStr = [NSString stringWithFormat:@"您的推广码 %@",self.share_code];
     NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:renZhengStr];
     [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0xFFFFFF) range:NSMakeRange(0, 5)];
     tuiGuangMaLable.attributedText = str;

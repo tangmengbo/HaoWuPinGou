@@ -30,6 +30,9 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     [self registerAPNs];
     
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
+    
     [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {

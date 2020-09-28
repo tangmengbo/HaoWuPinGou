@@ -67,7 +67,7 @@
  "peripheral_auth_coin":"1000",//外围女认证所需金币
  "global_auth_coin":"10000",//全球陪玩认证所需金币
  "cash_out_percentage":"30",//提现手续费百分比
- "share_percentage":"300",//分享提成奖励金币
+ "share_coin":"300",//分享提成奖励金币
  "unlock_mobile_coin":"200",//联系方式解锁所需金币
  "made_requirement_coin":"300",//定制需求所需金币
  "cash_out_limit":"500",//提现最低额度

@@ -60,7 +60,6 @@
         [self addSubview:_jinRuButton];
 
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+18*BiLiWidth, WIDTH_PingMu, 132*BiLiWidth)];
-//        self.contentScrollView.backgroundColor = [UIColor greenColor];
         [self addSubview:self.contentScrollView];
         
         self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];

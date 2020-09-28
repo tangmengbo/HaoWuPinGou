@@ -56,6 +56,9 @@ singleton_interface(HTTPModel)
 +(void)getCityList:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//填写邀请码
++(void)tianXieYaoQingMa:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //手机号是否存在
 +(void)mobileAlsoExit:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -267,6 +270,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //开奖详情
 +(void)getKaiJingDetail:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//领取好友登录金币
++(void)getFriendCoins:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //购买兑奖码
 +(void)buyTicket:(NSDictionary *_Nullable)parameter

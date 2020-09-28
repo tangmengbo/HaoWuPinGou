@@ -73,6 +73,7 @@
 		5F4552A4251DE75B00F42614 /* FengZhuangUIPageControll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
+		5F5B9BC5252178E6005AB038 /* qiDongVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */; };
 		5F60AC0C24FFABA5005BC151 /* DianuDetailListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */; };
 		5F66734825108EEF000C6810 /* MyFaBu_XinXiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66734725108EEF000C6810 /* MyFaBu_XinXiCell.m */; };
 		5F66734B25108F0B000C6810 /* MyFaBu_DingZhiFuWuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66734A25108F0B000C6810 /* MyFaBu_DingZhiFuWuCell.m */; };
@@ -315,6 +316,7 @@
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
+		5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = qiDongVideo.mp4; sourceTree = "<group>"; };
 		5F60AC0A24FFABA5005BC151 /* DianuDetailListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianuDetailListTableViewCell.h; sourceTree = "<group>"; };
 		5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianuDetailListTableViewCell.m; sourceTree = "<group>"; };
 		5F66734625108EEF000C6810 /* MyFaBu_XinXiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFaBu_XinXiCell.h; sourceTree = "<group>"; };
@@ -964,6 +966,7 @@
 			isa = PBXGroup;
 			children = (
 				04715AC323963D2A009CD914 /* KKlive.entitlements */,
+				5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */,
 				5F0BE20E2501D9DA00D307C7 /* loading.gif */,
 				5F54D5D12382709A00282C63 /* Flash.xib */,
 				5F691555237521CE00646D13 /* View */,
@@ -1303,6 +1306,7 @@
 				5FE3EA7A235599D300C77F4D /* LaunchScreen.storyboard in Resources */,
 				5FE3EA77235599D300C77F4D /* Assets.xcassets in Resources */,
 				5FE3EC3E2355AB8000C77F4D /* AgreementViewController.xib in Resources */,
+				5F5B9BC5252178E6005AB038 /* qiDongVideo.mp4 in Resources */,
 				5F54D5D22382709A00282C63 /* Flash.xib in Resources */,
 				5FE3EC152355A3E400C77F4D /* TZImagePickerController.bundle in Resources */,
 				5F0BE20F2501D9DA00D307C7 /* loading.gif in Resources */,

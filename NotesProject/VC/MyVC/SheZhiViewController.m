@@ -155,26 +155,8 @@
     [cleanButton addSubview:cleanLineView];
 
     
-    UIButton * guiFanButton = [[UIButton alloc] initWithFrame:CGRectMake(0, cleanButton.top+cleanButton.height, WIDTH_PingMu, 53*BiLiWidth)];
-    [guiFanButton addTarget:self action:@selector(guiFanButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    guiFanButton.backgroundColor = [UIColor whiteColor];
-    [self.mainScrollView addSubview:guiFanButton];
-    
-    UILabel * guiFanLable = [[UILabel alloc] initWithFrame:CGRectMake(16*BiLiWidth,0, 100*BiLiWidth, 53*BiLiWidth)];
-    guiFanLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    guiFanLable.textColor = RGBFormUIColor(0x343434);
-    guiFanLable.text = @"用户试用规范";
-    [guiFanButton addSubview:guiFanLable];
-    
-    UIImageView * guiFanLeftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-(17+18)*BiLiWidth, (53*BiLiWidth-18*BiLiWidth)/2, 18*BiLiWidth, 18*BiLiWidth)];
-    guiFanLeftImageView.image = [UIImage imageNamed:@"btn_back_nr_n"];
-    [guiFanButton addSubview:guiFanLeftImageView];
 
-    UIView * guiFanLineView = [[UIView alloc] initWithFrame:CGRectMake(0, shouShiButton.height-1, WIDTH_PingMu, 1)];
-    guiFanLineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-    [guiFanButton addSubview:guiFanLineView];
-
-    UIButton * versionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, guiFanButton.top+guiFanButton.height, WIDTH_PingMu, 53*BiLiWidth)];
+    UIButton * versionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, cleanButton.top+cleanButton.height, WIDTH_PingMu, 53*BiLiWidth)];
     versionButton.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:versionButton];
     

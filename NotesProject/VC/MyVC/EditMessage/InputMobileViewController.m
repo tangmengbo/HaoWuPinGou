@@ -27,9 +27,8 @@
     
     self.topTitleLale.text = @"绑定手机号";
     
-    UIImageView * logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-100*BiLiWidth)/2, self.topNavView.top+self.topNavView.height+10*BiLiWidth, 100*BiLiWidth, 100*BiLiWidth)];
-    logoImageView.image = [UIImage imageNamed:@""];
-    logoImageView.backgroundColor = [UIColor greenColor];
+    UIImageView * logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-72*BiLiWidth)/2, self.topNavView.top+self.topNavView.height+50*BiLiWidth, 72*BiLiWidth, 72*BiLiWidth)];
+    logoImageView.image = [UIImage imageNamed:@"telEdit_logo"];
     [self.view addSubview:logoImageView];
     
     
@@ -38,6 +37,15 @@
     titleLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
     titleLable.text = @"绑定手机号";
     [self.view addSubview:titleLable];
+    
+    if([@"2" isEqualToString:self.bangDingOrQieHuan])
+    {
+        self.topTitleLale.text = @"切换账号";
+        titleLable.text = @"切换账号";
+
+
+    }
+
     
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap)];

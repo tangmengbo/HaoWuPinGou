@@ -260,7 +260,7 @@
             
             if (status==1) {
                 
-                page = page+1;
+                self->page = self->page+1;
                 
                 [self.mainTableView.mj_header endRefreshing];
 

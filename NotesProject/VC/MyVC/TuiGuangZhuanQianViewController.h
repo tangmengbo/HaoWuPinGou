@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TuiGuangZhuanQianViewController : MainBaseViewController
 
+@property(nonatomic,strong)NSString * share_code;
 @end
 
 NS_ASSUME_NONNULL_END

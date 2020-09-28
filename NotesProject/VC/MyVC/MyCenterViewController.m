@@ -16,9 +16,106 @@
 
 @property(nonatomic,strong)NSDictionary * userInfo;
 
+@property(nonatomic,strong)UIView * tianXieYaoQingMaView;
+@property(nonatomic,strong)UITextField * yaoQingMaTF;
+
 @end
 
 @implementation MyCenterViewController
+
+-(UIView *)tianXieYaoQingMaView
+{
+    if (!_tianXieYaoQingMaView) {
+        
+        _tianXieYaoQingMaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _tianXieYaoQingMaView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [self.view addSubview:_tianXieYaoQingMaView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-244*BiLiWidth)/2, 287*BiLiWidth, 244*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_tianXieYaoQingMaView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_tianXieYaoQingMaView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33.5*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"请输入邀请码";
+        [kuangImageView addSubview:tipLable1];
+        
+        
+        self.yaoQingMaTF = [[UITextField alloc] initWithFrame:CGRectMake(20*BiLiWidth, tipLable1.top+tipLable1.height+30*BiLiWidth, kuangImageView.width-40*BiLiWidth, 40*BiLiWidth)];
+        self.yaoQingMaTF.layer.borderWidth = 1;
+        self.yaoQingMaTF.layer.borderColor = [RGBFormUIColor(0xEEEEEE) CGColor];
+        self.yaoQingMaTF.textColor = RGBFormUIColor(0x343434);
+        self.yaoQingMaTF.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        self.yaoQingMaTF.textAlignment = NSTextAlignmentCenter;
+        [kuangImageView addSubview:self.yaoQingMaTF];
+        
+
+        UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(20*BiLiWidth, self.yaoQingMaTF.top+self.yaoQingMaTF.height+20*BiLiWidth, kuangImageView.width-40*BiLiWidth, 40*BiLiWidth)];
+        [renZhengButton addTarget:self action:@selector(tiJiaoYanZhengMa) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:renZhengButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = renZhengButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [renZhengButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, renZhengButton.width, renZhengButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"确定";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [renZhengButton addSubview:sureLable];
+        
+
+        
+
+    }
+    return _tianXieYaoQingMaView;
+}
+-(void)tiJiaoYanZhengMa
+{
+    if (![NormalUse isValidString:self.yaoQingMaTF.text]) {
+        
+        [NormalUse showToastView:@"请输入邀请码" view:self.view];
+        return;
+    }
+    [HTTPModel tianXieYaoQingMa:[[NSDictionary alloc] initWithObjectsAndKeys:self.yaoQingMaTF.text,@"share_code", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.tianXieYaoQingMaButton.button_lable1.text = self.yaoQingMaTF.text;
+            self.tianXieYaoQingMaButton.button_imageView1.image = nil;
+            self.tianXieYaoQingMaButton.enabled = NO;
+            [NormalUse showToastView:@"邀请码已填写" view:self.view];
+            [self closeTipKuangView];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+}
+-(void)closeTipKuangView
+{
+    self.tianXieYaoQingMaView.hidden = YES;
+    [self.yaoQingMaTF resignFirstResponder];
+    
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -116,7 +213,14 @@
 
                 }
             }
-            
+            if([NormalUse isValidString:[self.userInfo objectForKey:@"from_share_code"]])
+            {
+                self.tianXieYaoQingMaButton.button_lable1.text = [self.userInfo objectForKey:@"from_share_code"];
+                self.tianXieYaoQingMaButton.button_imageView1.image = nil;
+                self.tianXieYaoQingMaButton.enabled = NO;
+
+            }
+
         }
     }];
 
@@ -320,6 +424,10 @@
     self.tianXieYaoQingMaButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.tianXieYaoQingMaButton.button_lable.textColor = RGBFormUIColor(0x333333);
     self.tianXieYaoQingMaButton.button_lable.text = @"填写邀请码";
+    self.tianXieYaoQingMaButton.button_lable1.frame = CGRectMake(self.tianXieYaoQingMaButton.width-100*BiLiWidth-12*BiLiWidth, 0, 100*BiLiWidth, self.tianXieYaoQingMaButton.height);
+    self.tianXieYaoQingMaButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.tianXieYaoQingMaButton.button_lable1.textColor = RGBFormUIColor(0x333333);
+    self.tianXieYaoQingMaButton.button_lable1.textAlignment = NSTextAlignmentRight;
     self.tianXieYaoQingMaButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
     self.tianXieYaoQingMaButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
     [self.mainScrollView addSubview:self.tianXieYaoQingMaButton];
@@ -393,10 +501,11 @@
 -(void)tuiGuangButtonClick
 {
     TuiGuangZhuanQianViewController * vc = [[TuiGuangZhuanQianViewController alloc] init];
+    vc.share_code = [self.userInfo objectForKey:@"share_code"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)tianXieYaoQingMaButtonClick
 {
-    
+    self.tianXieYaoQingMaView.hidden = NO;
 }
 @end

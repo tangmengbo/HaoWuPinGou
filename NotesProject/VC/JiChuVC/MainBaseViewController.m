@@ -112,7 +112,7 @@
     [self.loadingView addSubview: self.tipLable];
 
 }
-
+/*
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (@available(iOS 13.0, *)) {
@@ -142,6 +142,7 @@
     }
 
 }
+*/
 
 -(void)viewWillAppear:(BOOL)animated
 {
