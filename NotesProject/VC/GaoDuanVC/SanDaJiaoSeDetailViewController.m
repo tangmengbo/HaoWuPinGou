@@ -183,7 +183,7 @@
     [self.mainScrollView addSubview:self.autoLabel];
 
 
-    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth)];
+    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.messageContentView];
     //某个角圆角
@@ -205,7 +205,7 @@
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
         
         vImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -217,7 +217,7 @@
     }
     
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+//    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
@@ -589,23 +589,24 @@
     [self.jiBenXinXiContentView addSubview:jiaGeLable];
     
     //数量
-    UIImageView * shuLiangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-    shuLiangImageView.image = [UIImage imageNamed:@"ziLiao_renShu"];
-    [self.jiBenXinXiContentView addSubview:shuLiangImageView];
-    
-    UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
-    shuLiangLableLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    shuLiangLableLable.textColor = RGBFormUIColor(0x666666);
-    NSNumber *  nums = [self.tieZiInfo objectForKey:@"nums"];
-    if ([nums isKindOfClass:[NSNumber class]]) {
-        
-        shuLiangLableLable.text = [NSString stringWithFormat:@"数量：%d",nums.intValue];
-
-    }
-    [self.jiBenXinXiContentView addSubview:shuLiangLableLable];
-
+//    UIImageView * shuLiangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+//    shuLiangImageView.image = [UIImage imageNamed:@"ziLiao_renShu"];
+//    [self.jiBenXinXiContentView addSubview:shuLiangImageView];
+//
+//    UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
+//    shuLiangLableLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    shuLiangLableLable.textColor = RGBFormUIColor(0x666666);
+//    NSNumber *  nums = [self.tieZiInfo objectForKey:@"nums"];
+//    if ([nums isKindOfClass:[NSNumber class]]) {
+//
+//        shuLiangLableLable.text = [NSString stringWithFormat:@"数量：%d",nums.intValue];
+//
+//    }
+//    [self.jiBenXinXiContentView addSubview:shuLiangLableLable];
+//    shuLiangImageView.top = jiaGeImageView.top;
+//    shuLiangImageView.height = 0;
     //年龄
-    UIImageView * ageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, shuLiangImageView.top+shuLiangImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+    UIImageView * ageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
     ageImageView.image = [UIImage imageNamed:@"ziLiao_age"];
     [self.jiBenXinXiContentView addSubview:ageImageView];
     
@@ -645,72 +646,27 @@
     self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, 0)];
     [self.bottomContentScollView addSubview:self.xiangQingJieShaoContentView];
     
-//    UIImageView * headerImageView =  [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
-//    headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    headerImageView.autoresizingMask = UIViewAutoresizingNone;
-//    headerImageView.clipsToBounds = YES;
-//    headerImageView.layer.cornerRadius = 24*BiLiWidth;
-//    headerImageView.backgroundColor = [UIColor redColor];
-//    [self.xiangQingJieShaoContentView addSubview:headerImageView];
-//
-//    NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
-//    CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-//    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, 6*BiLiWidth, size.width, 14*BiLiWidth)];
-//    nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-//    nickLable.textColor = RGBFormUIColor(0x343434);
-//    nickLable.text = nickStr;
-//    [self.xiangQingJieShaoContentView addSubview:nickLable];
-//
-//    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+9*BiLiWidth, 6*BiLiWidth, 26*BiLiWidth, 14*BiLiWidth)];
-//    tipLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
-//    tipLable.textColor = RGBFormUIColor(0xFFFFFF);
-//    tipLable.layer.cornerRadius = 4*BiLiWidth;
-//    tipLable.clipsToBounds = YES;
-//    tipLable.text = @"作者";
-//    [self.xiangQingJieShaoContentView addSubview:tipLable];
-//
-//
-//    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, tipLable.top+tipLable.height+11.5*BiLiWidth, 100*BiLiWidth, 11*BiLiWidth)];
-//    timeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-//    timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-//    timeLable.text = @"2020-08-28";
-//    [self.xiangQingJieShaoContentView addSubview:timeLable];
-//
-//
-//    UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 45*BiLiWidth, 11*BiLiWidth)];
-//    pingFenTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-//    pingFenTipLable.textColor = RGBFormUIColor(0x9A9A9A);
-//    pingFenTipLable.text = @"综合评分";
-//    [self.xiangQingJieShaoContentView addSubview:pingFenTipLable];
-//
-//
-//    UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenTipLable.left+pingFenTipLable.width+12*BiLiWidth, headerImageView.top+headerImageView.height+17.5*BiLiWidth, 45*BiLiWidth, 18*BiLiWidth)];
-//    pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
-//    pingFenLable.textColor = RGBFormUIColor(0x343434);
-//    NSNumber *  complex_score = [self.tieZiInfo objectForKey:@"complex_score"];
-//    if ([complex_score isKindOfClass:[NSNumber class]]) {
-//
-//        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
-//
-//    }
-//
-//
-//    [self.xiangQingJieShaoContentView addSubview:pingFenLable];
     UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, 7.5*BiLiWidth, 333*BiLiWidth, 0)];
     messageLable.numberOfLines = 0;
     messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     messageLable.textColor = RGBFormUIColor(0x343434);
     [self.xiangQingJieShaoContentView addSubview:messageLable];
 
-    NSString * neiRongStr = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    //调整行间距
-    [paragraphStyle setLineSpacing:2];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
-    messageLable.attributedText = attributedString;
-    //设置自适应
-    [messageLable  sizeToFit];
+//    NSString * neiRongStr = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    //调整行间距
+//    [paragraphStyle setLineSpacing:2];
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+//    messageLable.attributedText = attributedString;
+//    //设置自适应
+//    [messageLable  sizeToFit];
+    
+    NSString * content = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+    messageLable.attributedText = attrStr;
+    [messageLable sizeToFit];
+
     
     self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+20*BiLiWidth;
 

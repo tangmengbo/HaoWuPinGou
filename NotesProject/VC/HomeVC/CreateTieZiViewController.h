@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UITextView * xiangQingTextView;
 
 @property(nonatomic,strong)UIButton * tiJiaoButton;
+@property(nonatomic,strong)UILabel * tiJiaoLable;
 
 @property(nonatomic,strong)NSDictionary * cityInfo;//城市信息
 @property(nonatomic,strong,nullable)NSString * videoPathId;

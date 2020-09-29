@@ -13,10 +13,91 @@
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
+@property(nonatomic,strong)UIView *tipKuangView;
 
 @end
 
 @implementation CreateDingZhiFuWuViewController
+
+-(UIView *)tipKuangView
+{
+    if (!_tipKuangView) {
+        
+        _tipKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _tipKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [self.view addSubview:_tipKuangView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-253*BiLiWidth)/2, 287*BiLiWidth, 253*BiLiWidth)];
+        kuangImageView.backgroundColor = RGBFormUIColor(0xFFFFFF);
+        kuangImageView.layer.cornerRadius = 8*BiLiWidth;
+        kuangImageView.layer.masksToBounds = YES;
+        kuangImageView.userInteractionEnabled = YES;
+        [_tipKuangView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_tipKuangView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 0;
+        [kuangImageView addSubview:tipLable2];
+        
+        NSString * neiRongStr  = @"什么是定制服务：\n定制服务为用户提供个性化需求，用户可根据自己的喜好以及时间来发布自己的需求，发布完成后可展示在需求大厅，经纪人、女神、外围等来解锁信息。\n定制服务的发布规则：\n 1、定制服务为用户发布需求，有经纪人、女神、外围等解锁信息，解锁后可联系发帖的用户提供服务。\n 2、定制服务的发布需要支付相应的费用，发布之后不可修改和删除\n 3、定制服务特殊需求尽量描述详细，如是否需要提供上门服务等。";
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        //调整行间距
+        [paragraphStyle setLineSpacing:2];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+        tipLable2.attributedText = attributedString;
+        [tipLable2  sizeToFit];
+
+        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable2.top+tipLable2.height+20*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+        [sureButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:sureButton];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = sureButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [sureButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        sureLable.text = @"确定";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [sureButton addSubview:sureLable];
+        
+        kuangImageView.height = sureButton.top+sureButton.height+20*BiLiWidth;
+        kuangImageView.top = (HEIGHT_PingMu-kuangImageView.height)/2;
+        closeButton.top = kuangImageView.top-33*BiLiWidth/3;
+    }
+    return _tipKuangView;
+}
+
+-(void)closeTipKuangView
+{
+    self.tipKuangView.hidden = YES;
+}
+-(void)rightClick
+{
+    self.tipKuangView.hidden = NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,11 +120,11 @@
     self.topNavView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.topNavView];
     
-    [self.rightButton setTitle:@"发布规则" forState:UIControlStateNormal];
-    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    self.rightButton.width = 50*BiLiWidth;
-    self.rightButton.left = self.rightButton.left-13*BiLiWidth;
-    [self.rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.rightButton setTitle:@"发布规则" forState:UIControlStateNormal];
+//    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
+//    self.rightButton.width = 50*BiLiWidth;
+//    self.rightButton.left = self.rightButton.left-13*BiLiWidth;
+//    [self.rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     self.whiteContentView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-320*BiLiWidth)/2, TopHeight_PingMu+85*BiLiWidth, 320*BiLiWidth, 362*BiLiWidth)];
     self.whiteContentView.backgroundColor = [UIColor whiteColor];
@@ -162,7 +243,7 @@
     meiZiLeiXingLable.text = @"妹子类型";
     [self.whiteContentView addSubview:meiZiLeiXingLable];
     
-    self.leiXingButton = [[UIButton alloc] initWithFrame:CGRectMake(194*BiLiWidth, meiZiLeiXingLable.top, 105*BiLiWidth, 39.5*BiLiWidth)];
+    self.leiXingButton = [[UIButton alloc] initWithFrame:CGRectMake(194*BiLiWidth-100*BiLiWidth, meiZiLeiXingLable.top, 105*BiLiWidth+100*BiLiWidth, 39.5*BiLiWidth)];
     self.leiXingButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.leiXingButton setTitle:@"选择喜欢的妹子类型>" forState:UIControlStateNormal];
     [self.leiXingButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
@@ -182,7 +263,7 @@
     fuWuXiangMuLable.text = @"服务项目";
     [self.whiteContentView addSubview:fuWuXiangMuLable];
     
-    self.xiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(194*BiLiWidth, fuWuXiangMuLable.top, 105*BiLiWidth, 39.5*BiLiWidth)];
+    self.xiangMuButton = [[UIButton alloc] initWithFrame:CGRectMake(194*BiLiWidth-100*BiLiWidth, fuWuXiangMuLable.top, 105*BiLiWidth+100*BiLiWidth, 39.5*BiLiWidth)];
     self.xiangMuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.xiangMuButton setTitle:@"选择服务项目>" forState:UIControlStateNormal];
     [self.xiangMuButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
@@ -306,7 +387,7 @@
     [self.pickRootView addGestureRecognizer:tapGesture];
     
     self.datePickView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-162, WIDTH_PingMu, 162)];
-    self.datePickView.datePickerMode=UIDatePickerModeDateAndTime;
+    self.datePickView.datePickerMode=UIDatePickerModeDate;
     [self.pickRootView addSubview:self.datePickView];
     self.datePickView.maximumDate = [NSDate date];
     
@@ -316,7 +397,7 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *lastMonthComps = [[NSDateComponents alloc] init];
     [lastMonthComps setYear:1];
-    //[lastMonthComps setMonth:1];// month = 1表示1月后的时间 month = -1为1月前的日期 year day 类推
+    [lastMonthComps setMonth:1];// month = 1表示1月后的时间 month = -1为1月前的日期 year day 类推
     NSDate *newdate = [calendar dateByAddingComponents:lastMonthComps toDate:currentDate options:0];
 
     [self.datePickView setMinimumDate:currentDate];//设置最小时间

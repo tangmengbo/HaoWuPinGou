@@ -126,10 +126,26 @@
         
         [HTTPModel dingZhiXuQiu:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
            
+            [self yinCangLoadingView];
+
             if (status==1) {
                 
-                [self.navigationController popToRootViewControllerAnimated:YES];
                 [NormalUse showToastView:@"发布成功" view:[NormalUse getCurrentVC].view];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                   
+                    NSArray *temArray = self.navigationController.viewControllers;
+                    
+                    for(UIViewController *temVC in temArray)
+                    {
+                        if ([temVC isKindOfClass:[DingZhiFuWuViewController class]])
+                        {
+                            [self.navigationController popToViewController:temVC animated:YES];
+                        }
+                    }
+
+                    
+                });
+
             }
             else
             {

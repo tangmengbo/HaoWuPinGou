@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign)id<CityListViewControllerDelegate>delegate;
 
+@property(nonatomic,strong)NSDictionary * cityInfo;
+
 
 @end
 

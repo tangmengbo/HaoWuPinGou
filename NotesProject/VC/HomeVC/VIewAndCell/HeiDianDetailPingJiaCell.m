@@ -88,7 +88,7 @@
         
     }
     
-    self.tiYanTimeLable.text = [NSString stringWithFormat:@"体验时间：%@",[info objectForKey:@"create_at"]];
+    self.tiYanTimeLable.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"create_at"]];
     self.pingFenLable.text = [info objectForKey:@"type"];
     
     NSArray * array = [info objectForKey:@"images"];

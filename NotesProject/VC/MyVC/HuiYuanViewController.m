@@ -29,9 +29,91 @@
 
 @property(nonatomic,strong)NSString * vip_type;//vip_type vip_forever永久会员 vip_year年会员
 
+//auth_vip 2终身会员 1年会员 0非会员
+@property(nonatomic,strong)NSNumber * auth_vip;
+@property(nonatomic,strong)UIButton * kaiTongButton;
+
+@property(nonatomic,strong)UIView * tiShiKuangView;
 @end
 
 @implementation HuiYuanViewController
+
+-(UIView *)tiShiKuangView
+{
+    if (!_tiShiKuangView) {
+        
+        _tiShiKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _tiShiKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_tiShiKuangView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_tiShiKuangView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_tiShiKuangView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 80*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 2;
+        tipLable2.text = @"开通此会员卡会替换您目前拥有的会员卡，是否确定开通";
+        [kuangImageView addSubview:tipLable2];
+        
+        UIButton * quXiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, tipLable2.top+tipLable2.height+25*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+        [quXiaoButton setTitle:@"取消" forState:UIControlStateNormal];
+        quXiaoButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        quXiaoButton.layer.cornerRadius = 20*BiLiWidth;
+        [quXiaoButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+        quXiaoButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [quXiaoButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:quXiaoButton];
+
+        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake(quXiaoButton.left+quXiaoButton.width+11.5*BiLiWidth, quXiaoButton.top, 115*BiLiWidth, 40*BiLiWidth)];
+        [sureButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:sureButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = sureButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [sureButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"确定";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [sureButton addSubview:sureLable];
+
+    }
+    return _tiShiKuangView;
+}
+-(void)sureButtonClick
+{
+    self.tiShiKuangView.hidden = YES;
+    [self kaiTongHuiYuan];
+}
+-(void)closeTipKuangView
+{
+    self.tiShiKuangView.hidden = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -106,13 +188,14 @@
 
 
     //auth_vip 2终身会员 1年会员 0非会员
-    NSNumber * auth_vip = [self.info objectForKey:@"auth_vip"];
-    if (auth_vip.intValue!=1) {
+    self.auth_vip = [self.info objectForKey:@"auth_vip"];
+    if (self.auth_vip.intValue!=1) {
         
         self.nianKaTipLable.hidden = YES;
+        self.kaiTongButton.hidden = YES;
         
     }
-     if (auth_vip.intValue != 2)
+     if (self.auth_vip.intValue != 2)
     {
         self.yongJiuTipLable.hidden = YES;
     }
@@ -193,28 +276,28 @@
     [self.mainScrollView addSubview:self.button4];
 
 
-    UIButton * tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-153*BiLiWidth)/2, self.button4.top+self.button4.height+32*BiLiWidth, 153*BiLiWidth, 40*BiLiWidth)];
-    [tiJiaoButton addTarget:self action:@selector(tiJiaoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:tiJiaoButton];
+    self.kaiTongButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-153*BiLiWidth)/2, self.button4.top+self.button4.height+32*BiLiWidth, 153*BiLiWidth, 40*BiLiWidth)];
+    [self.kaiTongButton addTarget:self action:@selector(tiJiaoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollView addSubview:self.kaiTongButton];
     //渐变设置
     UIColor *colorOne = RGBFormUIColor(0xF8E29F);
     UIColor *colorTwo = RGBFormUIColor(0xEAC384);
     CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-    gradientLayer1.frame = tiJiaoButton.bounds;
+    gradientLayer1.frame = self.kaiTongButton.bounds;
     gradientLayer1.cornerRadius = 20*BiLiWidth;
     gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
     gradientLayer1.startPoint = CGPointMake(0, 0);
     gradientLayer1.endPoint = CGPointMake(0, 1);
     gradientLayer1.locations = @[@0,@1];
-    [tiJiaoButton.layer addSublayer:gradientLayer1];
+    [self.kaiTongButton.layer addSublayer:gradientLayer1];
     
-    self.kaiTongJinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tiJiaoButton.width, tiJiaoButton.height)];
+    self.kaiTongJinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.kaiTongButton.width, self.kaiTongButton.height)];
     self.kaiTongJinBiLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     self.kaiTongJinBiLable.textAlignment = NSTextAlignmentCenter;
     self.kaiTongJinBiLable.textColor = [UIColor whiteColor];
-    [tiJiaoButton addSubview:self.kaiTongJinBiLable];
+    [self.kaiTongButton addSubview:self.kaiTongJinBiLable];
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, tiJiaoButton.top+tiJiaoButton.height+30*BiLiWidth)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
 
     [nianKaVipButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
@@ -240,6 +323,15 @@
     self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
     
     self.vip_type = @"vip_year";
+    
+    if(self.auth_vip.intValue==1)
+    {
+        self.kaiTongButton.hidden = YES;
+    }
+    else
+    {
+        self.kaiTongButton.hidden = NO;
+    }
 
 
 }
@@ -252,11 +344,34 @@
 
     self.vip_type = @"vip_forever";
     
+    if(self.auth_vip.intValue==2)
+    {
+        self.kaiTongButton.hidden = YES;
+    }
+    else
+    {
+        self.kaiTongButton.hidden = NO;
+    }
+
+    
 
 }
 -(void)tiJiaoButtonClick
 {
+    
+    if(self.auth_vip.intValue==0)
+    {
+        [self kaiTongButton];
+    }
+    else
+    {
+        self.tiShiKuangView.hidden = NO;
+    }
+}
+-(void)kaiTongHuiYuan
+{
     [NormalUse showMessageLoadView:@"开通中..." vc:self];
+
     [HTTPModel kaiTongHuiYuan:[[NSDictionary alloc]initWithObjectsAndKeys:self.vip_type,@"vip_type", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         [NormalUse removeMessageLoadingView:self];
@@ -280,5 +395,6 @@
         }
         
     }];
+
 }
 @end

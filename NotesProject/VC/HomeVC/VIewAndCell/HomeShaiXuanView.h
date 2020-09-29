@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * field; //'field'默认,'hot_value'热度,'complex_score'评分,'min_price'低价,'max_price'高价    
 @property(nonatomic,strong)NSString * order; //desc或者 asc(价格从低到高)
 
-@property(nonatomic,strong)NSArray * leiXingSourceArray;
+@property(nonatomic,strong)NSMutableArray * leiXingSourceArray;
 @property(nonatomic,strong)NSMutableArray * leiXingButtonArray;
 @property(nonatomic,strong)NSString * message_type;
 

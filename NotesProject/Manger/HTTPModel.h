@@ -271,6 +271,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)getKaiJingDetail:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+
 //领取好友登录金币
 +(void)getFriendCoins:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
@@ -361,4 +362,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //提现申请接口
 +(void)tiXianShenQing:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//发帖是否免费
++(void)faTieAlsoFree:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+
 @end

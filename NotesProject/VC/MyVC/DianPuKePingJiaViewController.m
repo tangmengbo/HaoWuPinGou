@@ -1,36 +1,80 @@
 //
-//  JingJiRenDianPuDetailViewController.m
+//  DianPuKePingJiaViewController.m
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/18.
+//  Created by 唐蒙波 on 2020/9/29.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "JingJiRenDianPuDetailViewController.h"
+#import "DianPuKePingJiaViewController.h"
 #import "DianuDetailListTableViewCell.h"
-#import "EditDianPuViewController.h"
-
-
-@interface JingJiRenDianPuDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "MyJieSuo_TieZiListCell.h"
+@interface DianPuKePingJiaViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     int page;
     float tableViewHeaderHeight;
+    BOOL alsoLock;
 }
 
 @property(nonatomic,strong)UITableView * mainTableView;
-
-@property(nonatomic,strong)UIImageView * headerImageView;
 
 @property(nonatomic,strong)NSDictionary * dianPuInfo;//店铺信息
 @property(nonatomic,strong)NSMutableArray *  artist_list;//店铺下艺人列表
 
 @property(nonatomic,strong)NSString * field;//默认最新 hot_value 最热
 
+@property(nonatomic,strong)UIView * jieSuoTipView;
 
 @end
 
-@implementation JingJiRenDianPuDetailViewController
+@implementation DianPuKePingJiaViewController
 
+-(UIView *)jieSuoTipView
+{
+    if (!_jieSuoTipView) {
+        
+        _jieSuoTipView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, 155*BiLiWidth)];
+        _jieSuoTipView.backgroundColor = RGBFormUIColor(0xFF6C6D);
+        [self.view addSubview:_jieSuoTipView];
+//        _jieSuoTipView.layer.shadowOpacity = 0.2f;
+//        _jieSuoTipView.layer.shadowColor = [UIColor blackColor].CGColor;
+//        _jieSuoTipView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
+
+        //某个角圆角
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_jieSuoTipView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = _jieSuoTipView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        _jieSuoTipView.layer.mask = maskLayer;
+
+        
+        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 24*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
+        tipLable.text = @"温馨提示";
+        tipLable.textColor = RGBFormUIColor(0xFFA218);
+        tipLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        [_jieSuoTipView addSubview:tipLable];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, tipLable.top+tipLable.height+18*BiLiWidth, WIDTH_PingMu-60*BiLiWidth, 40*BiLiWidth)];
+        tipLable1.text = @"解锁经纪人联系方式即可查看经纪人下所有信息的联系方式～";
+        tipLable1.numberOfLines = 2;
+        tipLable1.textColor = RGBFormUIColor(0xFFFFFF);
+        tipLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [_jieSuoTipView addSubview:tipLable1];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-28*BiLiWidth, 13*BiLiWidth, 14.5*BiLiWidth, 14.5*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"dianPu_tip_close"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeJieSuoTipView) forControlEvents:UIControlEventTouchUpInside];
+        [_jieSuoTipView addSubview:closeButton];
+
+    }
+    return _jieSuoTipView;
+}
+-(void)closeJieSuoTipView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.jieSuoTipView.top = HEIGHT_PingMu;
+    }];
+}
 -(Lable_ImageButton *)noMessageTipButotn
 {
     if (!_noMessageTipButotn) {
@@ -47,46 +91,19 @@
     }
     return _noMessageTipButotn;
 }
-
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
-    [HTTPModel jingJiRenGetDianPuDetail:nil
-                               callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        if (status==1) {
-            
-            self.dianPuInfo = responseObject;
-            self.topTitleLale.text = [self.dianPuInfo objectForKey:@"name"];
-            
-            self.artist_list = [self.dianPuInfo objectForKey:@"artist_list"];
-            [self.mainTableView reloadData];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                if (self.artist_list.count==0) {
-                    
-                    self.noMessageTipButotn.hidden = NO;
-                }
-                else
-                {
-                    self.noMessageTipButotn.hidden = YES;
-                    
-                }
-
-            });
-
-            // [self loadNewLsit];
-            
-            
-        }
-        else
-        {
-            [NormalUse showToastView:msg view:self.view];
-        }
+    if (alsoLock) {
         
-    }];
-    
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.jieSuoTipView.top = HEIGHT_PingMu-self.jieSuoTipView.height;
+        }];
+
+
+    }
 }
 
 - (void)viewDidLoad {
@@ -104,27 +121,35 @@
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mainTableView];
     
-//    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
-//    mjHeader.lastUpdatedTimeLabel.hidden = YES;
-//    self.mainTableView.mj_header = mjHeader;
-//
-//
-//    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
-//    self.mainTableView.mj_footer = mjFooter;
-
-    [self.rightButton setTitle:@"编辑" forState:UIControlStateNormal];
+    MJRefreshNormalHeader * mjHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewLsit)];
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
+    self.mainTableView.mj_header = mjHeader;
     
+    MJRefreshBackNormalFooter * mjFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    self.mainTableView.mj_footer = mjFooter;
+
 
     
+    [HTTPModel getDianPuDetail:[[NSDictionary alloc] initWithObjectsAndKeys:self.dianPuId,@"id", nil]
+                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
+        if (status==1) {
+
+            self.dianPuInfo = responseObject;
+            self.topTitleLale.text = [self.dianPuInfo objectForKey:@"name"];
+            
+            [self.mainTableView reloadData];
+
+            [self loadNewLsit];
+
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+
+    }];
     
-}
--(void)rightClick
-{
-    EditDianPuViewController * vc = [[EditDianPuViewController alloc] init];
-    vc.artist_list = self.artist_list;
-    vc.dianPuInfo = self.dianPuInfo;
-    vc.dianPuImage = self.headerImageView.image;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)loadNewLsit
 {
@@ -212,45 +237,29 @@
 #pragma mark UItableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int cellNumber;
-    if (self.artist_list.count%2==0) {
-        
-        cellNumber = (int)self.artist_list.count/2;
-    }
-    else
-    {
-        cellNumber = (int)self.artist_list.count/2+1;
-    }
-    return cellNumber;
+    return self.artist_list.count;
 
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return  202*BiLiWidth;
+    return  144*BiLiWidth+17*BiLiWidth;
     
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"DianuDetailListTableViewCell"] ;
-    DianuDetailListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+    NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuo_TieZiListCell"] ;
+    MyJieSuo_TieZiListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
     if (cell == nil)
     {
-        cell = [[DianuDetailListTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        cell = [[MyJieSuo_TieZiListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
+    //cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
-    if ((indexPath.row+1)*2<=self.artist_list.count) {
-        
-        [cell initData:[self.artist_list objectAtIndex:indexPath.row*2] info2:[self.artist_list objectAtIndex:indexPath.row*2+1]];
-    }
-    else
-    {
-        [cell initData:[self.artist_list objectAtIndex:indexPath.row*2] info2:nil];
-    }
+    [cell contentViewSetData:[self.artist_list objectAtIndex:indexPath.row] type_id:@"1"];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -283,14 +292,11 @@
 
         if (is_mark.intValue==1) {
 
-            tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth;
             return messageLable.top+messageLable.height+216*BiLiWidth;
 
         }
         else
         {
-            tableViewHeaderHeight = messageLable.top+messageLable.height+216*BiLiWidth-32.5*BiLiWidth;
-
             return messageLable.top+messageLable.height+216*BiLiWidth-32.5*BiLiWidth;
 
         }
@@ -309,39 +315,38 @@
     
     if ([NormalUse isValidDictionary:self.dianPuInfo]) {
         
-        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
-        self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
-        self.headerImageView.clipsToBounds = YES;
-        self.headerImageView.layer.cornerRadius = 24*BiLiWidth;
-        [headerView addSubview:self.headerImageView];
+        UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 48*BiLiWidth, 48*BiLiWidth)];
+        headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+        headerImageView.autoresizingMask = UIViewAutoresizingNone;
+        headerImageView.clipsToBounds = YES;
+        headerImageView.layer.cornerRadius = 24*BiLiWidth;
+        [headerView addSubview:headerImageView];
         
         if ([NormalUse isValidArray:[self.dianPuInfo objectForKey:@"image"]]) {
             
             NSArray * images = [self.dianPuInfo objectForKey:@"image"];
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
             
         }
         else if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"image"]])
         {
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
+            [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
         }
 
 
         CGSize titleSize = [NormalUse setSize:[self.dianPuInfo objectForKey:@"name"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
-        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+9.5*BiLiWidth, self.headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
+        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+9.5*BiLiWidth, headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
         titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         titleLable.textColor = RGBFormUIColor(0x333333);
         titleLable.text  = [self.dianPuInfo objectForKey:@"name"];
         [headerView addSubview:titleLable];
         
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];
-        vipImageView.image = [UIImage imageNamed:@"vip_black"];
         [headerView addSubview:vipImageView];
         
 
         NSNumber * auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
-        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
             
             vipImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -372,9 +377,44 @@
         pingFenButton.button_lable1.text = [NSString stringWithFormat:@"· %@",[NormalUse getobjectForKey:[self.dianPuInfo objectForKey:@"city_name"]]];
         [headerView addSubview:pingFenButton];
         
+        UIView * guanZhuBottomView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-84*BiLiWidth, titleLable.top, 72*BiLiWidth, 24*BiLiWidth)];
+        [headerView addSubview:guanZhuBottomView];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = guanZhuBottomView.bounds;
+        gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer.startPoint = CGPointMake(0, 0);
+        gradientLayer.endPoint = CGPointMake(0, 1);
+        gradientLayer.cornerRadius = 12*BiLiWidth;
+        gradientLayer.locations = @[@0,@1];
+        [guanZhuBottomView.layer addSublayer:gradientLayer];
+        
+        self.guanZhuButton = [[UIButton alloc] initWithFrame:guanZhuBottomView.frame];
+        [self.guanZhuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.guanZhuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        [self.guanZhuButton addTarget:self action:@selector(guanZhuButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:self.guanZhuButton];
+        NSNumber * is_follow = [self.dianPuInfo objectForKey:@"is_follow"];
+        if ([is_follow isKindOfClass:[NSNumber class]]) {
+            
+            if (is_follow.intValue==0) {
+                
+                self.guanZhuButton.tag = 0;
+                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_n"] forState:UIControlStateNormal];
+
+            }
+            else
+            {
+                self.guanZhuButton.tag = 1;
+                [self.guanZhuButton setBackgroundImage:[UIImage imageNamed:@"guanZhu_h"] forState:UIControlStateNormal];
+
+            }
+        }
 
         
-        UILabel * renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
+        UILabel * renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
         renZhengLable.textColor = RGBFormUIColor(0x333333);
         renZhengLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         [headerView addSubview:renZhengLable];
@@ -392,7 +432,7 @@
         }
 
         
-        UILabel * chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(renZhengLable.left+renZhengLable.width, self.headerImageView.top+self.headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
+        UILabel * chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(renZhengLable.left+renZhengLable.width, headerImageView.top+headerImageView.height+20.5*BiLiWidth, 63*BiLiWidth, 14*BiLiWidth)];
         chengJiaoLable.textColor = RGBFormUIColor(0x333333);
         chengJiaoLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         [headerView addSubview:chengJiaoLable];
@@ -425,18 +465,20 @@
         messageLable.attributedText = attributedString;
         //设置自适应
         [messageLable  sizeToFit];
-
-        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
+        
+        
+        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
         jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [headerView addSubview:jiaoYiBaoZhengImageView];
         
-        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 1.5*BiLiWidth,jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
+
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(17*BiLiWidth, 3*BiLiWidth, jiaoYiBaoZhengImageView.width-17*BiLiWidth, 14*BiLiWidth)];
         jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
         jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
         jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
         jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
         [jiaoYiBaoZhengImageView addSubview:jiaoYiBaoZhengLable];
-
+        
         NSNumber * is_mark = [self.dianPuInfo objectForKey:@"is_mark"];
 
         if (is_mark.intValue==1) {
@@ -450,11 +492,8 @@
             jiaoYiBaoZhengImageView.height = 0;
 
         }
-
-
         
-        
-        NSString * unlock_mobile_coin = [NormalUse getJinBiStr:@"unlock_mobile_coin"];
+        NSString * unlock_agent_coin = [NormalUse getJinBiStr:@"unlock_agent_coin"];
 
         self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
         [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
@@ -465,15 +504,54 @@
         self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
-        self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
+        self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_agent_coin]];
+        [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.jieSuoButton];
         
-        [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        self.jieSuoButton.button_lable.text = [NSString stringWithFormat:@"电话:%@",[self.dianPuInfo objectForKey:@"contact"]];
-        self.jieSuoButton.button_lable1.text = @"";
-        self.jieSuoButton.button_lable.left = 10*BiLiWidth;
-        self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
-
+        NSNumber * is_unlock = [self.dianPuInfo objectForKey:@"is_unlock"];
+        if([is_unlock isKindOfClass:[NSNumber class]])
+        {
+            
+            if (is_unlock.intValue==1) {
+                
+                alsoLock = NO;
+                
+                NSDictionary * contact = [self.dianPuInfo objectForKey:@"contact"];
+                [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+                NSString * wechat = [contact objectForKey:@"wechat"];
+                NSString * qq = [contact objectForKey:@"qq"];
+                NSNumber * mobile = [contact objectForKey:@"mobile"];
+                NSString * lianXieFangShiStr = @"";
+                if ([NormalUse isValidString:wechat]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+                }
+                if ([NormalUse isValidString:qq]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+                }
+                
+                if ([NormalUse isValidString:mobile]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                    
+                }
+                self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+                self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
+                self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+                self.jieSuoButton.button_lable.text = lianXieFangShiStr;
+                self.jieSuoButton.button_lable1.text = @"";
+                
+                
+            }
+            else
+            {
+                alsoLock = YES;
+                
+            }
+            
+        }
+        
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+28*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
         lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
         [headerView addSubview:lineView];
@@ -526,7 +604,7 @@
         if (status==1) {
             
 //             self.jieSuoButton.button_lable.text = @"已经解锁成功";
-//                self.jieSuoButton.button_lable1.text = @"";
+//              self.jieSuoButton.button_lable1.text = @"";
             NSDictionary * contact = responseObject;
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             NSString * wechat = [contact objectForKey:@"wechat"];
@@ -555,7 +633,6 @@
 
 
             [NormalUse showToastView:@"解锁成功" view:self.view];
-
         }
         else
         {
@@ -631,6 +708,5 @@
     [self.mainTableView reloadData];
 
 }
-
 
 @end

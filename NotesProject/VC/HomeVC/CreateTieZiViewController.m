@@ -14,6 +14,8 @@
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
+@property(nonatomic,strong)NSNumber * is_free;
+
 
 @end
 
@@ -38,6 +40,25 @@
     [self.mainScrollView addGestureRecognizer:tap];
     
     [self initTopStepView];
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([@"1" isEqualToString:self.from_flg]) {
+        
+        [dic setObject:@"1" forKey:@"is_agent"];
+    }
+    [HTTPModel faTieAlsoFree:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.is_free = [responseObject objectForKey:@"is_free"];
+            if (self.is_free.intValue==1) {
+                
+                self.tiJiaoLable.text = @"提交";
+
+            }
+        }
+        
+    }];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -84,7 +105,7 @@
     biaoTiXinXiLable.text = @"信息标题";
     [self.mainScrollView addSubview:biaoTiXinXiLable];
 
-    self.biaoTiTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, biaoTiXinXiLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
+    self.biaoTiTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth-80*BiLiWidth, biaoTiXinXiLable.top, 100*BiLiWidth+80*BiLiWidth, 39.5*BiLiWidth)];
     self.biaoTiTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [NormalUse setTextFieldPlaceholder:@"填写信息标题" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.biaoTiTF];
     self.biaoTiTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -381,12 +402,12 @@
     gradientLayer1.locations = @[@0,@1];
     [self.tiJiaoButton.layer addSublayer:gradientLayer1];
     
-    UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tiJiaoButton.width, self.tiJiaoButton.height)];
-    tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    tiJiaoLable.text = @"下一步";
-    tiJiaoLable.textAlignment = NSTextAlignmentCenter;
-    tiJiaoLable.textColor = [UIColor whiteColor];
-    [self.tiJiaoButton addSubview:tiJiaoLable];
+    self.tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tiJiaoButton.width, self.tiJiaoButton.height)];
+    self.tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    self.tiJiaoLable.text = @"下一步";
+    self.tiJiaoLable.textAlignment = NSTextAlignmentCenter;
+    self.tiJiaoLable.textColor = [UIColor whiteColor];
+    [self.tiJiaoButton addSubview:self.tiJiaoLable];
 
     
     
@@ -864,8 +885,8 @@
         
     }
     
-    if (!alsoKouFei)
-    {
+    //if (!alsoKouFei)
+    if (self.is_free.intValue==1) {
         [self xianShiLoadingView:@"提交中..." view:self.view];
         uploadVideoIndex = 0;
         self.videoPathId = nil;

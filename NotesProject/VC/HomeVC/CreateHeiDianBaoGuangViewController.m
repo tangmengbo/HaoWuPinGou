@@ -83,7 +83,7 @@
     biaoTiXinXiLable.text = @"信息标题";
     [self.mainScrollView addSubview:biaoTiXinXiLable];
 
-    self.biaoTiTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, biaoTiXinXiLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
+    self.biaoTiTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth-80*BiLiWidth, biaoTiXinXiLable.top, 100*BiLiWidth+80*BiLiWidth, 39.5*BiLiWidth)];
     self.biaoTiTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [NormalUse setTextFieldPlaceholder:@"填写信息标题" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.biaoTiTF];
     self.biaoTiTF.font = [UIFont systemFontOfSize:13*BiLiWidth];

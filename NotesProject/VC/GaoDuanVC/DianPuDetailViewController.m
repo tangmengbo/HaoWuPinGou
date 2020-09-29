@@ -35,11 +35,11 @@
     if (!_jieSuoTipView) {
         
         _jieSuoTipView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, 155*BiLiWidth)];
-        _jieSuoTipView.backgroundColor = RGBFormUIColor(0xFFFFFF);
+        _jieSuoTipView.backgroundColor = RGBFormUIColor(0xFF6C6D);
         [self.view addSubview:_jieSuoTipView];
-        _jieSuoTipView.layer.shadowOpacity = 0.2f;
-        _jieSuoTipView.layer.shadowColor = [UIColor blackColor].CGColor;
-        _jieSuoTipView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
+//        _jieSuoTipView.layer.shadowOpacity = 0.2f;
+//        _jieSuoTipView.layer.shadowColor = [UIColor blackColor].CGColor;
+//        _jieSuoTipView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
 
         //某个角圆角
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_jieSuoTipView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
@@ -58,7 +58,7 @@
         UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, tipLable.top+tipLable.height+18*BiLiWidth, WIDTH_PingMu-60*BiLiWidth, 40*BiLiWidth)];
         tipLable1.text = @"解锁经纪人联系方式即可查看经纪人下所有信息的联系方式～";
         tipLable1.numberOfLines = 2;
-        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textColor = RGBFormUIColor(0xFFFFFF);
         tipLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
         [_jieSuoTipView addSubview:tipLable1];
         
@@ -363,7 +363,7 @@
         
 
         NSNumber * auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
-        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
             
             vipImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -620,8 +620,34 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
-             self.jieSuoButton.button_lable.text = @"已经解锁成功";
-                self.jieSuoButton.button_lable1.text = @"";
+//             self.jieSuoButton.button_lable.text = @"已经解锁成功";
+//              self.jieSuoButton.button_lable1.text = @"";
+            NSDictionary * contact = responseObject;
+            [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            NSString * wechat = [contact objectForKey:@"wechat"];
+            NSString * qq = [contact objectForKey:@"qq"];
+            NSNumber * mobile = [contact objectForKey:@"mobile"];
+            NSString * lianXieFangShiStr = @"";
+            if ([NormalUse isValidString:wechat]) {
+                
+                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+            }
+            if ([NormalUse isValidString:qq]) {
+                
+                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+            }
+            
+            if ([NormalUse isValidString:mobile]) {
+                
+                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                
+            }
+            self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+            self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
+            self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+            self.jieSuoButton.button_lable.text = lianXieFangShiStr;
+            self.jieSuoButton.button_lable1.text = @"";
+
 
             [NormalUse showToastView:@"解锁成功" view:self.view];
         }

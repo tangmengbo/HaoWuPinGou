@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIButton * toolButton;
 
+@property(nonatomic,strong)UIView * lineView;
+
 
 -(void)initContentView:(NSDictionary *)info;
 

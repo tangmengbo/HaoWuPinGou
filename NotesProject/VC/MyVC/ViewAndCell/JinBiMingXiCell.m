@@ -53,7 +53,18 @@
 {
     self.titleLable.text = [info objectForKey:@"type"];
     self.timeLable.text = [info objectForKey:@"create_at"];
-    self.jinBiLable.text = [info objectForKey:@"coin"];
+    
+    if ([[info objectForKey:@"coin"] isKindOfClass:[NSString class]]) {
+        
+        self.jinBiLable.text = [info objectForKey:@"coin"];
+
+    }
+    else
+    {
+        NSNumber * coin = [info objectForKey:@"coin"];
+        self.jinBiLable.text = [NSString stringWithFormat:@"%d",coin.intValue];
+
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

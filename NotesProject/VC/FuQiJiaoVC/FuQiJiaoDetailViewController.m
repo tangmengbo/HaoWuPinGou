@@ -177,7 +177,7 @@
     
 
 
-    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth)];
+    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.messageContentView];
     //某个角圆角
@@ -199,7 +199,7 @@
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
         
         vImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -211,7 +211,7 @@
     }
     
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+//    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
@@ -440,7 +440,8 @@
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
     [self.messageContentView addSubview:self.tipLable];
     
-    
+    self.tipLable.top = self.jieSuoButton.top+self.jieSuoButton.height;
+    self.tipLable.height = 0;
 
     self.jiBenXinXiButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, self.tipLable.top+self.tipLable.height+25*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
     [self.jiBenXinXiButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];

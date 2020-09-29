@@ -189,18 +189,29 @@
     self.messageContentView.layer.mask = maskLayer;
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
-    CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
-    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 11*BiLiWidth, size.width, 17*BiLiWidth)];
+    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 11*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     nickLable.textColor = RGBFormUIColor(0x343434);
     nickLable.text = nickStr;
+    nickLable.numberOfLines = 0;
     [self.messageContentView addSubview:nickLable];
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-14.5*BiLiWidth)/2, 16*BiLiWidth, 14.5*BiLiWidth)];
-    [self.messageContentView addSubview:vImageView];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:nickStr];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    //调整行间距
+    [paragraphStyle setLineSpacing:2];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [nickStr length])];
+    nickLable.attributedText = attributedString;
+    //设置自适应
+    [nickLable  sizeToFit];
 
+    
+    
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+2*BiLiWidth, 16*BiLiWidth, 14.5*BiLiWidth)];
+    [self.messageContentView addSubview:vImageView];
+    
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
         
         vImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -211,8 +222,8 @@
         vImageView.width = 0;
     }
     
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+2*BiLiWidth, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
+//    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
@@ -680,15 +691,21 @@
     messageLable.textColor = RGBFormUIColor(0x343434);
     [self.xiangQingJieShaoContentView addSubview:messageLable];
 
-    NSString * neiRongStr = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    //调整行间距
-    [paragraphStyle setLineSpacing:2];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
-    messageLable.attributedText = attributedString;
-    //设置自适应
-    [messageLable  sizeToFit];
+//    NSString * neiRongStr = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    //调整行间距
+//    [paragraphStyle setLineSpacing:2];
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+//    messageLable.attributedText = attributedString;
+//    //设置自适应
+//    [messageLable  sizeToFit];
+    
+    NSString * content = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"decription"]];
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+    messageLable.attributedText = attrStr;
+    [messageLable sizeToFit];
+
     
     self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+20*BiLiWidth;
 

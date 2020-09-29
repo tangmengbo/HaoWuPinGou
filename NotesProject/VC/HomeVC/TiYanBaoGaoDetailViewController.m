@@ -74,7 +74,7 @@
     UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, nickLable.top+nickLable.height+9.5*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
     timeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-    timeLable.text = [NSString stringWithFormat:@"体验时间:%@",[self.info objectForKey:@"experience_date"]];
+    timeLable.text = [NSString stringWithFormat:@"%@",[self.info objectForKey:@"friendly_date"]];
     [self.mainScrollView addSubview:timeLable];
     
     UILabel * meiZiNameLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+12.5*BiLiWidth, 200*BiLiWidth, 39.5*BiLiWidth)];
@@ -100,7 +100,7 @@
     leiXingTipLable.text = @"类型";
     [self.mainScrollView addSubview:leiXingTipLable];
     
-    UILabel * leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-16.5*BiLiWidth-100*BiLiWidth, leiXingTipLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
+    UILabel * leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-16.5*BiLiWidth-200*BiLiWidth, leiXingTipLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
     leiXingLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     leiXingLable.textColor  = RGBFormUIColor(0x343434);
     leiXingLable.text = [self.info objectForKey:@"service_type"];

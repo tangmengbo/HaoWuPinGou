@@ -25,7 +25,8 @@
             
             if (status==1) {
                 
-                self.leiXingSourceArray = responseObject;
+                self.leiXingSourceArray = [[NSMutableArray alloc] initWithArray:responseObject];
+                [self.leiXingSourceArray insertObject:@"全部" atIndex:0];
                 [self initContentView];
             }
 
@@ -37,9 +38,30 @@
 }
 -(void)viewTap
 {
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.top = HEIGHT_PingMu;
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+-(void)shaiXuanButtonClick
+{
     self.paiXuSelect(self.field, self.order);
     
-    self.leiXingSelect(self.message_type);
+    if([@"全部" isEqualToString:self.message_type])
+    {
+        self.leiXingSelect(@"");
+
+    }
+    else
+    {
+        self.leiXingSelect(self.message_type);
+
+    }
 
     [UIView animateWithDuration:0.5 animations:^{
         
@@ -50,6 +72,7 @@
     } completion:^(BOOL finished) {
         
     }];
+
 }
 -(void)initContentView
 {
@@ -63,6 +86,13 @@
     titleLable1.textColor = RGBFormUIColor(0x9A9A9A);
     titleLable1.text = @"排序";
     [contentView addSubview:titleLable1];
+    
+    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(contentView.width-60*BiLiHeight, titleLable1.top-10*BiLiHeight, 60*BiLiWidth, 34*BiLiWidth)];
+    [shaiXuanButton setTitle:@"筛选" forState:UIControlStateNormal];
+    [shaiXuanButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+    shaiXuanButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:shaiXuanButton];
     
     self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格分从低到高", nil];
     

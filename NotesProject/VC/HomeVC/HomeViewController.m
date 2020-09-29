@@ -167,8 +167,8 @@
 {
     if (!_chaXiaoErFaTieRenZhengView1) {
         
-        _chaXiaoErFaTieRenZhengView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
-        _chaXiaoErFaTieRenZhengView1.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        _chaXiaoErFaTieRenZhengView1 = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, HEIGHT_PingMu)];
+        _chaXiaoErFaTieRenZhengView1.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
         [[UIApplication sharedApplication].keyWindow addSubview:_chaXiaoErFaTieRenZhengView1];
         
         UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-210*BiLiWidth, WIDTH_PingMu, 210*BiLiWidth)];
@@ -225,20 +225,33 @@
 }
 -(void)closeTipKuangView1
 {
-    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    }];
 }
 -(void)faTieButtonClick1
 {
-    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    }];
+    
+    
     self.chaXiaoErFaTieRenZhengView.hidden = NO;
+    self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
+    }];
 }
 -(UIView *)chaXiaoErFaTieRenZhengView
 {
     if (!_chaXiaoErFaTieRenZhengView) {
         
         _chaXiaoErFaTieRenZhengView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
-        _chaXiaoErFaTieRenZhengView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-        [self.view addSubview:_chaXiaoErFaTieRenZhengView];
+        _chaXiaoErFaTieRenZhengView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        [[UIApplication sharedApplication].keyWindow addSubview:_chaXiaoErFaTieRenZhengView];
         
         UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
         kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
@@ -305,7 +318,16 @@
 }
 -(void)closeTipKuangView
 {
-    self.chaXiaoErFaTieRenZhengView.hidden = YES;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+
+    } completion:^(BOOL finished) {
+             
+        self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+    }];
 }
 
 -(void)chaXiaoErRenZheng
@@ -332,8 +354,20 @@
 
         }
     }
-    self.chaXiaoErFaTieRenZhengView1.hidden = YES;
-    self.chaXiaoErFaTieRenZhengView.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    }];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        
+    } completion:^(BOOL finished) {
+        
+        self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+    }];
 
 
 }
@@ -1480,7 +1514,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         
         self.shaiXuanView.top  =0;
-        self.shaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        self.shaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
     }];
     
 }
@@ -1495,7 +1529,11 @@
         
         if (auth_nomal.intValue==0) {//未认证
             
-            self.chaXiaoErFaTieRenZhengView1.hidden = NO;
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                self.chaXiaoErFaTieRenZhengView1.top = 0;
+            }];
+            
         }
         else if (auth_nomal.intValue==1)//已认证
         {
@@ -1503,10 +1541,13 @@
         }
         else if (auth_nomal.intValue==2)//审核中
         {
-            self.chaXiaoErFaTieRenZhengView1.hidden = NO;
-
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                self.chaXiaoErFaTieRenZhengView1.top = 0;
+            }];
+            
         }
-
+        
     }
     
 

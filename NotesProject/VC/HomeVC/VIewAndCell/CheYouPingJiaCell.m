@@ -115,7 +115,7 @@
     }
 
     self.nickLable.text = [info objectForKey:@"nickname"];
-    self.tiYanTimeLable.text = [NSString stringWithFormat:@"体验时间：%@",[info objectForKey:@"create_at"]];
+    self.tiYanTimeLable.text = [NSString stringWithFormat:@"%@",[info objectForKey:@"create_at"]];
     NSNumber * avg_value = [info objectForKey:@"avg_value"];
     self.pingFenLable.text = [NSString stringWithFormat:@"%.1f",avg_value.floatValue];
     

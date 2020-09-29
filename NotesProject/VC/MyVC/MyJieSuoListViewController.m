@@ -10,6 +10,7 @@
 #import "MyJieSuo_TieZiListCell.h"
 #import "MyJieSuo_JingJiReCell.h"
 #import "DingZhiFuWuTableViewCell.h"
+#import "DianPuKePingJiaViewController.h"
 
 @interface MyJieSuoListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -899,7 +900,7 @@
     if (tableView.tag==0) {
         
         NSDictionary * info = [self.jingJiRenArray objectAtIndex:indexPath.row];
-        DianPuDetailViewController * vc = [[DianPuDetailViewController alloc] init];
+        DianPuKePingJiaViewController * vc = [[DianPuKePingJiaViewController alloc] init];
         NSNumber * idNumber = [info objectForKey:@"id"];
         vc.dianPuId = [NSString stringWithFormat:@"%d",idNumber.intValue];
         [self.navigationController pushViewController:vc animated:YES];

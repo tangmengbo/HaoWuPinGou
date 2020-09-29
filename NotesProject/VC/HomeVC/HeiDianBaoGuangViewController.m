@@ -7,6 +7,7 @@
 //
 
 #import "HeiDianBaoGuangViewController.h"
+#import "HeiDianBaoGuangListCell.h"
 
 @interface HeiDianBaoGuangViewController ()
 
@@ -118,20 +119,20 @@
 {
     
     
-    return  144*BiLiWidth+17*BiLiWidth;
+    return  134*BiLiWidth+10*BiLiWidth;
     
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
-    HomeListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+    NSString *tableIdentifier = [NSString stringWithFormat:@"HeiDianBaoGuangListCell"] ;
+    HeiDianBaoGuangListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
     if (cell == nil)
     {
-        cell = [[HomeListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        cell = [[HeiDianBaoGuangListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
     cell.backgroundColor = [UIColor clearColor];
-    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row] cellType:HeiDianBaoGuang];
+    [cell contentViewSetData:[self.sourceArray objectAtIndex:indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

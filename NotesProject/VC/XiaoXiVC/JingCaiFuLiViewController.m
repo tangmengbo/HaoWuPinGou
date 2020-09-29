@@ -32,9 +32,79 @@
 @property(nonatomic,strong)NSArray * duiJiangHaoMaArray;
 @property(nonatomic,strong)UIView * duiJiangHaoMaKuangView;
 
+
+@property(nonatomic,strong)UIView * lingQuDuiJiangMaTipView;
 @end
 
 @implementation JingCaiFuLiViewController
+
+-(UIView *)lingQuDuiJiangMaTipView
+{
+    if (!_lingQuDuiJiangMaTipView) {
+        
+        _lingQuDuiJiangMaTipView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _lingQuDuiJiangMaTipView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_lingQuDuiJiangMaTipView];
+        
+        UIView * kuangView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangView.layer.cornerRadius = 8*BiLiWidth;
+        kuangView.layer.masksToBounds = YES;
+        kuangView.backgroundColor = [UIColor whiteColor];
+        [_lingQuDuiJiangMaTipView addSubview:kuangView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangView.left+kuangView.width-33*BiLiWidth/2*1.5, kuangView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeLingQuDuiJiangMaTipView) forControlEvents:UIControlEventTouchUpInside];
+        [_lingQuDuiJiangMaTipView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(20*BiLiWidth, tipLable1.top+tipLable1.height+18*BiLiWidth, kuangView.width-40*BiLiWidth, 34*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x333333);
+        tipLable2.textAlignment = NSTextAlignmentCenter;
+        tipLable2.text = @"恭喜您已成功领取兑奖号码，您可到购买记录中查看兑奖码信息";
+        tipLable2.numberOfLines = 2;
+        [kuangView addSubview:tipLable2];
+        
+        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangView.width-209*BiLiWidth)/2, tipLable2.top+tipLable2.height+20*BiLiWidth, 209*BiLiWidth, 40*BiLiWidth)];
+        [sureButton addTarget:self action:@selector(closeLingQuDuiJiangMaTipView) forControlEvents:UIControlEventTouchUpInside];
+        [kuangView addSubview:sureButton];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = sureButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [sureButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+        tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        tiJiaoLable.text = @"我知道了";
+        tiJiaoLable.textAlignment = NSTextAlignmentCenter;
+        tiJiaoLable.textColor = [UIColor whiteColor];
+        [sureButton addSubview:tiJiaoLable];
+
+        kuangView.height = sureButton.top+sureButton.height+30*BiLiWidth;
+        kuangView.top = (HEIGHT_PingMu-kuangView.height)/2;
+        closeButton.top = kuangView.top-33*BiLiWidth/2;
+        
+    }
+    return _lingQuDuiJiangMaTipView;
+}
+-(void)closeLingQuDuiJiangMaTipView
+{
+    self.lingQuDuiJiangMaTipView.hidden = YES;
+}
 
 -(UIView *)duiJiangHaoMaKuangView
 {
@@ -535,12 +605,15 @@
 
 -(void)vipLingQuButtonClick
 {
+    
     NSNumber * idNumber = [self.messageInfo objectForKey:@"id"];
 
     [HTTPModel buyTicket:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"nums",[NSString stringWithFormat:@"%d",idNumber.intValue],@"ticket_id",@"1",@"vip_ticket_flag", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
+            self.lingQuDuiJiangMaTipView.hidden = NO;
+
             [self loadNewLsit];
         }
         else

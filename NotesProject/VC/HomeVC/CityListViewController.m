@@ -152,6 +152,7 @@
         
         UIButton * dangQianWeiZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-135*BiLiWidth, 23*BiLiWidth, 85*BiLiWidth, 35*BiLiWidth)];
         [headerView addSubview:dangQianWeiZhiButton];
+        [dangQianWeiZhiButton addTarget:self action:@selector(dangQianWeiZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
         //渐变设置
         UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
         UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -170,16 +171,16 @@
         cityLable.textColor = [UIColor whiteColor];
         [dangQianWeiZhiButton addSubview:cityLable];
         
-        NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
+        self.cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
         
-        if ([NormalUse isValidDictionary:cityInfo]) {
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
          
-            cityLable.text = [cityInfo objectForKey:@"cityName"];
+            cityLable.text = [self.cityInfo objectForKey:@"cityName"];
         }
         else
         {
-            cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
-            cityLable.text = [cityInfo objectForKey:@"cityName"];
+            self.cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
+            cityLable.text = [self.cityInfo objectForKey:@"cityName"];
         }
 
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(19*BiLiWidth, 80*BiLiWidth, WIDTH_PingMu-38*BiLiWidth, 1)];
@@ -218,6 +219,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
 {
     return nil;
+}
+-(void)dangQianWeiZhiButtonClick
+{
+    [self.delegate citySelect:self.cityInfo];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 -(void)cityButtonSelect:(NSDictionary *)info
 {

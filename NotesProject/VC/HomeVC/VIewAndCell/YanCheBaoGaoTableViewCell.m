@@ -76,7 +76,9 @@
         self.messageLable.numberOfLines = 0;
         [self addSubview:self.messageLable];
 
-
+        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 5)];
+        self.lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        [self addSubview:self.lineView];
     }
     return self;
 }
@@ -135,7 +137,7 @@
     //设置自适应
     [self.messageLable  sizeToFit];
 
-    
+    self.lineView.top = self.messageLable.top+self.messageLable.height+23*BiLiWidth-10;
 }
 -(void)imageTap:(UITapGestureRecognizer *)tap
 {

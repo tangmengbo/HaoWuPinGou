@@ -239,7 +239,7 @@
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue==1) {
+    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
         
         vImageView.image = [UIImage imageNamed:@"vip_black"];
 
@@ -251,7 +251,7 @@
     }
     
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
-    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+//    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
@@ -463,11 +463,20 @@
                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
 
             }
-        self.jieSuoButton.button_lable.left = 10*BiLiWidth;
-             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
-            self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
-            self.jieSuoButton.button_lable.text = lianXieFangShiStr;
-            self.jieSuoButton.button_lable1.text = @"";
+    self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+    self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
+    self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+    self.jieSuoButton.button_lable.text = lianXieFangShiStr;
+    self.jieSuoButton.button_lable.top = 0;
+    self.jieSuoButton.button_lable.height = self.jieSuoButton.height/2;
+    
+    self.jieSuoButton.button_lable1.left = 10*BiLiWidth;
+    self.jieSuoButton.button_lable1.adjustsFontSizeToFitWidth = YES;
+    self.jieSuoButton.button_lable1.width = self.jieSuoButton.width-20*BiLiWidth;
+    self.jieSuoButton.button_lable1.text = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"address"]];
+    self.jieSuoButton.button_lable1.top = self.jieSuoButton.height/2;
+    self.jieSuoButton.button_lable1.height = self.jieSuoButton.height/2;
+
 
 
 //        }
