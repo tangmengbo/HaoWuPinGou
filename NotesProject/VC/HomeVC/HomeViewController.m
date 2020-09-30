@@ -571,9 +571,10 @@
     else
     {
         [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            self.locationLable.text = [responseObject objectForKey:@"cityName"];
+           self.locationLable.text = [responseObject objectForKey:@"cityName"];
             [NormalUse defaultsSetObject:responseObject forKey:CurrentCity];
         }];
+
 
     }
 
@@ -1561,7 +1562,7 @@
 }
 - (void)citySelect:(NSDictionary *)info
 {
-    self.locationLable.text = [info objectForKey:@"cityName"];
+//    self.locationLable.text = [info objectForKey:@"cityName"];
     NSString * cityCode = [info objectForKey:@"cityCode"];
     if (cityCode.intValue==-1001) {
         

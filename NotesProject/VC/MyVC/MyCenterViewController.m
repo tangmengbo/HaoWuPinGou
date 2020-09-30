@@ -189,15 +189,19 @@
                 
                 if (auth_vip.intValue==0) {
                     
+                    self.messageLable.text = @"非VIP暂无免费解锁次数";
+
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_weiKaiTong"] forState:UIControlStateNormal];
 
 
                 }
                 else if(auth_vip.intValue==1)
                 {
+                    self.messageLable.text = @"非VIP暂无免费解锁次数";
+
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
-                    self.huiYuanTitleLable.text = @"会员到期时间";
+                    self.huiYuanTitleLable.text = @"年卡";
                     self.huiYuanTitleLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
@@ -206,6 +210,8 @@
                 }
                 else if (auth_vip.intValue==2)
                 {
+                    self.messageLable.text = @"永久卡";
+
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
                     
                     self.huiYuanTitleLable.textColor = [UIColor whiteColor];
@@ -338,12 +344,25 @@
     [self.huiYuanButton addSubview:self.huiYuanDaoQiLable];
 
     
-    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top, self.huiYuanButton.width, self.huiYuanButton.height)];
+    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top-4*BiLiWidth, self.huiYuanButton.width, self.huiYuanButton.height+10*BiLiWidth)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
     [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:chongZhiButton];
 
-    self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(90.5*BiLiWidth, 37*BiLiWidth, 60*BiLiWidth, 17*BiLiWidth)];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 20*BiLiWidth, 70*BiLiWidth, 14*BiLiWidth)];
+    tipLable.textColor = RGBFormUIColor(0x333333);
+    tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    tipLable.text = @"金币充值";
+    [chongZhiButton addSubview:tipLable];
+
+    UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 44.5*BiLiWidth, 30*BiLiWidth, 17*BiLiWidth)];
+    tipLable1.textColor = RGBFormUIColor(0x333333);
+    tipLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
+    tipLable1.text = @"余额:";
+    [chongZhiButton addSubview:tipLable1];
+
+    
+    self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(tipLable1.left+tipLable1.width, 44.5*BiLiWidth-2*BiLiWidth, 58*BiLiWidth, 17*BiLiWidth)];
     self.yuELable.textColor = RGBFormUIColor(0xFECF61);
     self.yuELable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.yuELable.adjustsFontSizeToFitWidth = YES;

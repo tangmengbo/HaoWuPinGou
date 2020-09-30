@@ -16,20 +16,14 @@
 #pragma mark 接口 生产
 
 //融云key
-#define RYKey @"tdrvipkstyvg5"
-#define WYAPPKey @"211a06a77c365aa1d071ead6a86b3412"
-#define WYCertificate @"yoyoPushDis"
-
+#define RYKey @"kj7swf8oknol2"
 #define HTTP_REQUESTURL @"http://yzjs.yingheyezi.com/wh/"
 
 
 
 #else
 #pragma mark 接口 测试
-#define RYKey @"k51hidwqke44b"
-#define WYAPPKey @"4317b56661cca83a3fdee0ffeed0ffcf"
-//网易云信appkey
-#define WYCertificate @"YoYoPushDev"
+#define RYKey @"kj7swf8oknol2"
 #define HTTP_REQUESTURL @"http://42.194.167.215:8089"
 #define HTTP_FileUpload @"http://129.28.198.178:8090"
 #endif
@@ -59,6 +53,7 @@
 #define CurrentCity @"CurrentCityDefaults" //当前城市
 #define UserRole @"UserRoleDefaults"//当前用户角色
 #define JinBiShuoMing @"JinBIShuoMingDefaults"//项目金币说明
+#define UserRongYunInfo @"UserRongYunInfoDefaults"//用户融云token等信息
 /*
  "cny_to_coin":"10",//人民币兑换金币比率 1人民币对应 10金币
  "normal_auth_coin":"1000",//茶小二认证所需金币

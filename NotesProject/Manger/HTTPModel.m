@@ -66,9 +66,15 @@ singleton_implementation(HTTPModel)
     if ([NormalUse isValidDictionary:cityInfo]) {
         
         NSNumber * cityCode = [cityInfo objectForKey:@"cityCode"];
-        [apiClient.requestSerializer setValue:[NSString stringWithFormat:@"%d",cityCode.intValue] forHTTPHeaderField:@"city_code"];
+        [apiClient.requestSerializer setValue:[NSString stringWithFormat:@"%d",cityCode.intValue] forHTTPHeaderField:@"citycode"];
 
     }
+    else
+    {
+        [apiClient.requestSerializer setValue:@"" forHTTPHeaderField:@"citycode"];
+
+    }
+
 
     
     //上传文件
@@ -226,7 +232,12 @@ singleton_implementation(HTTPModel)
     if ([NormalUse isValidDictionary:cityInfo]) {
         
         NSNumber * cityCode = [cityInfo objectForKey:@"cityCode"];
-        [apiClient.requestSerializer setValue:[NSString stringWithFormat:@"%d",cityCode.intValue] forHTTPHeaderField:@"city_code"];
+        [apiClient.requestSerializer setValue:[NSString stringWithFormat:@"%d",cityCode.intValue] forHTTPHeaderField:@"citycode"];
+
+    }
+    else
+    {
+        [apiClient.requestSerializer setValue:@"" forHTTPHeaderField:@"citycode"];
 
     }
     
@@ -721,6 +732,7 @@ singleton_implementation(HTTPModel)
 
 
 }
+//phone_ucode 手机唯一码 【该参数存在即表示初始化登录，不存在正常手机号密码登录】
 +(void)login:(NSDictionary *_Nullable)parameter
     callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {

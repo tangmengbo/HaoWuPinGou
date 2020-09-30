@@ -87,6 +87,17 @@
         
         if (status==1) {
             
+            NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+            [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+            
+            [NormalUse defaultsSetObject:[responseObject objectForKey:@"ryuser"] forKey:UserRongYunInfo];
+
+            //退出融云
+            [[RCIM sharedRCIM] logout];
+            
+            [[RCIM sharedRCIM] disconnect];
+            [[RongYManager getInstance] connectRongCloud];
+
             [NormalUse showToastView:@"更换成功" view:self.view];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                

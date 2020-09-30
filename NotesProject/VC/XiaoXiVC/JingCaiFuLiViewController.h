@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     int shengYuTime;//距离开奖的时间
 }
 
-@property(nonatomic,strong)NSTimer * timer;
+@property(nonatomic,strong,nullable)NSTimer * timer;
 
 @property(nonatomic,strong)UITextView * contentTextView;
 

@@ -57,8 +57,8 @@
 - (void)connectRongCloud {
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
-    NSString *loginToken = [userInfo objectForKey:@"face_token"];
+    NSDictionary * userInfo = [defaults objectForKey:UserRongYunInfo];
+    NSString *loginToken = [userInfo objectForKey:@"token"];
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
         [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
             NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
@@ -130,8 +130,8 @@
 - (void)applicationWillEnterForeground {
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * userInfo = [defaults objectForKey:UserInformation];
-    NSString *loginToken = [userInfo objectForKey:@"face_token"];
+    NSDictionary * userInfo = [defaults objectForKey:UserRongYunInfo];
+    NSString *loginToken = [userInfo objectForKey:@"token"];
 
 
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {

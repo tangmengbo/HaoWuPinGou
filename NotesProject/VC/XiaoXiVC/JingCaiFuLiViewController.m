@@ -106,105 +106,107 @@
     self.lingQuDuiJiangMaTipView.hidden = YES;
 }
 
--(UIView *)duiJiangHaoMaKuangView
+-(void)initDuiJiangHaoMaKuangView
 {
-    if (!_duiJiangHaoMaKuangView) {
-        
-        _duiJiangHaoMaKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
-        _duiJiangHaoMaKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-        [[UIApplication sharedApplication].keyWindow addSubview:_duiJiangHaoMaKuangView];
-        
-        UIView * kuangView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
-        kuangView.layer.cornerRadius = 8*BiLiWidth;
-        kuangView.layer.masksToBounds = YES;
-        kuangView.backgroundColor = [UIColor whiteColor];
-        [_duiJiangHaoMaKuangView addSubview:kuangView];
-        
-        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangView.left+kuangView.width-33*BiLiWidth/2*1.5, kuangView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
-        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
-        [closeButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [_duiJiangHaoMaKuangView addSubview:closeButton];
-        
-        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangView.width, 17*BiLiWidth)];
-        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
-        tipLable1.textColor = RGBFormUIColor(0x343434);
-        tipLable1.textAlignment = NSTextAlignmentCenter;
-        tipLable1.text = @"兑奖号码";
-        [kuangView addSubview:tipLable1];
-        
-        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(0, tipLable1.top+tipLable1.height+20*BiLiWidth, kuangView.width, 14*BiLiWidth)];
-        tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
-        tipLable2.textColor = RGBFormUIColor(0x333333);
-        tipLable2.textAlignment = NSTextAlignmentCenter;
-        tipLable2.text = @"金币越多中奖概率越大";
-        [kuangView addSubview:tipLable2];
-        
-        UIScrollView * duiJianScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, tipLable2.top+tipLable2.height+20*BiLiWidth, kuangView.width, 0)];
-        duiJianScrollView.showsVerticalScrollIndicator = NO;
-        duiJianScrollView.showsHorizontalScrollIndicator = NO;
-        [kuangView addSubview:duiJianScrollView];
-        
-        float originY = 0;
-        float originX = (kuangView.width-20*BiLiWidth*6)/7;
-        for (int i=0; i<self.duiJiangHaoMaArray.count; i++) {
-            
-            NSNumber * number = [self.duiJiangHaoMaArray objectAtIndex:i];
-            NSString * str = [NSString stringWithFormat:@"%d",number.intValue];
-            NSMutableArray * sourceArray = [NSMutableArray array];
-            for (int j=0; j<str.length; j++) {
-                [sourceArray addObject:[str substringWithRange:NSMakeRange(j, 1)]];
-            }
-            
-            for (int e=0; e<sourceArray.count; e++) {
-                
-                UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originX+(20*BiLiWidth+originX)*e, originY, 20*BiLiWidth, 20*BiLiWidth)];
-                [button setBackgroundImage:[UIImage imageNamed:@"duiJiangHaoMa_bg"] forState:UIControlStateNormal];
-                [button setTitle:[sourceArray objectAtIndex:e] forState:UIControlStateNormal];
-                [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
-                [duiJianScrollView addSubview:button];
-            }
-            originY = originY+15*BiLiWidth+20*BiLiWidth;
-            originX = (kuangView.width-20*BiLiWidth*6)/7;
-        }
-        if (originY>300*BiLiHeight) {
-            
-            duiJianScrollView.height = 300*BiLiHeight;
-            [duiJianScrollView setContentSize:CGSizeMake(duiJianScrollView.width, originY)];
-        }
-        else
-        {
-            duiJianScrollView.height = originY;
-        }
-        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangView.width-209*BiLiWidth)/2, duiJianScrollView.top+duiJianScrollView.height+20*BiLiWidth, 209*BiLiWidth, 40*BiLiWidth)];
-        [sureButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [kuangView addSubview:sureButton];
-        //渐变设置
-        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-        gradientLayer1.frame = sureButton.bounds;
-        gradientLayer1.cornerRadius = 20*BiLiWidth;
-        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-        gradientLayer1.startPoint = CGPointMake(0, 0);
-        gradientLayer1.endPoint = CGPointMake(0, 1);
-        gradientLayer1.locations = @[@0,@1];
-        [sureButton.layer addSublayer:gradientLayer1];
-        
-        UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
-        tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-        tiJiaoLable.text = @"我知道了";
-        tiJiaoLable.textAlignment = NSTextAlignmentCenter;
-        tiJiaoLable.textColor = [UIColor whiteColor];
-        [sureButton addSubview:tiJiaoLable];
+    
+    [self.duiJiangHaoMaKuangView removeFromSuperview];
 
+    
+    self.duiJiangHaoMaKuangView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+    self.duiJiangHaoMaKuangView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.duiJiangHaoMaKuangView];
+    
+    
+    UIView * kuangView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+    kuangView.layer.cornerRadius = 8*BiLiWidth;
+    kuangView.layer.masksToBounds = YES;
+    kuangView.backgroundColor = [UIColor whiteColor];
+    [self.duiJiangHaoMaKuangView addSubview:kuangView];
+    
+    UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangView.left+kuangView.width-33*BiLiWidth/2*1.5, kuangView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.duiJiangHaoMaKuangView addSubview:closeButton];
+    
+    UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangView.width, 17*BiLiWidth)];
+    tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+    tipLable1.textColor = RGBFormUIColor(0x343434);
+    tipLable1.textAlignment = NSTextAlignmentCenter;
+    tipLable1.text = @"兑奖号码";
+    [kuangView addSubview:tipLable1];
+    
+    UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(0, tipLable1.top+tipLable1.height+20*BiLiWidth, kuangView.width, 14*BiLiWidth)];
+    tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    tipLable2.textColor = RGBFormUIColor(0x333333);
+    tipLable2.textAlignment = NSTextAlignmentCenter;
+    tipLable2.text = @"金币越多中奖概率越大";
+    [kuangView addSubview:tipLable2];
+    
+    UIScrollView * duiJianScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, tipLable2.top+tipLable2.height+20*BiLiWidth, kuangView.width, 0)];
+    duiJianScrollView.showsVerticalScrollIndicator = NO;
+    duiJianScrollView.showsHorizontalScrollIndicator = NO;
+    [kuangView addSubview:duiJianScrollView];
+    
+    
+    float originY = 0;
+    float originX = (kuangView.width-20*BiLiWidth*6)/7;
+    for (int i=0; i<self.duiJiangHaoMaArray.count; i++) {
         
-        kuangView.height = sureButton.top+sureButton.height+30*BiLiWidth;
-        kuangView.top = (HEIGHT_PingMu-kuangView.height)/2;
-        closeButton.top = kuangView.top-33*BiLiWidth/2;
+        NSNumber * number = [self.duiJiangHaoMaArray objectAtIndex:i];
+        NSString * str = [NSString stringWithFormat:@"%d",number.intValue];
+        NSMutableArray * sourceArray = [NSMutableArray array];
+        for (int j=0; j<str.length; j++) {
+            [sourceArray addObject:[str substringWithRange:NSMakeRange(j, 1)]];
+        }
         
+        for (int e=0; e<sourceArray.count; e++) {
+            
+            UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originX+(20*BiLiWidth+originX)*e, originY, 20*BiLiWidth, 20*BiLiWidth)];
+            [button setBackgroundImage:[UIImage imageNamed:@"duiJiangHaoMa_bg"] forState:UIControlStateNormal];
+            [button setTitle:[sourceArray objectAtIndex:e] forState:UIControlStateNormal];
+            [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
+            [duiJianScrollView addSubview:button];
+        }
+        originY = originY+15*BiLiWidth+20*BiLiWidth;
+        originX = (kuangView.width-20*BiLiWidth*6)/7;
     }
-    return _duiJiangHaoMaKuangView;
+    if (originY>300*BiLiHeight) {
+        
+        duiJianScrollView.height = 300*BiLiHeight;
+        [duiJianScrollView setContentSize:CGSizeMake(duiJianScrollView.width, originY)];
+    }
+    else
+    {
+        duiJianScrollView.height = originY;
+    }
+    UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangView.width-209*BiLiWidth)/2, duiJianScrollView.top+duiJianScrollView.height+20*BiLiWidth, 209*BiLiWidth, 40*BiLiWidth)];
+    [sureButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [kuangView addSubview:sureButton];
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+    gradientLayer1.frame = sureButton.bounds;
+    gradientLayer1.cornerRadius = 20*BiLiWidth;
+    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer1.startPoint = CGPointMake(0, 0);
+    gradientLayer1.endPoint = CGPointMake(0, 1);
+    gradientLayer1.locations = @[@0,@1];
+    [sureButton.layer addSublayer:gradientLayer1];
+    
+    UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+    tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    tiJiaoLable.text = @"我知道了";
+    tiJiaoLable.textAlignment = NSTextAlignmentCenter;
+    tiJiaoLable.textColor = [UIColor whiteColor];
+    [sureButton addSubview:tiJiaoLable];
+    
+    
+    kuangView.height = sureButton.top+sureButton.height+30*BiLiWidth;
+    kuangView.top = (HEIGHT_PingMu-kuangView.height)/2;
+    closeButton.top = kuangView.top-33*BiLiWidth/2;
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -212,7 +214,7 @@
 }
 -(void)sureButtonClick
 {
-    self.duiJiangHaoMaKuangView.hidden = YES;
+    [self.duiJiangHaoMaKuangView removeFromSuperview];
 }
 -(UIView *)guiZeShuoMingKuangView
 {
@@ -544,6 +546,8 @@
             
             if (self->shengYuTime>0) {
                 
+                [self.timer invalidate];
+                self.timer = nil;
                 self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
 
             }
@@ -559,9 +563,10 @@
             }
             
             NSString * contentStr = [self.messageInfo objectForKey:@"rules"];
+//            self.contentTextView.text = contentStr;
             NSAttributedString *attrStr = [[NSAttributedString alloc] initWithData:[contentStr dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
             self.contentTextView.attributedText = attrStr;
-            [self.contentTextView sizeToFit];
+//            [self.contentTextView sizeToFit];
             
             [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.contentTextView.top+self.contentTextView.height)];
 
@@ -662,7 +667,7 @@
         if (status==1) {
             
             self.duiJiangHaoMaArray = responseObject;
-            self.duiJiangHaoMaKuangView.hidden = NO;
+            [self initDuiJiangHaoMaKuangView];
             [NormalUse showToastView:@"购买成功" view:self.view];
         }
         else
