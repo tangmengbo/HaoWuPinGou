@@ -59,10 +59,7 @@
     headerImageView.autoresizingMask = UIViewAutoresizingNone;
     headerImageView.clipsToBounds = YES;
     headerImageView.layer.cornerRadius = 24*BiLiWidth;
-    if([NormalUse isValidArray:self.images])
-    {
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:0]]];
-    }
+    [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.info objectForKey:@"avatar"]]];
     [self.mainScrollView addSubview:headerImageView];
     
     UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+22*BiLiWidth, 200*BiLiWidth, 15*BiLiWidth)];
@@ -74,7 +71,7 @@
     UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, nickLable.top+nickLable.height+9.5*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
     timeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-    timeLable.text = [NSString stringWithFormat:@"%@",[self.info objectForKey:@"friendly_date"]];
+    timeLable.text = [self.info objectForKey:@"experience_date"];//[NSString stringWithFormat:@"%@",[self.info objectForKey:@"friendly_date"]];
     [self.mainScrollView addSubview:timeLable];
     
     UILabel * meiZiNameLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+12.5*BiLiWidth, 200*BiLiWidth, 39.5*BiLiWidth)];
@@ -328,7 +325,6 @@
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-    
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {

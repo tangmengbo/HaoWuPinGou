@@ -94,7 +94,7 @@
     [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:shaiXuanButton];
     
-    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格分从低到高", nil];
+    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
     
 
     float originx = 15*BiLiWidth;
@@ -205,7 +205,7 @@
         self.order = @"desc";
 
     }
-    else if ([@"价格分从低到高" isEqualToString:str])
+    else if ([@"价格从低到高" isEqualToString:str])
     {
         self.field = @"min_price";
         self.order = @"asc";

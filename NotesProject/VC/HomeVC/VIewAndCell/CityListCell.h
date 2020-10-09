@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * buttonContentView;
 
+@property(nonatomic,assign)BOOL alsoFromHome;
+
+
 -(void)initContentView:(NSArray *)array;
 
 +(float)cellHegiht:(NSArray *)array;

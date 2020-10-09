@@ -107,7 +107,13 @@
 
     }
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -536,6 +542,8 @@
                 
                 NSDictionary * contact = [self.dianPuInfo objectForKey:@"contact"];
                 [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+                [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+
                 NSString * wechat = [contact objectForKey:@"wechat"];
                 NSString * qq = [contact objectForKey:@"qq"];
                 NSNumber * mobile = [contact objectForKey:@"mobile"];
@@ -609,6 +617,14 @@
     return headerView;
     
 }
+-(void)chatButtonClick
+{
+    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                       ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
+    [self.navigationController pushViewController:chatVC animated:YES];
+
+}
+
 -(void)jieSuoButtonClick
 {
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
@@ -625,6 +641,7 @@
 //              self.jieSuoButton.button_lable1.text = @"";
             NSDictionary * contact = responseObject;
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
             NSNumber * mobile = [contact objectForKey:@"mobile"];

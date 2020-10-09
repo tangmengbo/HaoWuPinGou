@@ -17,6 +17,8 @@
 @property(nonatomic,strong)UILabel * yueLable;
 @property(nonatomic,strong)UILabel * tipLable;//展示金币和人民币的比例 以及输入金币后对应的人民币数量
 
+@property(nonatomic,strong)UILabel * shouXuFeiDaoZhangLable;
+
 @property(nonatomic,strong)UITextField * yinHangKaHaoTF;
 @property(nonatomic,strong)UITextField * shouKuanRenXingMingTF;
 
@@ -160,7 +162,7 @@
     self.yueLable.attributedText = str;
 
     
-    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(whiteContentView.width-30*BiLiWidth-150*BiLiWidth, self.yueLable.top, 150*BiLiWidth, 18*BiLiWidth)];
+    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(whiteContentView.width-30*BiLiWidth-120*BiLiWidth, self.yueLable.top, 120*BiLiWidth, 18*BiLiWidth)];
     self.tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.tipLable.textColor = RGBFormUIColor(0x9A9A9A);
     self.tipLable.textAlignment = NSTextAlignmentRight;
@@ -169,7 +171,15 @@
     self.tipLable.text = [NSString stringWithFormat:@"1金币=%.2f人民币",1/jinBiRmbBiLi.floatValue];
     [whiteContentView addSubview:self.tipLable];
     
-    UILabel * shouKuanRenLable = [[UILabel alloc] initWithFrame:CGRectMake(jinBiImageView.left, self.yueLable.top+self.yueLable.height+34*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
+    self.shouXuFeiDaoZhangLable = [[UILabel alloc] initWithFrame:CGRectMake(self.yueLable.left, self.tipLable.top+self.tipLable.height, WIDTH_PingMu-self.yueLable.left*2, 50*BiLiWidth)];
+    self.shouXuFeiDaoZhangLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.shouXuFeiDaoZhangLable.textColor = RGBFormUIColor(0x9A9A9A);
+    self.shouXuFeiDaoZhangLable.textAlignment = NSTextAlignmentLeft;
+    self.shouXuFeiDaoZhangLable.adjustsFontSizeToFitWidth = YES;
+    [whiteContentView addSubview:self.shouXuFeiDaoZhangLable];
+
+    
+    UILabel * shouKuanRenLable = [[UILabel alloc] initWithFrame:CGRectMake(jinBiImageView.left, self.shouXuFeiDaoZhangLable.top+self.shouXuFeiDaoZhangLable.height, 200*BiLiWidth, 14*BiLiWidth)];
     shouKuanRenLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     shouKuanRenLable.textColor = RGBFormUIColor(0x343434);
     shouKuanRenLable.text = @"填写收款人信息";
@@ -235,7 +245,7 @@
     [self.mainScrollView addSubview:tiXianMessageLable];
    
     NSString * cash_out_percentage = [NormalUse getJinBiStr:@"cash_out_percentage"];
-    NSString * neiRongStr = [NSString stringWithFormat:@"1、每次提现最低为%@金币\n2、提现收取%@%@BiLiWidth手续费，如提1000金币，则实际到账%d金币\n3、仅支持银行卡提现，收款账户卡号和姓名必须一致，到账时间为24小时内",[NormalUse getJinBiStr:@"cash_out_limit"],cash_out_percentage,@"%",1000-(1000*cash_out_percentage.intValue/100)];
+    NSString * neiRongStr = [NSString stringWithFormat:@"1、每次提现最低为%@金币\n2、提现收取%@%@手续费，如提1000金币，则实际到账%d金币\n3、仅支持银行卡提现，收款账户卡号和姓名必须一致，到账时间为24小时内",[NormalUse getJinBiStr:@"cash_out_limit"],cash_out_percentage,@"%",1000-(1000*cash_out_percentage.intValue/100)];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距
@@ -303,8 +313,13 @@
 -(void)textFieldChanged:(UITextField*)textField{
 
     NSString * str = textField.text;
+    if (str.floatValue>self.yuEStr.floatValue) {
+        
+        textField.text = self.yuEStr;
+        str = self.yuEStr;
+    }
     NSString * jinBiRmbBiLi = [NormalUse getJinBiStr:@"cny_to_coin"];
-
+    
     if([NormalUse isValidString:str])
     {
         self.tipLable.text = [NSString stringWithFormat:@"合计:%.2f元",str.intValue/jinBiRmbBiLi.floatValue];
@@ -314,6 +329,9 @@
         self.tipLable.text = [NSString stringWithFormat:@"1金币=%.2f人民币",1/jinBiRmbBiLi.floatValue];
 
     }
-    
+    NSString * cash_out_percentage = [NormalUse getJinBiStr:@"cash_out_percentage"];
+    float shouXuFei = str.intValue/jinBiRmbBiLi.floatValue*cash_out_percentage.intValue/100;
+    float daoZhang = str.intValue/jinBiRmbBiLi.floatValue-shouXuFei;
+    self.shouXuFeiDaoZhangLable.text = [NSString stringWithFormat:@"手续费:%.2f  到账:%.2f",shouXuFei,daoZhang];
 }
 @end

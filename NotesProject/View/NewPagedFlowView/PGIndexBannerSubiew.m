@@ -50,6 +50,9 @@
         _mainImageView.userInteractionEnabled = YES;
         _mainImageView.layer.cornerRadius = 8*BiLiWidth;
         _mainImageView.layer.masksToBounds = YES;
+        _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _mainImageView.autoresizingMask = UIViewAutoresizingNone;
+        _mainImageView.clipsToBounds = YES;
     }
     return _mainImageView;
 }

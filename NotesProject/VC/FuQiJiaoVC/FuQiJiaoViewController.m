@@ -704,7 +704,18 @@
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-    
+    if (subIndex==-1) {
+        subIndex = subIndex+1;
+    }
+    NSDictionary * info = [self.bannerArray objectAtIndex:subIndex];
+    if ([NormalUse isValidString:[info objectForKey:@"url"]]) {
+        
+        WKWebViewController * vc = [[WKWebViewController alloc] init];
+        vc.titleStr = [info objectForKey:@"title"];
+        vc.url = [info objectForKey:@"url"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {

@@ -48,9 +48,13 @@
         }
         else
         {
-            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
             NSMutableArray * hotArray = [[NSMutableArray alloc] initWithArray:self.hotCityList];
-            [hotArray insertObject:dic atIndex:0];
+            if(self.alsoFromHome)
+            {
+                NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
+                [hotArray insertObject:dic atIndex:0];
+            }
+
             self.sourceInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             NSArray * keyArray = [responseObject allKeys];
             self.keyArray = [[NSMutableArray alloc] initWithArray:[keyArray sortedArrayUsingSelector:@selector(compare:)]];
@@ -85,10 +89,13 @@
         if (status==1) {
             
             [NormalUse defaultsSetObject:responseObject forKey:@"CityListDefaults"];
-
-            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
             NSMutableArray * hotArray = [[NSMutableArray alloc] initWithArray:self.hotCityList];
-            [hotArray insertObject:dic atIndex:0];
+
+            if(self.alsoFromHome)
+            {
+                NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
+                [hotArray insertObject:dic atIndex:0];
+            }
             self.sourceInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             NSArray * keyArray = [responseObject allKeys];
             self.keyArray = [[NSMutableArray alloc] initWithArray:[keyArray sortedArrayUsingSelector:@selector(compare:)]];
@@ -131,6 +138,7 @@
     {
         cell = [[CityListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
     }
+    cell.alsoFromHome = self.alsoFromHome;
     cell.backgroundColor = [UIColor clearColor];
     cell.delegate = self;
     NSString * keyStr = [self.keyArray objectAtIndex:indexPath.section];

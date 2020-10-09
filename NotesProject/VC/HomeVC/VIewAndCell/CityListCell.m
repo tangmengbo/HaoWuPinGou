@@ -44,47 +44,51 @@
         NSDictionary * info = [array objectAtIndex:i];
         
         NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
-        
-        if ([NormalUse isValidDictionary:cityInfo]) {
+
+        if (self.alsoFromHome) {
             
-            if ([[info objectForKey:@"cityName"] isEqualToString:[cityInfo objectForKey:@"cityName"]]) {
+            if ([NormalUse isValidDictionary:cityInfo]) {
                 
-                UIButton * dangQianWeiZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(18.5+(85+19)*BiLiWidth*(i%3),50*BiLiWidth*(i/3) ,85*BiLiWidth, 35*BiLiWidth)];
-                [self.buttonContentView addSubview:dangQianWeiZhiButton];
-                //渐变设置
-                UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-                UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-                CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-                gradientLayer1.frame = dangQianWeiZhiButton.bounds;
-                gradientLayer1.cornerRadius = 35*BiLiWidth/2;
-                gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-                gradientLayer1.startPoint = CGPointMake(0, 0);
-                gradientLayer1.endPoint = CGPointMake(0, 1);
-                gradientLayer1.locations = @[@0,@1];
-                [dangQianWeiZhiButton.layer addSublayer:gradientLayer1];
+                if ([[info objectForKey:@"cityName"] isEqualToString:[cityInfo objectForKey:@"cityName"]]) {
+                    
+                    UIButton * dangQianWeiZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(18.5+(85+19)*BiLiWidth*(i%3),50*BiLiWidth*(i/3) ,85*BiLiWidth, 35*BiLiWidth)];
+                    [self.buttonContentView addSubview:dangQianWeiZhiButton];
+                    //渐变设置
+                    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+                    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+                    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+                    gradientLayer1.frame = dangQianWeiZhiButton.bounds;
+                    gradientLayer1.cornerRadius = 35*BiLiWidth/2;
+                    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+                    gradientLayer1.startPoint = CGPointMake(0, 0);
+                    gradientLayer1.endPoint = CGPointMake(0, 1);
+                    gradientLayer1.locations = @[@0,@1];
+                    [dangQianWeiZhiButton.layer addSublayer:gradientLayer1];
+
+                }
 
             }
+            else
+            {
+                if ([[info objectForKey:@"cityName"] isEqualToString:@"全部"]) {
+                    
+                    UIButton * dangQianWeiZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(18.5+(85+19)*BiLiWidth*(i%3),50*BiLiWidth*(i/3) ,85*BiLiWidth, 35*BiLiWidth)];
+                    [self.buttonContentView addSubview:dangQianWeiZhiButton];
+                    //渐变设置
+                    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+                    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+                    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+                    gradientLayer1.frame = dangQianWeiZhiButton.bounds;
+                    gradientLayer1.cornerRadius = 35*BiLiWidth/2;
+                    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+                    gradientLayer1.startPoint = CGPointMake(0, 0);
+                    gradientLayer1.endPoint = CGPointMake(0, 1);
+                    gradientLayer1.locations = @[@0,@1];
+                    [dangQianWeiZhiButton.layer addSublayer:gradientLayer1];
 
-        }
-        else
-        {
-            if ([[info objectForKey:@"cityName"] isEqualToString:@"全部"]) {
-                
-                UIButton * dangQianWeiZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(18.5+(85+19)*BiLiWidth*(i%3),50*BiLiWidth*(i/3) ,85*BiLiWidth, 35*BiLiWidth)];
-                [self.buttonContentView addSubview:dangQianWeiZhiButton];
-                //渐变设置
-                UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-                UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-                CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-                gradientLayer1.frame = dangQianWeiZhiButton.bounds;
-                gradientLayer1.cornerRadius = 35*BiLiWidth/2;
-                gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-                gradientLayer1.startPoint = CGPointMake(0, 0);
-                gradientLayer1.endPoint = CGPointMake(0, 1);
-                gradientLayer1.locations = @[@0,@1];
-                [dangQianWeiZhiButton.layer addSublayer:gradientLayer1];
-
+                }
             }
+
         }
 
                 
@@ -112,23 +116,27 @@
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.buttonContentView addSubview:button];
         
-        if ([NormalUse isValidDictionary:cityInfo]) {
-            
-            if ([[info objectForKey:@"cityName"] isEqualToString:[cityInfo objectForKey:@"cityName"]]) {
+        if (self.alsoFromHome) {
 
-                [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
-                [button setBackgroundColor:[UIColor clearColor]];
+            if ([NormalUse isValidDictionary:cityInfo]) {
+                
+                if ([[info objectForKey:@"cityName"] isEqualToString:[cityInfo objectForKey:@"cityName"]]) {
 
+                    [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
+                    [button setBackgroundColor:[UIColor clearColor]];
+
+                }
             }
-        }
-        else
-        {
-            if ([[info objectForKey:@"cityName"] isEqualToString:@"全部"]) {
-                   
-                [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
-                [button setBackgroundColor:[UIColor clearColor]];
+            else
+            {
+                if ([[info objectForKey:@"cityName"] isEqualToString:@"全部"]) {
+                       
+                    [button setTitleColor:RGBFormUIColor(0xFFFFFF) forState:UIControlStateNormal];
+                    [button setBackgroundColor:[UIColor clearColor]];
 
-               }
+                   }
+            }
+
         }
         
         height = button.top+button.height+16*BiLiWidth;

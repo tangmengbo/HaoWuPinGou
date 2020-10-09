@@ -110,12 +110,7 @@
 
     }
     self.titleLable.text = [info objectForKey:@"user_name"];
-    NSNumber * complex_score = [info objectForKey:@"complex_score"];
-    if ([complex_score isKindOfClass:[NSNumber class]]) {
-        
-        self.starLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
-
-    }
+    self.starLable.text = [NormalUse getobjectForKey:[info objectForKey:@"complex_score"]];
     self.cityLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     
     

@@ -39,7 +39,7 @@
 -(void)initContentView
 {
     
-    UIView * whiteContentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-240*BiLiWidth, WIDTH_PingMu, 240*BiLiWidth)];
+    UIView * whiteContentView = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-160*BiLiWidth, WIDTH_PingMu, 160*BiLiWidth)];
     whiteContentView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteContentView];
     whiteContentView.layer.shadowOpacity = 0.2f;
@@ -53,7 +53,7 @@
     whiteContentView.layer.mask = maskLayer;
 
     
-    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格分从低到高", nil];
+    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高", nil];//[[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
     
     self.paiButtonXuArray = [NSMutableArray array];
     for (int i=0; i<self.paiXuSourceArray.count; i++) {
@@ -109,7 +109,7 @@
         self.order = @"desc";
 
     }
-    else if ([@"价格分从低到高" isEqualToString:str])
+    else if ([@"价格从低到高" isEqualToString:str])
     {
         self.field = @"min_price";
         self.order = @"asc";

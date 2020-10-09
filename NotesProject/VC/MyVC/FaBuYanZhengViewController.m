@@ -550,7 +550,7 @@
 {
     NSDate * select = [sender date]; // 获取被选中的时间
     NSDateFormatter *selectDateFormatter = [[NSDateFormatter alloc] init];
-    selectDateFormatter.dateFormat = @"MM月dd日";
+    selectDateFormatter.dateFormat = @"yyyy-MM-dd";
     NSString * selectData = [selectDateFormatter stringFromDate:select];
     [self.tiYanTimeButton setTitle:selectData forState:UIControlStateNormal];
     [self.tiYanTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
@@ -825,6 +825,8 @@
                 [dicInfo setObject:self.fuWuXiangMuButton.titleLabel.text forKey:@"service_type"];
                 [dicInfo setObject:self.tiYanTimeButton.titleLabel.text forKey:@"experience_date"];
                 [dicInfo setObject:self.xiaoFeiTF.text forKey:@"trade_money"];
+                
+                   
                 if(self.hongBangTuiJianButton.tag==0)
                 {
                     [dicInfo setObject:@"0" forKey:@"is_good"];

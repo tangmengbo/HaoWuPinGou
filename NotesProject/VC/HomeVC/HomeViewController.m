@@ -167,12 +167,12 @@
 }
 -(void)sureButtonClick
 {
-    self.uploadTipView.hidden = YES;
-
+    [self closeUploadTipKuangView];
 }
 -(void)closeUploadTipKuangView
 {
     self.uploadTipView.hidden = YES;
+    [self getGongGaiMessage];
 }
 
 
@@ -582,6 +582,26 @@
     
     
 }
+-(void)getGongGaiMessage
+{
+    [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject,@"message", nil];
+            GongGaoAlertView * gongGaoView = [[GongGaoAlertView alloc] initWithFrame:CGRectZero messageInfo:dic];
+            gongGaoView.closeView = ^{
+                
+            };
+            gongGaoView.toUpload = ^{
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:gongGaoView];
+
+        }
+    }];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -607,27 +627,15 @@
     
     [self registerInit];
     
-    [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-       
-        if (status==1) {
-            
-            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:responseObject,@"message", nil];
-            GongGaoAlertView * gongGaoView = [[GongGaoAlertView alloc] initWithFrame:CGRectZero messageInfo:dic];
-            gongGaoView.closeView = ^{
-                
-            };
-            gongGaoView.toUpload = ^{
-                
-            };
-            [[UIApplication sharedApplication].keyWindow addSubview:gongGaoView];
-
-        }
-    }];
      
     NSString * haveto_update_app = [NormalUse getJinBiStr:@"haveto_update_app"];//0 不需要更新 1 普通更新 2 强制更新
     if ([@"1" isEqualToString:haveto_update_app] ||[@"2" isEqualToString:haveto_update_app]) {
         
         self.uploadTipView.hidden = NO;
+    }
+    else
+    {
+        [self getGongGaiMessage];
     }
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top+BottomHeight_PingMu))];
@@ -689,10 +697,10 @@
     else
     {
         [HTTPModel getCurrentCity:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-           self.locationLable.text = [responseObject objectForKey:@"cityName"];
             [NormalUse defaultsSetObject:responseObject forKey:CurrentCity];
         }];
 
+        self.locationLable.text = @"全部";
 
     }
 
@@ -1680,7 +1688,7 @@
 }
 - (void)citySelect:(NSDictionary *)info
 {
-//    self.locationLable.text = [info objectForKey:@"cityName"];
+    self.locationLable.text = [info objectForKey:@"cityName"];
     NSString * cityCode = [info objectForKey:@"cityCode"];
     if (cityCode.intValue==-1001) {
         
@@ -1731,7 +1739,17 @@
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-    
+    if (subIndex==-1) {
+        subIndex = subIndex+1;
+    }
+    NSDictionary * info = [self.bannerArray objectAtIndex:subIndex];
+    if ([NormalUse isValidString:[info objectForKey:@"url"]]) {
+        
+        WKWebViewController * vc = [[WKWebViewController alloc] init];
+        vc.titleStr = [info objectForKey:@"title"];
+        vc.url = [info objectForKey:@"url"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
