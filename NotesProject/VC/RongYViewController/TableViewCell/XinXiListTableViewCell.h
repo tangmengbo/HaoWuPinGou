@@ -27,10 +27,6 @@
 @property(nonatomic,strong)UIView * lineView;
 
 
--(void)initData:(NSDictionary *)info;
-
-
-
 -(void)initWithFriendInfo:(RCConversation *)conversation;
 
 

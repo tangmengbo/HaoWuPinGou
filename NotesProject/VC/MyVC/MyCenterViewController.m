@@ -159,6 +159,10 @@
        
         if (status==1) {
             
+            NSDictionary * userYongYunInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+            
+            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:[userYongYunInfo objectForKey:@"userid"] name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+
             self.userInfo = responseObject;
             [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:self.userInfo] forKey:UserInformation];
             
@@ -344,7 +348,7 @@
     [self.huiYuanButton addSubview:self.huiYuanDaoQiLable];
 
     
-    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top-4*BiLiWidth, self.huiYuanButton.width, self.huiYuanButton.height+10*BiLiWidth)];
+    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth-4*BiLiWidth, self.huiYuanButton.top-4*BiLiWidth, self.huiYuanButton.width+10*BiLiWidth, self.huiYuanButton.height+10*BiLiWidth)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
     [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:chongZhiButton];

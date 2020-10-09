@@ -10,8 +10,11 @@
 #import "MyXiaoXi_GuanFangCell.h"
 #import "MyXiaoXi_ShenHeCell.h"
 #import "GuanFangXiaoXiDetailViewController.h"
+#import "ChatListViewController.h"
 
 @interface XiaoXiViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+
+@property(nonatomic,strong)UILabel * unReadMesLable;
 
 @property(nonatomic,strong)UIButton * button1;
 @property(nonatomic,strong)UIButton * button2;
@@ -69,7 +72,37 @@
     return _noMessageTipImageView3;
 }
 
+-(void)rightClick
+{
+    
+    NSArray *displayConversationTypeArray = @[@(ConversationType_PRIVATE)];
+    ChatListViewController * vc = [[ChatListViewController alloc] initWithDisplayConversationTypes:displayConversationTypeArray collectionConversationType:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    int unReadMesNumber = [[RCIMClient sharedRCIMClient] getUnreadCount:@[@(ConversationType_PRIVATE)]];
 
+    if (unReadMesNumber<=0) {
+        self.unReadMesLable.hidden = YES;
+    }
+    else
+    {
+        self.unReadMesLable.hidden = NO;
+        self.unReadMesLable.text = [NSString stringWithFormat:@"%d",unReadMesNumber];
+        if (unReadMesNumber<10) {
+            
+            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 15, 15);
+        }
+        else
+        {
+            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 20, 15);
+        }
+    }
+
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -79,6 +112,18 @@
     [self yinCangTabbar];
     
     CGSize size =  [NormalUse setSize:@"官方消息" withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    [self.rightButton setTitle:@"消息" forState:UIControlStateNormal];
+
+    self.unReadMesLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-20*BiLiWidth, 5, 20, 15)];
+    self.unReadMesLable.textColor = [UIColor whiteColor];
+    self.unReadMesLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+    self.unReadMesLable.textAlignment = NSTextAlignmentCenter;
+    self.unReadMesLable.layer.cornerRadius = 15/2;
+    self.unReadMesLable.layer.masksToBounds = YES;
+    self.unReadMesLable.hidden = YES;
+    self.unReadMesLable.backgroundColor = [UIColor redColor];
+    [self.topNavView addSubview:self.unReadMesLable];
+
 
     
     self.button1 = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu/3-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
@@ -90,6 +135,8 @@
     [self.button1.titleLabel sizeToFit];
     [self.view addSubview:self.button1];
     [self.button1 sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3+(WIDTH_PingMu/3-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
     [self.button2 setTitle:@"审核消息" forState:UIControlStateNormal];
@@ -337,7 +384,7 @@
     }
     else if (tableView.tag==1)
     {
-        NSDictionary * info = [self.sourceArray3 objectAtIndex:indexPath.row];
+        NSDictionary * info = [self.sourceArray2 objectAtIndex:indexPath.row];
         
         return [MyXiaoXi_ShenHeCell cellHegiht:info];
 

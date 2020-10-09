@@ -63,7 +63,7 @@
     self.titleLable.text = @"审核消息";
     self.timeLable.text = [info objectForKey:@"create_at"];
     
-    NSString * neiRongStr = [info objectForKey:@"message"];
+    NSString * neiRongStr = [NormalUse getobjectForKey:[info objectForKey:@"message"]];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距
@@ -83,7 +83,7 @@
     lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     lable.numberOfLines = 0;
 
-    NSString * neiRongStr = [info objectForKey:@"message"];
+    NSString * neiRongStr = [NormalUse getobjectForKey:[info objectForKey:@"message"]];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     //调整行间距

@@ -71,6 +71,9 @@
 		5F34DCFB24F38E6700DE15A1 /* CityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */; };
 		5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */; };
 		5F4552A4251DE75B00F42614 /* FengZhuangUIPageControll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */; };
+		5F45D55225300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F45D55125300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m */; };
+		5F45D55525301B1E007F207C /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F45D55425301B1E007F207C /* WKWebViewController.m */; };
+		5F45D55825303079007F207C /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F45D55725303079007F207C /* ChatListViewController.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
 		5F5B9BC5252178E6005AB038 /* qiDongVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */; };
@@ -315,6 +318,12 @@
 		5F34DCFD24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FangLeiFangPianDetailViewController.m; sourceTree = "<group>"; };
 		5F4552A2251DE75B00F42614 /* FengZhuangUIPageControll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FengZhuangUIPageControll.h; sourceTree = "<group>"; };
 		5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FengZhuangUIPageControll.m; sourceTree = "<group>"; };
+		5F45D55025300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyJieSuo_sanDaJiaoSeCell.h; sourceTree = "<group>"; };
+		5F45D55125300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyJieSuo_sanDaJiaoSeCell.m; sourceTree = "<group>"; };
+		5F45D55325301B1E007F207C /* WKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
+		5F45D55425301B1E007F207C /* WKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
+		5F45D55625303079007F207C /* ChatListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
+		5F45D55725303079007F207C /* ChatListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatListViewController.m; sourceTree = "<group>"; };
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
@@ -573,6 +582,8 @@
 				5F2650C524FC8B5600171684 /* TieZiDetailViewController.m */,
 				5F34DCF924F38E6700DE15A1 /* CityListViewController.h */,
 				5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */,
+				5F45D55325301B1E007F207C /* WKWebViewController.h */,
+				5F45D55425301B1E007F207C /* WKWebViewController.m */,
 				5F34DCDE24EF744900DE15A1 /* TiYanBaoGaoViewController.h */,
 				5F34DCDF24EF744900DE15A1 /* TiYanBaoGaoViewController.m */,
 				5F2650E924FD196000171684 /* TiYanBaoGaoDetailViewController.h */,
@@ -845,6 +856,8 @@
 				5F7EF461251062AF0052B948 /* MyJieSuo_JingJiReCell.m */,
 				5F6858CB250B478E007BDA9E /* MyJieSuo_TieZiListCell.h */,
 				5F6858CC250B478E007BDA9E /* MyJieSuo_TieZiListCell.m */,
+				5F45D55025300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.h */,
+				5F45D55125300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m */,
 				5F7EF463251062DE0052B948 /* MyJieSuo_DingZhiFuWuCell.h */,
 				5F7EF464251062DE0052B948 /* MyJieSuo_DingZhiFuWuCell.m */,
 				5F66734625108EEF000C6810 /* MyFaBu_XinXiCell.h */,
@@ -1020,7 +1033,6 @@
 				5F22EBBC24ECF317002DCF61 /* XiaoXiVC */,
 				5F22EBBD24ECF31F002DCF61 /* MyVC */,
 				5FE3EC5C2355B28100C77F4D /* RongYViewController */,
-				5FE3ECB02355B7AB00C77F4D /* XinXiVC */,
 				5FE3EC2D2355AB8000C77F4D /* DengLuVC */,
 				5FE3EAC423559F8D00C77F4D /* JiChuVC */,
 			);
@@ -1199,22 +1211,17 @@
 		5FE3EC5C2355B28100C77F4D /* RongYViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5FE3EC842355B28100C77F4D /* RongYChatViewController.h */,
-				5FE3EC712355B28100C77F4D /* RongYChatViewController.m */,
+				5FE3ECB42355B7AB00C77F4D /* TableViewCell */,
 				5FE3EC5D2355B28100C77F4D /* RongYManager.h */,
 				5FE3EC832355B28100C77F4D /* RongYManager.m */,
-			);
-			path = RongYViewController;
-			sourceTree = "<group>";
-		};
-		5FE3ECB02355B7AB00C77F4D /* XinXiVC */ = {
-			isa = PBXGroup;
-			children = (
-				5FE3ECB42355B7AB00C77F4D /* TableViewCell */,
+				5F45D55625303079007F207C /* ChatListViewController.h */,
+				5F45D55725303079007F207C /* ChatListViewController.m */,
+				5FE3EC842355B28100C77F4D /* RongYChatViewController.h */,
+				5FE3EC712355B28100C77F4D /* RongYChatViewController.m */,
 				5FE3ECB22355B7AB00C77F4D /* XinXiListViewController.h */,
 				5FE3ECBB2355B7AB00C77F4D /* XinXiListViewController.m */,
 			);
-			path = XinXiVC;
+			path = RongYViewController;
 			sourceTree = "<group>";
 		};
 		5FE3ECB42355B7AB00C77F4D /* TableViewCell */ = {
@@ -1411,6 +1418,7 @@
 				5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */,
 				5FE3EAD52355A0EE00C77F4D /* NSData+Additions.m in Sources */,
 				5F084FA4251876D000F2D64C /* MyXiaoXi_ShenHeCell.m in Sources */,
+				5F45D55225300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m in Sources */,
 				5F22EBCD24ECF3A8002DCF61 /* MyCenterViewController.m in Sources */,
 				5F084FB02518A19800F2D64C /* ChongZhiMingXiCell.m in Sources */,
 				5F26510224FE3F7600171684 /* NvShenRenZhengStep2VC.m in Sources */,
@@ -1459,10 +1467,12 @@
 				5F0B382024F60EDC00FC935A /* GesturePasswordButton.m in Sources */,
 				5F34DCE324EF769500DE15A1 /* HeiDianBaoGuangViewController.m in Sources */,
 				5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */,
+				5F45D55825303079007F207C /* ChatListViewController.m in Sources */,
 				5F7EF462251062AF0052B948 /* MyJieSuo_JingJiReCell.m in Sources */,
 				5FD8504825087759009286CE /* FuQiJiaoRenZhengStep2VC.m in Sources */,
 				5FE3EC102355A3E400C77F4D /* TZVideoPlayerController.m in Sources */,
 				5FE3EA6C235599D200C77F4D /* AppDelegate.m in Sources */,
+				5F45D55525301B1E007F207C /* WKWebViewController.m in Sources */,
 				5F2650FB24FE255900171684 /* JingJiRenRenZhengStep3VC.m in Sources */,
 				5FE3EC082355A3E400C77F4D /* UIView+LLMediaExt.m in Sources */,
 				5FE3EC192355A3E400C77F4D /* TZPhotoPreviewCell.m in Sources */,

@@ -55,13 +55,126 @@
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn3;
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn4;
 
-
+@property(nonatomic,strong)UIView * uploadTipView;
 
 
 
 @end
 
 @implementation HomeViewController
+
+-(UIView *)uploadTipView
+{
+    if (!_uploadTipView) {
+        
+        _uploadTipView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _uploadTipView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_uploadTipView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_uploadTipView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeUploadTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_uploadTipView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"滴滴约提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(20*BiLiWidth, tipLable1.top+tipLable1.height+30*BiLiWidth, kuangImageView.width-40*BiLiWidth, 50*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 2;
+        tipLable2.text = @"当前版本即将过期，为了不影响您的使用，请及时更新";
+        [kuangImageView addSubview:tipLable2];
+
+        NSString * haveto_update_app = [NormalUse getJinBiStr:@"haveto_update_app"];//0 不需要更新 1 普通更新 2 强制更新
+
+        if([@"2" isEqualToString:haveto_update_app])
+        {
+            
+            UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-115*BiLiWidth)/2, tipLable2.top+tipLable2.height+55*BiLiWidth, 115*BiLiWidth, 40*BiLiWidth)];
+            [sureButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [kuangImageView addSubview:sureButton];
+
+            //渐变设置
+            UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+            UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+            CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+            gradientLayer1.frame = sureButton.bounds;
+            gradientLayer1.cornerRadius = 20*BiLiWidth;
+            gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+            gradientLayer1.startPoint = CGPointMake(0, 0);
+            gradientLayer1.endPoint = CGPointMake(0, 1);
+            gradientLayer1.locations = @[@0,@1];
+            [sureButton.layer addSublayer:gradientLayer1];
+            
+            UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+            sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            sureLable.text = @"确定";
+            sureLable.textAlignment = NSTextAlignmentCenter;
+            sureLable.textColor = [UIColor whiteColor];
+            [sureButton addSubview:sureLable];
+
+        }
+        else
+        {
+            UIButton * quXiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, tipLable2.top+tipLable2.height+55*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+            [quXiaoButton setTitle:@"取消" forState:UIControlStateNormal];
+            quXiaoButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+            quXiaoButton.layer.cornerRadius = 20*BiLiWidth;
+            [quXiaoButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+            quXiaoButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            [quXiaoButton addTarget:self action:@selector(closeUploadTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+            [kuangImageView addSubview:quXiaoButton];
+
+            UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake(quXiaoButton.left+quXiaoButton.width+11.5*BiLiWidth, quXiaoButton.top, 115*BiLiWidth, 40*BiLiWidth)];
+            [sureButton addTarget:self action:@selector(sureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [kuangImageView addSubview:sureButton];
+            
+            //渐变设置
+            UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+            UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+            CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+            gradientLayer1.frame = sureButton.bounds;
+            gradientLayer1.cornerRadius = 20*BiLiWidth;
+            gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+            gradientLayer1.startPoint = CGPointMake(0, 0);
+            gradientLayer1.endPoint = CGPointMake(0, 1);
+            gradientLayer1.locations = @[@0,@1];
+            [sureButton.layer addSublayer:gradientLayer1];
+            
+            UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+            sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            sureLable.text = @"去更新";
+            sureLable.textAlignment = NSTextAlignmentCenter;
+            sureLable.textColor = [UIColor whiteColor];
+            [sureButton addSubview:sureLable];
+
+        }
+
+
+        
+    }
+    return _uploadTipView;
+}
+-(void)sureButtonClick
+{
+    self.uploadTipView.hidden = YES;
+
+}
+-(void)closeUploadTipKuangView
+{
+    self.uploadTipView.hidden = YES;
+}
+
 
 -(Lable_ImageButton *)noMessageTipButotn1
 {
@@ -511,6 +624,11 @@
         }
     }];
      
+    NSString * haveto_update_app = [NormalUse getJinBiStr:@"haveto_update_app"];//0 不需要更新 1 普通更新 2 强制更新
+    if ([@"1" isEqualToString:haveto_update_app] ||[@"2" isEqualToString:haveto_update_app]) {
+        
+        self.uploadTipView.hidden = NO;
+    }
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top+BottomHeight_PingMu))];
     self.mainScrollView.delegate = self;
@@ -1579,7 +1697,7 @@
     [self firstGetRedList];
     [self firstGetYanZhengBangDanList];
     [self firstGetYanCheBaoGaoList];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityChangeReloadMessageNotification" object:nil];
 }
 -(void)tiYanBaoGaoButtonClick
 {

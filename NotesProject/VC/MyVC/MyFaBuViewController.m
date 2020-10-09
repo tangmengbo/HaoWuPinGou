@@ -627,6 +627,7 @@
         {
             cell = [[MyFaBu_XinXiCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
+        cell.alsoYanZheng = YES;
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell contentViewSetData:[self.yanZhengArray objectAtIndex:indexPath.row]];

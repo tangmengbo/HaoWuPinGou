@@ -48,7 +48,8 @@
         }
     }];
 
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
+
 }
 -(void)initContentView
 {

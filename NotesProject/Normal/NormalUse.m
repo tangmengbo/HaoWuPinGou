@@ -146,7 +146,8 @@
 +(NSString *)getNowUserID {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary * userInfo = [defaults objectForKey:UserInformation];
-    return [userInfo objectForKey:@"userId"];
+    NSNumber * idNumber = [userInfo objectForKey:@"id"];
+    return [NSString stringWithFormat:@"%d",idNumber.intValue];
 }
 
 +(NSString *)getCurrentUserSex

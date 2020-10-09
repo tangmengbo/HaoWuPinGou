@@ -40,13 +40,33 @@
     self.hotCityList = [NormalUse defaultsGetObjectKey:@"HotCityListDefaults"];
     if ([NormalUse isValidArray:self.hotCityList]) {
         
-        [self getCityList];
+        NSDictionary *  responseObject = [NormalUse defaultsGetObjectKey:@"CityListDefaults"];
+        if(![NormalUse isValidDictionary:responseObject])
+        {
+            [self getCityList];
+
+        }
+        else
+        {
+            NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
+            NSMutableArray * hotArray = [[NSMutableArray alloc] initWithArray:self.hotCityList];
+            [hotArray insertObject:dic atIndex:0];
+            self.sourceInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
+            NSArray * keyArray = [responseObject allKeys];
+            self.keyArray = [[NSMutableArray alloc] initWithArray:[keyArray sortedArrayUsingSelector:@selector(compare:)]];
+            [self.keyArray insertObject:@"热门" atIndex:0];
+            [self.sourceInfo setValue:hotArray forKey:@"热门"];
+            [self.mainTableView reloadData];
+
+        }
+        
     }
     else
     {
         [HTTPModel getHotCityList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
+                [NormalUse defaultsSetObject:responseObject forKey:@"HotCityListDefaults"];
                 self.hotCityList = responseObject;
                 [self getCityList];
             }
@@ -64,6 +84,8 @@
         
         if (status==1) {
             
+            [NormalUse defaultsSetObject:responseObject forKey:@"CityListDefaults"];
+
             NSDictionary * dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"全部",@"cityName",@"-1001",@"cityCode", nil];
             NSMutableArray * hotArray = [[NSMutableArray alloc] initWithArray:self.hotCityList];
             [hotArray insertObject:dic atIndex:0];
@@ -73,6 +95,7 @@
             [self.keyArray insertObject:@"热门" atIndex:0];
             [self.sourceInfo setValue:hotArray forKey:@"热门"];
             [self.mainTableView reloadData];
+            
         }
     }];
 
@@ -173,15 +196,15 @@
         
         self.cityInfo = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
         
-        if ([NormalUse isValidDictionary:self.cityInfo]) {
-         
-            cityLable.text = [self.cityInfo objectForKey:@"cityName"];
-        }
-        else
-        {
+//        if ([NormalUse isValidDictionary:self.cityInfo]) {
+//
+//            cityLable.text = [self.cityInfo objectForKey:@"cityName"];
+//        }
+//        else
+//        {
             self.cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
             cityLable.text = [self.cityInfo objectForKey:@"cityName"];
-        }
+      //  }
 
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(19*BiLiWidth, 80*BiLiWidth, WIDTH_PingMu-38*BiLiWidth, 1)];
         lineView.backgroundColor = [RGBFormUIColor(0x999999) colorWithAlphaComponent:0.5];

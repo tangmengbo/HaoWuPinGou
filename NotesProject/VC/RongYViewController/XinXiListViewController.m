@@ -30,13 +30,9 @@
     [super viewDidLoad];
     
 
-        
-    self.backImageView.hidden = YES;
-    self.topTitleLale.text = @"Message";
-    self.statusBarView.backgroundColor = RGBFormUIColor(0xFAFAFA);
-    self.topNavView.backgroundColor = RGBFormUIColor(0xFAFAFA);
+    self.topTitleLale.text = @"消息";
     
-    self.messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.topNavView.frame.origin.y+self.topNavView.frame.size.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.frame.origin.y+self.topNavView.frame.size.height)-BottomHeight_PingMu) style:UITableViewStyleGrouped];
+    self.messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.topNavView.frame.origin.y+self.topNavView.frame.size.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.frame.origin.y+self.topNavView.frame.size.height))];
     self.messageTableView.delegate  = self;
     self.messageTableView.dataSource = self;
     self.messageTableView.tag = 1;
@@ -155,7 +151,6 @@
         RCConversation *conversation = self.dataSourceArray[indexPath.row];
         RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
                                            ConversationType_PRIVATE targetId:conversation.targetId];
-        
         chatVC.conversationType = ConversationType_PRIVATE;
         chatVC.targetId = conversation.targetId;
         [self.navigationController pushViewController:chatVC animated:YES];
@@ -210,7 +205,7 @@
     
     self.navigationController.navigationBarHidden = YES;
     self.tabBarController.tabBar.hidden = YES;
-    [self xianShiTabBar];
+    [self yinCangTabbar];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

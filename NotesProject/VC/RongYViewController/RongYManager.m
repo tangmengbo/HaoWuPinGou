@@ -36,6 +36,7 @@
 }
 - (id)init {
     if ((self = [super init])) {
+        
         [[RCIM sharedRCIM] initWithAppKey:RYKey];
         [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
         [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
@@ -54,6 +55,7 @@
     return self;
 }
 
+
 - (void)connectRongCloud {
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -62,7 +64,12 @@
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
         [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
             NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
-            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:[NormalUse getNowUserID] name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+            
+            RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+            [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
+            
+            
+
         } error:^(RCConnectErrorCode status) {
             NSLog(@"融云 登陆的错误码为:%ld", (long)status);
         } tokenIncorrect:^{
@@ -89,16 +96,15 @@
  */
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
-    RCUserInfo *userInfo;
-    if ([userId isEqualToString:[NormalUse getNowUserID]]) {
-        userInfo = [[RCUserInfo alloc] initWithUserId:[NormalUse getNowUserID] name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+
+    [HTTPModel getUserInfoByRYID:[[NSDictionary alloc] initWithObjectsAndKeys:userId,@"ry_uid", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        RCUserInfo*   userInfo = [[RCUserInfo alloc] initWithUserId:userId name:[responseObject objectForKey:@"nickname"] portrait:[responseObject objectForKey:@"avatar"]];
+        
         completion(userInfo);
-    } else {
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary *info = [defaults objectForKey:userId];
-        userInfo = [[RCUserInfo alloc] initWithUserId:info[@"userId"] name:info[@"nick"] portrait:info[@"avatarUrl"]];
-        completion(userInfo);
-    }
+        
+    }];
+    
 }
 /*!
  接收消息的回调方法
@@ -120,7 +126,7 @@
 {
     if (status==ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT)//用户被挤掉下线
     {
-        AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//        AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //        [appDelegate setWeiDengLuTabBar];
         
         [NormalUse showToastView:@"您的账号已在其他设备登录,请重新登录" view:[NormalUse getCurrentVC].view];
@@ -137,6 +143,11 @@
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
         [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
             NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
+            RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+            [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
+            [[RCIM sharedRCIM] refreshUserInfoCache:_currentUserInfo withUserId:userId];
+
+
         } error:^(RCConnectErrorCode status) {
             NSLog(@"融云 登陆的错误码为:%ld", (long)status);
         } tokenIncorrect:^{

@@ -239,7 +239,14 @@
     [self firstGetZuiXinShangChuanList];
     [self firstGetRenMenTuiJianList];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationChangeLoadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
 
+
+}
+-(void)locationChangeLoadNewLsit
+{
+    [self firstGetZuiXinShangChuanList];
+    [self firstGetRenMenTuiJianList];
 
 }
 -(void)firstGetZuiXinShangChuanList

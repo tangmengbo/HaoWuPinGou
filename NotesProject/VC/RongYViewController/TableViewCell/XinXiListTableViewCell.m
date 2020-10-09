@@ -86,6 +86,7 @@
     NSDictionary * info = [NormalUse dictionaryWithJsonString:extraStr];
     
     if ([[NormalUse getNowUserID] isEqualToString:userInfo.userId]) {
+        
         if ([NormalUse isValidDictionary:info]) {
             
             [self.touXiangImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatarUrl"]] placeholderImage:[UIImage imageNamed:@"user_placeholder_woman"]];

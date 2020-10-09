@@ -8,6 +8,7 @@
 
 #import "MyJieSuoListViewController.h"
 #import "MyJieSuo_TieZiListCell.h"
+#import "MyJieSuo_sanDaJiaoSeCell.h"
 #import "MyJieSuo_JingJiReCell.h"
 #import "DingZhiFuWuTableViewCell.h"
 #import "DianPuKePingJiaViewController.h"
@@ -838,11 +839,11 @@
     }
     else if (tableView.tag==2)
     {
-        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuoListCell"] ;
-        MyJieSuo_TieZiListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuo_sanDaJiaoSeCell"] ;
+        MyJieSuo_sanDaJiaoSeCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
         if (cell == nil)
         {
-            cell = [[MyJieSuo_TieZiListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+            cell = [[MyJieSuo_sanDaJiaoSeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -852,11 +853,11 @@
     }
     else if (tableView.tag==3)
     {
-        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuoListCell"] ;
-        MyJieSuo_TieZiListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuo_sanDaJiaoSeCell"] ;
+        MyJieSuo_sanDaJiaoSeCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
         if (cell == nil)
         {
-            cell = [[MyJieSuo_TieZiListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+            cell = [[MyJieSuo_sanDaJiaoSeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -866,11 +867,11 @@
     }
     else if (tableView.tag==4)
     {
-        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuoListCell"] ;
-        MyJieSuo_TieZiListCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuo_sanDaJiaoSeCell"] ;
+        MyJieSuo_sanDaJiaoSeCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
         if (cell == nil)
         {
-            cell = [[MyJieSuo_TieZiListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+            cell = [[MyJieSuo_sanDaJiaoSeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -912,6 +913,7 @@
         TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
         NSNumber * idNumber = [info objectForKey:@"id"];
         vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+        vc.avatarUrl = [info objectForKey:@"images"];
         [self.navigationController pushViewController:vc animated:YES];
 
     }

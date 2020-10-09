@@ -46,7 +46,7 @@
         self.neiRongView.backgroundColor = RGBFormUIColor(0xEEEEEE);
         [self.contentMessageView addSubview:self.neiRongView];
 
-        self.dingZhiNeiRongLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 9*BiLiWidth, self.neiRongView.width-26*BiLiWidth, 0*BiLiWidth)];
+        self.dingZhiNeiRongLable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 9*BiLiWidth, self.neiRongView.width-26*BiLiWidth, 13*BiLiWidth)];
         self.dingZhiNeiRongLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         self.dingZhiNeiRongLable.textColor = RGBFormUIColor(0x666666);
         [self.neiRongView addSubview:self.dingZhiNeiRongLable];
@@ -94,15 +94,16 @@
         
         neiRongStr = @"无特殊需求";
     }
-
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    //调整行间距
-    [paragraphStyle setLineSpacing:2];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
-    self.dingZhiNeiRongLable.attributedText = attributedString;
-    //设置自适应
-    [self.dingZhiNeiRongLable  sizeToFit];
+    self.dingZhiNeiRongLable.text = neiRongStr;
+    
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    //调整行间距
+//    [paragraphStyle setLineSpacing:2];
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+//    self.dingZhiNeiRongLable.attributedText = attributedString;
+//    //设置自适应
+//    [self.dingZhiNeiRongLable  sizeToFit];
     
     NSString * start_date = [info objectForKey:@"start_date"];
     
@@ -160,23 +161,23 @@
 +(float)cellHegiht:(NSDictionary *)info
 {
     
-    UILabel * lable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 9*BiLiWidth,250*BiLiWidth, 12*BiLiWidth)];
-    lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    UILabel * lable = [[UILabel alloc] initWithFrame:CGRectMake(13*BiLiWidth, 9*BiLiWidth,250*BiLiWidth, 13*BiLiWidth)];
+    lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     lable.numberOfLines = 0;
 
-    NSString * neiRongStr = [info objectForKey:@"description"];
-    if (![NormalUse isValidString:neiRongStr]) {
-        
-        neiRongStr = @"无特殊需求";
-    }
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    //调整行间距
-    [paragraphStyle setLineSpacing:2];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
-    lable.attributedText = attributedString;
-    //设置自适应
-    [lable  sizeToFit];
+//    NSString * neiRongStr = [info objectForKey:@"description"];
+//    if (![NormalUse isValidString:neiRongStr]) {
+//
+//        neiRongStr = @"无特殊需求";
+//    }
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    //调整行间距
+//    [paragraphStyle setLineSpacing:2];
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [neiRongStr length])];
+//    lable.attributedText = attributedString;
+//    //设置自适应
+//    [lable  sizeToFit];
     
     return lable.height+55*BiLiWidth+148*BiLiWidth+21*BiLiWidth;
 

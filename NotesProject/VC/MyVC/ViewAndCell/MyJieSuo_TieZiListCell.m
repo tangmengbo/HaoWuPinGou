@@ -37,31 +37,31 @@
         [self.faBuYanZhengButton addTarget:self action:@selector(faBuYanZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.faBuYanZhengButton];
         
-        self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
-        self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
-        self.faBuTimeLable.textColor = RGBFormUIColor(0xF6BC61);
-        self.faBuTimeLable.backgroundColor = RGBFormUIColor(0x333333);
-        self.faBuTimeLable.textAlignment = NSTextAlignmentCenter;
-        self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
-        [self.headerImageView addSubview:self.faBuTimeLable];
+//        self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
+//        self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+//        self.faBuTimeLable.textColor = RGBFormUIColor(0xF6BC61);
+//        self.faBuTimeLable.backgroundColor = RGBFormUIColor(0x333333);
+//        self.faBuTimeLable.textAlignment = NSTextAlignmentCenter;
+//        self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
+//        [self.headerImageView addSubview:self.faBuTimeLable];
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+90*BiLiWidth), 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self addSubview:self.titleLable];
         
-        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 11*BiLiWidth)];
         self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.leiXingLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.leiXingLable];
         
-        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.diQuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.diQuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.diQuLable];
 
         
-        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.fuWuLable];
@@ -76,7 +76,7 @@
         [self addSubview:self.pingFenStarView];
 
         
-        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.xiaoFeiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.xiaoFeiLable];

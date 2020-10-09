@@ -40,6 +40,8 @@
 //融云
 #import <RongIMKit/RongIMKit.h>
 #import "RongYManager.h"
+#import "RongYChatViewController.h"
+
 
 #import "HTTPModel.h"
 
@@ -54,6 +56,7 @@
 
 #import "UITextView+ZWPlaceHolder.h"//uitextView placehold
 #import "UITextView+ZWLimitCounter.h"
+
 
 #import "JvBaoViewController.h"
 

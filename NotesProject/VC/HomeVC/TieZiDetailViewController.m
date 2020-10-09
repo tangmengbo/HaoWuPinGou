@@ -95,7 +95,7 @@
     [self.view addSubview:self.mainScrollView];
     
     
-
+    
 }
 -(void)initTopMessageView
 {
@@ -417,6 +417,7 @@
             
             NSDictionary * contact = [self.tieZiInfo objectForKey:@"contact"];
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
             NSNumber * mobile = [contact objectForKey:@"mobile"];
@@ -512,6 +513,13 @@
     [self initXiangQingJieShaoView];
     [self initChenYouPingJiaTableView];
 }
+-(void)chatButtonClick
+{
+    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+    [self.navigationController pushViewController:chatVC animated:YES];
+
+}
 -(void)jieSuoButtonClick
 {
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
@@ -527,6 +535,7 @@
             NSDictionary * contactInfo = responseObject;
             
              [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
              NSString * wechat = [contactInfo objectForKey:@"wechat"];
              NSString * qq = [contactInfo objectForKey:@"qq"];
              NSNumber * mobile = [contactInfo objectForKey:@"mobile"];

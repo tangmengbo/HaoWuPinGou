@@ -9,8 +9,6 @@
 @interface RongYChatViewController : RCConversationViewController
 
 @property(nonatomic,strong)RCMessageContent * messageContent;
-
-
 @property(nonatomic,strong)RCMessage * mediaMessage;//发送图片时需要
 
 @end

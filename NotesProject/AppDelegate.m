@@ -28,7 +28,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [self registerAPNs];
+//    [self registerAPNs];
     
     
     
@@ -49,6 +49,11 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     //用户已经登录
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
+        if ([NormalUse isValidDictionary:[NormalUse defaultsGetObjectKey:UserRongYunInfo]]) {
+            
+            [[RongYManager getInstance] connectRongCloud];
+
+        }
         //是否需要手势密码
         [HTTPModel alsoNeesShouShiMiMa:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             

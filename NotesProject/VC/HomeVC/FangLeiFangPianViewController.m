@@ -27,8 +27,10 @@
     self.topTitleLale.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.lineView.hidden = YES;
     
+    [NormalUse xianShiGifLoadingView:self];
     [HTTPModel getArticleList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
+        [NormalUse quXiaoGifLoadingView:self];
         if (status==1) {
             
             self.sourceArray = responseObject;

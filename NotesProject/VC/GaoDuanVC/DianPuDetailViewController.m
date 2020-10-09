@@ -98,6 +98,7 @@
     
     if (alsoLock) {
         
+        alsoLock = NO;
         [UIView animateWithDuration:0.5 animations:^{
             
             self.jieSuoTipView.top = HEIGHT_PingMu-self.jieSuoTipView.height;

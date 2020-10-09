@@ -17,7 +17,7 @@
         
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
-        UIImageView * contentImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-319*BiLiWidth)/2, (HEIGHT_PingMu-401*BiLiWidth)/2, 319*BiLiWidth, 401*BiLiWidth)];
+        UIImageView * contentImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-319*BiLiWidth)/2, (HEIGHT_PingMu-401*BiLiWidth+20*BiLiWidth)/2, 319*BiLiWidth, 401*BiLiWidth-20*BiLiWidth)];
         contentImageView.image = [UIImage imageNamed:@"home_gongGao"];
         contentImageView.userInteractionEnabled = YES;
         [self addSubview:contentImageView];
@@ -34,7 +34,7 @@
         titleLable.text = @"滴滴约公告：";
         [contentImageView addSubview:titleLable];
         
-        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 130*BiLiWidth)];
+        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 170*BiLiWidth)];
         messageTextView.textColor = RGBFormUIColor(0x343434);
         messageTextView.font = [UIFont systemFontOfSize:14*BiLiWidth];
         messageTextView.textAlignment = NSTextAlignmentCenter;
@@ -47,27 +47,27 @@
         [messageTextView sizeToFit];
 
         
-        UIButton * uploadButton = [[UIButton alloc] initWithFrame:CGRectMake((contentImageView.width-240*BiLiWidth)/2, contentImageView.height-89*BiLiWidth, 240*BiLiWidth, 40*BiLiWidth)];
-        [uploadButton addTarget:self action:@selector(uploadButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [contentImageView addSubview:uploadButton];
-        //渐变设置
-        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-        gradientLayer1.frame = uploadButton.bounds;
-        gradientLayer1.cornerRadius = 20*BiLiWidth;
-        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-        gradientLayer1.startPoint = CGPointMake(0, 0);
-        gradientLayer1.endPoint = CGPointMake(0, 1);
-        gradientLayer1.locations = @[@0,@1];
-        [uploadButton.layer addSublayer:gradientLayer1];
-        
-        UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, uploadButton.width, uploadButton.height)];
-        tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-        tiJiaoLable.text = @"马上更新";
-        tiJiaoLable.textAlignment = NSTextAlignmentCenter;
-        tiJiaoLable.textColor = [UIColor whiteColor];
-        [uploadButton addSubview:tiJiaoLable];
+//        UIButton * uploadButton = [[UIButton alloc] initWithFrame:CGRectMake((contentImageView.width-240*BiLiWidth)/2, contentImageView.height-89*BiLiWidth, 240*BiLiWidth, 40*BiLiWidth)];
+//        [uploadButton addTarget:self action:@selector(uploadButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//        [contentImageView addSubview:uploadButton];
+//        //渐变设置
+//        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+//        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+//        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+//        gradientLayer1.frame = uploadButton.bounds;
+//        gradientLayer1.cornerRadius = 20*BiLiWidth;
+//        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+//        gradientLayer1.startPoint = CGPointMake(0, 0);
+//        gradientLayer1.endPoint = CGPointMake(0, 1);
+//        gradientLayer1.locations = @[@0,@1];
+//        [uploadButton.layer addSublayer:gradientLayer1];
+//
+//        UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, uploadButton.width, uploadButton.height)];
+//        tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+//        tiJiaoLable.text = @"马上更新";
+//        tiJiaoLable.textAlignment = NSTextAlignmentCenter;
+//        tiJiaoLable.textColor = [UIColor whiteColor];
+//        [uploadButton addSubview:tiJiaoLable];
 
         
         

@@ -29,11 +29,14 @@
 @property(nonatomic,strong)UIPageControl * pageControl;
 
 @property(nonatomic,strong)UIButton * pingFenButton;
+@property(nonatomic,strong)UIImageView * jianTouImageView;
+
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;
 
 @property(nonatomic,strong)UIView * itemButtonContentView;
 @property(nonatomic,strong)UIButton * pingFenButton1;
+@property(nonatomic,strong)UIImageView * jianTouImageView1;
 @property(nonatomic,strong)UIButton * zuiXinButton1;
 @property(nonatomic,strong)UIButton * zuiReButton1;
 
@@ -68,6 +71,14 @@
             wself.shaiXuanLeiXingStr = titleStr;
             [wself.pingFenButton1 setTitle:titleStr forState:UIControlStateNormal];
             [wself.pingFenButton setTitle:titleStr forState:UIControlStateNormal];
+            
+           CGSize  size = [NormalUse setSize:wself.pingFenButton1.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+            wself.pingFenButton1.width = size.width;
+            wself.jianTouImageView1.left = wself.pingFenButton1.width+wself.pingFenButton1.left+5*BiLiWidth;
+
+            wself.pingFenButton.width = size.width;
+            wself.jianTouImageView.left = wself.pingFenButton.width+wself.pingFenButton.left+5*BiLiWidth;
+
             wself.field = field;
             wself.order = order;
             [wself loadNewLsit];
@@ -241,6 +252,15 @@
     [self.pingFenButton1 addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.itemButtonContentView addSubview:self.pingFenButton1];
     
+    size = [NormalUse setSize:self.pingFenButton1.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    self.pingFenButton1.width = size.width;
+    
+    self.jianTouImageView1 = [[UIImageView alloc] init];
+    self.jianTouImageView1.frame = CGRectMake(self.pingFenButton1.width+self.pingFenButton1.left+5*BiLiWidth, (self.itemButtonContentView.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
+    self.jianTouImageView1.image = [UIImage imageNamed:@"mobileCode_xia"];
+    [self.itemButtonContentView addSubview:self.jianTouImageView1];
+
+    
 //    self.zuiXinButton1 = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton1.left+self.pingFenButton1.width+33*BiLiWidth, self.pingFenButton1.top, 33.5*BiLiWidth, 12*BiLiWidth)];
 //    [self.zuiXinButton1 setTitle:@"最新" forState:UIControlStateNormal];
 //    [self.zuiXinButton1 setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
@@ -282,6 +302,7 @@
         }
     }];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
 }
 -(void)loadNewLsit
 {
@@ -868,6 +889,15 @@
     [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:self.pingFenButton];
     
+   CGSize  size = [NormalUse setSize:self.pingFenButton.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    self.pingFenButton.width = size.width;
+    
+    self.jianTouImageView = [[UIImageView alloc] init];
+    self.jianTouImageView.frame = CGRectMake(self.pingFenButton.width+self.pingFenButton.left+5*BiLiWidth, self.pingFenButton.top+(self.pingFenButton.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
+    self.jianTouImageView.image = [UIImage imageNamed:@"mobileCode_xia"];
+    [headerView addSubview:self.jianTouImageView];
+
+    
 //    self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+33*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
 //    [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
 //    self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
@@ -919,10 +949,9 @@
     [UIView animateWithDuration:0.5 animations:^{
         
         self.gaoDuanShaiXuanView.top = 0;
-        self.gaoDuanShaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        self.gaoDuanShaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
 
     }];
-
 }
 -(void)zuiXinButtonClick
 {
