@@ -63,6 +63,8 @@
     self.titleLable.text = @"审核消息";
     self.timeLable.text = [info objectForKey:@"create_at"];
     
+    self.messageLable.width = WIDTH_PingMu-36*BiLiWidth;
+    
     NSString * neiRongStr = [NormalUse getobjectForKey:[info objectForKey:@"message"]];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

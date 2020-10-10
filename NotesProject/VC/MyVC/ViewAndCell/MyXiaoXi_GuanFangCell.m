@@ -76,7 +76,7 @@
     self.timeLable.text = [info objectForKey:@"create_at"];
     self.titleLable1.text = [info objectForKey:@"title"];
     
-    
+    self.messageLable.width = WIDTH_PingMu-36*BiLiWidth;
     NSString * neiRongStr = [info objectForKey:@"message"];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:neiRongStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

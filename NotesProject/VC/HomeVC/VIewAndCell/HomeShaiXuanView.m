@@ -178,14 +178,14 @@
     NSString * str = [self.paiXuSourceArray objectAtIndex:selectButton.tag];
     if ([@"最新" isEqualToString:str]) {
         
-        self.field = @"";
-        self.order = @"";
+        self.field = @"id";
+        self.order = @"desc";
 
     }
     else if ([@"最热" isEqualToString:str])
     {
         self.field = @"hot_value";
-        self.order = @"";
+        self.order = @"desc";
     }
     else if ([@"评分从高到低" isEqualToString:str])
     {

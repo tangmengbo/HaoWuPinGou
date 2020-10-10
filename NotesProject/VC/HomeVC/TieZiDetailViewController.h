@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * post_id;
 
+@property(nonatomic,assign)BOOL alsoFromYanCheBaoGao;
+
 @property(nonatomic,strong)NSString * avatarUrl;
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;

@@ -78,18 +78,18 @@
 -(void)paiXuButtonClick:(UIButton *)selectButton
 {
   //  'field'默认,'hot_value'热度,'complex_score'评分,'min_price'低价,'max_price'高价
-//desc或者 asc(从低到高)
+ //desc或者 asc(从低到高)  排序字段 'id'最新 'hot_value'热度 'complex_score'评分
     NSString * str = [self.paiXuSourceArray objectAtIndex:selectButton.tag];
     if ([@"最新" isEqualToString:str]) {
         
-        self.field = @"";
-        self.order = @"";
+        self.field = @"id";
+        self.order = @"desc";
 
     }
     else if ([@"最热" isEqualToString:str])
     {
         self.field = @"hot_value";
-        self.order = @"";
+        self.order = @"desc";
     }
     else if ([@"评分从高到低" isEqualToString:str])
     {

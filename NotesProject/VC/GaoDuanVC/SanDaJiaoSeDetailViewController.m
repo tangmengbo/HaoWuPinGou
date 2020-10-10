@@ -307,7 +307,7 @@
         
         if ([face_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=face_value.intValue) {
+            if (i<face_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 
@@ -338,7 +338,7 @@
         
         if ([skill_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=skill_value.intValue) {
+            if (i<skill_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 
@@ -371,7 +371,7 @@
         
         if ([ambience_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=ambience_value.intValue) {
+            if (i<ambience_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 

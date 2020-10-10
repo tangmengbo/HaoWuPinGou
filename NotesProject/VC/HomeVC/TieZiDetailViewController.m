@@ -153,9 +153,9 @@
     
     if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"videos"]])
     {
-        for (NSString * path in [self.tieZiInfo objectForKey:@"videos"]) {
+        for (NSDictionary * info in [self.tieZiInfo objectForKey:@"videos"]) {
             
-           UIImage * image = [self getVideoPreViewImage:[NSURL URLWithString:path]];
+           UIImage * image = [self getVideoPreViewImage:[NSURL URLWithString:[info objectForKey:@"url"]]];
             [self.images addObject:image];
         }
     }
@@ -313,7 +313,7 @@
         
         if ([face_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=face_value.intValue) {
+            if (i<face_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 
@@ -344,7 +344,7 @@
         
         if ([skill_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=skill_value.intValue) {
+            if (i<skill_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 
@@ -377,7 +377,7 @@
         
         if ([ambience_value isKindOfClass:[NSNumber class]]) {
             
-            if (i<=ambience_value.intValue) {
+            if (i<ambience_value.intValue) {
                 
                 imageView.image = [UIImage imageNamed:@"star_yellow"];
 
@@ -512,6 +512,7 @@
     [self initJiBenZiLiaoView];
     [self initXiangQingJieShaoView];
     [self initChenYouPingJiaTableView];
+    
 }
 -(void)chatButtonClick
 {
@@ -627,7 +628,7 @@
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = [self.tieZiInfo objectForKey:@"service_type"];
+    xiangMuLable.text = [NSString stringWithFormat:@"项目：%@",[self.tieZiInfo objectForKey:@"service_type"]];
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 
@@ -742,6 +743,15 @@
         self.cheYouPingJiaTableView.height = tableViewHeight;
         [self.cheYouPingJiaTableView addSubview:self.noMessageTipButotn];
     }
+    
+    if (self.alsoFromYanCheBaoGao) {
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.cheYouPingJiaButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+    }
+
 
 }
 #pragma mark UItableView Delegate
@@ -997,9 +1007,9 @@
     if ([NormalUse isValidArray:videos]) {
         
         for (int i=0;i<videos.count;i++) {
-            
-            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[videos objectAtIndex:i]]]];
-            photo.videoURL = [NSURL URLWithString:[videos objectAtIndex:i]];
+            NSDictionary * info = [videos objectAtIndex:i];
+            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[info objectForKey:@"url"]]]];
+            photo.videoURL = [NSURL URLWithString:[info objectForKey:@"url"]];
             [photos addObject:photo];
         }
 

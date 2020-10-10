@@ -473,9 +473,10 @@
     self.jieSuoButton.button_lable1.left = 10*BiLiWidth;
     self.jieSuoButton.button_lable1.adjustsFontSizeToFitWidth = YES;
     self.jieSuoButton.button_lable1.width = self.jieSuoButton.width-20*BiLiWidth;
-    self.jieSuoButton.button_lable1.text = [NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"address"]];
-    self.jieSuoButton.button_lable1.top = self.jieSuoButton.height/2;
-    self.jieSuoButton.button_lable1.height = self.jieSuoButton.height/2;
+    self.jieSuoButton.button_lable1.frame =CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height);
+    self.jieSuoButton.button_lable1.text = [NormalUse getobjectForKey:[NSString stringWithFormat:@"地址:%@",[self.tieZiInfo objectForKey:@"address"]]];
+//    self.jieSuoButton.button_lable1.top = self.jieSuoButton.height/2;
+//    self.jieSuoButton.button_lable1.height = self.jieSuoButton.height/2;
 
 
 

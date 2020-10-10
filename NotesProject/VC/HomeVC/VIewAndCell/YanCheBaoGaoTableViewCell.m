@@ -189,6 +189,7 @@
 -(void)toolButtonClick
 {
     TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+    vc.alsoFromYanCheBaoGao = YES;
     NSNumber * idNumber = [self.info objectForKey:@"post_id"];
     if ([idNumber isKindOfClass:[NSNumber class]]) {
         

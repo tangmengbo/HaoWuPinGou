@@ -257,6 +257,8 @@
     [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"time",@"order", nil]
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
+        [self.mainScrollView.mj_header endRefreshing];
+
         if (status==1) {
             
             NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
@@ -267,7 +269,6 @@
 
             [self.dataSourceArray replaceObjectAtIndex:0 withObject:sourceArray];
             
-            [self.mainScrollView.mj_header endRefreshing];
             if (dataArray.count>=10) {
                 
                 [self.mainScrollView.mj_footer endRefreshing];
@@ -312,6 +313,8 @@
     [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"hot",@"order", nil]
                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
+        [self.mainScrollView.mj_header endRefreshing];
+
         if (status==1) {
             
             NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
@@ -321,7 +324,6 @@
             NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
             [self.dataSourceArray replaceObjectAtIndex:1 withObject:sourceArray];
 
-            [self.mainScrollView.mj_header endRefreshing];
             if (dataArray.count>=10) {
                 
                 [self.mainScrollView.mj_footer endRefreshing];
