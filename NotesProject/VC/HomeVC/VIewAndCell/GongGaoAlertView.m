@@ -34,7 +34,7 @@
         titleLable.text = @"滴滴约公告：";
         [contentImageView addSubview:titleLable];
         
-        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 170*BiLiWidth)];
+        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 140*BiLiHeight)];
         messageTextView.textColor = RGBFormUIColor(0x343434);
         messageTextView.font = [UIFont systemFontOfSize:14*BiLiWidth];
         messageTextView.textAlignment = NSTextAlignmentCenter;
@@ -44,7 +44,7 @@
         NSString * content = [mesageInfo objectForKey:@"message"];
         NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
         messageTextView.attributedText = attrStr;
-        [messageTextView sizeToFit];
+//        [messageTextView sizeToFit];
 
         
 //        UIButton * uploadButton = [[UIButton alloc] initWithFrame:CGRectMake((contentImageView.width-240*BiLiWidth)/2, contentImageView.height-89*BiLiWidth, 240*BiLiWidth, 40*BiLiWidth)];

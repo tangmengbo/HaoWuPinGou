@@ -107,17 +107,17 @@
     
     NSString * start_date = [info objectForKey:@"start_date"];
     
-    NSDateFormatter* dateFormatOld = [[NSDateFormatter alloc] init];
-    [dateFormatOld setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate * startDate =[dateFormatOld dateFromString:start_date];
-    
-    NSDateFormatter* dateFormatNew = [[NSDateFormatter alloc] init];
-    [dateFormatNew setDateFormat:@"MM/dd"];
-    start_date = [dateFormatNew stringFromDate:startDate];
+//    NSDateFormatter* dateFormatOld = [[NSDateFormatter alloc] init];
+//    [dateFormatOld setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate * startDate =[dateFormatOld dateFromString:start_date];
+//
+//    NSDateFormatter* dateFormatNew = [[NSDateFormatter alloc] init];
+//    [dateFormatNew setDateFormat:@"MM/dd"];
+//    start_date = [dateFormatNew stringFromDate:startDate];
     
     NSString * end_date = [info objectForKey:@"end_date"];
-    NSDate *  endDate = [dateFormatOld dateFromString:end_date];
-    end_date = [dateFormatNew stringFromDate:endDate];
+//    NSDate *  endDate = [dateFormatOld dateFromString:end_date];
+//    end_date = [dateFormatNew stringFromDate:endDate];
 
 
     

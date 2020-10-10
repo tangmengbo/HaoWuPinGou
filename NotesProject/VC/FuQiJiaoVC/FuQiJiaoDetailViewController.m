@@ -622,7 +622,7 @@
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = [self.tieZiInfo objectForKey:@"service_type"];
+    xiangMuLable.text = [NSString stringWithFormat:@"服务：%@",[self.tieZiInfo objectForKey:@"service_type"]] ;
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 

@@ -279,7 +279,7 @@
     NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
     if ([complex_score isKindOfClass:[NSNumber class]]) {
         
-        pingFenLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
+        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
 
     }
     [pingFenView addSubview:pingFenLable];

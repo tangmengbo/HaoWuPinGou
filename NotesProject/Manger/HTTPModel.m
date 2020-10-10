@@ -2601,7 +2601,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 
 
-//解锁列表(6类)  type_id  默认1。1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务
+//解锁列表(6类)  type_id  默认1。1经纪人 2茶小二 3女神 4外围 5全球陪玩 6定制服务 7夫妻交
 +(void)getJieUnlockList:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
@@ -2931,7 +2931,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
 
 }
-//发布体验报告
+//发布体验报告 
 //type_id 1经纪人，茶小二帖子 2女神、外围、全球帖子
 +(void)faBuTiYanBaoGao:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback

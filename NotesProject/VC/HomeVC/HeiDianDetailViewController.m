@@ -475,8 +475,8 @@
     self.jieSuoButton.button_lable1.width = self.jieSuoButton.width-20*BiLiWidth;
     self.jieSuoButton.button_lable1.frame =CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height);
     self.jieSuoButton.button_lable1.text = [NormalUse getobjectForKey:[NSString stringWithFormat:@"地址:%@",[self.tieZiInfo objectForKey:@"address"]]];
-//    self.jieSuoButton.button_lable1.top = self.jieSuoButton.height/2;
-//    self.jieSuoButton.button_lable1.height = self.jieSuoButton.height/2;
+    self.jieSuoButton.button_lable1.top = self.jieSuoButton.height/2;
+    self.jieSuoButton.button_lable1.height = self.jieSuoButton.height/2;
 
 
 
@@ -656,7 +656,7 @@
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = [self.tieZiInfo objectForKey:@"service_type"];
+    xiangMuLable.text =[NSString stringWithFormat:@"服务：%@",[self.tieZiInfo objectForKey:@"service_type"]]  ;
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 

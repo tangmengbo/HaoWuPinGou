@@ -21,6 +21,7 @@
     int WaiWeiPage;
     int peiWanPage;
     int dingZhiPage;
+    int fuQiJiaoPage;
 }
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
@@ -50,7 +51,8 @@
 @property(nonatomic,strong)NSMutableArray * dingZhiArray;
 @property(nonatomic,strong)UITableView * dingZhiTableView;
 
-
+@property(nonatomic,strong)NSMutableArray * fuQiJiaoArray;
+@property(nonatomic,strong)UITableView * fuQiJiaoTableView;
 
 
 @end
@@ -68,11 +70,12 @@
     self.waiWeiArray = [NSMutableArray array];
     self.peiWanArray = [NSMutableArray array];
     self.dingZhiArray = [NSMutableArray array];
+    self.fuQiJiaoArray = [NSMutableArray array];
     
     [self yinCangTabbar];
 
     self.topButtonArray = [NSMutableArray array];
-    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"滴滴约信息",@"女神",@"外围",@"陪玩",@"定制服务", nil];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"滴滴约信息",@"女神",@"外围",@"陪玩",@"定制服务",@"夫妻交", nil];
     
     self.topButtonScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 50*BiLiWidth)];
     self.topButtonScrollView.showsVerticalScrollIndicator = NO;
@@ -131,6 +134,7 @@
     [self addWaiWeiTableView];
     [self addPeiWanTableView];
     [self addDiangZhiFuWuTableView];
+    [self addFuQiJiaoTableView];
 }
 -(void)sliderViewSetJianBian
 {
@@ -737,6 +741,97 @@
        self.dingZhiTableView.mj_footer = footer;
 
 }
+-(void)addFuQiJiaoTableView
+{
+    //夫妻交
+    self.fuQiJiaoTableView = [[UITableView alloc] initWithFrame:CGRectMake(WIDTH_PingMu*6, 0, WIDTH_PingMu, self.mainScrollView.height)];
+    self.fuQiJiaoTableView.delegate = self;
+    self.fuQiJiaoTableView.dataSource = self;
+    self.fuQiJiaoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.fuQiJiaoTableView.tag = 6;
+    [self.mainScrollView addSubview:self.fuQiJiaoTableView];
+    
+    __weak typeof(self)wself = self;
+       
+       MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+           
+           self->fuQiJiaoPage = 1;
+           [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->fuQiJiaoPage],@"page",@"7",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+               
+               [wself.fuQiJiaoTableView.mj_header endRefreshing];
+
+               if (status==1) {
+                   
+                   [wself.fuQiJiaoArray removeAllObjects];
+                   self->fuQiJiaoPage++;
+                   NSArray * array = [responseObject objectForKey:@"data"];
+                   
+                   if (![NormalUse isValidArray:array] || array.count==0) {
+                       
+                       UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.waiWeiTableView.width, self.waiWeiTableView.width*1280/720)];
+                       imageView.image = [UIImage imageNamed:@"NoMessageTip"];
+                       [self.fuQiJiaoTableView addSubview:imageView];
+                   }
+
+                   if (array.count>=10) {
+                       
+                       [wself.fuQiJiaoTableView.mj_footer endRefreshing];
+                   }
+                   else
+                   {
+                       [wself.fuQiJiaoTableView.mj_footer endRefreshingWithNoMoreData];
+                   }
+                   for (NSDictionary * info in array) {
+                       
+                       [wself.fuQiJiaoArray addObject:info];
+                   }
+                   [wself.fuQiJiaoTableView reloadData];
+               }
+               else
+               {
+                   [NormalUse showToastView:msg view:wself.view];
+               }
+           }];
+       }];
+       header.lastUpdatedTimeLabel.hidden = YES;
+       self.fuQiJiaoTableView.mj_header = header;
+       [self.fuQiJiaoTableView.mj_header beginRefreshing];
+       
+       MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+           
+           [HTTPModel getJieUnlockList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->fuQiJiaoPage],@"page",@"7",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+               
+               if (status==1) {
+                   
+                   self->fuQiJiaoPage++;
+
+                   NSArray * array = [responseObject objectForKey:@"data"];
+                   if (array.count>=10) {
+                       
+                       [wself.fuQiJiaoTableView.mj_footer endRefreshing];
+                   }
+                   else
+                   {
+                       [wself.fuQiJiaoTableView.mj_footer endRefreshingWithNoMoreData];
+                   }
+                   for (NSDictionary * info in array) {
+                       
+                       [wself.fuQiJiaoArray addObject:info];
+                   }
+                   [wself.fuQiJiaoTableView reloadData];
+               }
+               else
+               {
+                   [wself.fuQiJiaoTableView.mj_footer endRefreshing];
+
+                   [NormalUse showToastView:msg view:wself.view];
+               }
+           }];
+
+       }];
+       self.fuQiJiaoTableView.mj_footer = footer;
+
+}
 #pragma mark UItableView Delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -771,6 +866,11 @@
         return self.dingZhiArray.count;
 
     }
+    else if (tableView.tag==6)
+    {
+        return self.fuQiJiaoArray.count;
+        
+    }
 
     return 0;
 }
@@ -801,10 +901,14 @@
         return  144*BiLiWidth+17*BiLiWidth;
 
     }
-    else
+    else if(tableView.tag==5)
     {
         return  [DingZhiFuWuTableViewCell cellHegiht:[self.dingZhiArray objectAtIndex:indexPath.row]];
 
+    }
+    else
+    {
+        return 144*BiLiWidth+17*BiLiWidth;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -879,7 +983,7 @@
         return cell;
 
     }
-    else 
+    else if (tableView.tag==5)
     {
         NSString *tableIdentifier = [NSString stringWithFormat:@"DingZhiFuWuTableViewCell"] ;
         DingZhiFuWuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
@@ -890,6 +994,20 @@
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell contentViewSetData:[self.dingZhiArray objectAtIndex:indexPath.row]];
+        return cell;
+
+    }
+    else
+    {
+        NSString *tableIdentifier = [NSString stringWithFormat:@"MyJieSuo_sanDaJiaoSeCell"] ;
+        MyJieSuo_sanDaJiaoSeCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        if (cell == nil)
+        {
+            cell = [[MyJieSuo_sanDaJiaoSeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        }
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell contentViewSetData:[self.fuQiJiaoArray objectAtIndex:indexPath.row] type_id:@"3"];
         return cell;
 
     }
@@ -948,7 +1066,7 @@
         [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
     }
-    else
+    else if (tableView.tag==5)
     {
         NSDictionary * info = [self.dingZhiArray objectAtIndex:indexPath.row];
         
@@ -956,6 +1074,15 @@
         NSNumber * idNumber = [info objectForKey:@"id"];
         vc.idStr = [NSString stringWithFormat:@"%d",idNumber.intValue];
         [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else
+    {
+        NSDictionary * info = [self.fuQiJiaoArray objectAtIndex:indexPath.row];
+        FuQiJiaoDetailViewController * vc = [[FuQiJiaoDetailViewController alloc] init];
+        NSNumber * couple_id = [info objectForKey:@"id"];
+        vc.couple_id = [NSString stringWithFormat:@"%d",couple_id.intValue];
+        [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
 
     }
 }

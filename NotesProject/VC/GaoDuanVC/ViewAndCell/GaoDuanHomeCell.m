@@ -38,7 +38,8 @@
         self.starImageView.image = [UIImage imageNamed:@"star_yellow"];
         [self addSubview:self.starImageView];
 
-        self.starLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starImageView.left+self.starImageView.width+5*BiLiWidth, self.starImageView.top, 19*BiLiWidth, 12*BiLiWidth)];
+        self.starLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starImageView.left+self.starImageView.width+5*BiLiWidth, self.starImageView.top, 22*BiLiWidth, 12*BiLiWidth)];
+        self.starLable.adjustsFontSizeToFitWidth = YES;
         self.starLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.starLable.textColor = RGBFormUIColor(0xF5BB61);
         [self addSubview:self.starLable];
@@ -127,7 +128,6 @@
         imageView.clipsToBounds = YES;
         imageView.layer.cornerRadius = 5*BiLiWidth;
         imageView.userInteractionEnabled = YES;
-        
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jinDianKanKanButtonClick)];
         [imageView addGestureRecognizer:tap];
         
@@ -146,6 +146,13 @@
         }
         [self.contentScrollView addSubview:imageView];
         
+        UILabel * priceLable = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.height-19*BiLiWidth, imageView.width, 19*BiLiWidth)];
+        priceLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        priceLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        priceLable.textAlignment = NSTextAlignmentCenter;
+        priceLable.textColor = [UIColor whiteColor];
+        priceLable.text = [NSString stringWithFormat:@"¥%@-¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+        [imageView addSubview:priceLable];
         [self.contentScrollView setContentSize:CGSizeMake(imageView.left+imageView.width+12*BiLiWidth, self.contentScrollView.height)];
 
     }

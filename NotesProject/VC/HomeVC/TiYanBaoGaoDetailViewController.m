@@ -77,14 +77,14 @@
     UILabel * meiZiNameLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+12.5*BiLiWidth, 200*BiLiWidth, 39.5*BiLiWidth)];
     meiZiNameLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     meiZiNameLable.textColor = RGBFormUIColor(0x9A9A9A);
-    meiZiNameLable.text = [self.info objectForKey:@"girl_name"];
+    meiZiNameLable.text = @"妹子花名";
     [self.mainScrollView addSubview:meiZiNameLable];
     
     UILabel * bianHaoLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-16.5*BiLiWidth-100*BiLiWidth, meiZiNameLable.top, 100*BiLiWidth, 39.5*BiLiWidth)];
     bianHaoLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     bianHaoLable.textColor  = RGBFormUIColor(0x343434);
     bianHaoLable.textAlignment = NSTextAlignmentRight;
-    bianHaoLable.text = [NSString stringWithFormat:@"编号%@",[NormalUse getobjectForKey:[self.info objectForKey:@"uid"]]];
+    bianHaoLable.text = [self.info objectForKey:@"girl_name"];
     [self.mainScrollView addSubview:bianHaoLable];
 
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(meiZiNameLable.left, meiZiNameLable.top+meiZiNameLable.height,WIDTH_PingMu-24*BiLiWidth, 1)];

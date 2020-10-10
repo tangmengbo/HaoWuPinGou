@@ -231,22 +231,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "029B63E4-B92C-4E1D-8A2A-0DD5B9AC7D31"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/ViewAndCell/GaoDuanHomeCell.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "-contentViewSetData:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "DF4727E1-E2C3-48EE-84D4-9D57469404C4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -526,8 +510,8 @@
             filePath = "NotesProject/VC/MyVC/MyJieSuoListViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "953"
-            endingLineNumber = "953"
+            startingLineNumber = "1071"
+            endingLineNumber = "1071"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -561,22 +545,6 @@
             startingLineNumber = "232"
             endingLineNumber = "232"
             landmarkName = "+GET:parameters:progress:success:failure:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "68E87006-EFF2-40C7-8DB6-CBFEF3BA8327"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/CityListViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "-getCityList"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -679,48 +647,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7B600EDB-266A-4A31-8016-ACD02544A32B"
+            uuid = "F06A9269-34BE-401F-8336-061F3DB7C78B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/HeiDianDetailViewController.m"
+            filePath = "NotesProject/VC/GaoDuanVC/DianPuDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
-            landmarkName = "-initTopMessageView"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
+            landmarkName = "-tableView:viewForHeaderInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "37B42EB2-0920-4FD4-8B6E-6A07DEE08BE5"
+            uuid = "45FF9DCF-4121-4159-B0CB-6B507B7ADC46"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/SanDaJiaoSeDetailViewController.m"
+            filePath = "NotesProject/VC/MyVC/ViewAndCell/MyJieSuo_TieZiListCell.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "-initTopMessageView"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "-faBuYanZhengButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B04360F2-742C-49E5-AE7D-4DCBCCABF44E"
+            uuid = "837ADF3C-BE08-4A88-9466-136898E6F101"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoDetailViewController.m"
+            filePath = "NotesProject/VC/MyVC/FaBuYanZhengViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
-            landmarkName = "-initTopMessageView"
+            startingLineNumber = "851"
+            endingLineNumber = "851"
+            landmarkName = "-getImagePathId"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

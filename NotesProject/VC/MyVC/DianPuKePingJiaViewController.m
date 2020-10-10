@@ -365,12 +365,12 @@
         pingFenButton.button_lable.frame = CGRectMake(18*BiLiWidth, 0, 20*BiLiWidth, 13*BiLiWidth);
         pingFenButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
         pingFenButton.button_lable.textColor = RGBFormUIColor(0xF5BB61);
-        NSNumber * complex_score = [self.dianPuInfo objectForKey:@"complex_score"];
-        if ([complex_score isKindOfClass:[NSNumber class]]) {
+//        NSNumber * complex_score = [self.dianPuInfo objectForKey:@"complex_score"];
+//        if ([complex_score isKindOfClass:[NSNumber class]]) {
             
-            pingFenButton.button_lable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
+            pingFenButton.button_lable.text = [self.dianPuInfo objectForKey:@"complex_score"];
 
-        }
+//        }
         pingFenButton.button_lable1.frame = CGRectMake(pingFenButton.button_lable.left+pingFenButton.button_lable.width+5*BiLiWidth, 0, 200*BiLiWidth, 13*BiLiWidth);
         pingFenButton.button_lable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
         pingFenButton.button_lable1.textColor = RGBFormUIColor(0x999999);
