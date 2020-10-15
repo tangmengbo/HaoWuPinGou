@@ -46,6 +46,9 @@
         }
     }];
 
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -334,6 +337,8 @@
 }
 -(void)chongZhiButtonClick
 {
-    
+    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+    vc.forWhat = @"mall";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

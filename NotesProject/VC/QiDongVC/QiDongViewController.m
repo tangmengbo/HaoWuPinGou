@@ -84,10 +84,12 @@
                     
                     if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
                         
-                        //用户基本信息存储到本地
-                        [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:[responseObject objectForKey:@"info"]] forKey:UserInformation];
+                        NSDictionary * userInfo = [responseObject objectForKey:@"info"];
+                        [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
+                        [[RongYManager getInstance] connectRongCloud];
 
                     }
+
                     //获取初始化账号 成功后调用登录 获取到logintoken
                     [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                         

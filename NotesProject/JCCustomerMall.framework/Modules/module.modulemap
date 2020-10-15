@@ -1,0 +1,11 @@
+framework module JCCustomerMall {
+  umbrella header "JCCustomerMall.h"
+
+  export *
+  module * { export * }
+}
+
+module JCCustomerMall.Swift {
+    header "JCCustomerMall-Swift.h"
+    requires objc
+}

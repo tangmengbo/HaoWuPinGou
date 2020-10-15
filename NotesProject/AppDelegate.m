@@ -30,8 +30,13 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
 //    [self registerAPNs];
     
-    
-    
+//    [JCHttpInterface jcAppConfigWithHttpAddress:@"http://116.63.174.249:9090" socketAddress:@"116.63.174.249:6060"];
+//    [JCHttpInterface jcAppConfigWithAppFlag:@"2222" appKey:@"2" appSecret:@"2" sucess:^(id _Nullable any) {
+//        NSLog(@"config success");
+//    } failed:^(id _Nullable err) {
+//        NSLog(@"config failure");
+//    }];
+
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;//设置状态栏文字颜色
     
     [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];

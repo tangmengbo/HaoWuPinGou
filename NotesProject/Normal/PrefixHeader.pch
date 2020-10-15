@@ -11,6 +11,13 @@
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 
+//#import <JCCore/JCCore-Swift.h>
+//#import <JCUI/JCUI.h>
+//#import <JCBaseUI/JCBaseUI.h>
+//#import <JCCustomerMall/JCCustomerMall.h>
+//#import <JCCustomerUI/JCCustomerUI.h>
+
+#import "JinChanWebViewController.h"
 
 #import "UIView+Additions.h"
 #import "NSString+Additions.h"
@@ -26,6 +33,7 @@
 //SDWebview
 #import "UIImage+GIF.h"
 #import "UIImageView+WebCache.h"
+
 
 #import "MJRefresh.h"
 

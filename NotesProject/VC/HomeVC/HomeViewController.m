@@ -561,9 +561,11 @@
                 
                 if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
                     
-                    //用户基本信息存储到本地
-                    [NormalUse defaultsSetObject:[NormalUse removeNullFromDictionary:[responseObject objectForKey:@"info"]] forKey:UserInformation];
-                    
+                    NSDictionary * userInfo = [responseObject objectForKey:@"info"];
+                    [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
+                    [[RongYManager getInstance] connectRongCloud];
+
+
                 }
                 //获取初始化账号 成功后调用登录 获取到logintoken
                 [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -602,8 +604,18 @@
     }];
 
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+//    [JCHttpInterface jcAppLoginWithUserName:@"tmb"  userID: @"123456" userClass:1 userNickName:@"来了" userHeaderPic:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602496626981&di=0faae1dc632c840ca6566ac970dec38f&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"  module: 1 sucess:^(id _Nullable any) {
+//        NSLog(@"login success");
+//        JCMallViewController *mainCtl = [[JCMallViewController alloc]init];
+//        [self.navigationController pushViewController:mainCtl animated:YES];
+//    } failed:^(id _Nullable err) {
+//        NSLog(@"login failure %@",err);
+//    }];
     
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

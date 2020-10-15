@@ -197,16 +197,28 @@ if [ -r "${ARTIFACT_LIST_FILE}" ]; then
 fi
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${PODS_ROOT}/NIMSDK/NIMSDK/NIMSDK.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NIMAVChat.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NMC.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NMCBasicModuleFramework.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser/MWPhotoBrowser.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftWebSocket/SwiftWebSocket.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZWLimitCounter/ZWLimitCounter.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZWPlaceHolder/ZWPlaceHolder.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${PODS_ROOT}/NIMSDK/NIMSDK/NIMSDK.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NIMAVChat.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NMC.framework"
-  install_framework "${PODS_ROOT}/NIMSDK/NIMAVChat/NMCBasicModuleFramework.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser/MWPhotoBrowser.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftWebSocket/SwiftWebSocket.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZWLimitCounter/ZWLimitCounter.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZWPlaceHolder/ZWPlaceHolder.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

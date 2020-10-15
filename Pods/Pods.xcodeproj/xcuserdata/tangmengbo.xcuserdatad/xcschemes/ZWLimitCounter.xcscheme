@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B110FFFC4E79C91FF7FABE3D1EA8E144"
-               BuildableName = "libZWLimitCounter.a"
+               BuildableName = "ZWLimitCounter.framework"
                BlueprintName = "ZWLimitCounter"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

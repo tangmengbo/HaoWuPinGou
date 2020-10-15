@@ -62,22 +62,39 @@
     NSDictionary * userInfo = [defaults objectForKey:UserRongYunInfo];
     NSString *loginToken = [userInfo objectForKey:@"token"];
     if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
-        [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
+        
+        [[RCIM sharedRCIM] connectWithToken:loginToken dbOpened:^(RCDBErrorCode code) {
+            
+            
+        } success:^(NSString *userId) {
+            
             NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
             
             RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
             [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
-            
-            
 
-        } error:^(RCConnectErrorCode status) {
-            NSLog(@"融云 登陆的错误码为:%ld", (long)status);
-        } tokenIncorrect:^{
-            //token过期或者不正确。
-            //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
-            //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
-            NSLog(@"融云 token错误");
+            
+        } error:^(RCConnectErrorCode errorCode) {
+            
+            NSLog(@"融云 登陆的错误码为:%ld", (long)errorCode);
+
         }];
+//        [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
+//            NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
+//
+//            RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+//            [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
+//
+//
+//
+//        } error:^(RCConnectErrorCode status) {
+//            NSLog(@"融云 登陆的错误码为:%ld", (long)status);
+//        } tokenIncorrect:^{
+//            //token过期或者不正确。
+//            //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
+//            //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
+//            NSLog(@"融云 token错误");
+//        }];
     }
 }
 //断开与融云的链接但是接收推送
@@ -139,24 +156,42 @@
     NSDictionary * userInfo = [defaults objectForKey:UserRongYunInfo];
     NSString *loginToken = [userInfo objectForKey:@"token"];
 
+    [[RCIM sharedRCIM] connectWithToken:loginToken dbOpened:^(RCDBErrorCode code) {
+        
+        
+    } success:^(NSString *userId) {
+        
+        NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
+        
+        RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+        [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
 
-    if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
-        [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
-            NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
-            RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
-            [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
-            [[RCIM sharedRCIM] refreshUserInfoCache:_currentUserInfo withUserId:userId];
+        
+    } error:^(RCConnectErrorCode errorCode) {
+        
+        NSLog(@"融云 登陆的错误码为:%ld", (long)errorCode);
 
+    }];
 
-        } error:^(RCConnectErrorCode status) {
-            NSLog(@"融云 登陆的错误码为:%ld", (long)status);
-        } tokenIncorrect:^{
-            //token过期或者不正确。
-            //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
-            //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
-            NSLog(@"融云 token错误");
-        }];
-    }
+//    if([[RCIMClient sharedRCIMClient] getConnectionStatus] != ConnectionStatus_Connected) {
+//
+//
+//        [[RCIM sharedRCIM] connectWithToken:loginToken success:^(NSString *userId) {
+//            NSLog(@"融云 登陆成功。当前登录的用户ID：%@", userId);
+//            RCUserInfo *_currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[NormalUse getCurrentUserName] portrait:[NormalUse getCurrentAvatarpath]];
+//            [RCIM sharedRCIM].currentUserInfo = _currentUserInfo;
+//            [[RCIM sharedRCIM] refreshUserInfoCache:_currentUserInfo withUserId:userId];
+//
+//
+//        } error:^(RCConnectErrorCode status) {
+//            NSLog(@"融云 登陆的错误码为:%ld", (long)status);
+//        } tokenIncorrect:^{
+//            //token过期或者不正确。
+//            //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
+//            //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
+//            NSLog(@"融云 token错误");
+//        }];
+//    }
 }
 
 - (void)dealloc {

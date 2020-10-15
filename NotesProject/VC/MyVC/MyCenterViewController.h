@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton  * myKeFuButton;
 @property(nonatomic,strong)Lable_ImageButton  * tuiGuangButton;
 @property(nonatomic,strong)Lable_ImageButton  * tianXieYaoQingMaButton;
+@property(nonatomic,strong)Lable_ImageButton  * tiXianButton;
+@property(nonatomic,strong)Lable_ImageButton  * jinBiMingXiButton;
 
 @property(nonatomic,strong)UIButton * kaiJiangButton;
 

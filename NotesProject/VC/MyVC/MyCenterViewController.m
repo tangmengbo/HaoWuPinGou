@@ -10,6 +10,8 @@
 #import "ZhangHuDetailViewController.h"
 #import "EditUserMessageViewController.h"
 #import "TuiGuangZhuanQianViewController.h"
+#import "JinBiMingXiViewController.h"
+#import "TiXianViewController.h"
 
 
 @interface MyCenterViewController ()
@@ -121,6 +123,10 @@
 {
     [super viewWillAppear:animated];
     
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+
+    
     [self xianShiTabBar];
     
     NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
@@ -138,8 +144,8 @@
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
             self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
             self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
-            self.kaiJiangButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth;
-
+            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
         }
         else
         {
@@ -149,12 +155,14 @@
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
             self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
             self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
-            self.kaiJiangButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth;
+            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
 
         }
 
     }
-    
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.jinBiMingXiButton.top+self.jinBiMingXiButton.height+40*BiLiWidth)];
+
     [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
@@ -418,6 +426,7 @@
 
     
     self.myKeFuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myFaBuButton.top+self.myFaBuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.myKeFuButton addTarget:self action:@selector(keFuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.myKeFuButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     self.myKeFuButton.button_imageView.image = [UIImage imageNamed:@"my_keFu"];
     self.myKeFuButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
@@ -458,13 +467,41 @@
     self.tianXieYaoQingMaButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
     [self.mainScrollView addSubview:self.tianXieYaoQingMaButton];
 
+    self.tiXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.tiXianButton addTarget:self action:@selector(tiXianButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.tiXianButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.tiXianButton.button_imageView.image = [UIImage imageNamed:@"my_jinBiTiXian"];
+    self.tiXianButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.tiXianButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.tiXianButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.tiXianButton.button_lable.text = @"金币提现";
+    self.tiXianButton.button_lable1.frame = CGRectMake(self.tianXieYaoQingMaButton.width-100*BiLiWidth-12*BiLiWidth, 0, 100*BiLiWidth, self.tianXieYaoQingMaButton.height);
+    self.tiXianButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.tiXianButton.button_lable1.textColor = RGBFormUIColor(0x333333);
+    self.tiXianButton.button_lable1.textAlignment = NSTextAlignmentRight;
+    self.tiXianButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.tiXianButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.tiXianButton];
     
-    self.kaiJiangButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-330*BiLiWidth)/2, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+8*BiLiWidth, 330*BiLiWidth, 76.5*BiLiWidth)];
-    [self.kaiJiangButton setBackgroundImage:[UIImage imageNamed:@"my_kaiJiang"] forState:UIControlStateNormal];
-    [self.kaiJiangButton addTarget:self action:@selector(kaiJiangButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:self.kaiJiangButton];
+    self.jinBiMingXiButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.tiXianButton.top+self.tiXianButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.jinBiMingXiButton addTarget:self action:@selector(jinBiMingXiButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.jinBiMingXiButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.jinBiMingXiButton.button_imageView.image = [UIImage imageNamed:@"my_jinBiMingXi"];
+    self.jinBiMingXiButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.jinBiMingXiButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.jinBiMingXiButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.jinBiMingXiButton.button_lable.text = @"金币明细";
+    self.jinBiMingXiButton.button_lable1.frame = CGRectMake(self.tianXieYaoQingMaButton.width-100*BiLiWidth-12*BiLiWidth, 0, 100*BiLiWidth, self.tianXieYaoQingMaButton.height);
+    self.jinBiMingXiButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.jinBiMingXiButton.button_lable1.textColor = RGBFormUIColor(0x333333);
+    self.jinBiMingXiButton.button_lable1.textAlignment = NSTextAlignmentRight;
+    self.jinBiMingXiButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.jinBiMingXiButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.jinBiMingXiButton];
+
+
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiJiangButton.top+self.kaiJiangButton.height+40*BiLiWidth)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.jinBiMingXiButton.top+self.jinBiMingXiButton.height+40*BiLiWidth)];
     
 }
 #pragma mark--UIButton
@@ -519,10 +556,12 @@
     MyJieSuoListViewController * vc = [[MyJieSuoListViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
--(void)kaiJiangButtonClick
+-(void)keFuButtonClick
 {
-    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate.tabbar setItemSelected:3];
+    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+    vc.forWhat = @"help";
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 -(void)tuiGuangButtonClick
 {
@@ -534,4 +573,19 @@
 {
     self.tianXieYaoQingMaView.hidden = NO;
 }
+-(void)tiXianButtonClick
+{
+    TiXianViewController * vc = [[TiXianViewController alloc] init];
+    NSNumber * coin = [self.userInfo objectForKey:@"coin"];
+    vc.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+-(void)jinBiMingXiButtonClick
+{
+    JinBiMingXiViewController * vc = [[JinBiMingXiViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
 @end

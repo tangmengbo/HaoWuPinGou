@@ -59,6 +59,7 @@
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
     
+    [self.autoLabel removeFromSuperview];
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
     self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
     self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
