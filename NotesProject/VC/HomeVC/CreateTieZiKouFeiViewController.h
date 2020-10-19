@@ -21,9 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property(nonatomic,strong)NSMutableArray * videoPathArray;
+@property(nonatomic,strong)NSMutableArray * videoShouZhenImagePathArray;
 @property(nonatomic,strong)NSMutableArray * photoPathArray;
 
 @property(nonatomic,strong,nullable)NSString * videoPathId;
+@property(nonatomic,strong,nullable)NSString * videoShouZhenPathId;
 @property(nonatomic,strong,nullable)NSString * imagePathId;
 
 

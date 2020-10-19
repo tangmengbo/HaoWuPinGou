@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIView * videoContentView;
 @property(nonatomic,strong)NSMutableArray * videoArray;
 @property(nonatomic,strong)NSMutableArray * videoPathArray;
+@property(nonatomic,strong)NSMutableArray * videoShouZhenImagePathArray;
+
 
 @property(nonatomic,strong)UILabel * zhaoPianSelectLable;
 @property(nonatomic,strong)UIView * photoContentView;
@@ -62,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSDictionary * cityInfo;//城市信息
 @property(nonatomic,strong,nullable)NSString * videoPathId;
+@property(nonatomic,strong,nullable)NSString * videoShouZhenPathId;
 @property(nonatomic,strong,nullable)NSString * imagePathId;
 
 

@@ -855,6 +855,7 @@
     
     uploadVideoIndex = 0;
     self.videoPathId = nil;
+    self.videoShouZhenPathId = nil;
     [self.videoPathArray removeAllObjects];
 
     uploadImageIndex = 0;
@@ -864,6 +865,7 @@
     if ([NormalUse isValidArray:self.videoArray]) {
         
         self.videoPathArray = [NSMutableArray array];
+        self.videoShouZhenImagePathArray = [NSMutableArray array];
         [self uploadVideo];
     }
     else
@@ -878,29 +880,66 @@
 -(void)uploadVideo
 {
     LLImagePickerModel *model = [self.videoArray objectAtIndex:uploadVideoIndex];
-    [self getVideoFromPHAsset:model.asset];
+    [self getVideoFromPHAsset:model];
 }
 //获取视频文件的路径
-- (void) getVideoFromPHAsset: (PHAsset *) phAsset {
+- (void) getVideoFromPHAsset: (LLImagePickerModel *) model {
     
-    if (phAsset.mediaType == PHAssetMediaTypeVideo) {
-        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionCurrent;
-        options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
-        
-        PHImageManager *manager = [PHImageManager defaultManager];
-        [manager requestAVAssetForVideo:phAsset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            AVURLAsset *urlAsset = (AVURLAsset *)asset;
-            NSURL *url = urlAsset.URL;
-            
-            // mov格式转mp4
-            // NSURL *mp4 = [self convertToMp4:url];
-            
-            [self yaSuoAndUploadVideo:url];
-            
+    UIImage * shouZhenImage = model.image;
+    UIImage * uploadImage = [NormalUse scaleToSize:shouZhenImage size:CGSizeMake(400, 400*(shouZhenImage.size.height/shouZhenImage.size.width))];
+    //png和jpeg的压缩
+    NSData *imageData = UIImagePNGRepresentation(uploadImage);
+    
+    unsigned long long size = imageData.length;
+    NSString * videoFileSize = [NSString stringWithFormat:@"%.2f", size / pow(10, 6)];
+    NSLog(@"%@",videoFileSize);
 
-        }];
-    }
+    [HTTPModel uploadImageVideo:[[NSDictionary alloc] initWithObjectsAndKeys:imageData,@"file",@"&%&*HDSdahjd.dasiH23",@"upload_key",@"img",@"file_type", nil]
+                       callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            [self.videoShouZhenImagePathArray addObject:[responseObject objectForKey:@"filename"]];
+            
+            if (model.asset.mediaType == PHAssetMediaTypeVideo) {
+                PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+                options.version = PHImageRequestOptionsVersionCurrent;
+                options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+                
+                PHImageManager *manager = [PHImageManager defaultManager];
+                [manager requestAVAssetForVideo:model.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                    AVURLAsset *urlAsset = (AVURLAsset *)asset;
+                    NSURL *url = urlAsset.URL;
+                    
+                    // mov格式转mp4
+                    // NSURL *mp4 = [self convertToMp4:url];
+                    
+                    [self yaSuoAndUploadVideo:url];
+                    
+
+                }];
+            }
+
+        }
+        else
+        {
+            
+            if (self->uploadVideoIndex<self.videoArray.count) {
+                
+                LLImagePickerModel *model = [self.videoArray objectAtIndex:self->uploadVideoIndex];
+                [self getVideoFromPHAsset:model];
+            }
+            else
+            {
+                self->uploadVideoIndex = 0;
+                [self getVideoShouZhenPathId];
+
+            }
+
+        }
+        
+    }];
+
     
 }
 #pragma 视频名以当前日期为名
@@ -981,18 +1020,61 @@
         if (self->uploadVideoIndex<self.videoArray.count) {
             
             LLImagePickerModel *model = [self.videoArray objectAtIndex:self->uploadVideoIndex];
-            [self getVideoFromPHAsset:model.asset];
+            [self getVideoFromPHAsset:model];
         }
         else
         {
             self->uploadVideoIndex = 0;
-            [self getVideoPathId];
+            [self getVideoShouZhenPathId];
 
         }
 
     }];
 
 }
+-(void)getVideoShouZhenPathId
+{
+    if ([NormalUse isValidArray:self.videoShouZhenImagePathArray]&& self.videoShouZhenImagePathArray.count>0) {
+    
+        [HTTPModel saveFile:[[NSDictionary alloc]initWithObjectsAndKeys:[self.videoShouZhenImagePathArray objectAtIndex:uploadVideoIndex],@"filepath", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            self->uploadVideoIndex = self->uploadVideoIndex+1;
+            
+            if (status==1) {
+                
+                if (![NormalUse isValidString:self.videoShouZhenPathId]) {
+                    
+                    self.videoShouZhenPathId = [responseObject objectForKey:@"fileId"];
+                }
+                else
+                {
+                    self.videoShouZhenPathId = [[self.videoShouZhenPathId stringByAppendingString:@"|"] stringByAppendingString:[responseObject objectForKey:@"fileId"]];
+                }
+            }
+
+
+            if (self->uploadVideoIndex<self.videoArray.count) {
+
+                [self getVideoShouZhenPathId];
+            }
+            else
+            {
+                self->uploadVideoIndex = 0;
+                [self getVideoPathId];
+            }
+
+        }];
+        
+        
+    }
+    else
+    {
+        self->uploadVideoIndex = 0;
+        [self getVideoPathId];
+    }
+
+}
+
 -(void)getVideoPathId
 {
     if ([NormalUse isValidArray:self.videoPathArray]&& self.videoPathArray.count>0) {
@@ -1115,6 +1197,7 @@
                 [dicInfo setObject:self.jiShuStarValue forKey:@"skill_value"];
                 [dicInfo setObject:self.huanJingStarValue forKey:@"ambience_value"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.videoPathId] forKey:@"videos"];
+                [dicInfo setObject:[NormalUse getobjectForKey:self.videoShouZhenPathId] forKey:@"v_first_frames"];
                 [dicInfo setObject:self.imagePathId forKey:@"images"];
                 [dicInfo setObject:self.xiangQingTextView.text forKey:@"decription"];
                 

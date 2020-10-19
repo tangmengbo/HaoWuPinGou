@@ -633,6 +633,7 @@
        
         if (status==1) {
             
+            [NormalUse showToastView:@"领取成功" view:self.view];
             [self loadNewLsit];
         }
         else

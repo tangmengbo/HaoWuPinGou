@@ -158,8 +158,12 @@
     }
     else
     {
-        ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
-        vc.yuEStr = self.yuEStr;
+//        ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+//        vc.yuEStr = self.yuEStr;
+//        [self.navigationController pushViewController:vc animated:YES];
+
+        JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+        vc.forWhat = @"mall";
         [self.navigationController pushViewController:vc animated:YES];
 
     }

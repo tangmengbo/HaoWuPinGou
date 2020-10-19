@@ -22,7 +22,7 @@
 @property(nonatomic,strong)NSMutableArray *  artist_list;//店铺下艺人列表
 
 @property(nonatomic,strong)NSString * field;//默认最新 hot_value 最热
-
+@property(nonatomic,strong)NSString * order;//desc或者 asc
 @property(nonatomic,strong)UIView * jieSuoTipView;
 
 @end
@@ -167,6 +167,7 @@
         
         [dic setObject:self.field forKey:@"field"];
     }
+    [dic setObject:@"desc" forKey:@"order"];
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -391,7 +392,7 @@
         pingFenButton.button_lable.textColor = RGBFormUIColor(0xF5BB61);
 //        NSNumber * complex_score = [self.dianPuInfo objectForKey:@"complex_score"];
 //        if ([complex_score isKindOfClass:[NSNumber class]]) {
-            
+        pingFenButton.button_lable.adjustsFontSizeToFitWidth = YES;
             pingFenButton.button_lable.text = [NSString stringWithFormat:@"%@",[self.dianPuInfo objectForKey:@"complex_score"]];
 
 //        }
@@ -724,12 +725,14 @@
 }
 -(void)zuiXinButtonClick
 {
-    self.field = @"";
+    self.field = @"id";
+    
     [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
     
     [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
     
-    [self.mainTableView reloadData];
+    [self loadNewLsit];
+//    [self.mainTableView reloadData];
     
 }
 -(void)zuiReButtonClick
@@ -740,7 +743,9 @@
     
     [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
 
-    [self.mainTableView reloadData];
+    [self loadNewLsit];
+
+//    [self.mainTableView reloadData];
 
 }
 

@@ -1005,10 +1005,9 @@
     
     NSArray * videos = [self.tieZiInfo objectForKey:@"videos"];
     if ([NormalUse isValidArray:videos]) {
-        
         for (int i=0;i<videos.count;i++) {
             NSDictionary * info = [videos objectAtIndex:i];
-            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[info objectForKey:@"url"]]]];
+            MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]];
             photo.videoURL = [NSURL URLWithString:[info objectForKey:@"url"]];
             [photos addObject:photo];
         }
