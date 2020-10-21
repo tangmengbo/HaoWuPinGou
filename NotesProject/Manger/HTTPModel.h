@@ -313,6 +313,14 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //我的发布_帖子(信息)
 +(void)getMyXinXiList:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//我的发布_角色贴 type_id 1女神 2外围女 3全球空降
++(void)getJiaoSeFaTieList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//我的发布_夫妻交发帖
++(void)getFuQiJiaoFaTieList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //我的发布_黑店曝光
 +(void)getMyHeiDianBaoGuangList:(NSDictionary *_Nullable)parameter
                    callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

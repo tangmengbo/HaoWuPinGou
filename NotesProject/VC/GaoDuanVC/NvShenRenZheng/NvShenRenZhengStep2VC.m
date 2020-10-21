@@ -1200,6 +1200,8 @@
                 [dicInfo setObject:[NormalUse getobjectForKey:self.videoShouZhenPathId] forKey:@"v_first_frames"];
                 [dicInfo setObject:self.imagePathId forKey:@"images"];
                 [dicInfo setObject:self.xiangQingTextView.text forKey:@"decription"];
+                [dicInfo setObject:@"0" forKey:@"post_type"];//1发帖 0认证
+
                 
                 NvShenRenZhengStep3VC * vc = [[NvShenRenZhengStep3VC alloc] init];
                 vc.info = dicInfo;

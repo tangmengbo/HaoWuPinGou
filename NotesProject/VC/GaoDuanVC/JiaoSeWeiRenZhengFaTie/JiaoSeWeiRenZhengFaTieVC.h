@@ -1,16 +1,16 @@
 //
-//  CreateHeiDianBaoGuangViewController.h
+//  JiaoSeWeiRenZhengFaTieViewController.h
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/15.
+//  Created by 唐蒙波 on 2020/10/21.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "MainBaseViewController.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CreateHeiDianBaoGuangViewController : MainBaseViewController<LeiXiangSelectViewControllerDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate,CityListViewControllerDelegate>
+@interface JiaoSeWeiRenZhengFaTieVC : MainBaseViewController<LeiXiangSelectViewControllerDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate,CityListViewControllerDelegate>
 {
     int maxImageSelected;
     int uploadImageIndex;
@@ -19,11 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
     int uploadVideoIndex;
 }
 
-@property(nonatomic,strong)UITextField * addressTF;
+@property(nonatomic,strong)NSString * renZhengType;//1女神 2外围女 3全球空降
+@property(nonatomic,assign)int  renZhengStatus;
+
 @property(nonatomic,strong)UITextField * biaoTiTF;
 @property(nonatomic,strong)UIButton * diQuButton;
 @property(nonatomic,strong)UITextField * ageTF;
-@property(nonatomic,strong)UITextField * chanPinShuLiangTF;
 @property(nonatomic,strong)UITextField * beginPriceTF;
 @property(nonatomic,strong)UITextField * endPriceTF;
 @property(nonatomic,strong)UIButton * fuWuXiangMuButton;
@@ -45,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray * videoArray;
 @property(nonatomic,strong)NSMutableArray * videoPathArray;
 @property(nonatomic,strong)NSMutableArray * videoShouZhenImagePathArray;
-
 
 @property(nonatomic,strong)UILabel * zhaoPianSelectLable;
 @property(nonatomic,strong)UIView * photoContentView;

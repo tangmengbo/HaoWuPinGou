@@ -19,6 +19,8 @@
 
 #import "JinChanWebViewController.h"
 
+#import "JieSuoSuccessTipView.h"
+
 #import "UIView+Additions.h"
 #import "NSString+Additions.h"
 #import "NSData+Additions.h"

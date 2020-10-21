@@ -638,8 +638,14 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
-//             self.jieSuoButton.button_lable.text = @"已经解锁成功";
-//              self.jieSuoButton.button_lable1.text = @"";
+            JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
+            [self.view addSubview:view];
+            
+            view.toConnect = ^{
+                
+                [self chatButtonClick];
+            };
+
             NSDictionary * contact = responseObject;
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -647,6 +653,7 @@
             NSString * qq = [contact objectForKey:@"qq"];
             NSNumber * mobile = [contact objectForKey:@"mobile"];
             NSString * lianXieFangShiStr = @"";
+            
             if ([NormalUse isValidString:wechat]) {
                 
                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];

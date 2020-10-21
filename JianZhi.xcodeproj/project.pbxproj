@@ -112,6 +112,12 @@
 		5F8557BD2398DC6400BA1E18 /* Lable_ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8557BB2398DC6400BA1E18 /* Lable_ImageButton.m */; };
 		5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46624E6895200E835AB /* HTTPModel.m */; };
 		5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */; };
+		5F9D95C7253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D95C6253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.m */; };
+		5F9D95CA253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D95C9253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m */; };
+		5F9D95CD253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D95CC253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m */; };
+		5F9D95D0253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D95CF253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.m */; };
+		5F9D95D925400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D95D825400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m */; };
+		5F9D960125404E9E002599B6 /* JieSuoSuccessTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D960025404E9E002599B6 /* JieSuoSuccessTipView.m */; };
 		5F9FE4C725202814001359CB /* EditDianPuShangPinListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4C625202814001359CB /* EditDianPuShangPinListViewController.m */; };
 		5F9FE4CB25202AB6001359CB /* JingJiRenBianJiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4CA25202AB6001359CB /* JingJiRenBianJiListCell.m */; };
 		5F9FE4CE25207706001359CB /* InputMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9FE4CD25207706001359CB /* InputMobileViewController.m */; };
@@ -413,6 +419,18 @@
 		5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
 		5F91C46824E6895200E835AB /* HTTPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPModel.h; sourceTree = "<group>"; };
 		5F91C46924E6895200E835AB /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
+		5F9D95C5253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JiaoSeWeiRenZhengFaTieVC.h; sourceTree = "<group>"; };
+		5F9D95C6253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiaoSeWeiRenZhengFaTieVC.m; sourceTree = "<group>"; };
+		5F9D95C8253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JiaoSeWeiRenZhengFaTieKouFeiVC.h; sourceTree = "<group>"; };
+		5F9D95C9253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiaoSeWeiRenZhengFaTieKouFeiVC.m; sourceTree = "<group>"; };
+		5F9D95CB253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoWeiRenZhengFaTieVC.h; sourceTree = "<group>"; };
+		5F9D95CC253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoWeiRenZhengFaTieVC.m; sourceTree = "<group>"; };
+		5F9D95CE253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuQiJiaoWeiRenZhengFaTieKouFeiVC.h; sourceTree = "<group>"; };
+		5F9D95CF253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuQiJiaoWeiRenZhengFaTieKouFeiVC.m; sourceTree = "<group>"; };
+		5F9D95D725400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.h; sourceTree = "<group>"; };
+		5F9D95D825400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m; sourceTree = "<group>"; };
+		5F9D95FF25404E9E002599B6 /* JieSuoSuccessTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JieSuoSuccessTipView.h; sourceTree = "<group>"; };
+		5F9D960025404E9E002599B6 /* JieSuoSuccessTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JieSuoSuccessTipView.m; sourceTree = "<group>"; };
 		5F9FE4C525202814001359CB /* EditDianPuShangPinListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditDianPuShangPinListViewController.h; sourceTree = "<group>"; };
 		5F9FE4C625202814001359CB /* EditDianPuShangPinListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditDianPuShangPinListViewController.m; sourceTree = "<group>"; };
 		5F9FE4C925202AB6001359CB /* JingJiRenBianJiListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingJiRenBianJiListCell.h; sourceTree = "<group>"; };
@@ -638,6 +656,7 @@
 		5F22EBBA24ECF302002DCF61 /* GaoDuanVC */ = {
 			isa = PBXGroup;
 			children = (
+				5F7866FC253EEFF700D940C2 /* JiaoSeWeiRenZhengFaTie */,
 				5F2650FC24FE3F3E00171684 /* NvShenRenZheng */,
 				5F2650F224FE20A500171684 /* JingJiRenRenZheng */,
 				5F34DCC624EE4DE100DE15A1 /* ViewAndCell */,
@@ -660,6 +679,7 @@
 		5F22EBBB24ECF30C002DCF61 /* FuQiJiaoVC */ = {
 			isa = PBXGroup;
 			children = (
+				5F9D95C4253FCA09002599B6 /* FuQiJiaoWeiRenZhengFaTie */,
 				5FD8503625087628009286CE /* FuQiJiaoRenZheng */,
 				5F34DCDA24EE802300DE15A1 /* ViewAndCell */,
 				5F22EBC524ECF389002DCF61 /* FuQiJiaoViewController.h */,
@@ -881,6 +901,8 @@
 				5F7EF464251062DE0052B948 /* MyJieSuo_DingZhiFuWuCell.m */,
 				5F66734625108EEF000C6810 /* MyFaBu_XinXiCell.h */,
 				5F66734725108EEF000C6810 /* MyFaBu_XinXiCell.m */,
+				5F9D95D725400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.h */,
+				5F9D95D825400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m */,
 				5F66734925108F0B000C6810 /* MyFaBu_DingZhiFuWuCell.h */,
 				5F66734A25108F0B000C6810 /* MyFaBu_DingZhiFuWuCell.m */,
 				5F6673522510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.h */,
@@ -915,8 +937,21 @@
 				5F4552A3251DE75B00F42614 /* FengZhuangUIPageControll.m */,
 				5FC165832519C5DA00FA99D2 /* AutoScrollLabel.h */,
 				5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */,
+				5F9D95FF25404E9E002599B6 /* JieSuoSuccessTipView.h */,
+				5F9D960025404E9E002599B6 /* JieSuoSuccessTipView.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5F7866FC253EEFF700D940C2 /* JiaoSeWeiRenZhengFaTie */ = {
+			isa = PBXGroup;
+			children = (
+				5F9D95C5253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.h */,
+				5F9D95C6253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.m */,
+				5F9D95C8253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.h */,
+				5F9D95C9253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m */,
+			);
+			path = JiaoSeWeiRenZhengFaTie;
 			sourceTree = "<group>";
 		};
 		5F7ED856251B22DB00D23823 /* EditMessage */ = {
@@ -951,6 +986,17 @@
 				5F91C46724E6895200E835AB /* AFAppDotNetAPIClient.m */,
 			);
 			path = Manger;
+			sourceTree = "<group>";
+		};
+		5F9D95C4253FCA09002599B6 /* FuQiJiaoWeiRenZhengFaTie */ = {
+			isa = PBXGroup;
+			children = (
+				5F9D95CB253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.h */,
+				5F9D95CC253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m */,
+				5F9D95CE253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.h */,
+				5F9D95CF253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.m */,
+			);
+			path = FuQiJiaoWeiRenZhengFaTie;
 			sourceTree = "<group>";
 		};
 		5FAEA8E2253573E8004745D4 /* JinChanVC */ = {
@@ -1500,6 +1546,7 @@
 				5FD8505A2509C141009286CE /* YanCheBaoGaoTableViewCell.m in Sources */,
 				5F2650C624FC8B5600171684 /* TieZiDetailViewController.m in Sources */,
 				5F2650DB24FC8C9A00171684 /* JYImageCache.m in Sources */,
+				5F9D95C7253FCC1F002599B6 /* JiaoSeWeiRenZhengFaTieVC.m in Sources */,
 				5F26511224FE57D600171684 /* DianPuDetailViewController.m in Sources */,
 				5F0B382124F60EDC00FC935A /* GesturePasswordView.m in Sources */,
 				5FE3EC0F2355A3E400C77F4D /* TZAssetCell.m in Sources */,
@@ -1521,6 +1568,7 @@
 				5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */,
 				5F45D55825303079007F207C /* ChatListViewController.m in Sources */,
 				5F7EF462251062AF0052B948 /* MyJieSuo_JingJiReCell.m in Sources */,
+				5F9D95CA253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m in Sources */,
 				5FD8504825087759009286CE /* FuQiJiaoRenZhengStep2VC.m in Sources */,
 				5FE3EC102355A3E400C77F4D /* TZVideoPlayerController.m in Sources */,
 				5FE3EA6C235599D200C77F4D /* AppDelegate.m in Sources */,
@@ -1547,6 +1595,7 @@
 				5F22EBCA24ECF39E002DCF61 /* XiaoXiViewController.m in Sources */,
 				5F6673542510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m in Sources */,
 				5FE3EC0C2355A3E400C77F4D /* LLImagePickerView.m in Sources */,
+				5F9D960125404E9E002599B6 /* JieSuoSuccessTipView.m in Sources */,
 				5F084FA7251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m in Sources */,
 				5FDA455C2490EA0A00130D1E /* MyNavigationViewController.m in Sources */,
 				5F9FE4CE25207706001359CB /* InputMobileViewController.m in Sources */,
@@ -1555,9 +1604,11 @@
 				5FE3EC032355A3E400C77F4D /* ACAlertController.m in Sources */,
 				5F2650DF24FC8C9A00171684 /* JYPageControl.m in Sources */,
 				5F084FB32518AD1600F2D64C /* JinBiMingXiViewController.m in Sources */,
+				5F9D95D925400F79002599B6 /* MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m in Sources */,
 				5FE3ECBE2355B7AB00C77F4D /* XinXiListTableViewCell.m in Sources */,
 				5FE3EC122355A3E400C77F4D /* NSBundle+TZImagePicker.m in Sources */,
 				5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */,
+				5F9D95D0253FD934002599B6 /* FuQiJiaoWeiRenZhengFaTieKouFeiVC.m in Sources */,
 				5FBAD7CB251C3423004C153E /* ZYNetworkAccessibility.m in Sources */,
 				5F34DCFE24F3D45000DE15A1 /* FangLeiFangPianDetailViewController.m in Sources */,
 				5F7EF45A250F3D8D0052B948 /* FaBuYanZhengViewController.m in Sources */,
@@ -1580,6 +1631,7 @@
 				5F66738B25165CEA000C6810 /* PGIndexBannerSubiew.m in Sources */,
 				5FE3EC162355A3E400C77F4D /* TZProgressView.m in Sources */,
 				5FE3EAC923559FB400C77F4D /* MainBaseViewController.m in Sources */,
+				5F9D95CD253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m in Sources */,
 				5FC165822519AE7000FA99D2 /* QiDongViewController.m in Sources */,
 				5F2650DC24FC8C9A00171684 /* JYImageDownloader.m in Sources */,
 				5F24D24B2500965400476CFA /* NvShenListTableViewCell.m in Sources */,

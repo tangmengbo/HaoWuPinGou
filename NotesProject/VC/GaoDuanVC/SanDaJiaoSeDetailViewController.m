@@ -73,7 +73,7 @@
 
     [HTTPModel getSanDaGirlDetail:[[NSDictionary alloc]initWithObjectsAndKeys:self.girl_id,@"girl_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
-               [NormalUse quXiaoGifLoadingView:self];
+            [NormalUse quXiaoGifLoadingView:self];
         
         if (status==1) {
             
@@ -127,6 +127,8 @@
                 self.cheYouPingJiaTableView.height = tableViewHeight;
                 [self.cheYouPingJiaTableView reloadData];
 
+                [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.cheYouPingJiaTableView.top+self.cheYouPingJiaTableView.height)];
+
             }
         }
         
@@ -160,10 +162,14 @@
     
     if ([NormalUse isValidArray:[self.tieZiInfo objectForKey:@"videos"]])
     {
-        for (NSString * path in [self.tieZiInfo objectForKey:@"videos"]) {
+        for (NSDictionary * info in [self.tieZiInfo objectForKey:@"videos"]) {
             
-           UIImage * image = [self getVideoPreViewImage:[NSURL URLWithString:path]];
-            [self.images addObject:image];
+            UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]]];
+            if (image!=nil) {
+                
+                [self.images addObject:image];
+
+            }
         }
     }
     
@@ -183,7 +189,7 @@
     [self.mainScrollView addSubview:self.autoLabel];
 
 
-    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth)];
+    self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth-40*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.messageContentView];
     //某个角圆角
@@ -456,72 +462,18 @@
     }
 
     
-    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+11*BiLiWidth, WIDTH_PingMu, 10*BiLiWidth)];
+    
+    
+    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu, 10*BiLiWidth)];
     self.tipLable.textAlignment = NSTextAlignmentCenter;
     self.tipLable.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
     self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
     [self.messageContentView addSubview:self.tipLable];
     
-    self.tipLable.top = self.jieSuoButton.top+self.jieSuoButton.height;
-    self.tipLable.height = 0;
-
-    self.jiBenXinXiButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, self.tipLable.top+self.tipLable.height+25*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
-    [self.jiBenXinXiButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-    self.jiBenXinXiButton.titleLabel.font = [UIFont systemFontOfSize:16*BiLiWidth];
-    [self.jiBenXinXiButton setTitle:@"基本资料" forState:UIControlStateNormal];
-    self.jiBenXinXiButton.tag = 0;
-    self.jiBenXinXiButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.jiBenXinXiButton addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.messageContentView addSubview:self.jiBenXinXiButton];
-    
-    self.xiangQingJieShaoButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jiBenXinXiButton.left+self.jiBenXinXiButton.width+12.5*BiLiWidth, self.tipLable.top+self.tipLable.height+28.5*BiLiWidth, 52*BiLiWidth, 12*BiLiWidth)];
-    [self.xiangQingJieShaoButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-    self.xiangQingJieShaoButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.xiangQingJieShaoButton setTitle:@"详情介绍" forState:UIControlStateNormal];
-    self.xiangQingJieShaoButton.tag = 1;
-    self.xiangQingJieShaoButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.xiangQingJieShaoButton addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.messageContentView addSubview:self.xiangQingJieShaoButton];
-
-    
-    self.cheYouPingJiaButton = [[UIButton alloc] initWithFrame:CGRectMake(self.xiangQingJieShaoButton.left+self.xiangQingJieShaoButton.width+12.5*BiLiWidth, self.tipLable.top+self.tipLable.height+28.5*BiLiWidth, 52*BiLiWidth, 12*BiLiWidth)];
-    [self.cheYouPingJiaButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-    self.cheYouPingJiaButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.cheYouPingJiaButton setTitle:@"车友评价" forState:UIControlStateNormal];
-    self.cheYouPingJiaButton.tag = 2;
-    self.cheYouPingJiaButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.cheYouPingJiaButton addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.messageContentView addSubview:self.cheYouPingJiaButton];
+    [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
 
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(19.5*BiLiWidth,self.tipLable.top+self.tipLable.height+36.5*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
-    self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
-    self.sliderView.layer.masksToBounds = YES;
-    self.sliderView.alpha = 0.8;
-    [self.messageContentView addSubview:self.sliderView];
-    //渐变设置
-    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = self.sliderView.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-    gradientLayer.startPoint = CGPointMake(0, 0);
-    gradientLayer.endPoint = CGPointMake(0, 1);
-    gradientLayer.locations = @[@0,@1];
-    [self.sliderView.layer addSublayer:gradientLayer];
-
-
-    self.bottomContentScollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.messageContentView.top+self.messageContentView.height, WIDTH_PingMu, 0)];
-    self.bottomContentScollView.pagingEnabled = YES;
-    [self.bottomContentScollView setContentSize:CGSizeMake(WIDTH_PingMu*3, 0)];
-    self.bottomContentScollView.tag = 1001;
-    self.bottomContentScollView.delegate = self;
-    [self.mainScrollView addSubview:self.bottomContentScollView];
-
-    [self initJiBenZiLiaoView];
-    [self initXiangQingJieShaoView];
-    [self initChenYouPingJiaTableView];
 }
 -(void)jieSuoButtonClick
 {
@@ -572,17 +524,23 @@
     }];
     
 }
--(void)initJiBenZiLiaoView
+-(void)initJiBenZiLiaoView:(float)originY
 {
-    self.jiBenXinXiContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
-    [self.bottomContentScollView addSubview:self.jiBenXinXiContentView];
+    self.jiBenXinXiContentView = [[UIView alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 0)];
+    [self.mainScrollView addSubview:self.jiBenXinXiContentView];
     
+    UILabel * xiangQingJieShaoLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 70*BiLiWidth, 16*BiLiWidth)];
+    xiangQingJieShaoLable.textColor = RGBFormUIColor(0x343434);
+    xiangQingJieShaoLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
+    xiangQingJieShaoLable.text = @"基本资料";
+    [self.jiBenXinXiContentView addSubview:xiangQingJieShaoLable];
+
     //价格
-    UIImageView * jiaGeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 12*BiLiWidth, 12*BiLiWidth)];
+    UIImageView * jiaGeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, xiangQingJieShaoLable.top+xiangQingJieShaoLable.height+10*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
     jiaGeImageView.image = [UIImage imageNamed:@"ziLiao_jiaGe"];
     [self.jiBenXinXiContentView addSubview:jiaGeImageView];
     
-    UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangQingJieShaoLable.top+xiangQingJieShaoLable.height+10*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
     jiaGeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     jiaGeLable.textColor = RGBFormUIColor(0x666666);
     jiaGeLable.text = [NSString stringWithFormat:@"价格：%@-%@",[self.tieZiInfo objectForKey:@"min_price"],[self.tieZiInfo objectForKey:@"max_price"]];
@@ -636,17 +594,22 @@
 
     self.jiBenXinXiContentView.height = xiangMuLable.top+xiangMuLable.height+20*BiLiWidth;
     
-    self.bottomContentScollView.height = self.jiBenXinXiContentView.height;
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.bottomContentScollView.top+self.bottomContentScollView.height)];
-    
+    [self initXiangQingJieShaoView:self.jiBenXinXiContentView.top+self.jiBenXinXiContentView.height];
+
 }
--(void)initXiangQingJieShaoView
+-(void)initXiangQingJieShaoView:(float)originY
 {
-    self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, 0)];
-    [self.bottomContentScollView addSubview:self.xiangQingJieShaoContentView];
+    self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
+    [self.mainScrollView addSubview:self.xiangQingJieShaoContentView];
     
-    UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, 7.5*BiLiWidth, 333*BiLiWidth, 0)];
+    UILabel * xiangQingJieShaoLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, originY, 70*BiLiWidth, 16*BiLiWidth)];
+    xiangQingJieShaoLable.textColor = RGBFormUIColor(0x343434);
+    xiangQingJieShaoLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
+    xiangQingJieShaoLable.text = @"详情介绍";
+    [self.xiangQingJieShaoContentView addSubview:xiangQingJieShaoLable];
+
+    UILabel * messageLable = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, xiangQingJieShaoLable.top+xiangQingJieShaoLable.height+10*BiLiWidth, 333*BiLiWidth, 0)];
     messageLable.numberOfLines = 0;
     messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     messageLable.textColor = RGBFormUIColor(0x343434);
@@ -668,11 +631,12 @@
     [messageLable sizeToFit];
 
     
-    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+20*BiLiWidth;
+    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+5*BiLiWidth;
 
+    [self initChenYouPingJiaTableView:self.xiangQingJieShaoContentView.top+self.xiangQingJieShaoContentView.height];
 
 }
--(void)initChenYouPingJiaTableView
+-(void)initChenYouPingJiaTableView:(float)originY
 {
     
     float tableViewHeight = 0;
@@ -680,13 +644,18 @@
         
         tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
     }
-    
-    self.cheYouPingJiaTableView = [[UITableView alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2, 0, WIDTH_PingMu, tableViewHeight)];
+    UILabel * chenYouPingJiaLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, originY, 70*BiLiWidth, 16*BiLiWidth)];
+    chenYouPingJiaLable.textColor = RGBFormUIColor(0x343434);
+    chenYouPingJiaLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
+    chenYouPingJiaLable.text = @"车友评价";
+    [self.mainScrollView addSubview:chenYouPingJiaLable];
+
+    self.cheYouPingJiaTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, chenYouPingJiaLable.top+chenYouPingJiaLable.height+10*BiLiWidth, WIDTH_PingMu, tableViewHeight)];
     self.cheYouPingJiaTableView.delegate = self;
     self.cheYouPingJiaTableView.dataSource = self;
     self.cheYouPingJiaTableView.scrollEnabled = NO;
     self.cheYouPingJiaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.bottomContentScollView addSubview:self.cheYouPingJiaTableView];
+    [self.mainScrollView addSubview:self.cheYouPingJiaTableView];
     
     if (tableViewHeight==0) {
         
@@ -695,6 +664,8 @@
         [self.cheYouPingJiaTableView addSubview:self.noMessageTipButotn];
     }
     
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.cheYouPingJiaTableView.top+self.cheYouPingJiaTableView.height)];
+
 }
 #pragma mark UItableView Delegate
 
@@ -946,11 +917,10 @@
     
     NSArray * videos = [self.tieZiInfo objectForKey:@"videos"];
     if ([NormalUse isValidArray:videos]) {
-        
         for (int i=0;i<videos.count;i++) {
-            
-            MWPhoto * photo = [MWPhoto photoWithImage:[self getVideoPreViewImage:[NSURL URLWithString:[videos objectAtIndex:i]]]];
-            photo.videoURL = [NSURL URLWithString:[videos objectAtIndex:i]];
+            NSDictionary * info = [videos objectAtIndex:i];
+            MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]];
+            photo.videoURL = [NSURL URLWithString:[info objectForKey:@"url"]];
             [photos addObject:photo];
         }
 

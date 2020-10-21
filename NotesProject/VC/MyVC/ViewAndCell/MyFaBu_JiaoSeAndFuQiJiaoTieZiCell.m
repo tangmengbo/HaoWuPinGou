@@ -1,14 +1,14 @@
 //
-//  MyFaBu_XinXiCell.m
+//  MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.m
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/15.
+//  Created by 唐蒙波 on 2020/10/21.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "MyFaBu_XinXiCell.h"
+#import "MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.h"
 
-@implementation MyFaBu_XinXiCell
+@implementation MyFaBu_JiaoSeAndFuQiJiaoTieZiCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -23,7 +23,7 @@
         self.selectedBackgroundView = [[UIView alloc] init];
         self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
 
-        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 144*BiLiWidth)];
+        self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 134*BiLiWidth, 134*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
@@ -46,23 +46,23 @@
         self.statusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-65*BiLiWidth, 0, 50*BiLiWidth, 50*BiLiWidth*60/150)];
         [self addSubview:self.statusImageView];
         
-        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
-        self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.leiXingLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.leiXingLable];
+//        self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+//        self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+//        self.leiXingLable.textColor = RGBFormUIColor(0x999999);
+//        [self addSubview:self.leiXingLable];
         
-        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.diQuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.diQuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.diQuLable];
 
         
-        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+13*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.fuWuLable];
 
-        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+10*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
+        self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+13*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0x999999);
         self.pingFenLable.text = @"综合评分: ";
@@ -72,7 +72,7 @@
         [self addSubview:self.pingFenStarView];
 
         
-        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+10*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
+        self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+13*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.xiaoFeiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
         [self addSubview:self.xiaoFeiLable];

@@ -1946,6 +1946,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSLog(@"%@",responseObject);
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
         NSNumber * code = [dict objectForKey:@"code"];
@@ -2816,7 +2817,76 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
 
 }
+//我的发布_角色贴 type_id 1女神 2外围女 3全球空降
++(void)getJiaoSeFaTieList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/user/publish_authinfo",HTTP_REQUESTURL];
 
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+
+}
+//我的发布_夫妻交发帖
++(void)getFuQiJiaoFaTieList:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/user/publish_couple",HTTP_REQUESTURL];
+
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
+
+}
 //我的发布_黑店曝光
 +(void)getMyHeiDianBaoGuangList:(NSDictionary *_Nullable)parameter
                    callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback

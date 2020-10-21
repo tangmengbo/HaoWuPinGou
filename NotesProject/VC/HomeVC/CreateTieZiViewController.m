@@ -900,6 +900,7 @@
         if ([NormalUse isValidArray:self.videoArray]) {
             
             self.videoPathArray = [NSMutableArray array];
+            self.videoShouZhenImagePathArray = [NSMutableArray array];
             [self uploadVideo];
         }
         else

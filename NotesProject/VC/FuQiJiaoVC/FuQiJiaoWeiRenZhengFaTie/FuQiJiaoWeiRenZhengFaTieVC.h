@@ -1,16 +1,16 @@
 //
-//  CreateHeiDianBaoGuangViewController.h
+//  FuQiJiaoWeiRenZhengFaTieVC.h
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/15.
+//  Created by 唐蒙波 on 2020/10/21.
 //  Copyright © 2020 Meng. All rights reserved.
 //
 
-#import "MainBaseViewController.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CreateHeiDianBaoGuangViewController : MainBaseViewController<LeiXiangSelectViewControllerDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate,CityListViewControllerDelegate>
+@interface FuQiJiaoWeiRenZhengFaTieVC :  MainBaseViewController<LeiXiangSelectViewControllerDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate,CityListViewControllerDelegate>
 {
     int maxImageSelected;
     int uploadImageIndex;
@@ -19,11 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
     int uploadVideoIndex;
 }
 
-@property(nonatomic,strong)UITextField * addressTF;
+@property(nonatomic,strong)NSNumber * auth_couple;////0 未认证 1 已认证 2 审核中
+
 @property(nonatomic,strong)UITextField * biaoTiTF;
 @property(nonatomic,strong)UIButton * diQuButton;
-@property(nonatomic,strong)UITextField * ageTF;
-@property(nonatomic,strong)UITextField * chanPinShuLiangTF;
+@property(nonatomic,strong)UITextField * maleTF;
+@property(nonatomic,strong)UITextField * famaleTF;
 @property(nonatomic,strong)UITextField * beginPriceTF;
 @property(nonatomic,strong)UITextField * endPriceTF;
 @property(nonatomic,strong)UIButton * fuWuXiangMuButton;
