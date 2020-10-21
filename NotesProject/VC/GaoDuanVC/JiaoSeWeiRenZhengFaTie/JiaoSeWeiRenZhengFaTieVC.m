@@ -24,7 +24,7 @@
     
     [self yinCangTabbar];
     
-    self.topTitleLale.text = @"认证";
+    self.topTitleLale.text = @"发帖";
     self.loadingFullScreen = @"yes";
     
     maxImageSelected = 4;

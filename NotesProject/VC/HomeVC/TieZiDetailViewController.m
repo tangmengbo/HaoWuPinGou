@@ -157,6 +157,7 @@
         for (NSDictionary * info in [self.tieZiInfo objectForKey:@"videos"]) {
             
                 
+            
             UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]]];
             if (image!=nil) {
                 

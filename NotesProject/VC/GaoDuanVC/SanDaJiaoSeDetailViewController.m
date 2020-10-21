@@ -475,6 +475,14 @@
 
 
 }
+-(void)chatButtonClick
+{
+    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+    [self.navigationController pushViewController:chatVC animated:YES];
+
+}
+
 -(void)jieSuoButtonClick
 {
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
@@ -490,6 +498,16 @@
             NSDictionary * contactInfo = responseObject;
             
              [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
+            [self.view addSubview:view];
+            
+            view.toConnect = ^{
+                
+                [self chatButtonClick];
+            };
+
+
              NSString * wechat = [contactInfo objectForKey:@"wechat"];
              NSString * qq = [contactInfo objectForKey:@"qq"];
              NSNumber * mobile = [contactInfo objectForKey:@"mobile"];

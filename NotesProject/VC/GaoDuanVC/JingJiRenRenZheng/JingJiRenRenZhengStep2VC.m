@@ -14,6 +14,14 @@
 
 @implementation JingJiRenRenZhengStep2VC
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.topTitleLale.text = @"认证";
@@ -152,6 +160,22 @@
     tiJiaoLable.textColor = [UIColor whiteColor];
     [tiJiaoButton addSubview:tiJiaoLable];
     
+    UILabel * tipsLable = [[UILabel alloc] initWithFrame:CGRectMake(20*BiLiWidth, tiJiaoButton.top+tiJiaoButton.height+15*BiLiWidth, WIDTH_PingMu-20*BiLiWidth*2, 50*BiLiWidth)];
+    tipsLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+    tipsLable.textColor = RGBFormUIColor(0x333333);
+    tipsLable.numberOfLines = 3;
+    tipsLable.userInteractionEnabled = YES;
+    [self.view addSubview:tipsLable];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quRenZheng)];
+    [tipsLable addGestureRecognizer:tap];
+
+    
+    NSMutableAttributedString * str1 = [[NSMutableAttributedString alloc] initWithString:@"提示:认证的结果可在消息中查看，认证成功后发布的信息将带有“官方认证”标签，助力您快速开单，您在认证过程中遇到任何问题，可以联系在线客服>"];
+    [str1 addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x0033FF) range:NSMakeRange(str1.length-5, 5)];
+    tipsLable.attributedText = str1;
+
+    
     
     [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
@@ -169,6 +193,15 @@
 
     
 }
+-(void)quRenZheng
+{
+    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+    vc.forWhat = @"help";
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
+
 -(void)nextButtonClick
 {
     

@@ -205,12 +205,15 @@
     {
         for (NSDictionary * info in [self.tieZiInfo objectForKey:@"videos"]) {
             
+            if ([info isKindOfClass:[NSDictionary class]]) {
                 
-            UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]]];
-            if (image!=nil) {
-                
-                [self.images addObject:image];
-                
+                UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NormalUse getobjectForKey:[info objectForKey:@"fframe"]]]]];
+                if (image!=nil) {
+                    
+                    [self.images addObject:image];
+                    
+                }
+
             }
 
         }
