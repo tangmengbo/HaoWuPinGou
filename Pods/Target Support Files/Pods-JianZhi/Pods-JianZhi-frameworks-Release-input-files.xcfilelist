@@ -5,7 +5,5 @@ ${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework
 ${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework
 ${BUILT_PRODUCTS_DIR}/MWPhotoBrowser/MWPhotoBrowser.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
-${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework
-${BUILT_PRODUCTS_DIR}/SwiftWebSocket/SwiftWebSocket.framework
 ${BUILT_PRODUCTS_DIR}/ZWLimitCounter/ZWLimitCounter.framework
 ${BUILT_PRODUCTS_DIR}/ZWPlaceHolder/ZWPlaceHolder.framework

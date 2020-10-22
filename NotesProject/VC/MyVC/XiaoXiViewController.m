@@ -13,13 +13,21 @@
 #import "ChatListViewController.h"
 
 @interface XiaoXiViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+{
+    ChatListViewController * chatListVC;
+}
 
 @property(nonatomic,strong)UILabel * unReadMesLable;
 
 @property(nonatomic,strong)UIButton * button1;
 @property(nonatomic,strong)UIButton * button2;
 @property(nonatomic,strong)UIButton * button3;
+@property(nonatomic,strong)UIButton * button4;
 @property(nonatomic,strong)UIView * sliderView;
+
+@property(nonatomic,strong)UIView * shenHeXiaoXiPoint;
+@property(nonatomic,strong)UIView * huoDongXiaoXiPoint;
+@property(nonatomic,strong)UIView * huiHuaXiaoXiPoint;
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 @property(nonatomic,strong)UITableView * tableView1;
@@ -82,25 +90,37 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    self.tabBarController.tabBar.hidden = YES;
+
+    [chatListVC reloadMessageList];//刷新消息列表
     
     int unReadMesNumber = [[RCIMClient sharedRCIMClient] getUnreadCount:@[@(ConversationType_PRIVATE)]];
 
     if (unReadMesNumber<=0) {
-        self.unReadMesLable.hidden = YES;
+        
+        self.huiHuaXiaoXiPoint.hidden = YES;
     }
     else
     {
-        self.unReadMesLable.hidden = NO;
-        self.unReadMesLable.text = [NSString stringWithFormat:@"%d",unReadMesNumber];
-        if (unReadMesNumber<10) {
-            
-            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 15, 15);
-        }
-        else
-        {
-            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 20, 15);
-        }
+        self.huiHuaXiaoXiPoint.hidden = NO;
     }
+//    if (unReadMesNumber<=0) {
+//        self.unReadMesLable.hidden = YES;
+//    }
+//    else
+//    {
+//        self.unReadMesLable.hidden = NO;
+//        self.unReadMesLable.text = [NSString stringWithFormat:@"%d",unReadMesNumber];
+//        if (unReadMesNumber<10) {
+//
+//            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 15, 15);
+//        }
+//        else
+//        {
+//            self.unReadMesLable.frame = CGRectMake(self.unReadMesLable.frame.origin.x, self.unReadMesLable.frame.origin.y, 20, 15);
+//        }
+//    }
 
 }
 - (void)viewDidLoad {
@@ -111,22 +131,13 @@
     
     [self yinCangTabbar];
     
+//    [self.rightButton setTitle:@"消息" forState:UIControlStateNormal];
+
+
+
     CGSize size =  [NormalUse setSize:@"官方消息" withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-    [self.rightButton setTitle:@"消息" forState:UIControlStateNormal];
 
-    self.unReadMesLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-20*BiLiWidth, 5, 20, 15)];
-    self.unReadMesLable.textColor = [UIColor whiteColor];
-    self.unReadMesLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
-    self.unReadMesLable.textAlignment = NSTextAlignmentCenter;
-    self.unReadMesLable.layer.cornerRadius = 15/2;
-    self.unReadMesLable.layer.masksToBounds = YES;
-    self.unReadMesLable.hidden = YES;
-    self.unReadMesLable.backgroundColor = [UIColor redColor];
-    [self.topNavView addSubview:self.unReadMesLable];
-
-
-    
-    self.button1 = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu/3-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
+    self.button1 = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu/4-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
     [self.button1 setTitle:@"官方消息" forState:UIControlStateNormal];
     [self.button1 setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     self.button1.tag = 0;
@@ -138,7 +149,7 @@
     
     
     
-    self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3+(WIDTH_PingMu/3-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
+    self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/4+(WIDTH_PingMu/4-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
     [self.button2 setTitle:@"审核消息" forState:UIControlStateNormal];
     [self.button2 setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     self.button2.tag = 1;
@@ -146,8 +157,26 @@
     [self.button2 addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.button2.titleLabel sizeToFit];
     [self.view addSubview:self.button2];
+    
+    self.shenHeXiaoXiPoint = [[UIView alloc] initWithFrame:CGRectMake(self.button2.left+self.button2.width-7*BiLiWidth, self.button2.top, 8*BiLiWidth, 8*BiLiWidth)];
+    self.shenHeXiaoXiPoint.backgroundColor = [UIColor redColor];
+    self.shenHeXiaoXiPoint.layer.cornerRadius = 4*BiLiWidth;
+    self.shenHeXiaoXiPoint.layer.masksToBounds = YES;
+    [self.view addSubview:self.shenHeXiaoXiPoint];
+    NSNumber * review_msgcnt = [self.xiaoXiWeiDuInfo objectForKey:@"review_msgcnt"];
+    if (review_msgcnt.intValue==0) {
+        
+        self.shenHeXiaoXiPoint.hidden = YES;
 
-    self.button3 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3*2+(WIDTH_PingMu/3-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
+    }
+    else
+    {
+        self.shenHeXiaoXiPoint.hidden = NO;
+
+    }
+
+
+    self.button3 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/4*2+(WIDTH_PingMu/4-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
     [self.button3 setTitle:@"活动消息" forState:UIControlStateNormal];
     [self.button3 setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     self.button3.tag = 2;
@@ -155,6 +184,54 @@
     [self.button3 addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.button3.titleLabel sizeToFit];
     [self.view addSubview:self.button3];
+    
+    
+    self.huoDongXiaoXiPoint = [[UIView alloc] initWithFrame:CGRectMake(self.button3.left+self.button3.width-7*BiLiWidth, self.button2.top, 8*BiLiWidth, 8*BiLiWidth)];
+    self.huoDongXiaoXiPoint.backgroundColor = [UIColor redColor];
+    self.huoDongXiaoXiPoint.layer.cornerRadius = 4*BiLiWidth;
+    self.huoDongXiaoXiPoint.layer.masksToBounds = YES;
+    [self.view addSubview:self.huoDongXiaoXiPoint];
+    NSNumber * active_msgcnt = [self.xiaoXiWeiDuInfo objectForKey:@"active_msgcnt"];
+
+    if (active_msgcnt.intValue==0) {
+        
+        self.huoDongXiaoXiPoint.hidden = YES;
+
+    }
+    else
+    {
+        self.huoDongXiaoXiPoint.hidden = NO;
+
+    }
+    
+    self.button4 = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/4*3+(WIDTH_PingMu/4-size.width)/2, self.topNavView.height+self.topNavView.top+10*BiLiWidth, size.width, 17*BiLiWidth)];
+    [self.button4 setTitle:@"会话消息" forState:UIControlStateNormal];
+    [self.button4 setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+    self.button4.tag = 3;
+    self.button4.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    [self.button4 addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button4.titleLabel sizeToFit];
+    [self.view addSubview:self.button4];
+    
+    self.huiHuaXiaoXiPoint = [[UIView alloc] initWithFrame:CGRectMake(self.button4.left+self.button4.width-7*BiLiWidth, self.button2.top, 8*BiLiWidth, 8*BiLiWidth)];
+    self.huiHuaXiaoXiPoint.backgroundColor = [UIColor redColor];
+    self.huiHuaXiaoXiPoint.layer.cornerRadius = 4*BiLiWidth;
+    self.huiHuaXiaoXiPoint.layer.masksToBounds = YES;
+    [self.view addSubview:self.huiHuaXiaoXiPoint];
+    self.huiHuaXiaoXiPoint.hidden = NO;
+
+
+    
+//    self.unReadMesLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-20*BiLiWidth, self.button4.top-7.5, 20, 15)];
+//    self.unReadMesLable.textColor = [UIColor whiteColor];
+//    self.unReadMesLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+//    self.unReadMesLable.textAlignment = NSTextAlignmentCenter;
+//    self.unReadMesLable.layer.cornerRadius = 15/2;
+//    self.unReadMesLable.layer.masksToBounds = YES;
+//    self.unReadMesLable.hidden = YES;
+//    self.unReadMesLable.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:self.unReadMesLable];
+
 
     self.sliderView = [[UIView alloc] initWithFrame:CGRectMake((self.button1.width-53*BiLiWidth)/2+self.button1.left,self.button1.top+15*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
     self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
@@ -174,7 +251,7 @@
 
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.button1.top+self.button1.height+10*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.button1.top+self.button1.height+10*BiLiWidth))];
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu*3, self.mainScrollView.height)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu*4, self.mainScrollView.height)];
     self.mainScrollView.delegate = self;
     self.mainScrollView.tag = 1002;
     self.mainScrollView.pagingEnabled = YES;
@@ -295,8 +372,10 @@
     [self.tableView3.mj_header beginRefreshing];
 
 
-
-
+    NSArray *displayConversationTypeArray = @[@(ConversationType_PRIVATE)];
+    chatListVC = [[ChatListViewController alloc] initWithDisplayConversationTypes:displayConversationTypeArray collectionConversationType:nil];
+    chatListVC.view.frame = CGRectMake(WIDTH_PingMu*3, 0, WIDTH_PingMu, self.mainScrollView.height);
+    [self.mainScrollView addSubview:chatListVC.view];
 }
 -(void)listTopButtonClick:(UIButton *)button
 {
@@ -306,17 +385,30 @@
         
         self.button2.transform = CGAffineTransformIdentity;
         self.button3.transform = CGAffineTransformIdentity;
+        self.button4.transform = CGAffineTransformIdentity;
     }
     else if (button.tag==1)
     {
         self.button1.transform = CGAffineTransformIdentity;
         self.button3.transform = CGAffineTransformIdentity;
+        self.button4.transform = CGAffineTransformIdentity;
+
+        self.shenHeXiaoXiPoint.hidden = YES;
+    }
+    else if(button.tag==2)
+    {
+        self.button1.transform = CGAffineTransformIdentity;
+        self.button2.transform = CGAffineTransformIdentity;
+        self.button4.transform = CGAffineTransformIdentity;
+
+        self.huoDongXiaoXiPoint.hidden = YES;
 
     }
     else
     {
         self.button1.transform = CGAffineTransformIdentity;
         self.button2.transform = CGAffineTransformIdentity;
+        self.button3.transform = CGAffineTransformIdentity;
 
     }
     
@@ -343,10 +435,14 @@
             [self.button2 sendActionsForControlEvents:UIControlEventTouchUpInside];
 
         }
-        else
+        else if(specialIndex==2)
         {
             [self.button3 sendActionsForControlEvents:UIControlEventTouchUpInside];
 
+        }
+        else
+        {
+            [self.button4 sendActionsForControlEvents:UIControlEventTouchUpInside];
         }
         
     }

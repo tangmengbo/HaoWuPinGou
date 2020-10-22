@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F061FFB2534205A00EFE134 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F061FFA2534205A00EFE134 /* Test.swift */; };
 		5F084FA125185DE000F2D64C /* MyXiaoXi_GuanFangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA025185DE000F2D64C /* MyXiaoXi_GuanFangCell.m */; };
 		5F084FA4251876D000F2D64C /* MyXiaoXi_ShenHeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA3251876D000F2D64C /* MyXiaoXi_ShenHeCell.m */; };
 		5F084FA7251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA6251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m */; };
@@ -212,8 +211,6 @@
 		1ACB60475A30615544A412C1 /* Pods-NotesProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesProject.debug.xcconfig"; path = "Target Support Files/Pods-NotesProject/Pods-NotesProject.debug.xcconfig"; sourceTree = "<group>"; };
 		3EAA70B96634DEB9F58F4FF5 /* Pods-JianZhi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JianZhi.release.xcconfig"; path = "Target Support Files/Pods-JianZhi/Pods-JianZhi.release.xcconfig"; sourceTree = "<group>"; };
 		55246EC849A8269716F55318 /* Pods_JianZhi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JianZhi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F061FF92534205A00EFE134 /* JianZhi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JianZhi-Bridging-Header.h"; sourceTree = "<group>"; };
-		5F061FFA2534205A00EFE134 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		5F084F9F25185DE000F2D64C /* MyXiaoXi_GuanFangCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyXiaoXi_GuanFangCell.h; sourceTree = "<group>"; };
 		5F084FA025185DE000F2D64C /* MyXiaoXi_GuanFangCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyXiaoXi_GuanFangCell.m; sourceTree = "<group>"; };
 		5F084FA2251876D000F2D64C /* MyXiaoXi_ShenHeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyXiaoXi_ShenHeCell.h; sourceTree = "<group>"; };
@@ -1062,7 +1059,6 @@
 		5FE3EA69235599D200C77F4D /* NotesProject */ = {
 			isa = PBXGroup;
 			children = (
-				5F061FFA2534205A00EFE134 /* Test.swift */,
 				04715AC323963D2A009CD914 /* KKlive.entitlements */,
 				5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */,
 				5F0BE20E2501D9DA00D307C7 /* loading.gif */,
@@ -1083,7 +1079,6 @@
 				5FE3EA78235599D300C77F4D /* LaunchScreen.storyboard */,
 				5FE3EA7B235599D300C77F4D /* Info.plist */,
 				5FE3EA7C235599D300C77F4D /* main.m */,
-				5F061FF92534205A00EFE134 /* JianZhi-Bridging-Header.h */,
 			);
 			path = NotesProject;
 			sourceTree = "<group>";
@@ -1621,7 +1616,6 @@
 				5F2650EB24FD196000171684 /* TiYanBaoGaoDetailViewController.m in Sources */,
 				5F22EBC424ECF371002DCF61 /* GaoDuanViewController.m in Sources */,
 				5F2650DE24FC8C9A00171684 /* UIImageView+JYImageViewManager.m in Sources */,
-				5F061FFB2534205A00EFE134 /* Test.swift in Sources */,
 				5FE3EC172355A3E400C77F4D /* TZImageManager.m in Sources */,
 				5F66734825108EEF000C6810 /* MyFaBu_XinXiCell.m in Sources */,
 				5FE3EC112355A3E400C77F4D /* TZAssetModel.m in Sources */,
@@ -1820,7 +1814,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = YoYo;
-				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev1;
+				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev3;
 				SWIFT_OBJC_BRIDGING_HEADER = "NotesProject/JianZhi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1863,7 +1857,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = YoYo;
-				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev1;
+				PROVISIONING_PROFILE_SPECIFIER = hwpg_dev3;
 				SWIFT_OBJC_BRIDGING_HEADER = "NotesProject/JianZhi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

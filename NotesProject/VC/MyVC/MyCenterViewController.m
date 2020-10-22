@@ -21,6 +21,8 @@
 @property(nonatomic,strong)UIView * tianXieYaoQingMaView;
 @property(nonatomic,strong)UITextField * yaoQingMaTF;
 
+@property(nonatomic,strong)NSDictionary * xiaoXiWeiDuInfo;
+
 @end
 
 @implementation MyCenterViewController
@@ -126,6 +128,28 @@
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
 
+    [HTTPModel getNewMessageCount:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+        
+        if (status==1) {
+            
+            self.xiaoXiWeiDuInfo = responseObject;
+            //消息类型 0官方 1审核 2活动
+            NSNumber * official_msgcnt = [responseObject objectForKey:@"official_msgcnt"];
+            NSNumber * active_msgcnt = [responseObject objectForKey:@"active_msgcnt"];
+            NSNumber * review_msgcnt = [responseObject objectForKey:@"review_msgcnt"];
+
+            if (official_msgcnt.intValue+active_msgcnt.intValue+review_msgcnt.intValue==0) {
+                
+                self.redPointView.hidden = YES;
+            }
+            else
+            {
+                self.redPointView.hidden = NO;
+            }
+            NSLog(@"%@",responseObject);
+        }
+    }];
     
     [self xianShiTabBar];
     
@@ -294,6 +318,13 @@
     [xiaoXiButton setImage:[UIImage imageNamed:@"my_xiaoXi"] forState:UIControlStateNormal];
     [xiaoXiButton addTarget:self action:@selector(xiaoXiButonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:xiaoXiButton];
+    
+    self.redPointView = [[UIView alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width-4*BiLiWidth, xiaoXiButton.top-4*BiLiWidth, 8*BiLiWidth, 8*BiLiWidth)];
+    self.redPointView.backgroundColor = [UIColor redColor];
+    self.redPointView.layer.cornerRadius = 4*BiLiWidth;
+    self.redPointView.layer.masksToBounds = YES;
+    [self.mainScrollView addSubview:self.redPointView];
+    self.redPointView.hidden = YES;
     
     UIButton * sheZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width+27*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 20*BiLiWidth, 22*BiLiWidth)];
     [sheZhiButton setImage:[UIImage imageNamed:@"my_setting"] forState:UIControlStateNormal];

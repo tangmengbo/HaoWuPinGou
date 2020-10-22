@@ -12,8 +12,6 @@ target 'JianZhi' do
   pod 'AFNetworking', '~> 3.1.0'
   pod 'ZWPlaceHolder'
   pod 'ZWLimitCounter'
-  pod 'SwiftWebSocket', '~> 2.7.0'
-  pod 'SQLite.swift', '~> 0.11.5'
   pod 'SDWebImage'
   
   

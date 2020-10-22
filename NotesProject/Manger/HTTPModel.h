@@ -377,5 +377,8 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 //根据融云ID获取头像昵称
 +(void)getUserInfoByRYID:(NSDictionary *_Nullable)parameter
-callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//轮询获取最新消息
++(void)getNewMessageCount:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 @end
