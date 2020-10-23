@@ -102,6 +102,7 @@
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:self.post_id forKey:@"post_id"];
     [info setObject:@"1" forKey:@"page"];
+    [info setObject:@"1" forKey:@"type_id"];
 
     [HTTPModel getYanCheBaoGaoList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -287,6 +288,7 @@
     UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(53.5*BiLiWidth, 25.5*BiLiWidth, 50*BiLiWidth, 33*BiLiWidth)];
     pingFenLable.font = [UIFont systemFontOfSize:33*BiLiWidth];
     pingFenLable.textColor = RGBFormUIColor(0xFFA218);
+    pingFenLable.adjustsFontSizeToFitWidth = YES;
     NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
     if ([complex_score isKindOfClass:[NSNumber class]]) {
         
@@ -463,9 +465,15 @@
 }
 -(void)chatButtonClick
 {
-    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+    NSLog(@"%@",ryInfo);
+    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+        
+        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                           ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+        [self.navigationController pushViewController:chatVC animated:YES];
+
+    }
 
 }
 -(void)jieSuoButtonClick
@@ -621,7 +629,7 @@
     messageLable.attributedText = attrStr;
     [messageLable sizeToFit];
 
-    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+5*BiLiWidth;
+    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+10*BiLiWidth;
 
     [self initChenYouPingJiaTableView:self.xiangQingJieShaoContentView.top+self.xiangQingJieShaoContentView.height];
 

@@ -130,7 +130,7 @@
 
             if (status==1) {
                 
-                [NormalUse showToastView:@"发布成功" view:[NormalUse getCurrentVC].view];
+                [NormalUse showToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                    
                     NSArray *temArray = self.navigationController.viewControllers;

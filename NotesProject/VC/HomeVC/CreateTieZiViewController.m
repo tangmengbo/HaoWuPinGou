@@ -1267,7 +1267,7 @@
                     if (status==1) {
                         
                         [self.navigationController popViewControllerAnimated:YES];
-                        [NormalUse showToastView:@"发布成功" view:[NormalUse getCurrentVC].view];
+                        [NormalUse showToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
                     }
                     else
                     {

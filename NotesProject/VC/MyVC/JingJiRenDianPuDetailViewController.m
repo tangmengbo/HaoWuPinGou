@@ -515,9 +515,14 @@
 }
 -(void)chatButtonClick
 {
-    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                       ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
-    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dianPuInfo objectForKey:@"ryuser_id"]]) {
+        
+        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                           ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
+        [self.navigationController pushViewController:chatVC animated:YES];
+
+    }
 
 }
 

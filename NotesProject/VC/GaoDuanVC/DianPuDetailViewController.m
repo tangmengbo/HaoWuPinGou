@@ -119,7 +119,10 @@
     
     [self yinCangTabbar];
     
-    self.field = @"";
+    self.shaiXuanLeiXingStr = @"最新";
+    self.field = @"id";
+    self.order = @"desc";
+    
     self.artist_list = [NSMutableArray array];
 
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.top+self.topNavView.height))style:UITableViewStyleGrouped];
@@ -158,16 +161,70 @@
 
     }];
     
+    
+    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
+    
+    self.shaiXuanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.pingFenButton.top+self.pingFenButton.height+10*BiLiWidth, WIDTH_PingMu, 0)];
+    self.shaiXuanView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.shaiXuanView];
+    
+    self.shaiXuanView.hidden = YES;
+    
+    UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-28*BiLiWidth, 13*BiLiWidth, 14.5*BiLiWidth, 14.5*BiLiWidth)];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"dianPu_tip_close"] forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(closeShaiXuanTipView) forControlEvents:UIControlEventTouchUpInside];
+    [self.shaiXuanView addSubview:closeButton];
+
+    
+    UILabel * paiXuLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 5*BiLiWidth, 40*BiLiWidth, 12*BiLiWidth)];
+    paiXuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    paiXuLable.textColor = RGBFormUIColor(0x333333);
+    paiXuLable.text = @"排序";
+    [self.shaiXuanView addSubview:paiXuLable];
+    
+    float originx = 11.5*BiLiWidth;
+    float originy = paiXuLable.top+paiXuLable.height+10*BiLiWidth;
+    float xDisTance =  10*BiLiWidth;
+    float yDistance = 12*BiLiWidth;
+
+    self.paiButtonXuArray = [NSMutableArray array];
+    for (int i=0; i<self.paiXuSourceArray.count; i++) {
+        
+        NSString * leiXingStr = [self.paiXuSourceArray objectAtIndex:i];
+        
+        CGSize size = [NormalUse setSize:leiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+        
+        if (originx+size.width+25*BiLiWidth>WIDTH_PingMu-23*BiLiWidth) {
+            
+            originx = 15*BiLiWidth;
+            originy = originy+24*BiLiWidth+yDistance;
+        }
+        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(originx, originy,size.width+25*BiLiWidth , 24*BiLiWidth)];
+        [button setTitle:leiXingStr forState:UIControlStateNormal];
+        [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+        [button setBackgroundColor:RGBFormUIColor(0xEEEEEE)];
+        button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        button.tag=i;
+        button.layer.cornerRadius = 12*BiLiWidth;
+        [button addTarget:self action:@selector(paiXuButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.shaiXuanView addSubview:button];
+        
+        [self.paiButtonXuArray addObject:button];
+        
+        originx = originx+button.width+xDisTance;
+        
+        self.shaiXuanView.height = button.top+button.height+10*BiLiWidth;
+        
+    }
+
+    
 }
 -(void)loadNewLsit
 {
     page = 1;
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    if ([NormalUse isValidString:self.field]) {
-        
-        [dic setObject:self.field forKey:@"field"];
-    }
-    [dic setObject:@"desc" forKey:@"order"];
+    [dic setObject:self.field forKey:@"field"];
+    [dic setObject:self.order forKey:@"order"];
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -211,10 +268,9 @@
 -(void)loadMoreList
 {
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    if ([NormalUse isValidString:self.field]) {
         
-        [dic setObject:self.field forKey:@"field"];
-    }
+    [dic setObject:self.field forKey:@"field"];
+    [dic setObject:self.order forKey:@"order"];
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -583,33 +639,19 @@
         lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
         [headerView addSubview:lineView];
 
-        self.pingFenButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView.top+lineView.height+28.5*BiLiWidth, 50*BiLiWidth, 12*BiLiWidth)];
-        [self.pingFenButton setTitle:@"评分最高" forState:UIControlStateNormal];
-        [self.pingFenButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-        self.pingFenButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        
+        CGSize  size = [NormalUse setSize:self.shaiXuanLeiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+
+        self.pingFenButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView.top+lineView.height+28.5*BiLiWidth, 100*BiLiWidth, 12*BiLiWidth)];
+        self.pingFenButton.button_lable.frame = CGRectMake(0, 0, size.width, self.pingFenButton.height);
+        self.pingFenButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.pingFenButton.button_lable.textColor = RGBFormUIColor(0x666666);
+        self.pingFenButton.button_lable.text = self.shaiXuanLeiXingStr;
+        self.pingFenButton.button_imageView.frame = CGRectMake(self.pingFenButton.button_lable.width+self.pingFenButton.button_lable.left+5*BiLiWidth, (self.pingFenButton.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
+        self.pingFenButton.button_imageView.image = [UIImage imageNamed:@"mobileCode_xia"];
         [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.pingFenButton];
         
-        self.zuiXinButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+33*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-        [self.zuiXinButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-        [self.zuiXinButton setTitle:@"最新" forState:UIControlStateNormal];
-        self.zuiXinButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-        [self.zuiXinButton addTarget:self action:@selector(zuiXinButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:self.zuiXinButton];
-        
-        self.zuiReButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pingFenButton.left+self.pingFenButton.width+79*BiLiWidth, self.pingFenButton.top, 33.5*BiLiWidth, 12*BiLiWidth)];
-        [self.zuiReButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-        [self.zuiReButton setTitle:@"最热" forState:UIControlStateNormal];
-        self.zuiReButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-        [self.zuiReButton addTarget:self action:@selector(zuiReButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:self.zuiReButton];
-        
-        if ([NormalUse isValidString:self.field]) {
-            
-            [self.zuiXinButton setTitleColor:RGBFormUIColor(0x666666) forState:UIControlStateNormal];
-            [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-
-        }
 
     }
 
@@ -618,11 +660,69 @@
     return headerView;
     
 }
+-(void)closeShaiXuanTipView
+{
+    self.shaiXuanView.hidden = YES;
+}
+-(void)paiXuButtonClick:(UIButton *)button
+{
+    [self closeShaiXuanTipView];
+    
+    self.shaiXuanLeiXingStr = [self.paiXuSourceArray objectAtIndex:button.tag];
+    
+    CGSize  size = [NormalUse setSize:self.shaiXuanLeiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    self.pingFenButton.button_lable.frame = CGRectMake(0, 0, size.width, self.pingFenButton.height);
+    self.pingFenButton.button_imageView.frame = CGRectMake(self.pingFenButton.button_lable.width+self.pingFenButton.button_lable.left+5*BiLiWidth, (self.pingFenButton.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
+
+    
+    if ([@"最新" isEqualToString:self.shaiXuanLeiXingStr]) {
+        
+        self.field = @"id";
+        self.order = @"desc";
+
+    }
+    else if ([@"最热" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"hot_value";
+        self.order = @"desc";
+    }
+    else if ([@"评分从高到低" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"complex_score";
+        self.order = @"desc";
+
+    }
+    else if ([@"评分从低到高" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"complex_score";
+        self.order = @"asc";
+
+    }
+    else if ([@"价格从高到低" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"max_price";
+        self.order = @"desc";
+
+    }
+    else if ([@"价格从低到高" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"min_price";
+        self.order = @"asc";
+
+    }
+    [self loadNewLsit];
+
+}
 -(void)chatButtonClick
 {
-    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                       ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
-    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dianPuInfo objectForKey:@"ryuser_id"]]) {
+        
+        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                           ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
+        [self.navigationController pushViewController:chatVC animated:YES];
+
+    }
 
 }
 
@@ -728,7 +828,8 @@
 }
 -(void)pingFenButtonClick
 {
-    
+    self.shaiXuanView.hidden = NO;
+    self.shaiXuanView.top = self.pingFenButton.top+self.pingFenButton.height+10*BiLiWidth+self.mainTableView.top-self.mainTableView.contentOffset.y;
 }
 -(void)zuiXinButtonClick
 {

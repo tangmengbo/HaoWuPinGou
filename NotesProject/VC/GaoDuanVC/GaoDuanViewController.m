@@ -608,6 +608,7 @@
         
         JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
         vc.renZhengType = self.renZhengType;
+        vc.renZhengStatus = self.renZhengStatus;
         [self.navigationController pushViewController:vc animated:YES];
         
     }
@@ -641,39 +642,46 @@
 
 -(void)peiWanButtonClick:(UIButton *)button
 {
-    self.renZhengType = @"3";
-    self.renZhengStatus = (int)button.tag;
+//    self.renZhengType = @"3";
+//    self.renZhengStatus = (int)button.tag;
+//
+//    if (button.tag==1) {
+//
+//        JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
+//        vc.renZhengType = self.renZhengType;
+//        [self.navigationController pushViewController:vc animated:YES];
+//
+//    }
+//    else
+//    {
+//        self.sanDaJiaSeFaTieRenZhengView.hidden = NO;
+//    }
+    
+    if (button.tag==0) {//未认证
 
-    if (button.tag==1) {
-        
+        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"3";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else if (button.tag==1)//已认证
+    {
+        self.renZhengType = @"3";
+        self.renZhengStatus = (int)button.tag;
+
         JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
         vc.renZhengType = self.renZhengType;
+        vc.renZhengStatus = self.renZhengStatus;
         [self.navigationController pushViewController:vc animated:YES];
-        
+
     }
-    else
+    else if(button.tag==2)//审核中
     {
-        self.sanDaJiaSeFaTieRenZhengView.hidden = NO;
+        NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
+        vc.alsoShowBackButton = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+
     }
-    
-//    if (button.tag==0) {//未认证
-//
-//        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
-//        vc.renZhengType = @"3";
-//        [self.navigationController pushViewController:vc animated:YES];
-//
-//    }
-//    else if (button.tag==1)//已认证
-//    {
-//
-//    }
-//    else if(button.tag==2)//审核中
-//    {
-//        NvShenRenZhengStep4VC * vc = [[NvShenRenZhengStep4VC alloc] init];
-//        vc.alsoShowBackButton = YES;
-//        [self.navigationController pushViewController:vc animated:YES];
-//
-//    }
 
 }
 
@@ -903,7 +911,7 @@
                 button3.tag = auth_peripheral.intValue;
                 if (auth_peripheral.intValue==1) {
                     
-                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
+                    [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWeiYiRenZheng"] forState:UIControlStateNormal];
 
                 }
                 else if (auth_peripheral.intValue==2)
@@ -924,7 +932,7 @@
                 button4.tag = auth_global.intValue;
                 if (auth_global.intValue==1) {
                     
-                    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWan"] forState:UIControlStateNormal];
+                    [button4 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_quanQiuPeiWanYiRenZheng"] forState:UIControlStateNormal];
 
                 }
                 else if (auth_global.intValue==2)

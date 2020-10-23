@@ -110,7 +110,7 @@
     
     if([@"1" isEqualToString:self.editPWOrBangDing])
     {
-        tiJiaoLable.text = @"确定充值密码";
+        tiJiaoLable.text = @"确定重置密码";
     }
 
     

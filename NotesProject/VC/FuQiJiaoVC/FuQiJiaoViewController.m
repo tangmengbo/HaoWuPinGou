@@ -180,15 +180,15 @@
                 self.auth_couple = [info objectForKey:@"auth_couple"];
                 if ([self.auth_couple isKindOfClass:[NSNumber class]]) {
                     
-//                    if (self.auth_couple.intValue==1) {
-//                        
-//                        self.liJiRenZhengButton.hidden = YES;
-//                    }
-//                    else
-//                    {
-//                        self.liJiRenZhengButton.hidden = NO;
-//
-//                    }
+                    if (self.auth_couple.intValue==1) {
+                        
+                        [self.liJiRenZhengButton setTitle:@"发布信息" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        [self.liJiRenZhengButton setTitle:@"立即认证" forState:UIControlStateNormal];
+
+                    }
                 }
                 
             }
@@ -205,8 +205,12 @@
     
     self.topTitleLale.text = @"夫妻交友";
     
-    self.liJiRenZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 0, 72*BiLiWidth, self.topNavView.height)];
-    [self.liJiRenZhengButton setImage:[UIImage imageNamed:@"fuQiJiaoR_renZheng"] forState:UIControlStateNormal];
+    self.liJiRenZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, (self.topNavView.height-24*BiLiWidth)/2, 72*BiLiWidth, 24*BiLiWidth)];
+    self.liJiRenZhengButton.layer.cornerRadius = 12*BiLiWidth;
+    self.liJiRenZhengButton.layer.borderWidth = 1;
+    self.liJiRenZhengButton.layer.borderColor = [RGBFormUIColor(0xFF6C6C) CGColor];
+    self.liJiRenZhengButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    [self.liJiRenZhengButton setTitleColor:RGBFormUIColor(0xFF6C6C) forState:UIControlStateNormal];
     [self.liJiRenZhengButton addTarget:self action:@selector(liJiRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.topNavView addSubview:self.liJiRenZhengButton];
     

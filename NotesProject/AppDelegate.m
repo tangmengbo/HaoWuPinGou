@@ -41,6 +41,14 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
 
+    [HTTPModel getSiteUrls:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            NSArray * array = responseObject;
+            [NormalUse defaultsSetObject:array forKey:AppSiteUrls];
+        }
+    }];
     
     [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        

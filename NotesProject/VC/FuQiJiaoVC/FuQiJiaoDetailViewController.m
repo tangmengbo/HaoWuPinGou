@@ -110,6 +110,8 @@
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:self.couple_id forKey:@"post_id"];
     [info setObject:@"1" forKey:@"page"];
+    [info setObject:@"3" forKey:@"type_id"];
+
 
     [HTTPModel getYanCheBaoGaoList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -523,10 +525,14 @@
 {
     if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
     {
-        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                           ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-        [self.navigationController pushViewController:chatVC animated:YES];
+        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+            
+            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                               ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+            [self.navigationController pushViewController:chatVC animated:YES];
 
+        }
     }
 
 }
@@ -654,7 +660,7 @@
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = [NSString stringWithFormat:@"服务：%@",[self.tieZiInfo objectForKey:@"service_type"]] ;
+    xiangMuLable.text = [NSString stringWithFormat:@"项目：%@",[self.tieZiInfo objectForKey:@"service_type"]] ;
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 
@@ -702,7 +708,7 @@
     [messageLable sizeToFit];
 
     
-    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+5*BiLiWidth;
+    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+10*BiLiWidth;
     [self initChenYouPingJiaTableView:self.xiangQingJieShaoContentView.top+self.xiangQingJieShaoContentView.height];
 
 

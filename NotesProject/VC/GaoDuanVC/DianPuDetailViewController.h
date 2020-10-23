@@ -19,9 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
 
 
-@property(nonatomic,strong)UIButton * pingFenButton;
+@property(nonatomic,strong)Lable_ImageButton * pingFenButton;
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;
+
+@property(nonatomic,strong)NSString * shaiXuanLeiXingStr;
+@property(nonatomic,strong)NSArray * paiXuSourceArray;
+@property(nonatomic,strong)NSMutableArray * paiButtonXuArray;
+@property(nonatomic,strong)UIView * shaiXuanView;
 
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
 

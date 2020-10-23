@@ -233,11 +233,11 @@
                 }
                 else if(auth_vip.intValue==1)
                 {
-                    self.messageLable.text = @"非VIP暂无免费解锁次数";
+                    self.messageLable.text = @"年卡";
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
-                    self.huiYuanTitleLable.text = @"年卡";
+                    self.huiYuanTitleLable.text = @"会员到期时间";
                     self.huiYuanTitleLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
@@ -545,6 +545,7 @@
 -(void)xiaoXiButonClick
 {
     XiaoXiViewController * vc = [[XiaoXiViewController alloc] init];
+    vc.xiaoXiWeiDuInfo = self.xiaoXiWeiDuInfo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)sheZhiButtonClick

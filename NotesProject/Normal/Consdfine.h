@@ -54,6 +54,7 @@
 #define UserRole @"UserRoleDefaults"//当前用户角色
 #define JinBiShuoMing @"JinBIShuoMingDefaults"//项目金币说明
 #define UserRongYunInfo @"UserRongYunInfoDefaults"//用户融云token等信息
+#define AppSiteUrls @"AppSiteUrlsDefaults"//站点地址列表
 /*
  "cny_to_coin":"10",//人民币兑换金币比率 1人民币对应 10金币
  "normal_auth_coin":"1000",//茶小二认证所需金币

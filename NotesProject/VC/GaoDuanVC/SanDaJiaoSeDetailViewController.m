@@ -110,6 +110,8 @@
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:self.girl_id forKey:@"post_id"];
     [info setObject:@"1" forKey:@"page"];
+    [info setObject:@"2" forKey:@"type_id"];
+
 
     [HTTPModel getYanCheBaoGaoList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
@@ -191,6 +193,7 @@
 
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth-40*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
+    self.messageContentView.userInteractionEnabled = YES;
     [self.mainScrollView addSubview:self.messageContentView];
     //某个角圆角
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
@@ -282,6 +285,7 @@
     UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(53.5*BiLiWidth, 25.5*BiLiWidth, 50*BiLiWidth, 33*BiLiWidth)];
     pingFenLable.font = [UIFont systemFontOfSize:33*BiLiWidth];
     pingFenLable.textColor = RGBFormUIColor(0xFFA218);
+    pingFenLable.adjustsFontSizeToFitWidth = YES;
     NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
     if ([complex_score isKindOfClass:[NSNumber class]]) {
         
@@ -432,6 +436,8 @@
             NSDictionary * contact = [self.tieZiInfo objectForKey:@"contact"];
 
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+
            // [16]    (null)    @"mobile" : (long)0    [19]    (null)    @"qq" : (no summary)
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
@@ -471,15 +477,20 @@
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
     [self.messageContentView addSubview:self.tipLable];
     
-    [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
+   [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
 
 }
 -(void)chatButtonClick
 {
-    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-    [self.navigationController pushViewController:chatVC animated:YES];
+    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+        
+        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                           ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+        [self.navigationController pushViewController:chatVC animated:YES];
+
+    }
 
 }
 
@@ -545,6 +556,7 @@
 -(void)initJiBenZiLiaoView:(float)originY
 {
     self.jiBenXinXiContentView = [[UIView alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 0)];
+    self.jiBenXinXiContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.jiBenXinXiContentView];
     
     UILabel * xiangQingJieShaoLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 70*BiLiWidth, 16*BiLiWidth)];
@@ -564,23 +576,6 @@
     jiaGeLable.text = [NSString stringWithFormat:@"价格：%@-%@",[self.tieZiInfo objectForKey:@"min_price"],[self.tieZiInfo objectForKey:@"max_price"]];
     [self.jiBenXinXiContentView addSubview:jiaGeLable];
     
-    //数量
-//    UIImageView * shuLiangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-//    shuLiangImageView.image = [UIImage imageNamed:@"ziLiao_renShu"];
-//    [self.jiBenXinXiContentView addSubview:shuLiangImageView];
-//
-//    UILabel * shuLiangLableLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, shuLiangImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
-//    shuLiangLableLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-//    shuLiangLableLable.textColor = RGBFormUIColor(0x666666);
-//    NSNumber *  nums = [self.tieZiInfo objectForKey:@"nums"];
-//    if ([nums isKindOfClass:[NSNumber class]]) {
-//
-//        shuLiangLableLable.text = [NSString stringWithFormat:@"数量：%d",nums.intValue];
-//
-//    }
-//    [self.jiBenXinXiContentView addSubview:shuLiangLableLable];
-//    shuLiangImageView.top = jiaGeImageView.top;
-//    shuLiangImageView.height = 0;
     //年龄
     UIImageView * ageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiaGeImageView.top+jiaGeImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
     ageImageView.image = [UIImage imageNamed:@"ziLiao_age"];
@@ -606,7 +601,7 @@
     UILabel * xiangMuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, xiangMuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
-    xiangMuLable.text = [self.tieZiInfo objectForKey:@"service_type"];
+    xiangMuLable.text = [NSString stringWithFormat:@"项目：%@",[self.tieZiInfo objectForKey:@"service_type"]];
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 
@@ -618,10 +613,10 @@
 }
 -(void)initXiangQingJieShaoView:(float)originY
 {
-    self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
+    self.xiangQingJieShaoContentView = [[UIView alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 0)];
     [self.mainScrollView addSubview:self.xiangQingJieShaoContentView];
     
-    UILabel * xiangQingJieShaoLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, originY, 70*BiLiWidth, 16*BiLiWidth)];
+    UILabel * xiangQingJieShaoLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, 0, 70*BiLiWidth, 16*BiLiWidth)];
     xiangQingJieShaoLable.textColor = RGBFormUIColor(0x343434);
     xiangQingJieShaoLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
     xiangQingJieShaoLable.text = @"详情介绍";
@@ -649,7 +644,7 @@
     [messageLable sizeToFit];
 
     
-    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+5*BiLiWidth;
+    self.xiangQingJieShaoContentView.height = messageLable.top+messageLable.height+10*BiLiWidth;
 
     [self initChenYouPingJiaTableView:self.xiangQingJieShaoContentView.top+self.xiangQingJieShaoContentView.height];
 

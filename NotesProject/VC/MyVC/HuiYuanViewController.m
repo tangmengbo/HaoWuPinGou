@@ -33,11 +33,94 @@
 @property(nonatomic,strong)NSNumber * auth_vip;
 @property(nonatomic,strong)UIButton * kaiTongButton;
 
+@property(nonatomic,strong)UIView * kaiTongHuiYuanQueRenView;
+@property(nonatomic,strong)UILabel * kaiTongHuiYuanQueRenViewTipLable;
+
 @property(nonatomic,strong)UIView * tiShiKuangView;
+
+@property(nonatomic,strong)UIView * kaiTongSuccessTipView;
 @end
 
 @implementation HuiYuanViewController
 
+-(UIView *)kaiTongHuiYuanQueRenView
+{
+    if (!_kaiTongHuiYuanQueRenView) {
+        
+        _kaiTongHuiYuanQueRenView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _kaiTongHuiYuanQueRenView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        [[UIApplication sharedApplication].keyWindow addSubview:_kaiTongHuiYuanQueRenView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-234*BiLiWidth)/2, 287*BiLiWidth, 234*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_kaiTongHuiYuanQueRenView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(queRenViewCloseTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_kaiTongHuiYuanQueRenView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        self.kaiTongHuiYuanQueRenViewTipLable = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+        self.kaiTongHuiYuanQueRenViewTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        self.kaiTongHuiYuanQueRenViewTipLable.textColor = RGBFormUIColor(0x343434);
+        self.kaiTongHuiYuanQueRenViewTipLable.text = @"";
+        self.kaiTongHuiYuanQueRenViewTipLable.textAlignment = NSTextAlignmentCenter;
+        [kuangImageView addSubview:self.kaiTongHuiYuanQueRenViewTipLable];
+        
+//        UIButton * quXiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, self.kaiTongHuiYuanQueRenViewTipLable.top+self.kaiTongHuiYuanQueRenViewTipLable.height+25*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+//        [quXiaoButton setTitle:@"取消" forState:UIControlStateNormal];
+//        quXiaoButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+//        quXiaoButton.layer.cornerRadius = 20*BiLiWidth;
+//        [quXiaoButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+//        quXiaoButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//        [quXiaoButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+//        [kuangImageView addSubview:quXiaoButton];
+
+        UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-200*BiLiWidth)/2, self.kaiTongHuiYuanQueRenViewTipLable.top+self.kaiTongHuiYuanQueRenViewTipLable.height+25*BiLiWidth, 200*BiLiWidth, 40*BiLiWidth)];
+        [sureButton addTarget:self action:@selector(queRenViewSureButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:sureButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = sureButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [sureButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"确定";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [sureButton addSubview:sureLable];
+
+    }
+    return _kaiTongHuiYuanQueRenView;
+}
+-(void)queRenViewCloseTipKuangView
+{
+    self.kaiTongHuiYuanQueRenView.hidden = YES;
+    
+}
+-(void)queRenViewSureButtonClick
+{
+    [self kaiTongHuiYuan];
+
+    self.kaiTongHuiYuanQueRenView.hidden = YES;
+}
 -(UIView *)tiShiKuangView
 {
     if (!_tiShiKuangView) {
@@ -361,7 +444,19 @@
     
     if(self.auth_vip.intValue==0)
     {
-        [self kaiTongButton];
+
+        self.kaiTongHuiYuanQueRenView.hidden = NO;
+        
+        if ([@"vip_year" isEqualToString:self.vip_type]) {
+            
+            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通年卡";
+
+        }
+        else
+        {
+            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通永久卡";
+        }
+
     }
     else
     {
@@ -377,17 +472,73 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
+             self.kaiTongSuccessTipView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+            self.kaiTongSuccessTipView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+            [[UIApplication sharedApplication].keyWindow addSubview:self.kaiTongSuccessTipView];
+            
+            UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-234*BiLiWidth)/2, 287*BiLiWidth, 234*BiLiWidth)];
+            kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+            kuangImageView.userInteractionEnabled = YES;
+            [self.kaiTongSuccessTipView addSubview:kuangImageView];
+            
+            UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+            [closeButton addTarget:self action:@selector(kaiTongSuccessCloseTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+            [self.kaiTongSuccessTipView addSubview:closeButton];
+            
+            UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+            tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+            tipLable1.textColor = RGBFormUIColor(0x343434);
+            tipLable1.textAlignment = NSTextAlignmentCenter;
+            tipLable1.text = @"提示";
+            [kuangImageView addSubview:tipLable1];
+            
+            UILabel * kaiTongHuiYuanQueRenViewTipLable = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 40*BiLiWidth)];
+            kaiTongHuiYuanQueRenViewTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            kaiTongHuiYuanQueRenViewTipLable.textColor = RGBFormUIColor(0x343434);
+            kaiTongHuiYuanQueRenViewTipLable.textAlignment = NSTextAlignmentCenter;
+            [kuangImageView addSubview:kaiTongHuiYuanQueRenViewTipLable];
+            
+
+            UIButton * sureButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-200*BiLiWidth)/2, kaiTongHuiYuanQueRenViewTipLable.top+kaiTongHuiYuanQueRenViewTipLable.height+25*BiLiWidth, 200*BiLiWidth, 40*BiLiWidth)];
+            [sureButton addTarget:self action:@selector(kaiTongSuccessCloseTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+            [kuangImageView addSubview:sureButton];
+            
+            //渐变设置
+            UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+            UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+            CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+            gradientLayer1.frame = sureButton.bounds;
+            gradientLayer1.cornerRadius = 20*BiLiWidth;
+            gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+            gradientLayer1.startPoint = CGPointMake(0, 0);
+            gradientLayer1.endPoint = CGPointMake(0, 1);
+            gradientLayer1.locations = @[@0,@1];
+            [sureButton.layer addSublayer:gradientLayer1];
+            
+            UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sureButton.width, sureButton.height)];
+            sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+            sureLable.text = @"确定";
+            sureLable.textAlignment = NSTextAlignmentCenter;
+            sureLable.textColor = [UIColor whiteColor];
+            [sureButton addSubview:sureLable];
+
             if ([@"vip_year" isEqualToString:self.vip_type]) {
                 
                 self.nianKaTipLable.hidden = NO;
+                self.auth_vip = [NSNumber numberWithInt:1];
+                kaiTongHuiYuanQueRenViewTipLable.text = @"年卡会员开通成功";
+
             }
             else
             {
                 self.yongJiuTipLable.hidden = NO;
+                self.auth_vip = [NSNumber numberWithInt:2];
+                kaiTongHuiYuanQueRenViewTipLable.text = @"永久卡会员开通成功";
+
 
             }
-            [NormalUse showToastView:msg view:self.view];
-
+            
         }
         else
         {
@@ -396,5 +547,9 @@
         
     }];
 
+}
+-(void)kaiTongSuccessCloseTipKuangView
+{
+    [self.kaiTongSuccessTipView removeFromSuperview];
 }
 @end

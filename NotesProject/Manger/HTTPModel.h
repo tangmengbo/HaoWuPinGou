@@ -381,4 +381,9 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //轮询获取最新消息
 +(void)getNewMessageCount:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//站点地址列表
++(void)getSiteUrls:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 @end

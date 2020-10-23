@@ -119,118 +119,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8420F416-D554-48AA-8256-919030A57A1F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/DianPuDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "636"
-            endingLineNumber = "636"
-            landmarkName = "-jieSuoButtonClick"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8420F416-D554-48AA-8256-919030A57A1F - d55e9c6f220b10bc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[DianPuDetailViewController jieSuoButtonClick]"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/DianPuDetailViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "636"
-                  endingLineNumber = "636"
-                  offsetFromSymbolStart = "276">
-               </Location>
-               <Location
-                  uuid = "8420F416-D554-48AA-8256-919030A57A1F - 950e775491cb368"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__47-[DianPuDetailViewController jieSuoButtonClick]_block_invoke"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/GaoDuanVC/DianPuDetailViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "638"
-                  endingLineNumber = "638"
-                  offsetFromSymbolStart = "212">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C5DAD02E-8425-44B1-AE3A-920901D781C6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/DianPuDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "639"
-            endingLineNumber = "639"
-            landmarkName = "-jieSuoButtonClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7D672CC3-8283-49F1-AB94-E83EF3B2FD08"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
-            landmarkName = "-jieSuoButtonClick"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7D672CC3-8283-49F1-AB94-E83EF3B2FD08 - b2431aa556358fff"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[TieZiDetailViewController jieSuoButtonClick]"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/HomeVC/TieZiDetailViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "478"
-                  endingLineNumber = "478"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "7D672CC3-8283-49F1-AB94-E83EF3B2FD08 - 73f52c7c8fdbf84f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__46-[TieZiDetailViewController jieSuoButtonClick]_block_invoke"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/HomeVC/TieZiDetailViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "480"
-                  endingLineNumber = "480"
-                  offsetFromSymbolStart = "200">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C5E1B921-051D-404B-8683-75D7EE37F38E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -247,32 +135,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E8F3E977-F225-42CA-BDB4-C68590983C90"
+            uuid = "AE43620C-ACB9-402E-B59F-F256FB4B2F0E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoDetailViewController.m"
+            filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "740"
+            endingLineNumber = "740"
+            landmarkName = "-shouCangOrQuXiaoShouCang:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7578ACC4-C61B-4C72-B646-970E22C90052"
+            uuid = "71087400-C1D2-481C-8B14-8851D1D3AF3E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoViewController.m"
+            filePath = "NotesProject/VC/GaoDuanVC/SanDaJiaoSeDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
-            landmarkName = "-liJiRenZhengButtonClick"
+            startingLineNumber = "473"
+            endingLineNumber = "473"
+            landmarkName = "-initTopMessageView"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC2B61CC-7807-4E8D-9D0A-29E9A9AF7E68"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/GaoDuanVC/SanDaJiaoSeDetailViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
+            landmarkName = "-chatButtonClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "10AA143F-9DA5-4193-A5FD-EC3BC626A628"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/MyVC/MyCenterViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BDE084D5-AADC-4A20-A801-C238719FB2F4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/MyVC/XiaoXiViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
