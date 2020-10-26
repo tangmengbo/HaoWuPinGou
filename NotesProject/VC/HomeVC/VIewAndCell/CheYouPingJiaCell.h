@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UILabel * messageLable;
 
+@property(nonatomic,strong)UIView * lineView;
+
+
 
 @property(nonatomic,strong)UIButton * toolButton;
 

@@ -268,6 +268,59 @@ singleton_implementation(HTTPModel)
         }
     }];
 }
++ (void)IPByUrlGET:(NSString *)URLString
+       parameters:(id)parameters
+         progress:(void (^)(NSProgress *))progress
+          success:(void (^)(NSURLSessionDataTask *, id))success
+          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure{
+    
+    
+//    URLString = @"http://42.194.167.215:8089/appi/common/curCity";
+    AFAppDotNetAPIClient * apiClient =   [AFAppDotNetAPIClient sharedClient];
+
+    apiClient.requestSerializer.timeoutInterval = 5.f;
+    
+    [apiClient GET:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        if (progress) {
+            progress(uploadProgress);
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(task, responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (failure) {
+            failure(task, error);
+        }
+    }];
+}
+
++ (void)IPTestGET:(NSString *)URLString
+       parameters:(id)parameters
+         progress:(void (^)(NSProgress *))progress
+          success:(void (^)(NSURLSessionDataTask *, id))success
+          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure{
+    
+    
+    AFAppDotNetAPIClient * apiClient =   [AFAppDotNetAPIClient sharedClient];
+    apiClient.requestSerializer.timeoutInterval = 5.f;
+    
+    [apiClient GET:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        if (progress) {
+            progress(uploadProgress);
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(task, responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (failure) {
+            failure(task, error);
+        }
+    }];
+}
 
 
 + (void)REPLYGET:(NSString *)URLString  errerCount:(int)errerCount parameters:(id)parameters progress:(void (^)(NSProgress *))progress success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure{
@@ -326,7 +379,129 @@ singleton_implementation(HTTPModel)
     [AFAppDotNetAPIClient clearAllRequest];
 }
 
+//通过url获取ip
++(void)getIPByUrl:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@",[parameter objectForKey:@"testUrl"]];
 
+    //url = @"http://42.194.167.215:8089/appi/common/curCity";
+    [HTTPModel IPByUrlGET:url parameters:nil progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *bodyString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+
+        if([NormalUse isValidString:bodyString])
+        {
+            NSArray * ipArray = [bodyString componentsSeparatedByString:@";"];
+
+            if ([NormalUse isValidArray:ipArray]) {
+                
+                callback(1, ipArray, nil);
+
+            }
+            else
+            {
+                callback(-1, nil, nil);
+
+            }
+
+        }
+        else
+        {
+            callback(-1, nil, nil);
+
+        }
+
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+        
+        
+    }];
+
+}
+//根据Ip获取Url数组
++(void)getUrlListByIp:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/common/getSiteUrls",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+        
+        
+    }];
+
+}
+
+//ip是否可用
++(void)IpTestCheck:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@",[parameter objectForKey:@"testIp"]];
+    
+    [HTTPModel IPTestGET:url parameters:nil progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if ([@"NSURLErrorDomain" isEqualToString:error.domain]) {//无效IP
+            
+            callback(-1, nil, @"无效IP");
+
+        }
+        else
+        {
+            callback(-2, nil, NET_ERROR_MSG);
+        }
+        
+        
+    }];
+
+}
 # pragma - mark http请求接口
 
 +(void)getCurrentCity:(NSDictionary *_Nullable)parameter
@@ -3472,10 +3647,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 }
 //站点地址列表
-+(void)getSiteUrls:(NSDictionary *_Nullable)parameter
++(void)getJSSiteUrls:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-    NSString *url =  [NSString stringWithFormat:@"%@/appi/common/getSiteUrls",HTTP_REQUESTURL];
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/common/getJcSites",HTTP_REQUESTURL];
 
        [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
            

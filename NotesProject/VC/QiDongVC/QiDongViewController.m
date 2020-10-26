@@ -166,13 +166,13 @@
         self->timeNumber = limit_sec.intValue;
         
         
-        self.daojiShiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-90, TopHeight_PingMu+10, 80, 30)];
+        self.daojiShiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60, TopHeight_PingMu+10, 50, 30)];
         self.daojiShiButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.2];
         self.daojiShiButton.layer.cornerRadius = 15;
         self.daojiShiButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.daojiShiButton setTitle:[NSString stringWithFormat:@"跳过(%d)",self->timeNumber] forState:UIControlStateNormal];
+        [self.daojiShiButton setTitle:[NSString stringWithFormat:@"%d S",self->timeNumber] forState:UIControlStateNormal];
         [self.daojiShiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.daojiShiButton addTarget:self action:@selector(tiaoGuo) forControlEvents:UIControlEventTouchUpInside];
+//        [self.daojiShiButton addTarget:self action:@selector(tiaoGuo) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.daojiShiButton];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
@@ -255,7 +255,7 @@
         self.timer = nil;
         [self timeFinish];
     }
-    [self.daojiShiButton setTitle:[NSString stringWithFormat:@"跳过(%d)",timeNumber] forState:UIControlStateNormal];
+    [self.daojiShiButton setTitle:[NSString stringWithFormat:@"%d S",timeNumber] forState:UIControlStateNormal];
 
 }
 -(void)tiaoGuo

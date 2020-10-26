@@ -1120,7 +1120,7 @@
                 float tableViewHeight  = 0;
                 for (NSDictionary * info in sourceArray) {
                     
-                    tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
+                    tableViewHeight = tableViewHeight+[YanCheBaoGaoTableViewCell cellHegiht:info];
                 }
                 
                 tableView.height = tableViewHeight;

@@ -33,6 +33,9 @@
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = menuButton;
     
+    
+    [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];//移除位置发送
+
     [HTTPModel getUserInfoByRYID:[[NSDictionary alloc] initWithObjectsAndKeys:self.targetId,@"ry_uid", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         RCUserInfo*   userInfo = [[RCUserInfo alloc] initWithUserId:self.targetId name:[responseObject objectForKey:@"nickname"] portrait:[responseObject objectForKey:@"avatar"]];

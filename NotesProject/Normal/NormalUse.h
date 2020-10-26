@@ -185,5 +185,7 @@
 
 +(UIImage *)shengChengErWeiMa:(NSString *)pathStr;
 
++(NSString *)netWorkState;
+
 
 @end

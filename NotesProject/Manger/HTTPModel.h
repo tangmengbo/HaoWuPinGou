@@ -36,6 +36,12 @@ singleton_interface(HTTPModel)
     success:( void (^)(NSURLSessionDataTask *task, id  responseObject))success
     failure:( void (^)(NSURLSessionDataTask *  task, NSError *error))failure;
 
++ (void)IPTestGET:(NSString *)URLString
+       parameters:(id)parameters
+         progress:(void (^)(NSProgress *))progress
+          success:( void (^)(NSURLSessionDataTask *task, id  responseObject))success
+          failure:( void (^)(NSURLSessionDataTask *  task, NSError *error))failure;
+
 //GET单次（链接失败不重新链接)
 + (void)SINGERGET:(NSString *)URLString
        parameters:(id)parameters
@@ -45,6 +51,18 @@ singleton_interface(HTTPModel)
 
 //取消所有请求
 + (void)clearAllRequt;
+
+//通过url获取ip
++(void)getIPByUrl:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//appi/common/getSiteUrls
+//根据Ip获取Url数组
++(void)getUrlListByIp:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//ip是否可用
++(void)IpTestCheck:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 
 //获取当前城市
 +(void)getCurrentCity:(NSDictionary *_Nullable)parameter
@@ -383,7 +401,6 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
 //站点地址列表
-+(void)getSiteUrls:(NSDictionary *_Nullable)parameter
++(void)getJSSiteUrls:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-
 @end

@@ -11,6 +11,7 @@
 #import "SheZhiViewController.h"
 #import "MyNavigationViewController.h"
 #import "QiDongViewController.h"
+#import "GetIPAlsoCanUseViewController.h"
 
 
 NSString *NTESNotificationLogout = @"NTESNotificationLogout";
@@ -30,100 +31,106 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
 //    [self registerAPNs];
     
-//    [JCHttpInterface jcAppConfigWithHttpAddress:@"http://116.63.174.249:9090" socketAddress:@"116.63.174.249:6060"];
-//    [JCHttpInterface jcAppConfigWithAppFlag:@"2222" appKey:@"2" appSecret:@"2" sucess:^(id _Nullable any) {
-//        NSLog(@"config success");
-//    } failed:^(id _Nullable err) {
-//        NSLog(@"config failure");
-//    }];
 
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;//设置状态栏文字颜色
     
     [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
 
-    [HTTPModel getSiteUrls:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-       
+    [self setIPAlsoCanUseTabbar];
+    
+    [HTTPModel getJSSiteUrls:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
         if (status==1) {
-            
+
             NSArray * array = responseObject;
             [NormalUse defaultsSetObject:array forKey:AppSiteUrls];
         }
     }];
+
     
-    [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-       
-        if (status==1) {
-            
-            NSDictionary * info = [NormalUse removeNullFromDictionary:responseObject];
-            [NormalUse defaultsSetObject:info forKey:JinBiShuoMing];
-        }
-    }];
-    
-    //用户已经登录
-    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
-        
-        if ([NormalUse isValidDictionary:[NormalUse defaultsGetObjectKey:UserRongYunInfo]]) {
-            
-            [[RongYManager getInstance] connectRongCloud];
-
-        }
-        //是否需要手势密码
-        [HTTPModel alsoNeesShouShiMiMa:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                //是否需要手势密码
-                BOOL  isSign =  [[responseObject objectForKey:@"flag"] boolValue];
-                
-                if (isSign)
-                {
-                    //输入手势密码
-                    [self setShouShiYanZhengTabbar];
-                }
-                else
-                {
-                    //直接进入
-                    [self setQiDongTabbar];
-                }
-
-            }
-            else
-            {
-                //直接进入
-                [self setQiDongTabbar];
-            }
-        }];
-    }
-    else
-    {
-        [self setQiDongTabbar];
-
-        //未登录用户先 获取初始化账号
-        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
-                    
-                    NSDictionary * userInfo = [responseObject objectForKey:@"info"];
-                    [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
-                    [[RongYManager getInstance] connectRongCloud];
-
-
-                }
-                //获取初始化账号 成功后调用登录 获取到logintoken
-                [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-                    
-                    if (status==1) {
-                        
-                        NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
-                        [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
-
-                    }
-                }];
-            }
-        }];
-    }
+//    [HTTPModel getSiteUrls:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//        if (status==1) {
+//
+//            NSArray * array = responseObject;
+//            [NormalUse defaultsSetObject:array forKey:AppSiteUrls];
+//        }
+//    }];
+//
+//    [HTTPModel getAppJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//        if (status==1) {
+//
+//            NSDictionary * info = [NormalUse removeNullFromDictionary:responseObject];
+//            [NormalUse defaultsSetObject:info forKey:JinBiShuoMing];
+//        }
+//    }];
+//
+//    //用户已经登录
+//    if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
+//
+//        if ([NormalUse isValidDictionary:[NormalUse defaultsGetObjectKey:UserRongYunInfo]]) {
+//
+//            [[RongYManager getInstance] connectRongCloud];
+//
+//        }
+//        //是否需要手势密码
+//        [HTTPModel alsoNeesShouShiMiMa:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//
+//                //是否需要手势密码
+//                BOOL  isSign =  [[responseObject objectForKey:@"flag"] boolValue];
+//
+//                if (isSign)
+//                {
+//                    //输入手势密码
+//                    [self setShouShiYanZhengTabbar];
+//                }
+//                else
+//                {
+//                    //直接进入
+//                    [self setQiDongTabbar];
+//                }
+//
+//            }
+//            else
+//            {
+//                //直接进入
+//                [self setQiDongTabbar];
+//            }
+//        }];
+//    }
+//    else
+//    {
+//        [self setQiDongTabbar];
+//
+//        //未登录用户先 获取初始化账号
+//        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//
+//                if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
+//
+//                    NSDictionary * userInfo = [responseObject objectForKey:@"info"];
+//                    [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
+//                    [[RongYManager getInstance] connectRongCloud];
+//
+//
+//                }
+//                //获取初始化账号 成功后调用登录 获取到logintoken
+//                [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//                    if (status==1) {
+//
+//                        NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+//                        [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+//
+//                    }
+//                }];
+//            }
+//        }];
+//    }
     
     return YES;
 }
@@ -150,7 +157,13 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     [[RCIMClient sharedRCIMClient] setDeviceTokenData:deviceToken];
 }
+-(void)setIPAlsoCanUseTabbar
+{
+    GetIPAlsoCanUseViewController   * loginVC = [[GetIPAlsoCanUseViewController alloc] init];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    self.window.rootViewController = nav;
 
+}
 -(void)setYinDaoTabbar
 {
     GetCountryInfoViewController   * loginVC = [[GetCountryInfoViewController alloc] init];

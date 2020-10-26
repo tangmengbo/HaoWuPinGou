@@ -27,18 +27,19 @@
 
 @implementation SanDaJiaoSeDetailViewController
 
--(Lable_ImageButton *)noMessageTipButotn
+-(UIImageView *)noMessageTipButotn
 {
     if (!_noMessageTipButotn) {
         
-        _noMessageTipButotn = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, 10*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
-        _noMessageTipButotn.button_imageView.frame = CGRectMake((_noMessageTipButotn.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
-        _noMessageTipButotn.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
-        _noMessageTipButotn.button_lable.frame = CGRectMake(0, _noMessageTipButotn.button_imageView.top+_noMessageTipButotn.button_imageView.height+10*BiLiWidth, _noMessageTipButotn.width, 12*BiLiWidth);
-        _noMessageTipButotn.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-        _noMessageTipButotn.button_lable.textColor = RGBFormUIColor(0x343434);
-        _noMessageTipButotn.button_lable.textAlignment = NSTextAlignmentCenter;
-        _noMessageTipButotn.button_lable.text = @"暂无评论";
+        _noMessageTipButotn = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-200*BiLiWidth)/2, 0*BiLiWidth, 200*BiLiWidth, 200*BiLiWidth*1280/720)];
+        _noMessageTipButotn.image =[UIImage imageNamed:@"NoMessageTip"];
+//        _noMessageTipButotn.button_imageView.frame = CGRectMake((_noMessageTipButotn.width-60*BiLiWidth)/2, 0, 60*BiLiWidth, 60*BiLiWidth);
+//        _noMessageTipButotn.button_imageView.image = [UIImage imageNamed:@"noMessage_tip"];
+//        _noMessageTipButotn.button_lable.frame = CGRectMake(0, _noMessageTipButotn.button_imageView.top+_noMessageTipButotn.button_imageView.height+10*BiLiWidth, _noMessageTipButotn.width, 12*BiLiWidth);
+//        _noMessageTipButotn.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//        _noMessageTipButotn.button_lable.textColor = RGBFormUIColor(0x343434);
+//        _noMessageTipButotn.button_lable.textAlignment = NSTextAlignmentCenter;
+//        _noMessageTipButotn.button_lable.text = @"暂无评论";
         
     }
     return _noMessageTipButotn;
@@ -672,7 +673,7 @@
     
     if (tableViewHeight==0) {
         
-        tableViewHeight = 100*BiLiWidth;
+        tableViewHeight = self.noMessageTipButotn.height;
         self.cheYouPingJiaTableView.height = tableViewHeight;
         [self.cheYouPingJiaTableView addSubview:self.noMessageTipButotn];
     }

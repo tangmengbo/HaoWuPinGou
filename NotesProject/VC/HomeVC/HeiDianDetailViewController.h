@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSArray * pingLunArray;
 @property(nonatomic,strong)UIButton * cheYouPingJiaButton;
 
-@property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
+@property(nonatomic,strong)UIImageView * noMessageTipButotn;
 @property(nonatomic,strong)UITableView * cheYouPingJiaTableView;
 
 @property(nonatomic,strong)UIView * sliderView;

@@ -11,6 +11,7 @@
 #import <Security/Security.h>
 //获取idfa
 #import <AdSupport/ASIdentifierManager.h>
+#import "Reachability.h"
 #import <CFNetwork/CFNetwork.h>
 
 
@@ -1699,5 +1700,41 @@
     
 }
 
++(NSString *)netWorkState
+{
+    Reachability *reachability   = [Reachability reachabilityWithHostname:@"www.apple.com"];
+    
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    
+    NSString *net = @"WIFI";
+    
+    switch (internetStatus) {
+            
+        case ReachableViaWiFi:
+            
+            net = @"WIFI";
+            
+            break;
+            
+        case ReachableViaWWAN:
+            
+            net = @"蜂窝数据";
+            
+            
+            break;
+            
+            
+        case NotReachable:
+            
+            net = @"网络不可用";
+            
+        default:
+            
+            break;
+            
+    }
+    
+    return net;
 
+}
 @end

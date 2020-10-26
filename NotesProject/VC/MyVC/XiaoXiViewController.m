@@ -559,18 +559,6 @@
         
         
     }
-    else if (tableView.tag==1)
-    {
-        NSDictionary * info = [self.sourceArray3 objectAtIndex:indexPath.row];
-        
-
-    }
-    else
-    {
-        NSDictionary * info = [self.sourceArray3 objectAtIndex:indexPath.row];
-        
-
-    }
 }
 /*
 -(void)initUI

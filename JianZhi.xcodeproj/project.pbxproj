@@ -76,6 +76,8 @@
 		5F45D55825303079007F207C /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F45D55725303079007F207C /* ChatListViewController.m */; };
 		5F498D1323AB99830050AD19 /* GetCountryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */; };
 		5F54D5D22382709A00282C63 /* Flash.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54D5D12382709A00282C63 /* Flash.xib */; };
+		5F565DCB2544068B00C823C2 /* GetIPAlsoCanUseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F565DCA2544068B00C823C2 /* GetIPAlsoCanUseViewController.m */; };
+		5F565DEC254410E300C823C2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F565DEA254410E300C823C2 /* Reachability.m */; };
 		5F5B9BC5252178E6005AB038 /* qiDongVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */; };
 		5F60AC0C24FFABA5005BC151 /* DianuDetailListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */; };
 		5F66734825108EEF000C6810 /* MyFaBu_XinXiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F66734725108EEF000C6810 /* MyFaBu_XinXiCell.m */; };
@@ -347,6 +349,10 @@
 		5F498D1123AB99830050AD19 /* GetCountryInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCountryInfoViewController.h; sourceTree = "<group>"; };
 		5F498D1223AB99830050AD19 /* GetCountryInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCountryInfoViewController.m; sourceTree = "<group>"; };
 		5F54D5D12382709A00282C63 /* Flash.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flash.xib; sourceTree = "<group>"; };
+		5F565DC92544068B00C823C2 /* GetIPAlsoCanUseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetIPAlsoCanUseViewController.h; sourceTree = "<group>"; };
+		5F565DCA2544068B00C823C2 /* GetIPAlsoCanUseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetIPAlsoCanUseViewController.m; sourceTree = "<group>"; };
+		5F565DEA254410E300C823C2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		5F565DEB254410E300C823C2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5F5B9BC4252178E6005AB038 /* qiDongVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = qiDongVideo.mp4; sourceTree = "<group>"; };
 		5F60AC0A24FFABA5005BC151 /* DianuDetailListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianuDetailListTableViewCell.h; sourceTree = "<group>"; };
 		5F60AC0B24FFABA5005BC151 /* DianuDetailListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianuDetailListTableViewCell.m; sourceTree = "<group>"; };
@@ -1017,6 +1023,8 @@
 		5FC1657F2519AE5600FA99D2 /* QiDongVC */ = {
 			isa = PBXGroup;
 			children = (
+				5F565DC92544068B00C823C2 /* GetIPAlsoCanUseViewController.h */,
+				5F565DCA2544068B00C823C2 /* GetIPAlsoCanUseViewController.m */,
 				5FC165802519AE7000FA99D2 /* QiDongViewController.h */,
 				5FC165812519AE7000FA99D2 /* QiDongViewController.m */,
 			);
@@ -1144,6 +1152,8 @@
 				5F26510924FE45BD00171684 /* VideoRecord */,
 				5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */,
 				5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */,
+				5F565DEB254410E300C823C2 /* Reachability.h */,
+				5F565DEA254410E300C823C2 /* Reachability.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1489,6 +1499,7 @@
 				5FC6816F251D81320030E0D9 /* HeiDianDetailPingJiaCell.m in Sources */,
 				5F7ED855251B19C600D23823 /* CreateDingZhiFuWuKouFeiViewController.m in Sources */,
 				5F34DCDD24EF716500DE15A1 /* MyScrollView.m in Sources */,
+				5F565DEC254410E300C823C2 /* Reachability.m in Sources */,
 				5F66738F25184441000C6810 /* GouMaiJiLuCell.m in Sources */,
 				5F66736C251455CC000C6810 /* JingJiRenDianPuDetailViewController.m in Sources */,
 				5F2650D824FC8C9A00171684 /* JYWeakTimer.m in Sources */,
@@ -1625,6 +1636,7 @@
 				5F66738B25165CEA000C6810 /* PGIndexBannerSubiew.m in Sources */,
 				5FE3EC162355A3E400C77F4D /* TZProgressView.m in Sources */,
 				5FE3EAC923559FB400C77F4D /* MainBaseViewController.m in Sources */,
+				5F565DCB2544068B00C823C2 /* GetIPAlsoCanUseViewController.m in Sources */,
 				5F9D95CD253FD8CC002599B6 /* FuQiJiaoWeiRenZhengFaTieVC.m in Sources */,
 				5FC165822519AE7000FA99D2 /* QiDongViewController.m in Sources */,
 				5F2650DC24FC8C9A00171684 /* JYImageDownloader.m in Sources */,

@@ -24,7 +24,7 @@
 #else
 #pragma mark 接口 测试
 #define RYKey @"kj7swf8oknol2"
-#define HTTP_REQUESTURL @"http://42.194.167.215:8089"
+#define HTTP_REQUESTURL     [NormalUse defaultsGetObjectKey:APPUrlRequestDefults]
 #define HTTP_FileUpload @"http://129.28.198.178:8090"
 #endif
 
@@ -47,6 +47,7 @@
 #define RGBFormUIColor(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 
+//开发者账号  360057466@qq.com JYcx2019
 
 #define UserInformation @"UserINFO" //当前用户信息
 #define LoginToken @"LoginTokenDefaults" //当前用户token
@@ -54,7 +55,9 @@
 #define UserRole @"UserRoleDefaults"//当前用户角色
 #define JinBiShuoMing @"JinBIShuoMingDefaults"//项目金币说明
 #define UserRongYunInfo @"UserRongYunInfoDefaults"//用户融云token等信息
-#define AppSiteUrls @"AppSiteUrlsDefaults"//站点地址列表
+#define AppSiteUrls @"AppSiteUrlsDefaults"//金蝉站点地址列表
+
+#define APPUrlRequestDefults @"APPUrlRequestDefults"
 /*
  "cny_to_coin":"10",//人民币兑换金币比率 1人民币对应 10金币
  "normal_auth_coin":"1000",//茶小二认证所需金币
