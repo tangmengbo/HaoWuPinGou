@@ -146,6 +146,26 @@ singleton_implementation(HTTPModel)
             }
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (success) {
+                
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+                if ([NormalUse isValidDictionary:dict]) {
+
+                    if ([NormalUse isValidString:[dict objectForKey:@"info"]]) {
+
+                        if ([@"未登录或登录已过期" isEqualToString:[dict objectForKey:@"info"]]) {
+
+
+                            [NormalUse defaultsSetObject:nil forKey:LoginToken];
+//                            AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//                            [delegate setIPAlsoCanUseTabbar];
+
+                            [NormalUse showToastView:@"未登录或登录已过期" view:[NormalUse getCurrentVC].view];
+
+                        }
+
+                    }
+                }
+
                 success(task, responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -247,6 +267,24 @@ singleton_implementation(HTTPModel)
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+            if ([NormalUse isValidDictionary:dict]) {
+
+                if ([NormalUse isValidString:[dict objectForKey:@"info"]]) {
+
+                    if ([@"未登录或登录已过期" isEqualToString:[dict objectForKey:@"info"]]) {
+
+                        [NormalUse defaultsSetObject:nil forKey:LoginToken];
+//                        AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//                        [delegate setIPAlsoCanUseTabbar];
+
+                        [NormalUse showToastView:@"未登录或登录已过期" view:[NormalUse getCurrentVC].view];
+                    }
+
+                }
+            }
+//            NSLog(@"%@",dict);
             success(task, responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -3651,6 +3689,183 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
     NSString *url =  [NSString stringWithFormat:@"%@/appi/common/getJcSites",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+//查看支付状态 appi/mlpay/getPaystatus
++(void)checkZFStatus:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/getPaystatus",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+//聚合下单 appi/mlpay/ddyOrdering
++(void)jvHeXiaDan:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+
+//订单号生成接口 appi/mlpay/getddOrder
++(void)getZFOrderId:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/getddOrder",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+
+//金币产品列表 appi/mlpay/ddyProducts
++(void)getZFJinBiList:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyProducts",HTTP_REQUESTURL];
+
+       [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+           
+       } success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+           
+           NSNumber * code = [dict objectForKey:@"code"];
+           if (code.intValue==1) {
+               
+               if ([dict valueForKey:@"data"]) {
+                   
+                   callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+               }
+               
+           }
+           else
+           {
+               callback(code.intValue, nil, [dict objectForKey:@"info"]);
+               
+           }
+           
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           callback(error.code, nil, error.domain);
+           
+       }];
+
+}
+//充值明细 appi/user/getRechargeList
++(void)getZFRechargeList:(NSDictionary *_Nullable)parameter
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/user/getRechargeList",HTTP_REQUESTURL];
 
        [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
            

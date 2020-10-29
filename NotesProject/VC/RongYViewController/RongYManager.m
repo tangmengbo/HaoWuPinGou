@@ -146,7 +146,14 @@
 //        AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //        [appDelegate setWeiDengLuTabBar];
         
-        [NormalUse showToastView:@"您的账号已在其他设备登录,请重新登录" view:[NormalUse getCurrentVC].view];
+        [NormalUse defaultsSetObject:nil forKey:LoginToken];
+        
+//        AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//        [delegate setIPAlsoCanUseTabbar];
+        
+        [NormalUse showToastView:@"您的账号已在其他设备登录" view:[NormalUse getCurrentVC].view];
+
+
     }
 }
 

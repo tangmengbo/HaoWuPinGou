@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ChongZhiMingXiCell : UITableViewCell
 
+@property(nonatomic,strong)NSDictionary * info;
+
 @property(nonatomic,strong)UILabel * dingDanBianHaoLable;
 @property(nonatomic,strong)UILabel * typeLable;
 @property(nonatomic,strong)UILabel * jinELable;

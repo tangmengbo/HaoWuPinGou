@@ -316,7 +316,6 @@
     [HTTPModel IpTestCheck:[[NSDictionary alloc]initWithObjectsAndKeys:testUrl,@"testIp", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
-            // [self yanZhengIp:@"http://42.194.167.215:8089/appi/common/curCity"];
 
             [NormalUse defaultsSetObject:[NSString stringWithFormat:@"http://%@:8089",ipStr] forKey:APPUrlRequestDefults];
             

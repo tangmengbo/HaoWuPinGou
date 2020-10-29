@@ -30,7 +30,13 @@
     return _noMessageTipImageView;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -47,20 +53,20 @@
     
     MJRefreshNormalHeader * header1 = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        [HTTPModel getXiaoXiMessageList:[[NSDictionary alloc]initWithObjectsAndKeys:@"0",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel getZFRechargeList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
-//                self.sourceArray = [responseObject objectForKey:@"data"];
-//
-//                if (![NormalUse isValidArray:self.sourceArray]) {
+                self.sourceArray = [responseObject objectForKey:@"data"];
+
+                if (![NormalUse isValidArray:self.sourceArray]) {
                     
                     [self.mainTableView addSubview:self.noMessageTipImageView];
-//                }
-//                else
-//                {
-//                    [self.noMessageTipImageView removeFromSuperview];
-//                }
+                }
+                else
+                {
+                    [self.noMessageTipImageView removeFromSuperview];
+                }
                 [self.mainTableView reloadData];
                 [self.mainTableView.mj_header endRefreshing];
 

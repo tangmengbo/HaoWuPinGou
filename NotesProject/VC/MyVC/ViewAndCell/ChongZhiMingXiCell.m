@@ -30,7 +30,17 @@
         self.dingDanBianHaoLable.textColor = RGBFormUIColor(0x9A9A9A);
         [self addSubview:self.dingDanBianHaoLable];
         
-        self.typeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.dingDanBianHaoLable.left, self.dingDanBianHaoLable.top+self.dingDanBianHaoLable.height+15*BiLiWidth, 40*BiLiWidth, 14*BiLiWidth)];
+        UIButton * fuZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-86*BiLiWidth, self.dingDanBianHaoLable.top-4.5*BiLiWidth, 72*BiLiWidth, 24*BiLiWidth)];
+        fuZhiButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        [fuZhiButton setTitle:@"复制订单" forState:UIControlStateNormal];
+        [fuZhiButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+        fuZhiButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        fuZhiButton.layer.cornerRadius = 12*BiLiWidth;
+        [fuZhiButton addTarget:self action:@selector(fuZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:fuZhiButton];
+
+        
+        self.typeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.dingDanBianHaoLable.left, self.dingDanBianHaoLable.top+self.dingDanBianHaoLable.height+15*BiLiWidth, 50*BiLiWidth, 14*BiLiWidth)];
         self.typeLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.typeLable.textColor = RGBFormUIColor(0x343434);
         [self addSubview:self.typeLable];
@@ -48,9 +58,9 @@
         [self addSubview:self.statusLable];
         
         self.timeLbale = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLable.left, self.typeLable.top+self.typeLable.height+15*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
-        self.statusLable.textColor = RGBFormUIColor(0x9A9A9A);
-        self.statusLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        [self addSubview:self.statusLable];
+        self.timeLbale.textColor = RGBFormUIColor(0x9A9A9A);
+        self.timeLbale.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        [self addSubview:self.timeLbale];
 
         self.lianXikeFuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-86*BiLiWidth, self.statusLable.top+self.statusLable.height+7.5*BiLiWidth, 72*BiLiWidth, 24*BiLiWidth)];
         self.lianXikeFuButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -58,6 +68,7 @@
         [self.lianXikeFuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
         self.lianXikeFuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.lianXikeFuButton.layer.cornerRadius = 12*BiLiWidth;
+        [self.lianXikeFuButton addTarget:self action:@selector(liaXiJeFuButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.lianXikeFuButton];
         
 
@@ -71,7 +82,38 @@
 }
 -(void)initData:(NSDictionary *)info
 {
+    self.info = info;
     
+    self.dingDanBianHaoLable.text = [NSString stringWithFormat:@"订单号: %@",[info objectForKey:@"order_no"]];
+    self.typeLable.text = [info objectForKey:@"pay_type"];
+    self.jinELable.text = [info objectForKey:@"amount"];
+    self.timeLbale.text = [info objectForKey:@"create_at"];
+    self.statusLable.text = [info objectForKey:@"pay_text"];
+    if ([@"充值成功" isEqualToString:[info objectForKey:@"pay_text"]]) {
+        
+        self.statusLable.textColor = RGBFormUIColor(0x00BE00);
+    }
+    else
+    {
+        self.statusLable.textColor = RGBFormUIColor(0xF43232);
+
+    }
+}
+-(void)fuZhiButtonClick
+{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [self.info objectForKey:@"order_no"];
+    
+    [NormalUse showToastView:@"链接已复制" view:[NormalUse getCurrentVC].view];
+
+
+}
+-(void)liaXiJeFuButtonClick
+{
+    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+    vc.forWhat = @"help";
+    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

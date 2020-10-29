@@ -24,8 +24,12 @@
 @property(nonatomic,strong)NSMutableArray * buttonArray;
 @property(nonatomic,strong)UIButton * jinBiButtonBottom;
 
+@property(nonatomic,strong)NSArray * products;
+
 @property(nonatomic,strong)Lable_ImageButton * zfbButton;
 @property(nonatomic,strong)Lable_ImageButton * wxButton;
+
+@property(nonatomic,strong)NSString * orderId;
 
 @end
 
@@ -54,7 +58,9 @@
     [super viewDidLoad];
     
     [self yinCangTabbar];
+    
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yanZhengOrder) name:@"YanZhengDingDanNotification" object:nil];
     
     UIImageView * topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 155.5*BiLiWidth+TopHeight_PingMu)];
     topImageView.image = [UIImage imageNamed:@"zhangHu_topBG"];
@@ -150,10 +156,29 @@
     
     self.buttonArray = [NSMutableArray array];
     
+
+    [HTTPModel getZFJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            
+            self.products = [responseObject objectForKey:@"products"];
+            [self initChongZhiItemView];
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+    
+}
+-(void)initChongZhiItemView
+{
     float originX = (WIDTH_PingMu-100*BiLiWidth*3-20*BiLiWidth)/2;
     float originY = 0;
-    for (int i=0; i<6; i++) {
+
+    for (int i=0; i<self.products.count; i++) {
         
+        NSDictionary * info = [self.products objectAtIndex:i];
         if (i==0) {
             
             self.jinBiButtonBottom = [[UIButton alloc] initWithFrame:CGRectMake(originX+110*BiLiWidth*(i%3), self.zaiXianZhiFuButton.top+self.zaiXianZhiFuButton.height+25*BiLiWidth+64*BiLiWidth*(i/3), 100*BiLiWidth, 54*BiLiWidth)];
@@ -191,29 +216,31 @@
         [self.contentScrollView addSubview:button];
         [self.buttonArray addObject:button];
         
-        button.button_lable.text = @"100金币";
-        button.button_lable1.text = @"¥100";
+        NSNumber * cny = [info objectForKey:@"cny"];
+        NSNumber * coin = [info objectForKey:@"coin"];
+        button.button_lable.text = [NSString stringWithFormat:@"%d金币",coin.intValue];
+        button.button_lable1.text = [NSString stringWithFormat:@"¥%d",cny.intValue];
         
         originY = button.top+button.height+20*BiLiWidth;
         
     }
     
-    self.zfbButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
-    self.zfbButton.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
-    [self.zfbButton addTarget:self action:@selector(zfbButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    self.zfbButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
-    self.zfbButton.button_lable.frame = CGRectMake(self.zfbButton.button_imageView.left+self.zfbButton.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
-    self.zfbButton.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    self.zfbButton.button_lable.textColor = RGBFormUIColor(0x343434);
-    self.zfbButton.button_lable.text = @"支付宝支付";
-    self.zfbButton.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (self.zfbButton.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
-    self.zfbButton.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
-    self.zfbButton.button_imageView1.layer.masksToBounds = YES;
-    self.zfbButton.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
-    self.zfbButton.button_imageView1.layer.borderWidth = 1;
-    [self.contentScrollView addSubview:self.zfbButton];
+//    self.zfbButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
+//    self.zfbButton.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
+//    [self.zfbButton addTarget:self action:@selector(zfbButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    self.zfbButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
+//    self.zfbButton.button_lable.frame = CGRectMake(self.zfbButton.button_imageView.left+self.zfbButton.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
+//    self.zfbButton.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+//    self.zfbButton.button_lable.textColor = RGBFormUIColor(0x343434);
+//    self.zfbButton.button_lable.text = @"支付宝支付";
+//    self.zfbButton.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (self.zfbButton.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
+//    self.zfbButton.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
+//    self.zfbButton.button_imageView1.layer.masksToBounds = YES;
+//    self.zfbButton.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
+//    self.zfbButton.button_imageView1.layer.borderWidth = 1;
+//    [self.contentScrollView addSubview:self.zfbButton];
     
-    self.wxButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.zfbButton.top+self.zfbButton.height+23*BiLiWidth, WIDTH_PingMu, 21*BiLiWidth)];
+    self.wxButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
     [self.wxButton addTarget:self action:@selector(wxButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.wxButton.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
     self.wxButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
@@ -234,6 +261,8 @@
     
     [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu, chongZhiButton.top+chongZhiButton.height+40*BiLiWidth)];
     //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
     CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
     gradientLayer1.frame = chongZhiButton.bounds;
     gradientLayer1.cornerRadius = 20*BiLiWidth;
@@ -250,7 +279,7 @@
     tiJiaoLable.textColor = [UIColor whiteColor];
     [chongZhiButton addSubview:tiJiaoLable];
 
-    
+
 }
 #pragma mark--UIButtonClick
 -(void)rightClick
@@ -272,26 +301,30 @@
 
 -(void)zhiFuMethodClick:(UIButton *)button
 {
-    
+
     if (button.tag==0) {
-        
+
         self.daiLiZhiFuButton.transform = CGAffineTransformIdentity;
         [self.daiLiZhiFuButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
         
+        [button setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+        [UIView animateWithDuration:0.5 animations:^{
+
+            button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+
+        }];
+
     }
     else if (button.tag==1)
     {
-        self.zaiXianZhiFuButton.transform = CGAffineTransformIdentity;
-        [self.zaiXianZhiFuButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+//        self.zaiXianZhiFuButton.transform = CGAffineTransformIdentity;
+//        [self.zaiXianZhiFuButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+        JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+        vc.forWhat = @"mall";
+        [self.navigationController pushViewController:vc animated:YES];
 
     }
-    [button setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        button.transform = CGAffineTransformMakeScale(1.3, 1.3);
-        self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
-        
-    }];
 }
 
 -(void)jinEItemButtonClick:(UIButton *)selectButton
@@ -300,6 +333,7 @@
         
         self.jinBiButtonBottom.hidden = NO;
         self.jinBiButtonBottom.frame = selectButton.frame;
+        self.jinBiButtonBottom.tag = selectButton.tag;
         if (button.tag == selectButton.tag) {
             
             button.layer.borderColor = [[UIColor clearColor] CGColor];
@@ -337,8 +371,69 @@
 }
 -(void)chongZhiButtonClick
 {
-    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
-    vc.forWhat = @"mall";
-    [self.navigationController pushViewController:vc animated:YES];
+    [self xianShiLoadingView:@"下单中..." view:self.view];
+    [HTTPModel getZFOrderId:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        [self yinCangLoadingView];
+
+        if (status==1) {
+            
+            self.orderId = responseObject;
+            NSDictionary * info = [self.products objectAtIndex:self.jinBiButtonBottom.tag];
+            NSNumber * coin = [info objectForKey:@"coin"];
+            NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
+            url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken]]];
+            
+            NSURL *cleanURL = [NSURL URLWithString:url];
+            [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
+                
+            }];
+
+            
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+}
+
+-(void)yanZhengOrder
+{
+    [self xianShiLoadingView:@"验证支付..." view:self.view];
+    [HTTPModel checkZFStatus:[[NSDictionary alloc]initWithObjectsAndKeys:self.orderId,@"orderId", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self yinCangLoadingView];
+        if (status==1) {
+            //0下单，1成功，2失败
+            NSNumber * pay_status = [responseObject objectForKey:@"pay_status"];
+            if (pay_status.intValue==0) {
+                
+                [NormalUse showToastView:@"订单正在处理中,请稍等" view:self.view];
+            }
+            else if (pay_status.intValue==1)
+            {
+                [NormalUse showToastView:@"订单支付成功" view:self.view];
+
+            }
+            else
+            {
+                [NormalUse showToastView:@"订单支付失败" view:self.view];
+
+            }
+        }
+    }];
+    
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            NSNumber * base_coinNumber = [responseObject objectForKey:@"coin"];
+            NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
+            self.yuELable.text = base_coinStr;
+
+        }
+    }];
+
 }
 @end

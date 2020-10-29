@@ -71,22 +71,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0E05F836-FBDD-4918-88AC-192F45EAA440"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/NvShenRenZheng/NvShenRenZhengStep2VC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1037"
-            endingLineNumber = "1037"
-            landmarkName = "-getVideoShouZhenPathId"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0A7A6F11-B251-44CC-960E-926BF28247D7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -167,80 +151,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6515DD12-C437-4EF5-BFFE-63264B3F49EA"
+            uuid = "7E9C3F06-A5D7-4459-B7DF-504A9DF52223"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
+            filePath = "NotesProject/VC/HomeVC/WKWebViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "-getIpByUrl2Error"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A6599736-E41C-4430-A963-95EC4311BFD5"
+            uuid = "FED0939F-014F-4121-993F-5A296C1B8708"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
+            filePath = "NotesProject/VC/HomeVC/WKWebViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "-getIpByUrl2:"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-leftClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "31B8D341-86D8-4FDD-B517-3E5E5CF54514"
+            uuid = "0A591ABC-FADE-46CD-94CE-3543C856BA6C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NotesProject/Manger/HTTPModel.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
-            landmarkName = "+getIPByUrl:callback:"
+            startingLineNumber = "3726"
+            endingLineNumber = "3726"
+            landmarkName = "+checkZFStatus:callback:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B0DDFFD3-7AE9-4A10-9FCC-F289F8C72506"
+            uuid = "97E05562-AFF2-4D4D-AB61-7549AEB7528E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
+            filePath = "NotesProject/VC/MyVC/ZhangHuDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "-getIpByUrl1Error"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
+            landmarkName = "-chongZhiButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FB10D185-5147-4E28-B211-0ED87EE5D3E7"
+            uuid = "7455C68E-48E5-4B5C-BF2C-C63A728B1689"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/JinChanVC/JinChanWebViewController.m"
+            filePath = "NotesProject/VC/MyVC/ZhangHuDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-addTheWebview"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "-chongZhiButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

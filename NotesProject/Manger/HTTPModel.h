@@ -403,4 +403,23 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //站点地址列表
 +(void)getJSSiteUrls:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//查看支付状态 appi/mlpay/getPaystatus
++(void)checkZFStatus:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//聚合下单 appi/mlpay/ddyOrdering
++(void)jvHeXiaDan:(NSDictionary *_Nullable)parameter
+         callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//订单号生成接口 appi/mlpay/getddOrder
++(void)getZFOrderId:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
+//金币产品列表 /appi/mlpay/ddyProducts
++(void)getZFJinBiList:(NSDictionary *_Nullable)parameter
+                 callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+//充值明细 appi/user/getRechargeList
++(void)getZFRechargeList:(NSDictionary *_Nullable)parameter
+                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 @end

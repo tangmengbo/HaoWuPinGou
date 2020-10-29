@@ -562,14 +562,14 @@
 }
 -(void)myZhangHuButtonClick
 {
-    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
-    vc.forWhat = @"mall";
-    [self.navigationController pushViewController:vc animated:YES];
-
-//    ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
-//    NSNumber * coin = [self.userInfo objectForKey:@"coin"];
-//    vc.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
+//    JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+//    vc.forWhat = @"mall";
 //    [self.navigationController pushViewController:vc animated:YES];
+
+    ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+    NSNumber * coin = [self.userInfo objectForKey:@"coin"];
+    vc.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)shouCangGuanZhuButtonClick
 {

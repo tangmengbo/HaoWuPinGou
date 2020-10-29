@@ -205,32 +205,27 @@
     self.timeLable.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.timeLable];
 
-    self.beginAndStopRecordButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-25*BiLiWidth)/2,self.jinDuBottomView.top+self.jinDuBottomView.height+20*BiLiWidth, 25*BiLiWidth, 27*BiLiWidth)];
+    self.beginAndStopRecordButton = [[UIButton alloc] initWithFrame:CGRectMake(30*BiLiWidth,self.jinDuBottomView.top+self.jinDuBottomView.height+40*BiLiWidth, (WIDTH_PingMu-90*BiLiWidth)/2, 40*BiLiWidth)];
     self.beginAndStopRecordButton.tag = 0;
-    [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];    [self.beginAndStopRecordButton addTarget:self action:@selector(beginAndRecord:) forControlEvents:UIControlEventTouchDown];
+    self.beginAndStopRecordButton.layer.cornerRadius = 20*BiLiWidth;
+    [self.beginAndStopRecordButton setBackgroundColor:RGBFormUIColor(0xFF6C6C)];
+    [self.beginAndStopRecordButton.titleLabel setFont:[UIFont systemFontOfSize:15*BiLiWidth]];
+    [self.beginAndStopRecordButton setTitle:@"开始录制" forState:UIControlStateNormal];
+    [self.beginAndStopRecordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.beginAndStopRecordButton addTarget:self action:@selector(beginAndRecord:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.beginAndStopRecordButton];
     
-    self.tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, self.beginAndStopRecordButton.top+self.beginAndStopRecordButton.height+20*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
+    
+    
+    self.tiJiaoButton = [[UIButton alloc] initWithFrame:CGRectMake(self.beginAndStopRecordButton.left+self.beginAndStopRecordButton.width+30*BiLiWidth, self.beginAndStopRecordButton.top, self.beginAndStopRecordButton.width, 40*BiLiWidth)];
     [self.tiJiaoButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.tiJiaoButton];
-    //渐变设置
-    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-    gradientLayer1.frame = self.tiJiaoButton.bounds;
-    gradientLayer1.cornerRadius = 20*BiLiWidth;
-    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-    gradientLayer1.startPoint = CGPointMake(0, 0);
-    gradientLayer1.endPoint = CGPointMake(0, 1);
-    gradientLayer1.locations = @[@0,@1];
-    [self.tiJiaoButton.layer addSublayer:gradientLayer1];
-    
-    UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tiJiaoButton.width, self.tiJiaoButton.height)];
-    tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    tiJiaoLable.text = @"下一步";
-    tiJiaoLable.textAlignment = NSTextAlignmentCenter;
-    tiJiaoLable.textColor = [UIColor whiteColor];
-    [self.tiJiaoButton addSubview:tiJiaoLable];
-    
+    [self.tiJiaoButton setTitle:@"下一步" forState:UIControlStateNormal];
+    self.tiJiaoButton.layer.cornerRadius = 20*BiLiWidth;
+    [self.tiJiaoButton.titleLabel setFont:[UIFont systemFontOfSize:15*BiLiWidth]];
+    [self.tiJiaoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.tiJiaoButton.enabled = NO;
+    [self.tiJiaoButton setBackgroundColor:RGBFormUIColor(0xbfbfbf)];
+    [self.view addSubview:self.tiJiaoButton];
 
 
     
@@ -365,20 +360,27 @@
 #pragma mark--开始录制视频
 -(void)beginAndRecord:(UIButton *)button
 {
-    if (button.tag==0) {
-        button.tag=1;
-        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"tingzhi_luZhi"] forState:UIControlStateNormal];
+//    if (button.tag==0) {
+//        button.tag=1;
+    
+    [self.beginAndStopRecordButton setBackgroundColor:RGBFormUIColor(0xbfbfbf)];
+    [self.beginAndStopRecordButton setTitle:@"重新录制" forState:UIControlStateNormal];
+    self.beginAndStopRecordButton.enabled = NO;
+    [self.tiJiaoButton setBackgroundColor:RGBFormUIColor(0xbfbfbf)];
+    self.tiJiaoButton.enabled = NO;
+
+
         [self startVideoRecorder];
 
-    }
-    else
-    {
-        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
-
-        button.tag=0;
-        [self stopVideoRecorder];
-
-    }
+//    }
+//    else
+//    {
+//        [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
+//
+//        button.tag=0;
+//        [self stopVideoRecorder];
+//
+//    }
 }
 #pragma 视频名以当前日期为名
 - (NSString*)getVideoSaveFilePathString
@@ -434,7 +436,12 @@
 }
 - (void)stopVideoRecorder{
     
-    [self.beginAndStopRecordButton setBackgroundImage:[UIImage imageNamed:@"kaiShi_luZhi"] forState:UIControlStateNormal];
+    self.beginAndStopRecordButton.enabled = YES;
+    [self.beginAndStopRecordButton setBackgroundColor:RGBFormUIColor(0xFF6C6C)];
+
+    [self.tiJiaoButton setBackgroundColor:RGBFormUIColor(0xFF6C6C)];
+    self.tiJiaoButton.enabled = YES;
+
     [self.movieFileOutput stopRecording];
     [self timerStop];
     

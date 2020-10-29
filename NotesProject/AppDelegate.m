@@ -229,6 +229,9 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 {
     self.tabbar.bottomView.hidden = NO;
 }
-
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"YanZhengDingDanNotification" object:nil];
+}
 
 @end

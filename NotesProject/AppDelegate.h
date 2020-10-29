@@ -19,7 +19,7 @@
 @property(nonatomic,strong)UIWindow * window;//必须命名为 window
 @property(nonatomic,strong)MainTabbarController * tabbar;
 
-
+-(void)setIPAlsoCanUseTabbar;
 -(void)setYiDengLuTabBar;
 -(void)setShouShiYanZhengTabbar;
 -(void)setQiDongTabbar;

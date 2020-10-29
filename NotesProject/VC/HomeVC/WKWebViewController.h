@@ -12,9 +12,9 @@
 
 @property(nonatomic,strong)WKWebView * webView;
 
-
 @property(nonatomic,strong)NSString * titleStr;
 
 @property(nonatomic,strong)NSString * url;
+
 
 @end

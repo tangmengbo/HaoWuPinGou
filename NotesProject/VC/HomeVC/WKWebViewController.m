@@ -20,8 +20,9 @@
     [super viewDidLoad];
     
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topNavView.frame.origin.y+self.topNavView.frame.size.height, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.frame.origin.y+self.topNavView.frame.size.height))];
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.url]]];
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.url]]];
     [self.view addSubview: self.webView];
+    
     self.webView.UIDelegate = self;
     // 导航代理
     self.webView.navigationDelegate = self;
@@ -48,15 +49,15 @@
 }
 -(void)leftClick
 {
-    if (self.webView.canGoBack) {
-        
-        [self.webView goBack];
-        
-    }else{
+//    if (self.webView.canGoBack) {
+//
+//        [self.webView goBack];
+//
+//    }else{
         
         [self.navigationController popViewControllerAnimated:YES];
         
-    }
+ //   }
 }
 #pragma mark -- WKNavigationDelegate
 /*

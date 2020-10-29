@@ -76,10 +76,10 @@
         kuangImageView.userInteractionEnabled = YES;
         [_uploadTipView addSubview:kuangImageView];
         
-        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
-        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
-        [closeButton addTarget:self action:@selector(closeUploadTipKuangView) forControlEvents:UIControlEventTouchUpInside];
-        [_uploadTipView addSubview:closeButton];
+//        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+//        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+//        [closeButton addTarget:self action:@selector(closeUploadTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+//        [_uploadTipView addSubview:closeButton];
         
         UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
         tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
@@ -167,7 +167,18 @@
 }
 -(void)sureButtonClick
 {
-    [self closeUploadTipKuangView];
+    
+    NSString * haveto_update_app = [NormalUse getJinBiStr:@"haveto_update_app"];//0 不需要更新 1 普通更新 2 强制更新
+    if(![@"2" isEqualToString:haveto_update_app])
+    {
+        [self closeUploadTipKuangView];
+
+    }
+    NSString *textURL = @"http://www.baidu.com";
+    NSURL *cleanURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", textURL]];
+    [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
+        
+    }];
 }
 -(void)closeUploadTipKuangView
 {
