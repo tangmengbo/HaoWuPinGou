@@ -107,6 +107,27 @@
     [tiXianButton addTarget:self action:@selector(tiXianButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentScrollView addSubview:tiXianButton];
     
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+    gradientLayer1.frame = tiXianButton.bounds;
+    gradientLayer1.cornerRadius = 20*BiLiWidth;
+    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer1.startPoint = CGPointMake(0, 0);
+    gradientLayer1.endPoint = CGPointMake(0, 1);
+    gradientLayer1.locations = @[@0,@1];
+    [tiXianButton.layer addSublayer:gradientLayer1];
+    
+    UILabel * tiXianLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tiXianButton.width, tiXianButton.height)];
+    tiXianLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    tiXianLable.text = @"金币提现";
+    tiXianLable.textAlignment = NSTextAlignmentCenter;
+    tiXianLable.textColor = [UIColor whiteColor];
+    [tiXianButton addSubview:tiXianLable];
+
+
+    
     UIButton * mingXiButton = [[UIButton alloc] initWithFrame:CGRectMake(tiXianButton.top+tiXianButton.width+51*BiLiWidth, 0, 137*BiLiWidth, 40*BiLiWidth)];
     [mingXiButton setBackgroundColor:RGBFormUIColor(0xEEEEEE)];
     [mingXiButton setTitle:@"金币明细" forState:UIControlStateNormal];
@@ -115,6 +136,24 @@
     mingXiButton.layer.cornerRadius = 20*BiLiWidth;
     [mingXiButton addTarget:self action:@selector(mingXiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentScrollView addSubview:mingXiButton];
+    
+    CAGradientLayer * gradientLayer2 = [CAGradientLayer layer];
+    gradientLayer2.frame = mingXiButton.bounds;
+    gradientLayer2.cornerRadius = 20*BiLiWidth;
+    gradientLayer2.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer2.startPoint = CGPointMake(0, 0);
+    gradientLayer2.endPoint = CGPointMake(0, 1);
+    gradientLayer2.locations = @[@0,@1];
+    [mingXiButton.layer addSublayer:gradientLayer2];
+    
+    UILabel * mingXiLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, mingXiButton.width, mingXiButton.height)];
+    mingXiLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    mingXiLable.text = @"金币明细";
+    mingXiLable.textAlignment = NSTextAlignmentCenter;
+    mingXiLable.textColor = [UIColor whiteColor];
+    [mingXiButton addSubview:mingXiLable];
+
+
     
     CGSize size =  [NormalUse setSize:@"官方消息" withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
     
@@ -127,9 +166,8 @@
     [self.zaiXianZhiFuButton.titleLabel sizeToFit];
     [self.contentScrollView addSubview:self.zaiXianZhiFuButton];
     
-    [self.zaiXianZhiFuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
-    self.daiLiZhiFuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.zaiXianZhiFuButton.left+self.zaiXianZhiFuButton.width+17*BiLiWidth, tiXianButton.height+tiXianButton.top+35*BiLiWidth, size.width, 17*BiLiWidth)];
+    self.daiLiZhiFuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.zaiXianZhiFuButton.left+self.zaiXianZhiFuButton.width+25*BiLiWidth, tiXianButton.height+tiXianButton.top+35*BiLiWidth, size.width, 17*BiLiWidth)];
     [self.daiLiZhiFuButton setTitle:@"代理支付" forState:UIControlStateNormal];
     [self.daiLiZhiFuButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     self.daiLiZhiFuButton.tag = 1;
@@ -138,14 +176,15 @@
     [self.daiLiZhiFuButton.titleLabel sizeToFit];
     [self.contentScrollView addSubview:self.daiLiZhiFuButton];
     
+    [self.zaiXianZhiFuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+    
     self.sliderView = [[UIView alloc] initWithFrame:CGRectMake((self.zaiXianZhiFuButton.width-53*BiLiWidth)/2+self.zaiXianZhiFuButton.left,self.zaiXianZhiFuButton.top+15*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
     self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
     self.sliderView.layer.masksToBounds = YES;
     self.sliderView.alpha = 0.8;
     [self.contentScrollView addSubview:self.sliderView];
     //渐变设置
-    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
     CAGradientLayer * gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.sliderView.bounds;
     gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
@@ -304,13 +343,14 @@
 
     if (button.tag==0) {
 
-        self.daiLiZhiFuButton.transform = CGAffineTransformIdentity;
         [self.daiLiZhiFuButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
         
         [button setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
         [UIView animateWithDuration:0.5 animations:^{
 
-            button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        self.daiLiZhiFuButton.transform = CGAffineTransformMakeScale(1.3, 1.3);
+
             self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
 
         }];

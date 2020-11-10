@@ -29,18 +29,18 @@
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 24*BiLiWidth;
-        [self addSubview:self.headerImageView];
+        [self.contentView addSubview:self.headerImageView];
         
         self.nickLable = [[UILabel alloc] initWithFrame:CGRectMake(74.5*BiLiWidth, 6.5*BiLiWidth, 200*BiLiWidth, 14*BiLiWidth)];
         self.nickLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.nickLable.textColor = RGBFormUIColor(0x343434);
         self.nickLable.adjustsFontSizeToFitWidth = YES;
-        [self addSubview:self.nickLable];
+        [self.contentView addSubview:self.nickLable];
         
         self.tiYanTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
         self.tiYanTimeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.tiYanTimeLable.textColor = RGBFormUIColor(0x9A9A9A);
-        [self addSubview:self.tiYanTimeLable];
+        [self.contentView addSubview:self.tiYanTimeLable];
         
         self.toolButton = [[UIButton alloc] initWithFrame:CGRectMake(291*BiLiWidth,9.5,55.5*BiLiWidth,42*BiLiWidth)];
         self.toolButton.frame = CGRectMake(278*BiLiWidth, self.nickLable.top, 69*BiLiWidth, 22*BiLiWidth);
@@ -51,34 +51,34 @@
         self.toolButton.titleLabel.font = [UIFont systemFontOfSize:10*BiLiWidth];
         [self.toolButton setTitleColor:RGBFormUIColor(0xFF6C6D) forState:UIControlStateNormal];
         [self.toolButton addTarget:self action:@selector(toolButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.toolButton];
+        [self.contentView addSubview:self.toolButton];
 
         
         self.pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left, self.headerImageView.top+self.headerImageView.height+20.5*BiLiWidth, 45*BiLiWidth, 11*BiLiWidth)];
         self.pingFenTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.pingFenTipLable.textColor = RGBFormUIColor(0x9A9A9A);
         self.pingFenTipLable.text = @"综合评分";
-        [self addSubview:self.pingFenTipLable];
+        [self.contentView addSubview:self.pingFenTipLable];
         
         self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.pingFenTipLable.left+self.pingFenTipLable.width+12*BiLiWidth, self.headerImageView.top+self.headerImageView.height+17.5*BiLiWidth, 30*BiLiWidth, 18*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0x343434);
-        [self addSubview:self.pingFenLable];
+        [self.contentView addSubview:self.pingFenLable];
 
         
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.pingFenTipLable.top+self.pingFenTipLable.height+16*BiLiWidth, WIDTH_PingMu, 90*BiLiWidth)];
-        [self addSubview:self.contentScrollView];
+        [self.contentView addSubview:self.contentScrollView];
 
         
         self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(14*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+18.5*BiLiWidth, WIDTH_PingMu-28*BiLiWidth, 11*BiLiWidth)];
         self.messageLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.messageLable.textColor = RGBFormUIColor(0x343434);
         self.messageLable.numberOfLines = 0;
-        [self addSubview:self.messageLable];
+        [self.contentView addSubview:self.messageLable];
 
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 5)];
         self.lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-        [self addSubview:self.lineView];
+        [self.contentView addSubview:self.lineView];
     }
     return self;
 }

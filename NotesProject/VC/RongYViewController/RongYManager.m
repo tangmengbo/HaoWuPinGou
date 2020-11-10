@@ -143,13 +143,9 @@
 {
     if (status==ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT)//用户被挤掉下线
     {
-//        AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [appDelegate setWeiDengLuTabBar];
         
         [NormalUse defaultsSetObject:nil forKey:LoginToken];
         
-//        AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [delegate setIPAlsoCanUseTabbar];
         
         [NormalUse showToastView:@"您的账号已在其他设备登录" view:[NormalUse getCurrentVC].view];
 

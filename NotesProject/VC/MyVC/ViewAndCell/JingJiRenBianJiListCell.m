@@ -26,7 +26,7 @@
         self.contentView1.layer.masksToBounds = YES;
         self.contentView1.layer.borderWidth = 1;
         self.contentView1.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
-        [self addSubview:self.contentView1];
+        [self.contentView addSubview:self.contentView1];
         
         
         self.headerImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 165*BiLiWidth, 137*BiLiWidth)];
@@ -82,7 +82,7 @@
         self.contentView2.layer.masksToBounds = YES;
         self.contentView2.layer.borderWidth = 1;
         self.contentView2.layer.borderColor = [RGBFormUIColor(0xDDDDDD) CGColor];
-        [self addSubview:self.contentView2];
+        [self.contentView addSubview:self.contentView2];
         
         self.headerImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 165*BiLiWidth, 137*BiLiWidth)];
         self.headerImageView2.contentMode = UIViewContentModeScaleAspectFill;

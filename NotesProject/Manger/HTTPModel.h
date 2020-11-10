@@ -62,8 +62,9 @@ singleton_interface(HTTPModel)
 //ip是否可用
 +(void)IpTestCheck:(NSDictionary *_Nullable)parameter
                  callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-
-
+//获取上传资源的接口域名
++(void)getResourceSite:(NSDictionary *_Nullable)parameter
+              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //获取当前城市
 +(void)getCurrentCity:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

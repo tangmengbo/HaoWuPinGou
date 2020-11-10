@@ -150,19 +150,12 @@ singleton_implementation(HTTPModel)
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
                 if ([NormalUse isValidDictionary:dict]) {
 
-                    if ([NormalUse isValidString:[dict objectForKey:@"info"]]) {
+                    NSNumber * code = [dict objectForKey:@"code"];
 
-                        if ([@"未登录或登录已过期" isEqualToString:[dict objectForKey:@"info"]]) {
-
-
-                            [NormalUse defaultsSetObject:nil forKey:LoginToken];
-//                            AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//                            [delegate setIPAlsoCanUseTabbar];
-
-                            [NormalUse showToastView:@"未登录或登录已过期" view:[NormalUse getCurrentVC].view];
-
-                        }
-
+                    if (code.intValue==11403)
+                    {
+                        [NormalUse defaultsSetObject:nil forKey:LoginToken];
+                        [NormalUse showToastView:[dict objectForKey:@"info"] view:[NormalUse getCurrentVC].view];
                     }
                 }
 
@@ -245,6 +238,7 @@ singleton_implementation(HTTPModel)
     
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
+        NSLog(@"%@",[NormalUse defaultsGetObjectKey:LoginToken]);
         [apiClient.requestSerializer setValue:[NormalUse defaultsGetObjectKey:LoginToken] forHTTPHeaderField:@"logintoken"];
     }
     
@@ -270,21 +264,16 @@ singleton_implementation(HTTPModel)
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
             if ([NormalUse isValidDictionary:dict]) {
-
-                if ([NormalUse isValidString:[dict objectForKey:@"info"]]) {
-
-                    if ([@"未登录或登录已过期" isEqualToString:[dict objectForKey:@"info"]]) {
-
-                        [NormalUse defaultsSetObject:nil forKey:LoginToken];
-//                        AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//                        [delegate setIPAlsoCanUseTabbar];
-
-                        [NormalUse showToastView:@"未登录或登录已过期" view:[NormalUse getCurrentVC].view];
-                    }
-
+                
+                NSNumber * code = [dict objectForKey:@"code"];
+                if (code.intValue==11403) {
+                    
+                   [NormalUse defaultsSetObject:nil forKey:LoginToken];
+                    
+                    [NormalUse showToastView:[dict objectForKey:@"info"] view:[NormalUse getCurrentVC].view];
                 }
+                
             }
-//            NSLog(@"%@",dict);
             success(task, responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -465,7 +454,7 @@ singleton_implementation(HTTPModel)
 +(void)getUrlListByIp:(NSDictionary *_Nullable)parameter
              callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
-    NSString *url = [NSString stringWithFormat:@"%@/appi/common/getSiteUrls",HTTP_REQUESTURL];
+    NSString *url = [NSString stringWithFormat:@"http://%@:8089/appi/common/getSiteUrls",[parameter objectForKey:@"uri"]];
     
     [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
         
@@ -1138,7 +1127,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         NSLog(@"%@",jsonStr);
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
-            
+
             if ([dict valueForKey:@"data"]) {
                 
                 callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);

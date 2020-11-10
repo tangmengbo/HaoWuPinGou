@@ -48,8 +48,8 @@
     imageView.clipsToBounds = YES;
     [self.view addSubview:imageView];
     
-    self.urlSourceArray1 = [[NSArray alloc] initWithObjects:@"aa.ddjy123.com",@"bb.ddjy123.com",@"backup.ddjy123.com", nil];
-    
+    self.urlSourceArray1 = [[NSArray alloc] initWithObjects:@"api.dis123s1.xyz",@"api.dis123s2.xyz",@"api.dis123s3.xyz",@"api.dis123s4.xyz", nil];
+        
 
     [self getNetWorkStatus];
 }
@@ -186,8 +186,8 @@
     [HTTPModel getUrlListByIp:[[NSDictionary alloc]initWithObjectsAndKeys:ipStr,@"uri", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
-            self.urlSourceArray2 = responseObject;
-            
+            self.urlSourceArray2 = [responseObject objectForKey:@"main_site"];
+            [NormalUse defaultsSetObject:[responseObject objectForKey:@"res_site"] forKey:@"UploadYuMingDefaults"];
             //如果根据self.ipArray1中的ip获取到了对的url数组self.urlSourceArray2,则根据self.urlSourceArray2中的url获取ip数组self.ipArray2
             if ([NormalUse isValidArray:self.urlSourceArray2]) {
                 
@@ -423,7 +423,6 @@
     }
     else
     {
-        [delegate setQiDongTabbar];
 
         //未登录用户先 获取初始化账号
         [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -445,6 +444,14 @@
                         
                         NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
                         [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:@"YYYY-MM-dd"];
+                        NSDate *datenow = [NSDate date];
+                        NSString *currentTimeString = [formatter stringFromDate:datenow];
+                        [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
+
+                        [delegate setQiDongTabbar];
 
                     }
                 }];

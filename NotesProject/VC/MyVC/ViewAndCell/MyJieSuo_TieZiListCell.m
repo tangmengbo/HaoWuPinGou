@@ -29,13 +29,13 @@
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
-        [self addSubview:self.headerImageView];
+        [self.contentView addSubview:self.headerImageView];
         
         self.faBuYanZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-14*BiLiWidth, self.headerImageView.top, 72*BiLiWidth, 24*BiLiWidth)];
         self.faBuYanZhengButton.layer.cornerRadius = 12*BiLiWidth;
         self.faBuYanZhengButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
         [self.faBuYanZhengButton addTarget:self action:@selector(faBuYanZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.faBuYanZhengButton];
+        [self.contentView addSubview:self.faBuYanZhengButton];
         
 //        self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
 //        self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
@@ -48,38 +48,38 @@
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+90*BiLiWidth), 17*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
-        [self addSubview:self.titleLable];
+        [self.contentView addSubview:self.titleLable];
         
         self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+32*BiLiWidth, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 11*BiLiWidth)];
         self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.leiXingLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.leiXingLable];
+        [self.contentView addSubview:self.leiXingLable];
         
         self.diQuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.leiXingLable.top+self.leiXingLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.diQuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.diQuLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.diQuLable];
+        [self.contentView addSubview:self.diQuLable];
 
         
         self.fuWuLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.diQuLable.top+self.diQuLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.fuWuLable];
+        [self.contentView addSubview:self.fuWuLable];
 
         self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+10*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0x999999);
         self.pingFenLable.text = @"综合评分: ";
-        [self addSubview:self.pingFenLable];
+        [self.contentView addSubview:self.pingFenLable];
         
         self.pingFenStarView = [[UIView alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width+3.5*BiLiWidth, self.pingFenLable.top-1*BiLiWidth, 72*BiLiWidth, 12*BiLiWidth)];
-        [self addSubview:self.pingFenStarView];
+        [self.contentView addSubview:self.pingFenStarView];
 
         
         self.xiaoFeiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.pingFenLable.top+self.pingFenLable.height+10*BiLiWidth, self.leiXingLable.width, 11*BiLiWidth)];
         self.xiaoFeiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.xiaoFeiLable];
+        [self.contentView addSubview:self.xiaoFeiLable];
 
 
 

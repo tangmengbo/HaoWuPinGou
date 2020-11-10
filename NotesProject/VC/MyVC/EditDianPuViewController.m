@@ -531,7 +531,7 @@
     }];
     UIAlertAction * libraryAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
           
-        [wself addMediaFromLibaray:@"image"];
+        [wself showImagePicker:UIImagePickerControllerSourceTypePhotoLibrary];
       }];
     [alert addAction:cancleAction];
     [alert addAction:photoAction];
@@ -551,45 +551,90 @@
         [self presentViewController:self.imagePickerController animated:YES completion:nil];
     }
 }
--(void)addMediaFromLibaray:(NSString *)type
+- (void)showImagePicker:(UIImagePickerControllerSourceType)sourceType
 {
-    TZImagePickerController *imagePickController;
-    NSInteger count = 0;
     
-    if ([@"image" isEqualToString:type]) {
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        self.imagePickerController = [[UIImagePickerController alloc] init] ;
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.sourceType = sourceType;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.modalPresentationStyle = 0;
+        [self presentViewController:self.imagePickerController animated:YES completion:nil];
+    } else {
         
-        count = maxImageSelected - self.photoArray.count;
-        imagePickController = [[TZImagePickerController alloc] initWithMaxImagesCount:count delegate:self];
-        //是否 在相册中显示拍照按钮
-        imagePickController.allowTakePicture = NO;
-        //是否可以选择显示原图
-        imagePickController.allowPickingOriginalPhoto = NO;
-
-        //是否 在相册中可以选择照片
-        imagePickController.allowPickingImage= YES;
-        //是否 在相册中可以选择视频
-        imagePickController.allowPickingVideo = NO;
-
     }
-    else
-    {
-        imagePickController = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
-        //是否 在相册中显示拍照按钮
-        imagePickController.allowTakePicture = NO;
-        //是否可以选择显示原图
-        imagePickController.allowPickingOriginalPhoto = NO;
-
-        //是否 在相册中可以选择照片
-        imagePickController.allowPickingImage= NO;
-        //是否 在相册中可以选择视频
-        imagePickController.allowPickingVideo = YES;
-
-    }
-    [imagePickController pushPhotoPickerVc];
-    imagePickController.modalPresentationStyle = 0;
-    [self.navigationController presentViewController:imagePickController animated:YES completion:nil];
-    
 }
+#pragma mark - UIImagePickerControllerDelegate
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{   //判断是否设置头像
+//    UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
+//
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//
+//    [self.photoArray addObject:image];
+//    [self initphotoContentView];
+//
+//
+//    self.headerImage = image;
+//    UIImage * uploadImage = [NormalUse scaleToSize:image size:CGSizeMake(400, 400*(image.size.height/image.size.width))];
+//
+//    NSData *data = UIImagePNGRepresentation(uploadImage);
+//
+//    NSString *encodedImageStr = [data base64EncodedStringWithOptions:0];
+//
+//
+//    NSString *imageType = [NormalUse contentTypeForImageData:data];
+//
+//    [self xianShiLoadingView:TEXT_LanguageInternationalization(@"submitting...") view:self.view];
+//    [self.interfaceTool uploadImage:@"8024"
+//                  picBody_base64Str:encodedImageStr
+//                          picFormat:imageType
+//                               type:@"1"
+//                           delegate:self
+//                           selector:@selector(uploadSuccess:)
+//                      errorSelector:@selector(uploadError:)];
+    
+//}
+//-(void)addMediaFromLibaray:(NSString *)type
+//{
+//    TZImagePickerController *imagePickController;
+//    NSInteger count = 1;
+//
+//    if ([@"image" isEqualToString:type]) {
+//
+//        count = maxImageSelected - self.photoArray.count;
+//        imagePickController = [[TZImagePickerController alloc] initWithMaxImagesCount:count delegate:self];
+//        //是否 在相册中显示拍照按钮
+//        imagePickController.allowTakePicture = NO;
+//        //是否可以选择显示原图
+//        imagePickController.allowPickingOriginalPhoto = NO;
+//
+//        //是否 在相册中可以选择照片
+//        imagePickController.allowPickingImage= YES;
+//        //是否 在相册中可以选择视频
+//        imagePickController.allowPickingVideo = NO;
+//
+//    }
+//    else
+//    {
+//        imagePickController = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+//        //是否 在相册中显示拍照按钮
+//        imagePickController.allowTakePicture = NO;
+//        //是否可以选择显示原图
+//        imagePickController.allowPickingOriginalPhoto = NO;
+//
+//        //是否 在相册中可以选择照片
+//        imagePickController.allowPickingImage= NO;
+//        //是否 在相册中可以选择视频
+//        imagePickController.allowPickingVideo = YES;
+//
+//    }
+//    [imagePickController pushPhotoPickerVc];
+//    imagePickController.modalPresentationStyle = 0;
+//    [self.navigationController presentViewController:imagePickController animated:YES completion:nil];
+//
+//}
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {   //判断是否设置头像

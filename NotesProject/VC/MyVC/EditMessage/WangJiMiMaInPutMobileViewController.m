@@ -122,6 +122,7 @@
             {
                 InputCheckNumberViewController * vc = [[InputCheckNumberViewController alloc] init];
                 vc.editPWOrBangDing = @"1";
+                vc.mobileStr = self.mobileTF.text;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }

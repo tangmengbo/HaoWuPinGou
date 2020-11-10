@@ -29,28 +29,28 @@
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 20*BiLiWidth;
-        [self addSubview:self.headerImageView];
+        [self.contentView addSubview:self.headerImageView];
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left+self.headerImageView.width+15*BiLiWidth, 22.5*BiLiWidth, 200*BiLiWidth, 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x343434);
-        [self addSubview:self.titleLable];
+        [self.contentView addSubview:self.titleLable];
         
         self.timeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+10*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
         self.timeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-        [self addSubview:self.timeLable];
+        [self.contentView addSubview:self.timeLable];
         
 
         self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left, self.headerImageView.height+self.headerImageView.top+15*BiLiWidth, WIDTH_PingMu-36*BiLiWidth, 12*BiLiWidth)];
         self.messageLable.textColor = RGBFormUIColor(0x9A9A9A);
         self.messageLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.messageLable.numberOfLines = 0;
-        [self addSubview:self.messageLable];
+        [self.contentView addSubview:self.messageLable];
 
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 1)];
         self.lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-        [self addSubview:self.lineView];
+        [self.contentView addSubview:self.lineView];
 
     }
     return self;

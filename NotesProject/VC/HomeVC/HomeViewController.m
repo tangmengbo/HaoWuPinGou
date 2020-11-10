@@ -586,6 +586,13 @@
                         NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
                         [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
                         
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:@"YYYY-MM-dd"];
+                        NSDate *datenow = [NSDate date];
+                        NSString *currentTimeString = [formatter stringFromDate:datenow];
+
+                        [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
+
                     }
                 }];
             }
@@ -640,6 +647,7 @@
      
         [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
+            [NormalUse defaultsSetObject:[responseObject objectForKey:@"logintoken"] forKey:LoginToken];
             [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
         }];
 

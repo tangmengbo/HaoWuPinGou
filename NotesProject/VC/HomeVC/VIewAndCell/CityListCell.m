@@ -24,7 +24,7 @@
         self.selectedBackgroundView.backgroundColor = [UIColor clearColor];//RGBFormUIColor(0xF4F4F4);
         
         self.buttonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
-        [self addSubview:self.buttonContentView];
+        [self.contentView addSubview:self.buttonContentView];
     }
     return self;
 }

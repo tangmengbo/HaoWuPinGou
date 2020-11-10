@@ -8,13 +8,16 @@
 
 #import "HuiYuanViewController.h"
 
-@interface HuiYuanViewController ()
+@interface HuiYuanViewController ()<UIScrollViewDelegate>
 
 
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
 @property(nonatomic,strong)UIScrollView * topScrollView;
+
+@property(nonatomic,strong)Lable_ImageButton * nianKaVipButton;
+@property(nonatomic,strong)Lable_ImageButton * yongJiuVipButton;
 
 @property(nonatomic,strong)Lable_ImageButton * button1;
 @property(nonatomic,strong)Lable_ImageButton * button2;
@@ -215,39 +218,47 @@
     self.topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 157*BiLiWidth)];
     self.topScrollView.showsVerticalScrollIndicator = NO;
     self.topScrollView.showsHorizontalScrollIndicator = NO;
+    self.topScrollView.clipsToBounds = NO;
+    self.topScrollView.pagingEnabled = YES;
+    self.topScrollView.delegate = self;
+    self.topScrollView.tag = 1001;
     [self.mainScrollView addSubview:self.topScrollView];
     
-    Lable_ImageButton * nianKaVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
-    nianKaVipButton.clipsToBounds = YES;
-    [nianKaVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yearCard"] forState:UIControlStateNormal];
-    [nianKaVipButton addTarget:self action:@selector(nianKaVipClick) forControlEvents:UIControlEventTouchUpInside];
-    nianKaVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, nianKaVipButton.width, 20*BiLiWidth);
-    nianKaVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
-    nianKaVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
-    nianKaVipButton.button_lable.textColor = [UIColor whiteColor];
-    nianKaVipButton.button_lable.text = @"永恒钻石VIP";
-    nianKaVipButton.button_lable1.frame = CGRectMake(0, nianKaVipButton.button_lable.top+nianKaVipButton.button_lable.height+11*BiLiWidth, nianKaVipButton.width, 14*BiLiWidth);
-    nianKaVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    nianKaVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    nianKaVipButton.button_lable1.textColor = [UIColor whiteColor];
-    nianKaVipButton.button_lable1.text = @"年卡";
-    [self.topScrollView addSubview:nianKaVipButton];
+    self.nianKaVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
+    self.nianKaVipButton.clipsToBounds = YES;
+    [self.nianKaVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yearCard"] forState:UIControlStateNormal];
+//    [self.nianKaVipButton addTarget:self action:@selector(nianKaVipClick) forControlEvents:UIControlEventTouchUpInside];
+    self.nianKaVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, self.nianKaVipButton.width, 20*BiLiWidth);
+    self.nianKaVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
+    self.nianKaVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    self.nianKaVipButton.button_lable.textColor = [UIColor whiteColor];
+    self.nianKaVipButton.button_lable.text = @"永恒钻石VIP";
+    self.nianKaVipButton.button_lable1.frame = CGRectMake(0, self.nianKaVipButton.button_lable.top+self.nianKaVipButton.button_lable.height+11*BiLiWidth, self.nianKaVipButton.width, 14*BiLiWidth);
+    self.nianKaVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.nianKaVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+    self.nianKaVipButton.button_lable1.textColor = [UIColor whiteColor];
+    self.nianKaVipButton.button_lable1.text = @"年卡";
+    [self.topScrollView addSubview:self.nianKaVipButton];
     
-    Lable_ImageButton * yongJiuVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(nianKaVipButton.left+nianKaVipButton.width+9*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
-    yongJiuVipButton.clipsToBounds = YES;
-    [yongJiuVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
-    [yongJiuVipButton addTarget:self action:@selector(yongJiuVipClick) forControlEvents:UIControlEventTouchUpInside];
-    yongJiuVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, yongJiuVipButton.width, 20*BiLiWidth);
-    yongJiuVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
-    yongJiuVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
-    yongJiuVipButton.button_lable.textColor = [UIColor whiteColor];
-    yongJiuVipButton.button_lable.text = @"最强王者VIP";
-    yongJiuVipButton.button_lable1.frame = CGRectMake(0, yongJiuVipButton.button_lable.top+yongJiuVipButton.button_lable.height+11*BiLiWidth, yongJiuVipButton.width, 14*BiLiWidth);
-    yongJiuVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    yongJiuVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    yongJiuVipButton.button_lable1.textColor = [UIColor whiteColor];
-    yongJiuVipButton.button_lable1.text = @"永久卡";
-    [self.topScrollView addSubview:yongJiuVipButton];
+    
+    self.yongJiuVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.nianKaVipButton.left+self.nianKaVipButton.width+5*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
+    self.yongJiuVipButton.clipsToBounds = YES;
+    [self.yongJiuVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
+//    [self.yongJiuVipButton addTarget:self action:@selector(yongJiuVipClick) forControlEvents:UIControlEventTouchUpInside];
+    self.yongJiuVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, self.yongJiuVipButton.width, 20*BiLiWidth);
+    self.yongJiuVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
+    self.yongJiuVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    self.yongJiuVipButton.button_lable.textColor = [UIColor whiteColor];
+    self.yongJiuVipButton.button_lable.text = @"最强王者VIP";
+    self.yongJiuVipButton.button_lable1.frame = CGRectMake(0, self.yongJiuVipButton.button_lable.top+self.yongJiuVipButton.button_lable.height+11*BiLiWidth, self.yongJiuVipButton.width, 14*BiLiWidth);
+    self.yongJiuVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.yongJiuVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+    self.yongJiuVipButton.button_lable1.textColor = [UIColor whiteColor];
+    self.yongJiuVipButton.button_lable1.text = @"永久卡";
+    [self.topScrollView addSubview:self.yongJiuVipButton];
+    
+    self.yongJiuVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+
     
     self.nianKaTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
     self.nianKaTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
@@ -257,7 +268,7 @@
     self.nianKaTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.nianKaTipLable.textColor = [UIColor whiteColor];
     self.nianKaTipLable.text = @"已拥有";
-    [nianKaVipButton addSubview:self.nianKaTipLable];
+    [self.nianKaVipButton addSubview:self.nianKaTipLable];
     
     self.yongJiuTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
     self.yongJiuTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
@@ -267,7 +278,7 @@
     self.yongJiuTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
     self.yongJiuTipLable.textColor = [UIColor whiteColor];
     self.yongJiuTipLable.text = @"已拥有";
-    [yongJiuVipButton addSubview:self.yongJiuTipLable];
+    [self.yongJiuVipButton addSubview:self.yongJiuTipLable];
 
 
     //auth_vip 2终身会员 1年会员 0非会员
@@ -275,7 +286,6 @@
     if (self.auth_vip.intValue!=1) {
         
         self.nianKaTipLable.hidden = YES;
-        self.kaiTongButton.hidden = YES;
         
     }
      if (self.auth_vip.intValue != 2)
@@ -284,10 +294,10 @@
     }
 
     
-    [self.topScrollView setContentSize:CGSizeMake(yongJiuVipButton.left+yongJiuVipButton.width+20*BiLiWidth, self.topScrollView.height)];
+    [self.topScrollView setContentSize:CGSizeMake(self.yongJiuVipButton.left+self.yongJiuVipButton.width+20*BiLiWidth, self.topScrollView.height)];
 
     
-    UIImageView * tieQuanImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-16*BiLiWidth*329/38)/2, nianKaVipButton.top+nianKaVipButton.height+36*BiLiWidth, 16*BiLiWidth*329/38, 16*BiLiWidth)];
+    UIImageView * tieQuanImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-16*BiLiWidth*329/38)/2, self.nianKaVipButton.top+self.nianKaVipButton.height+36*BiLiWidth, 16*BiLiWidth*329/38, 16*BiLiWidth)];
     tieQuanImageView.image = [UIImage imageNamed:@"huiYuan_tip"];
     [self.mainScrollView addSubview:tieQuanImageView];
     
@@ -382,8 +392,9 @@
     
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
 
-    [nianKaVipButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
+//    [self.nianKaVipButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [self nianKaVipClick];
+
 }
 -(void)nianKaVipClick
 {
@@ -407,10 +418,11 @@
     
     self.vip_type = @"vip_year";
     
-    if(self.auth_vip.intValue==1)
+    if(self.auth_vip.intValue==1 || self.auth_vip.intValue==2)
     {
         self.kaiTongButton.hidden = YES;
     }
+    
     else
     {
         self.kaiTongButton.hidden = NO;
@@ -523,19 +535,22 @@
             sureLable.textColor = [UIColor whiteColor];
             [sureButton addSubview:sureLable];
 
+            self.kaiTongButton.hidden = YES;
+
             if ([@"vip_year" isEqualToString:self.vip_type]) {
                 
                 self.nianKaTipLable.hidden = NO;
+                self.yongJiuTipLable.hidden = YES;
                 self.auth_vip = [NSNumber numberWithInt:1];
                 kaiTongHuiYuanQueRenViewTipLable.text = @"年卡会员开通成功";
 
             }
             else
             {
+                self.nianKaTipLable.hidden = YES;
                 self.yongJiuTipLable.hidden = NO;
                 self.auth_vip = [NSNumber numberWithInt:2];
                 kaiTongHuiYuanQueRenViewTipLable.text = @"永久卡会员开通成功";
-
 
             }
             
@@ -552,4 +567,38 @@
 {
     [self.kaiTongSuccessTipView removeFromSuperview];
 }
+-(void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
+{
+    if (scrollView.tag==1001) {
+        
+//        int  specialIndex = scrollView.contentOffset.x/scrollView.width;
+        
+        if (scrollView.contentOffset.x==0)
+        {
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                self.nianKaVipButton.transform = CGAffineTransformIdentity;
+                self.yongJiuVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+
+            }];
+            [self nianKaVipClick];
+        }
+        else
+        {
+            
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                self.yongJiuVipButton.transform = CGAffineTransformIdentity;
+                self.nianKaVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+
+            }];
+
+
+            [self yongJiuVipClick];
+        }
+        
+    }
+
+}
+
 @end

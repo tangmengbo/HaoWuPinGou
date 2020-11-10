@@ -28,23 +28,23 @@
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(20*BiLiWidth, 9*BiLiWidth, WIDTH_PingMu-100*BiLiWidth, 14*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x343434);
-        [self addSubview:self.titleLable];
+        [self.contentView addSubview:self.titleLable];
         
         self.timeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+7*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
         self.timeLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.timeLable.textColor = RGBFormUIColor(0x9A9A9A);
-        [self addSubview:self.timeLable];
+        [self.contentView addSubview:self.timeLable];
         
 
         self.jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-225*BiLiWidth, 25.5*BiLiWidth, 200*BiLiWidth, 15*BiLiWidth)];
         self.jinBiLable.textColor = RGBFormUIColor(0xFFA20B);
         self.jinBiLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.jinBiLable.textAlignment = NSTextAlignmentRight;
-        [self addSubview:self.jinBiLable];
+        [self.contentView addSubview:self.jinBiLable];
 
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 52*BiLiWidth-1, WIDTH_PingMu, 1)];
         lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-        [self addSubview:lineView];
+        [self.contentView addSubview:lineView];
 
     }
     return self;

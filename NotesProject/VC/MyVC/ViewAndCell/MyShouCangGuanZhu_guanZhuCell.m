@@ -29,29 +29,29 @@
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 61*BiLiWidth/2;
-        [self addSubview:self.headerImageView];
+        [self.contentView addSubview:self.headerImageView];
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+11*BiLiWidth, 19*BiLiWidth, 120*BiLiWidth, 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
-        [self addSubview:self.titleLable];
+        [self.contentView addSubview:self.titleLable];
         
         self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+10*BiLiWidth, 50*BiLiWidth, 18*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
         self.pingFenLable.textColor = RGBFormUIColor(0xFFA217);
-        [self addSubview:self.pingFenLable];
+        [self.contentView addSubview:self.pingFenLable];
         
         self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width, self.pingFenLable.top, 100*BiLiWidth, 18*BiLiWidth)];
         self.cityLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.cityLable.textColor = RGBFormUIColor(0x9A9A9A);
-        [self addSubview:self.cityLable];
+        [self.contentView addSubview:self.cityLable];
         
         self.renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.cityLable.top+self.cityLable.height+22*BiLiWidth, 45*BiLiWidth, 15*BiLiWidth)];
         self.renZhengLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.renZhengLable.textColor = RGBFormUIColor(0x666666);
         self.renZhengLable.backgroundColor = RGBFormUIColor(0xEEEEEE);
         self.renZhengLable.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:self.renZhengLable];
+        [self.contentView addSubview:self.renZhengLable];
 
         
         self.chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(self.renZhengLable.left+self.renZhengLable.width+13*BiLiWidth, self.renZhengLable.top, self.renZhengLable.width, self.renZhengLable.height)];
@@ -59,7 +59,7 @@
         self.chengJiaoLable.textColor = RGBFormUIColor(0x666666);
         self.chengJiaoLable.backgroundColor = RGBFormUIColor(0xEEEEEE);
         self.chengJiaoLable.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:self.chengJiaoLable];
+        [self.contentView addSubview:self.chengJiaoLable];
 
         self.alsoDeleteButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-100*BiLiWidth, self.titleLable.top,100*BiLiWidth,24*BiLiWidth)];
         [self.alsoDeleteButton addTarget:self action:@selector(alsoDeleteButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -72,11 +72,11 @@
         self.alsoDeleteButton.button_imageView1.frame = CGRectMake(self.alsoDeleteButton.button_imageView.left+1.5*BiLiWidth, self.alsoDeleteButton.button_imageView.top+1.5*BiLiWidth, 9*BiLiWidth, 9*BiLiWidth);
         self.alsoDeleteButton.button_imageView1.layer.cornerRadius = 4.5*BiLiWidth;
         self.alsoDeleteButton.button_imageView1.layer.masksToBounds = YES;
-        [self addSubview:self.alsoDeleteButton];
+        [self.contentView addSubview:self.alsoDeleteButton];
 
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 109*BiLiWidth-1, WIDTH_PingMu, 1)];
         lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-        [self addSubview:lineView];
+        [self.contentView addSubview:lineView];
 
         self.alsoDeleteButton.hidden = YES;
 

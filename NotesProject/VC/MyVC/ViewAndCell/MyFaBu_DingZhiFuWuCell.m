@@ -25,7 +25,7 @@
         self.contentMessageView.layer.cornerRadius = 5*BiLiWidth;
         self.contentMessageView.layer.masksToBounds = NO;
         self.contentMessageView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:self.contentMessageView];
+        [self.contentView addSubview:self.contentMessageView];
         self.contentMessageView.layer.shadowOpacity = 0.2f;
         self.contentMessageView.layer.shadowColor = [UIColor blackColor].CGColor;
         self.contentMessageView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影

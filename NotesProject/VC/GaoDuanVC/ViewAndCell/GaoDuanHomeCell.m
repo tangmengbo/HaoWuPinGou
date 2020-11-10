@@ -27,28 +27,28 @@
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView.clipsToBounds = YES;
         self.headerImageView.layer.cornerRadius = 24*BiLiWidth;
-        [self addSubview:self.headerImageView];
+        [self.contentView addSubview:self.headerImageView];
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+15*BiLiWidth, 25*BiLiWidth, 170*BiLiWidth, 14*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
-        [self addSubview:self.titleLable];
+        [self.contentView addSubview:self.titleLable];
         
         self.starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+13*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
         self.starImageView.image = [UIImage imageNamed:@"star_yellow"];
-        [self addSubview:self.starImageView];
+        [self.contentView addSubview:self.starImageView];
 
         self.starLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starImageView.left+self.starImageView.width+5*BiLiWidth, self.starImageView.top, 22*BiLiWidth, 12*BiLiWidth)];
         self.starLable.adjustsFontSizeToFitWidth = YES;
         self.starLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.starLable.textColor = RGBFormUIColor(0xF5BB61);
-        [self addSubview:self.starLable];
+        [self.contentView addSubview:self.starLable];
 
         
         self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starLable.left+self.starLable.width+12*BiLiWidth, self.starImageView.top, 60*BiLiWidth, 12*BiLiWidth)];
         self.cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.cityLable.textColor = RGBFormUIColor(0x999999);
-        [self addSubview:self.cityLable];
+        [self.contentView addSubview:self.cityLable];
         
         self.jinRuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 24*BiLiWidth, 72*BiLiWidth, 24*BiLiWidth)];
         self.jinRuButton.layer.cornerRadius = 12*BiLiWidth;
@@ -58,14 +58,14 @@
         [self.jinRuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
         self.jinRuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         [self.jinRuButton addTarget:self action:@selector(jinDianKanKanButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_jinRuButton];
+        [self.contentView addSubview:_jinRuButton];
 
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+18*BiLiWidth, WIDTH_PingMu, 132*BiLiWidth)];
-        [self addSubview:self.contentScrollView];
+        [self.contentView addSubview:self.contentScrollView];
         
         self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
         self.jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
-        [self addSubview:self.jiaoYiBaoZhengImageView];
+        [self.contentView addSubview:self.jiaoYiBaoZhengImageView];
         
         self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
         self.jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
@@ -81,7 +81,7 @@
         self.renZhengLable.adjustsFontSizeToFitWidth = YES;
         self.renZhengLable.backgroundColor = RGBFormUIColor(0xEDEDED);
         self.renZhengLable.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:self.renZhengLable];
+        [self.contentView addSubview:self.renZhengLable];
 
 
 
@@ -91,11 +91,11 @@
         self.chengJiaoLable.adjustsFontSizeToFitWidth = YES;
         self.chengJiaoLable.backgroundColor = RGBFormUIColor(0xEDEDED);
         self.chengJiaoLable.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:self.chengJiaoLable];
+        [self.contentView addSubview:self.chengJiaoLable];
 
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.chengJiaoLable.top+self.chengJiaoLable.height+20*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
         self.lineView.backgroundColor = RGBFormUIColor(0xEDEDED);
-        [self addSubview:self.lineView];
+        [self.contentView addSubview:self.lineView];
         
 
 
