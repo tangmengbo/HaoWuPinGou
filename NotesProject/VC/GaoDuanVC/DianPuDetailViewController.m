@@ -715,12 +715,18 @@
 }
 -(void)chatButtonClick
 {
-    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dianPuInfo objectForKey:@"ryuser_id"]]) {
-        
-        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                           ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
-        [self.navigationController pushViewController:chatVC animated:YES];
+    
+    if([NormalUse isValidString:[self.dianPuInfo objectForKey:@"ryuser_id"]])
+    {
+
+        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dianPuInfo objectForKey:@"ryuser_id"]]) {
+            
+            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                               ConversationType_PRIVATE targetId:[self.dianPuInfo objectForKey:@"ryuser_id"]];
+            [self.navigationController pushViewController:chatVC animated:YES];
+
+        }
 
     }
 
@@ -738,35 +744,45 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
-            JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
-            [self.view addSubview:view];
-            
-            view.toConnect = ^{
+            if([NormalUse isValidString:[self.dianPuInfo objectForKey:@"ryuser_id"]])
+            {
                 
-                [self chatButtonClick];
-            };
+                JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
+                [self.view addSubview:view];
+                
+                view.toConnect = ^{
+                    
+                    [self chatButtonClick];
+                };
+            }
 
             NSDictionary * contact = responseObject;
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            NSString * wechat = [contact objectForKey:@"wechat"];
-            NSString * qq = [contact objectForKey:@"qq"];
-            NSNumber * mobile = [contact objectForKey:@"mobile"];
+            
             NSString * lianXieFangShiStr = @"";
-            
-            if ([NormalUse isValidString:wechat]) {
+
+            if ([NormalUse isValidDictionary:contact]) {
                 
-                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
-            }
-            if ([NormalUse isValidString:qq]) {
+                NSString * wechat = [contact objectForKey:@"wechat"];
+                NSString * qq = [contact objectForKey:@"qq"];
+                NSNumber * mobile = [contact objectForKey:@"mobile"];
                 
-                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
-            }
-            
-            if ([NormalUse isValidString:mobile]) {
+                if ([NormalUse isValidString:wechat]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+                }
+                if ([NormalUse isValidString:qq]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+                }
                 
-                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
-                
+                if ([NormalUse isValidString:mobile]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                    
+                }
+
             }
             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;

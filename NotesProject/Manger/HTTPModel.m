@@ -911,7 +911,6 @@ singleton_implementation(HTTPModel)
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         
-        
         NSNumber * code = [dict objectForKey:@"code"];
         if (code.intValue==1) {
             

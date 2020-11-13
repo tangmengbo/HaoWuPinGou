@@ -226,7 +226,7 @@
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
-            NSNumber * mobile = [contact objectForKey:@"mobile"];
+            NSString * mobile = [contact objectForKey:@"mobile"];
             NSString * lianXieFangShiStr = @"";
             if ([NormalUse isValidString:wechat]) {
                 
@@ -237,9 +237,9 @@
                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
             }
             
-            if ([mobile isKindOfClass:[NSNumber class]]) {
+            if ([NormalUse isValidString:mobile]) {
                 
-                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%@",mobile]];
 
             }
             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
@@ -254,15 +254,19 @@
 }
 -(void)chatButtonClick
 {
-    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
-        
-        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                           ConversationType_PRIVATE targetId:[self.dingZhiInfo objectForKey:@"ryuser_id"]];
-        [self.navigationController pushViewController:chatVC animated:YES];
+    if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])
+    {
+        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+            
+            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                               ConversationType_PRIVATE targetId:[self.dingZhiInfo objectForKey:@"ryuser_id"]];
+            [self.navigationController pushViewController:chatVC animated:YES];
+
+        }
+
 
     }
-
 }
 
 -(void)jieSuoButtonClick
@@ -278,35 +282,44 @@
         if (status==1) {
             
             NSDictionary * contactInfo = responseObject;
-            JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
-            [self.view addSubview:view];
             
-            view.toConnect = ^{
+            if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])
+            {
+                JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
+                [self.view addSubview:view];
                 
-                [self chatButtonClick];
-            };
-
+                view.toConnect = ^{
+                    
+                    [self chatButtonClick];
+                };
+            }
             
              [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-             NSString * wechat = [contactInfo objectForKey:@"wechat"];
-             NSString * qq = [contactInfo objectForKey:@"qq"];
-             NSNumber * mobile = [contactInfo objectForKey:@"mobile"];
-             NSString * lianXieFangShiStr = @"";
-             if ([NormalUse isValidString:wechat]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
-             }
-             if ([NormalUse isValidString:qq]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
-             }
-             
-             if ([mobile isKindOfClass:[NSNumber class]]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+            
+            NSString * lianXieFangShiStr = @"";
 
-             }
+            if ([NormalUse isValidDictionary:contactInfo]) {
+                
+                NSString * wechat = [contactInfo objectForKey:@"wechat"];
+                NSString * qq = [contactInfo objectForKey:@"qq"];
+                NSString * mobile = [contactInfo objectForKey:@"mobile"];
+                if ([NormalUse isValidString:wechat]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+                }
+                if ([NormalUse isValidString:qq]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+                }
+                
+                if (([NormalUse isValidString:mobile])) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%@",mobile]];
+
+                }
+
+            }
              self.jieSuoButton.button_lable.left = 10*BiLiWidth;
              self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;

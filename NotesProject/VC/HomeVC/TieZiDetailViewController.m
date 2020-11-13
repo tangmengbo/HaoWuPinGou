@@ -179,6 +179,8 @@
 
     [scrollLunBo startCarouselWithArray:self.images];
 
+    [self.autoLabel removeFromSuperview];
+    
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
     self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
     self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
@@ -188,12 +190,6 @@
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth-40*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.messageContentView];
-    //某个角圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.messageContentView.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.messageContentView.layer.mask = maskLayer;
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
     UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 11*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
@@ -428,7 +424,7 @@
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             NSString * wechat = [contact objectForKey:@"wechat"];
             NSString * qq = [contact objectForKey:@"qq"];
-            NSNumber * mobile = [contact objectForKey:@"mobile"];
+            NSString * mobile = [contact objectForKey:@"mobile"];
             NSString * lianXieFangShiStr = @"";
             if ([NormalUse isValidString:wechat]) {
                 
@@ -439,9 +435,9 @@
                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
             }
             
-            if ([mobile isKindOfClass:[NSNumber class]]) {
+            if ([NormalUse isValidString:mobile]) {
                 
-                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%@",mobile]];
 
             }
             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
@@ -461,18 +457,31 @@
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
     [self.messageContentView addSubview:self.tipLable];
     
+    self.messageContentView.height = self.tipLable.top+self.tipLable.height+10*BiLiWidth;
+    
+    //某个角圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.messageContentView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.messageContentView.layer.mask = maskLayer;
+
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
     
 }
 -(void)chatButtonClick
 {
-    NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-    NSLog(@"%@",ryInfo);
-    if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
-        
-        RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                           ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-        [self.navigationController pushViewController:chatVC animated:YES];
+    if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+    {
+        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+        NSLog(@"%@",ryInfo);
+        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+            
+            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                               ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+            [self.navigationController pushViewController:chatVC animated:YES];
+
+        }
 
     }
 
@@ -491,39 +500,50 @@
             
             NSDictionary * contactInfo = responseObject;
             
-            JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
-            [self.view addSubview:view];
-            
-            view.toConnect = ^{
+            if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+            {
                 
-                [self chatButtonClick];
-            };
+                JieSuoSuccessTipView * view = [[JieSuoSuccessTipView alloc] initWithFrame:CGRectZero];
+                [self.view addSubview:view];
+                
+                view.toConnect = ^{
+                    
+                    [self chatButtonClick];
+                };
+            }
             
              [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-             NSString * wechat = [contactInfo objectForKey:@"wechat"];
-             NSString * qq = [contactInfo objectForKey:@"qq"];
-             NSNumber * mobile = [contactInfo objectForKey:@"mobile"];
-             NSString * lianXieFangShiStr = @"";
-             if ([NormalUse isValidString:wechat]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
-             }
-             if ([NormalUse isValidString:qq]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
-             }
-             
-             if ([mobile isKindOfClass:[NSNumber class]]) {
-                 
-                 lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+            
+            NSString * lianXieFangShiStr = @"";
 
-             }
-             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
-             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
-            self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
-             self.jieSuoButton.button_lable.text = lianXieFangShiStr;
-             self.jieSuoButton.button_lable1.text = @"";
+            if ([NormalUse isValidDictionary:contactInfo]) {
+                
+                NSString * wechat = [contactInfo objectForKey:@"wechat"];
+                NSString * qq = [contactInfo objectForKey:@"qq"];
+                NSString * mobile = [contactInfo objectForKey:@"mobile"];
+                if ([NormalUse isValidString:wechat]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"微信:%@",wechat]];
+                }
+                if ([NormalUse isValidString:qq]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  QQ:%@",qq]];
+                }
+                
+                if ([NormalUse isValidString:mobile]) {
+                    
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%@",mobile]];
+
+                }
+
+            }
+            
+            self.jieSuoButton.button_lable.left = 10*BiLiWidth;
+            self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
+           self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+            self.jieSuoButton.button_lable.text = lianXieFangShiStr;
+            self.jieSuoButton.button_lable1.text = @"";
 
             [NormalUse showToastView:@"解锁成功" view:self.view];
         }

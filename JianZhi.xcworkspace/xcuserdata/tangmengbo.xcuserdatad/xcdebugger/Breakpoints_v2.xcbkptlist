@@ -126,25 +126,9 @@
             filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "741"
-            endingLineNumber = "741"
+            startingLineNumber = "761"
+            endingLineNumber = "761"
             landmarkName = "-shouCangOrQuXiaoShouCang:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AC2B61CC-7807-4E8D-9D0A-29E9A9AF7E68"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/GaoDuanVC/SanDaJiaoSeDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
-            landmarkName = "-chatButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -190,8 +174,8 @@
             filePath = "NotesProject/Manger/HTTPModel.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3715"
-            endingLineNumber = "3715"
+            startingLineNumber = "3714"
+            endingLineNumber = "3714"
             landmarkName = "+checkZFStatus:callback:"
             landmarkType = "7">
          </BreakpointContent>
@@ -375,145 +359,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B14BEBA8-C817-4918-BC5B-0FB4CD282373"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "-getUrlByIp:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "438FE910-6DC2-4ED2-B7B7-41A76FFE5209"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/Manger/HTTPModel.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
-            landmarkName = "+getUrlListByIp:callback:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E31D7DF0-68A0-4A95-ACAD-81AD20A41592"
+            uuid = "12AA4656-8864-458A-BB38-62241E0C7CBB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "-getIpByUrl1:"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "-goInApp"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E31D7DF0-68A0-4A95-ACAD-81AD20A41592 - 4fa7828a34d97969"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GetIPAlsoCanUseViewController getIpByUrl1:]"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "135"
-                  endingLineNumber = "135"
-                  offsetFromSymbolStart = "116">
-               </Location>
-               <Location
-                  uuid = "E31D7DF0-68A0-4A95-ACAD-81AD20A41592 - a65b754ede1aa13a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__45-[GetIPAlsoCanUseViewController getIpByUrl1:]_block_invoke"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "137"
-                  endingLineNumber = "137"
-                  offsetFromSymbolStart = "84">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2FC0ECD7-4C4B-4B9D-A969-A66CB973143A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "-getUrlByIp:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D264644C-631A-4F5B-9D25-0F950E3DAACA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/Manger/HTTPModel.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
-            landmarkName = "+getUrlListByIp:callback:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D264644C-631A-4F5B-9D25-0F950E3DAACA - 7c349c87979bf606"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "+[HTTPModel getUrlListByIp:callback:]"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/Manger/HTTPModel.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "459"
-                  endingLineNumber = "459"
-                  offsetFromSymbolStart = "224">
-               </Location>
-               <Location
-                  uuid = "D264644C-631A-4F5B-9D25-0F950E3DAACA - 195e4d4d8f9565ce"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__37+[HTTPModel getUrlListByIp:callback:]_block_invoke"
-                  moduleName = "YoYo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tangmengbo/Desktop/WaiBU/%E5%A5%BD%E7%89%A9%E6%8B%BC%E8%B4%AD/HaoWuPinGou/NotesProject/Manger/HTTPModel.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "461"
-                  endingLineNumber = "461"
-                  offsetFromSymbolStart = "64">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
