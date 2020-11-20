@@ -62,9 +62,10 @@
     [headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.info objectForKey:@"avatar"]]];
     [self.mainScrollView addSubview:headerImageView];
     
-    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+22*BiLiWidth, 200*BiLiWidth, 15*BiLiWidth)];
+    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, self.pageControl.top+self.pageControl.height+22*BiLiWidth, 250*BiLiWidth, 15*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     nickLable.textColor = RGBFormUIColor(0x343434);
+    nickLable.adjustsFontSizeToFitWidth = YES;
     nickLable.text = [self.info objectForKey:@"nickname"];
     [self.mainScrollView addSubview:nickLable];
     
@@ -325,6 +326,52 @@
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
     
     NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    
+    if (subIndex==-1) {
+        subIndex = subIndex+1;
+    }
+    
+    NSMutableArray * photos = [NSMutableArray array];
+    
+    NSArray * images = self.images;
+    if ([NormalUse isValidArray:images]) {
+        
+        for (int i=0;i<images.count;i++) {
+            
+            MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[images objectAtIndex:i]]];
+            [photos addObject:photo];
+        }
+
+    }
+    
+//    NSArray * videos = [self.tieZiInfo objectForKey:@"videos"];
+//    if ([NormalUse isValidArray:videos]) {
+//        for (int i=0;i<videos.count;i++) {
+//            NSDictionary * info = [videos objectAtIndex:i];
+//            if ([NormalUse isValidString:[info objectForKey:@"fframe"]]) {
+//
+//                MWPhoto * photo = [MWPhoto photoWithURL:[NSURL URLWithString:[info objectForKey:@"fframe"]]];
+//                photo.videoURL = [NSURL URLWithString:[info objectForKey:@"url"]];
+//                [photos addObject:photo];
+//
+//            }
+//        }
+//
+//    }
+
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+    browser.displayActionButton = NO;
+    browser.alwaysShowControls = NO;
+    browser.displaySelectionButtons = NO;
+    browser.zoomPhotosToFill = YES;
+    browser.displayNavArrows = NO;
+    browser.startOnGrid = NO;
+    browser.enableGrid = YES;
+    [browser setCurrentPhotoIndex:subIndex];
+    [[NormalUse getCurrentVC].navigationController pushViewController:browser animated:YES];
+
+ 
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {

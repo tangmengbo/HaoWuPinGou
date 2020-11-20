@@ -1004,7 +1004,7 @@
         jiaoBiaoLable.textColor = RGBFormUIColor(0xFFFFFF);
         jiaoBiaoLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         jiaoBiaoLable.adjustsFontSizeToFitWidth = YES;
-        jiaoBiaoLable.text = [info objectForKey:@"city_name"];
+        jiaoBiaoLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
         [contentView addSubview:jiaoBiaoLable];
 
         

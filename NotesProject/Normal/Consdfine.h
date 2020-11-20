@@ -16,14 +16,14 @@
 #pragma mark 接口 生产
 
 //融云key
-#define RYKey @"k51hidwqkg02b"//@"kj7swf8oknol2"
+#define RYKey @"tdrvipkst2ml5"//@"kj7swf8oknol2"
 #define HTTP_REQUESTURL @"http://yzjs.yingheyezi.com/wh/"
 
 
 
 #else
 #pragma mark 接口 测试
-#define RYKey @"k51hidwqkg02b"
+#define RYKey @"tdrvipkst2ml5"
 #define HTTP_REQUESTURL     [NormalUse defaultsGetObjectKey:APPUrlRequestDefults]
 #define HTTP_FileUpload [NormalUse defaultsGetObjectKey:@"UploadYuMingDefaults"]
 #endif

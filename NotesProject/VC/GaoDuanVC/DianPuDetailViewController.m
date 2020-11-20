@@ -289,7 +289,6 @@
                 [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
 
             }
-            self.artist_list = [NSMutableArray array];
             for (NSDictionary * info in array) {
                 
                 [self.artist_list addObject:info];
@@ -415,11 +414,12 @@
         }
 
 
-        CGSize titleSize = [NormalUse setSize:[self.dianPuInfo objectForKey:@"name"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
-        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+9.5*BiLiWidth, headerImageView.top+7*BiLiWidth, titleSize.width, 17*BiLiWidth)];
+//        CGSize titleSize = [NormalUse setSize:[self.dianPuInfo objectForKey:@"name"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.width+headerImageView.left+9.5*BiLiWidth, headerImageView.top+7*BiLiWidth, WIDTH_PingMu-(headerImageView.width+headerImageView.left+9.5*BiLiWidth+84*BiLiWidth+5), 17*BiLiWidth)];
         titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         titleLable.textColor = RGBFormUIColor(0x333333);
         titleLable.text  = [self.dianPuInfo objectForKey:@"name"];
+        titleLable.adjustsFontSizeToFitWidth = YES;
         [headerView addSubview:titleLable];
         
         UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];

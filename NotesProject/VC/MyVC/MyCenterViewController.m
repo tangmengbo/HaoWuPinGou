@@ -248,13 +248,13 @@
                 {
                     self.messageLable.text = @"永久卡";
 
-                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
+                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yongJiuVip_new"] forState:UIControlStateNormal];
                     
                     self.huiYuanTitleLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
 
-                    self.huiYuanTitleLable.text = @"会员到期时间";
-                    self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
+                    self.huiYuanTitleLable.text = @"";//@"会员到期时间";
+                    self.huiYuanDaoQiLable.text = @"";//[self.userInfo objectForKey:@"vip_expiration_date"];
 
                 }
             }
@@ -389,24 +389,30 @@
     
     UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top, self.huiYuanButton.width, self.huiYuanButton.height)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
+//    [chongZhiButton setBackgroundColor:RGBFormUIColor(0x403b3f)];
     [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    chongZhiButton.layer.cornerRadius = 5*BiLiWidth;
     [self.mainScrollView addSubview:chongZhiButton];
-
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 20*BiLiWidth, 70*BiLiWidth, 14*BiLiWidth)];
-    tipLable.textColor = RGBFormUIColor(0x5d3f14);
-    tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    tipLable.text = @"金币充值";
-    [chongZhiButton addSubview:tipLable];
-
+    
+//    UIImageView *  jinBiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*BiLiWidth, (chongZhiButton.height-39*BiLiWidth)/2, 39*BiLiWidth, 39*BiLiWidth)];
+//    jinBiImageView.image = [UIImage imageNamed:@"chongZhi_jinBi"];
+//    [chongZhiButton addSubview:jinBiImageView];
+//
+//    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 20*BiLiWidth, 70*BiLiWidth, 14*BiLiWidth)];
+//    tipLable.textColor = [UIColor whiteColor];//RGBFormUIColor(0x5d3f14);
+//    tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//    tipLable.text = @"金币充值";
+//    [chongZhiButton addSubview:tipLable];
+//
     UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 44.5*BiLiWidth, 30*BiLiWidth, 17*BiLiWidth)];
-    tipLable1.textColor = RGBFormUIColor(0x5d3f14);
+    tipLable1.textColor = [UIColor whiteColor];//RGBFormUIColor(0x5d3f14);
     tipLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    tipLable1.text = @"余额:";
+    tipLable1.text = @"";//@"余额:";
     [chongZhiButton addSubview:tipLable1];
 
     
     self.yuELable = [[UILabel alloc] initWithFrame:CGRectMake(tipLable1.left+tipLable1.width, 44.5*BiLiWidth-2*BiLiWidth, 58*BiLiWidth, 17*BiLiWidth)];
-    self.yuELable.textColor = RGBFormUIColor(0xb44a10);
+    self.yuELable.textColor = RGBFormUIColor(0xf2c517);
     self.yuELable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.yuELable.adjustsFontSizeToFitWidth = YES;
     [chongZhiButton addSubview:self.yuELable];

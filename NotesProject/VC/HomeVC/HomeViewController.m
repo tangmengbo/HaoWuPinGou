@@ -731,7 +731,7 @@
             [NormalUse defaultsSetObject:responseObject forKey:CurrentCity];
         }];
 
-        self.locationLable.text = @"全部";
+        self.locationLable.text = @"选择城市";
 
     }
 
