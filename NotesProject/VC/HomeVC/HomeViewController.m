@@ -508,6 +508,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self setLocationStr];
+    
     [self xianShiTabBar];
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
@@ -551,6 +553,20 @@
     }
     
     
+}
+-(void)setLocationStr
+{
+    NSDictionary * info = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
+    if ([NormalUse isValidDictionary:info]) {
+        
+        self.locationLable.text = [info objectForKey:@"cityName"];
+        
+    }
+    else
+    {
+        self.locationLable.text = @"选择城市";
+        
+    }
 }
 -(void)registerInit
 {
@@ -626,15 +642,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-//    [JCHttpInterface jcAppLoginWithUserName:@"tmb"  userID: @"123456" userClass:1 userNickName:@"来了" userHeaderPic:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602496626981&di=0faae1dc632c840ca6566ac970dec38f&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853"  module: 1 sucess:^(id _Nullable any) {
-//        NSLog(@"login success");
-//        JCMallViewController *mainCtl = [[JCMallViewController alloc]init];
-//        [self.navigationController pushViewController:mainCtl animated:YES];
-//    } failed:^(id _Nullable err) {
-//        NSLog(@"login failure %@",err);
-//    }];
-    
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
+
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"YYYY-MM-dd"];
@@ -1731,12 +1741,16 @@
         [NormalUse defaultsSetObject:info forKey:@"CityInfoDefaults"];
 
     }
-    
+    [self reloadNewLsit];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityChangeReloadMessageNotification" object:nil];
+}
+-(void)reloadNewLsit
+{
     [self firstGetTieZiList];
     [self firstGetRedList];
     [self firstGetYanZhengBangDanList];
     [self firstGetYanCheBaoGaoList];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityChangeReloadMessageNotification" object:nil];
+
 }
 -(void)tiYanBaoGaoButtonClick
 {

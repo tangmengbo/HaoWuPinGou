@@ -133,6 +133,8 @@
 		5FC1658A2519F54800FA99D2 /* HomeShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */; };
 		5FC6816F251D81320030E0D9 /* HeiDianDetailPingJiaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC6816E251D81320030E0D9 /* HeiDianDetailPingJiaCell.m */; };
 		5FC7AD8C24D0080000EEEC66 /* SimulateIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */; };
+		5FCC70D8256BBE4200CC68A8 /* ForeignCityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC70D7256BBE4200CC68A8 /* ForeignCityListViewController.m */; };
+		5FCC70DB256BCE1000CC68A8 /* ForeignCityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC70DA256BCE1000CC68A8 /* ForeignCityListCell.m */; };
 		5FD4143F2522D448004265E8 /* HeiDianBaoGuangListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD4143E2522D448004265E8 /* HeiDianBaoGuangListCell.m */; };
 		5FD414422522E10B004265E8 /* DianPuKePingJiaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD414412522E10B004265E8 /* DianPuKePingJiaViewController.m */; };
 		5FD8503525079C6F009286CE /* CreateTieZiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8503425079C6F009286CE /* CreateTieZiViewController.m */; };
@@ -462,6 +464,10 @@
 		5FC6816E251D81320030E0D9 /* HeiDianDetailPingJiaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianDetailPingJiaCell.m; sourceTree = "<group>"; };
 		5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulateIDFA.m; sourceTree = "<group>"; };
 		5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulateIDFA.h; sourceTree = "<group>"; };
+		5FCC70D6256BBE4200CC68A8 /* ForeignCityListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForeignCityListViewController.h; sourceTree = "<group>"; };
+		5FCC70D7256BBE4200CC68A8 /* ForeignCityListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForeignCityListViewController.m; sourceTree = "<group>"; };
+		5FCC70D9256BCE1000CC68A8 /* ForeignCityListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForeignCityListCell.h; sourceTree = "<group>"; };
+		5FCC70DA256BCE1000CC68A8 /* ForeignCityListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForeignCityListCell.m; sourceTree = "<group>"; };
 		5FD4143D2522D448004265E8 /* HeiDianBaoGuangListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeiDianBaoGuangListCell.h; sourceTree = "<group>"; };
 		5FD4143E2522D448004265E8 /* HeiDianBaoGuangListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeiDianBaoGuangListCell.m; sourceTree = "<group>"; };
 		5FD414402522E10B004265E8 /* DianPuKePingJiaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianPuKePingJiaViewController.h; sourceTree = "<group>"; };
@@ -622,6 +628,8 @@
 				5F2650C524FC8B5600171684 /* TieZiDetailViewController.m */,
 				5F34DCF924F38E6700DE15A1 /* CityListViewController.h */,
 				5F34DCFA24F38E6700DE15A1 /* CityListViewController.m */,
+				5FCC70D6256BBE4200CC68A8 /* ForeignCityListViewController.h */,
+				5FCC70D7256BBE4200CC68A8 /* ForeignCityListViewController.m */,
 				5F45D55325301B1E007F207C /* WKWebViewController.h */,
 				5F45D55425301B1E007F207C /* WKWebViewController.m */,
 				5F34DCDE24EF744900DE15A1 /* TiYanBaoGaoViewController.h */,
@@ -841,6 +849,8 @@
 				5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */,
 				5FBAD7CC251C6986004C153E /* CityListCell.h */,
 				5FBAD7CD251C6986004C153E /* CityListCell.m */,
+				5FCC70D9256BCE1000CC68A8 /* ForeignCityListCell.h */,
+				5FCC70DA256BCE1000CC68A8 /* ForeignCityListCell.m */,
 			);
 			path = VIewAndCell;
 			sourceTree = "<group>";
@@ -1592,6 +1602,7 @@
 				5F91C46B24E6895200E835AB /* AFAppDotNetAPIClient.m in Sources */,
 				5F9FE4C725202814001359CB /* EditDianPuShangPinListViewController.m in Sources */,
 				5F34DCC924EE4E2600DE15A1 /* GaoDuanHomeCell.m in Sources */,
+				5FCC70DB256BCE1000CC68A8 /* ForeignCityListCell.m in Sources */,
 				5F7ED859251B22F300D23823 /* EditUserMessageViewController.m in Sources */,
 				5FD4143F2522D448004265E8 /* HeiDianBaoGuangListCell.m in Sources */,
 				5F6858CA250B476B007BDA9E /* MyJieSuoListViewController.m in Sources */,
@@ -1601,6 +1612,7 @@
 				5F22EBCA24ECF39E002DCF61 /* XiaoXiViewController.m in Sources */,
 				5F6673542510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m in Sources */,
 				5FE3EC0C2355A3E400C77F4D /* LLImagePickerView.m in Sources */,
+				5FCC70D8256BBE4200CC68A8 /* ForeignCityListViewController.m in Sources */,
 				5F9D960125404E9E002599B6 /* JieSuoSuccessTipView.m in Sources */,
 				5F084FA7251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m in Sources */,
 				5FDA455C2490EA0A00130D1E /* MyNavigationViewController.m in Sources */,

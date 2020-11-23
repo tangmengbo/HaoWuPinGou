@@ -78,6 +78,7 @@
 
 #import "CreateTieZiKouFeiViewController.h"
 
+#import "ForeignCityListViewController.h"
 #import "CityListViewController.h"
 #import "LeiXiangSelectViewController.h"
 #import "CreateDingZhiFuWuViewController.h"

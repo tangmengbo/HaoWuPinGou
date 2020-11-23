@@ -35,6 +35,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;//设置状态栏文字颜色
     
     [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
+    [NormalUse defaultsSetObject:nil forKey:@"ForeignCityInfoDefaults"];
 
     [self setIPAlsoCanUseTabbar];
     

@@ -47,7 +47,8 @@
     }];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewLsit) name:@"cityChangeReloadQuanQiuPeiWanMessageNotification" object:nil];
+    
 }
 -(void)initContentView
 {
@@ -137,6 +138,14 @@
         
         [info setObject:self.field forKey:@"field"];
     }
+    
+    NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"ForeignCityInfoDefaults"];
+    if ([NormalUse isValidDictionary:cityInfo]) {
+        
+        NSNumber * cityCode = [cityInfo objectForKey:@"cityCode"];
+        [info setObject:cityCode forKey:@"cityCode"];
+    }
+
     [HTTPModel getSanDaGirlList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -168,11 +177,17 @@
 -(void)loadMoreList
 {
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    [info setObject:@"2" forKey:@"type_id"];
+    [info setObject:@"3" forKey:@"type_id"];
     [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     if ([NormalUse isValidString:self.field]) {
         
         [info setObject:self.field forKey:@"field"];
+    }
+    NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:@"ForeignCityInfoDefaults"];
+    if ([NormalUse isValidDictionary:cityInfo]) {
+        
+        NSNumber * cityCode = [cityInfo objectForKey:@"cityCode"];
+        [info setObject:cityCode forKey:@"cityCode"];
     }
 
 

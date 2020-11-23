@@ -11,7 +11,7 @@
 #import "GaoDuanShaiXuanView.h"
 #import "JiaoSeWeiRenZhengFaTieVC.h"
 
-@interface GaoDuanViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface GaoDuanViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,ForeignCityListViewControllerDelegate,CityListViewControllerDelegate>
 {
     NvShenListViewController * nvShenListVC;
     WaiWeiListViewController * waiWeiVC;
@@ -207,7 +207,7 @@
 {
     [super viewWillAppear:animated];
     [self xianShiTabBar];
-    
+    [self setLocationStr];
     //获取当前用户角色
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
@@ -251,6 +251,90 @@
 
     }
 }
+-(void)setLocationStr
+{
+    if ((int)(self.contentScrollView.contentOffset.x/WIDTH_PingMu)==3) {
+        
+        NSDictionary * info = [NormalUse defaultsGetObjectKey:@"ForeignCityInfoDefaults"];
+        if ([NormalUse isValidDictionary:info]) {
+            
+           self.locationLable.text = [info objectForKey:@"cityName"];
+
+        }
+        else
+        {
+            self.locationLable.text = @"选择城市";
+
+        }
+    }
+    else
+    {
+        NSDictionary * info = [NormalUse defaultsGetObjectKey:@"CityInfoDefaults"];
+        if ([NormalUse isValidDictionary:info]) {
+            
+            self.locationLable.text = [info objectForKey:@"cityName"];
+
+        }
+        else
+        {
+            self.locationLable.text = @"选择城市";
+
+        }
+
+    }
+
+}
+-(void)shaiXuanButtonClick
+{
+    if (self.contentScrollView.contentOffset.x/WIDTH_PingMu==3) {
+        
+        ForeignCityListViewController * vc = [[ForeignCityListViewController alloc] init];
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+    else
+    {
+        CityListViewController * vc = [[CityListViewController alloc] init];
+        vc.alsoFromHome = YES;
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+}
+-(void)foreignCitySelect:(NSDictionary *)info
+{
+    self.locationLable.text = [info objectForKey:@"cityName"];
+    NSString * cityCode = [info objectForKey:@"cityCode"];
+    if (cityCode.intValue==-1001) {
+        
+        [NormalUse defaultsSetObject:nil forKey:@"ForeignCityInfoDefaults"];
+    }
+    else
+    {
+        [NormalUse defaultsSetObject:info forKey:@"ForeignCityInfoDefaults"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityChangeReloadQuanQiuPeiWanMessageNotification" object:nil];
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.locationLable.text = [info objectForKey:@"cityName"];
+    NSString * cityCode = [info objectForKey:@"cityCode"];
+    if (cityCode.intValue==-1001) {
+        
+        [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
+
+    }
+    else
+    {
+        [NormalUse defaultsSetObject:info forKey:@"CityInfoDefaults"];
+
+    }
+    [self loadNewLsit];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityChangeReloadMessageNotification" object:nil];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -259,6 +343,22 @@
     self.backImageView.hidden = YES;
     self.lineView.hidden = YES;
     
+    self.topNavView.hidden = NO;
+    UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
+    locationImageView.image = [UIImage imageNamed:@"home_location"];
+    [self.topNavView addSubview:locationImageView];
+    
+    self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 150*BiLiWidth, locationImageView.height)];
+    self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.locationLable.adjustsFontSizeToFitWidth = YES;
+    self.locationLable.textColor = RGBFormUIColor(0x333333);
+    self.locationLable.text = @"选择城市";
+    [self.topNavView addSubview:self.locationLable];
+    
+    UIButton * citySelectButton = [[UIButton alloc] initWithFrame:CGRectMake(locationImageView.left, locationImageView.top, 200*BiLiWidth, locationImageView.height)];
+    [citySelectButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.topNavView addSubview:citySelectButton];
+
     self.listButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
     float originx = 20*BiLiWidth;
@@ -266,31 +366,17 @@
     for (int i=0; i<array.count; i++) {
         
         UIButton * button;
-//        if (i==0) {
-            
-            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
-            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,TopHeight_PingMu+25*BiLiWidth, size.width, 17*BiLiWidth)];
-            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-
-
-//        }
-//        else
-//        {
-//            size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:14*BiLiWidth];
-//            button  = [[UIButton alloc] initWithFrame:CGRectMake(originx, TopHeight_PingMu+27*BiLiWidth, size.width, 14*BiLiWidth)];
-//            [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
-//            [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
-//            button.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
-//
-//
-//        }
+        
+        size  = [NormalUse setSize:[array objectAtIndex:i] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+        button  = [[UIButton alloc] initWithFrame:CGRectMake(originx,self.topNavView.top+self.topNavView.height, size.width, 17*BiLiWidth)];
+        [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+        [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         if (i==0) {
             
             button.transform = CGAffineTransformMakeScale(1.3, 1.3);
         }
-
+        
         button.tag = i;
         [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
@@ -299,7 +385,7 @@
         [self.listButtonArray addObject:button];
     }
     
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(10.5*BiLiWidth,TopHeight_PingMu+37*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(10.5*BiLiWidth,TopHeight_PingMu+57*BiLiWidth,53*BiLiWidth,7*BiLiWidth)];
     self.sliderView.layer.cornerRadius = 7*BiLiWidth/2;
     self.sliderView.layer.masksToBounds = YES;
     self.sliderView.alpha = 0.8;
@@ -317,7 +403,7 @@
     [self.sliderView.layer addSublayer:gradientLayer];
 
 
-    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, TopHeight_PingMu+58*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(TopHeight_PingMu+58*BiLiWidth+BottomHeight_PingMu))];
+    self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.sliderView.top+self.sliderView.height+5*BiLiWidth, WIDTH_PingMu, HEIGHT_PingMu-(self.sliderView.top+self.sliderView.height+5*BiLiWidth+BottomHeight_PingMu))];
     [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu*array.count, self.contentScrollView.height)];
     self.contentScrollView.pagingEnabled = YES;
     self.contentScrollView.tag = 1001;
@@ -353,7 +439,7 @@
     [self.contentScrollView addSubview:peiWanVC.view];
 
 
-    self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height+5*BiLiWidth, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
+    self.itemButtonContentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.sliderView.top+self.sliderView.height+5*BiLiWidth, WIDTH_PingMu, 14.5*BiLiWidth*2+12*BiLiWidth)];
     self.itemButtonContentView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.itemButtonContentView];
     
@@ -498,7 +584,7 @@
 #pragma mark--顶部按钮点击
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
-    [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
+    [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:NO];
     for (int i=0; i<self.listButtonArray.count; i++) {
         
         UIButton * button = [self.listButtonArray objectAtIndex:i];
@@ -531,7 +617,10 @@
         self.itemButtonContentView.hidden = YES;
 
     }
+    
+    [self setLocationStr];
 }
+
 #pragma mark--经纪人认证 女神认证 全国空降 陪玩
 
 -(void)jingJiRenRenZhengButtonClick:(UIButton *)button
