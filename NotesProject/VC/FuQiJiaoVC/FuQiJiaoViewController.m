@@ -397,24 +397,20 @@
             
             int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
 
-            if (index==0) {
+            int cellNumber;
+            if (sourceArray.count%2==0) {
                 
-                int cellNumber;
-                if (sourceArray.count%2==0) {
-                    
-                    cellNumber = (int)sourceArray.count/2;
-                }
-                else
-                {
-                    cellNumber = (int)sourceArray.count/2+1;
-                }
-                tableView.height = cellNumber*200*BiLiWidth;
-                [self setTableViewHeightAndScollViewContentSize:tableView];
-
+                cellNumber = (int)sourceArray.count/2;
             }
+            else
+            {
+                cellNumber = (int)sourceArray.count/2+1;
+            }
+            tableView.height = cellNumber*200*BiLiWidth;
 
-            
-            
+            if (index==0) {
+                [self setTableViewHeightAndScollViewContentSize:tableView];
+            }
         }
         
     }];
@@ -451,23 +447,22 @@
             
             int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
 
+            int cellNumber;
+            if (sourceArray.count%2==0) {
+                
+                cellNumber = (int)sourceArray.count/2;
+            }
+            else
+            {
+                cellNumber = (int)sourceArray.count/2+1;
+            }
+            tableView.height = cellNumber*200*BiLiWidth;
+
             if (index==1) {
                 
-                int cellNumber;
-                if (sourceArray.count%2==0) {
-                    
-                    cellNumber = (int)sourceArray.count/2;
-                }
-                else
-                {
-                    cellNumber = (int)sourceArray.count/2+1;
-                }
-                tableView.height = cellNumber*200*BiLiWidth;
                 [self setTableViewHeightAndScollViewContentSize:tableView];
 
             }
-
-
         }
         
     }];
@@ -526,18 +521,19 @@
 
                 int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
 
+                int cellNumber;
+                if (sourceArray.count%2==0) {
+                    
+                    cellNumber = (int)sourceArray.count/2;
+                }
+                else
+                {
+                    cellNumber = (int)sourceArray.count/2+1;
+                }
+                tableView.height = cellNumber*200*BiLiWidth;
+
                 if (index==0) {
                     
-                    int cellNumber;
-                    if (sourceArray.count%2==0) {
-                        
-                        cellNumber = (int)sourceArray.count/2;
-                    }
-                    else
-                    {
-                        cellNumber = (int)sourceArray.count/2+1;
-                    }
-                    tableView.height = cellNumber*200*BiLiWidth;
                     [self setTableViewHeightAndScollViewContentSize:tableView];
 
                 }
@@ -583,19 +579,18 @@
                 [tableView reloadData];
                 
                 int index = self.contentScrollView.contentOffset.x/WIDTH_PingMu;
-
+                int cellNumber;
+                if (sourceArray.count%2==0) {
+                    
+                    cellNumber = (int)sourceArray.count/2;
+                }
+                else
+                {
+                    cellNumber = (int)sourceArray.count/2+1;
+                }
+                tableView.height = cellNumber*200*BiLiWidth;
                 if (index==1) {
                     
-                    int cellNumber;
-                    if (sourceArray.count%2==0) {
-                        
-                        cellNumber = (int)sourceArray.count/2;
-                    }
-                    else
-                    {
-                        cellNumber = (int)sourceArray.count/2+1;
-                    }
-                    tableView.height = cellNumber*200*BiLiWidth;
                     [self setTableViewHeightAndScollViewContentSize:tableView];
 
                 }
