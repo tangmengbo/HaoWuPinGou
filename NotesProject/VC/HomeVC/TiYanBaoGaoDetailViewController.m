@@ -101,7 +101,7 @@
     UILabel * leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-16.5*BiLiWidth-200*BiLiWidth, leiXingTipLable.top, 200*BiLiWidth, 39.5*BiLiWidth)];
     leiXingLable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     leiXingLable.textColor  = RGBFormUIColor(0x343434);
-    leiXingLable.text = [self.info objectForKey:@"service_type"];
+    leiXingLable.text = [self.info objectForKey:@"message_type"];
     leiXingLable.textAlignment = NSTextAlignmentRight;
     [self.mainScrollView addSubview:leiXingLable];
 

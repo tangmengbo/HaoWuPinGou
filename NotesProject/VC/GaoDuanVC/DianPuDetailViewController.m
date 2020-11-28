@@ -603,7 +603,7 @@
 
                 NSString * wechat = [contact objectForKey:@"wechat"];
                 NSString * qq = [contact objectForKey:@"qq"];
-                NSNumber * mobile = [contact objectForKey:@"mobile"];
+                NSString * mobile = [contact objectForKey:@"mobile"];
                 NSString * lianXieFangShiStr = @"";
                 if ([NormalUse isValidString:wechat]) {
                     
@@ -616,7 +616,7 @@
                 
                 if ([NormalUse isValidString:mobile]) {
                     
-                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
+                    lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%@",mobile]];
                     
                 }
                 self.jieSuoButton.button_lable.left = 10*BiLiWidth;

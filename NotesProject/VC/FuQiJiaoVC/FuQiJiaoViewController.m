@@ -368,7 +368,7 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"time",@"order", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page",@"time",@"order", nil]
                    callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         [self.mainScrollView.mj_header endRefreshing];
@@ -424,13 +424,12 @@
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
     
-    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"apge",@"hot",@"order", nil]
+    [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"page",@"hot",@"order", nil]
                  callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         [self.mainScrollView.mj_header endRefreshing];
 
         if (status==1) {
-            
             NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
             [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
 
@@ -495,7 +494,7 @@
         
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:0];
 
-        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge",@"time",@"order", nil]
+        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page",@"time",@"order", nil]
                        callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
@@ -554,7 +553,7 @@
     {
         
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:1];
-        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"apge",@"hot",@"order", nil]
+        [HTTPModel getFuQiJiaoList:[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue],@"page",@"hot",@"order", nil]
                      callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {

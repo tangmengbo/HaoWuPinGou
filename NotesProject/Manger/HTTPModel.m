@@ -456,7 +456,7 @@ singleton_implementation(HTTPModel)
 {
     NSString *url = [NSString stringWithFormat:@"http://%@:8089/appi/common/getSiteUrls",[parameter objectForKey:@"uri"]];
     
-    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+    [HTTPModel IPByUrlGET:url parameters:parameter progress:^(NSProgress * progress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         

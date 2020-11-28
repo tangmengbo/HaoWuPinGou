@@ -505,6 +505,16 @@
 }
 -(void)loadNewLsit
 {
+    [HTTPModel getGuanFangTuiJianDianPu:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.guanFangTuiJianDianPuArray = responseObject;
+            [self.mainTableView reloadData];
+            
+        }
+    }];
+
     page = 1;
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
@@ -522,7 +532,7 @@
         
         if (status==1) {
             
-            self->page++;
+            self->page = self->page+1;
             NSArray * dataArray = [responseObject objectForKey:@"data"];
             self.jingJiRenListArray = [[NSMutableArray alloc] initWithArray:dataArray];
             [self.mainTableView.mj_header endRefreshing];
@@ -543,7 +553,6 @@
 }
 -(void)loadMoreList
 {
-    page = 1;
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
     [info setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     if ([NormalUse isValidString:self.field]) {
@@ -555,13 +564,11 @@
         [info setObject:self.order forKey:@"order"];
 
     }
-
-
-    [HTTPModel getJingJiRenList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel getJingJiRenList:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
-            
+            self->page = self->page+1;
             NSArray * dataArray = [responseObject objectForKey:@"data"];
             for (NSDictionary * info in dataArray) {
                 
