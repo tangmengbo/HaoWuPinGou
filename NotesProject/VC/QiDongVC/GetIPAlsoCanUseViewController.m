@@ -198,6 +198,8 @@
     [HTTPModel getUrlListByIp:[[NSDictionary alloc]initWithObjectsAndKeys:ipStr,@"uri", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
+            
+            [NormalUse defaultsSetObject:[responseObject objectForKey:@"ios_pkg"] forKey:@"ios_pkg"];
             self.urlSourceArray2 = [responseObject objectForKey:@"main_site"];
             [NormalUse defaultsSetObject:[responseObject objectForKey:@"res_site"] forKey:@"UploadYuMingDefaults"];
             //如果根据self.ipArray1中的ip获取到了对的url数组self.urlSourceArray2,则根据self.urlSourceArray2中的url获取ip数组self.ipArray2
@@ -437,7 +439,7 @@
     {
 //
         //未登录用户先 获取初始化账号
-        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
