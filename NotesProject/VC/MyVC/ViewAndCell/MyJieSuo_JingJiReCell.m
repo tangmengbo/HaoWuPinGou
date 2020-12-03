@@ -75,8 +75,9 @@
 {
     if ([[info objectForKey:@"image"] isKindOfClass:[NSString class]]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
-        
+      // [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
     }
     
     self.titleLable.text = [info objectForKey:@"name"];

@@ -96,7 +96,9 @@
     NSDictionary * userinfo = [info objectForKey:@"userinfo"];
     if ([NormalUse isValidDictionary:userinfo]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]]];
+       // [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]]];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         self.titleLable.text = [userinfo objectForKey:@"nickname"];
 
     }

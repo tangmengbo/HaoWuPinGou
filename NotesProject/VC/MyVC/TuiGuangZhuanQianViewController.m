@@ -52,9 +52,8 @@
     tipLable.text = [NSString stringWithFormat:@"每成功邀请1名用户注册，获得%@金币，同时邀请的用户消费金币时您可获得高额抽成",[NormalUse getJinBiStr:@"share_coin"]] ;
     [self.mainScrollView addSubview:tipLable];
     
-    
     UIImageView * erWeiMaImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-103*BiLiWidth)/2, tipLable.top+tipLable.height+26*BiLiWidth, 103*BiLiWidth, 103*BiLiWidth)];
-    erWeiMaImageView.image = [NormalUse shengChengErWeiMa:[NormalUse defaultsGetObjectKey:@"ios_pkg"]];
+    erWeiMaImageView.image = [NormalUse shengChengErWeiMa:[NSString stringWithFormat:@"%@?share_code=%@",[NormalUse defaultsGetObjectKey:@"ios_pkg"],self.share_code]];
     [self.mainScrollView addSubview:erWeiMaImageView];
     
     UILabel * tuiGuangMaLable = [[UILabel alloc] initWithFrame:CGRectMake(0, erWeiMaImageView.top+erWeiMaImageView.height+28*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];

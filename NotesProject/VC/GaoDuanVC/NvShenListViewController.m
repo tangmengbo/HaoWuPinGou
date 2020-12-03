@@ -360,8 +360,10 @@
     }
     //在这里下载网络图片
           NSDictionary * info = [self.bannerArray objectAtIndex:index];
-          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
-//    bannerView.mainImageView.image = self.imageArray[index];
+          //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+    
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]] placeholderImage:[UIImage imageNamed:@"banner_kong"]];
+
     
     return bannerView;
 }

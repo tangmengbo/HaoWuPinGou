@@ -123,12 +123,16 @@
     if ([NormalUse isValidArray:[info1 objectForKey:@"images"]]) {
         
         NSArray * images = [info1 objectForKey:@"images"];
-        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+       // [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         
     }
     else if ([NormalUse isValidString:[info1 objectForKey:@"images"]])
     {
-        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
+       // [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
+        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
     }
     
     NSString * titleStr = [NormalUse getobjectForKey:[info1 objectForKey:@"city_name"]];
@@ -149,12 +153,15 @@
         if ([NormalUse isValidArray:[info2 objectForKey:@"images"]]) {
             
             NSArray * images = [info2 objectForKey:@"images"];
-            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
-            
+           // [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
         else if ([NormalUse isValidString:[info2 objectForKey:@"images"]])
         {
-            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
+            //[self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
         
         NSString * titleStr = [NormalUse getobjectForKey:[info2 objectForKey:@"city_name"]];

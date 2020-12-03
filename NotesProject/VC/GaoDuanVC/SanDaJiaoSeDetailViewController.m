@@ -142,7 +142,7 @@
         carouselConfig.pageContollType = MiddlePageControl;
         carouselConfig.pageTintColor = [UIColor whiteColor];
         carouselConfig.currentPageTintColor = [UIColor lightGrayColor];
-        carouselConfig.placeholder = [UIImage imageNamed:@"default"];
+        carouselConfig.placeholder = [UIImage imageNamed:@"banner_kong"];
         carouselConfig.faileReloadTimes = 5;
         carouselConfig.contentMode = UIViewContentModeScaleAspectFill;
         return carouselConfig;

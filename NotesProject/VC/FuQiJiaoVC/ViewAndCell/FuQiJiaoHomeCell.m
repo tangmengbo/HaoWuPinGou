@@ -95,16 +95,18 @@
     self.info1 = info1;
     if ([[info1 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
-        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
-        
+       // [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]]];
+        [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[info1 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
     }
     if ([[info1 objectForKey:@"images"] isKindOfClass:[NSArray class]])
     {
         NSArray * images = [info1 objectForKey:@"images"];
         if ([NormalUse isValidArray:images]) {
             
-            [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
-            
+           // [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [self.headerImageView1 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
     }
 
@@ -131,16 +133,18 @@
 
         if ([[info2 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
             
-            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
-            
+           // [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
+            [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
         if ([[info2 objectForKey:@"images"] isKindOfClass:[NSArray class]])
         {
             NSArray * images = [info2 objectForKey:@"images"];
             if ([NormalUse isValidArray:images]) {
                 
-                [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
-                
+              //  [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+                [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
             }
         }
         NSString * titleStr = [info2 objectForKey:@"city_name"];

@@ -133,16 +133,18 @@
         
         if ([NormalUse isValidString:[info objectForKey:@"images"]]) {
             
-            [imageView sd_setImageWithURL:[info objectForKey:@"images"]];
+           // [imageView sd_setImageWithURL:[info objectForKey:@"images"]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
             
         }
         else if ([NormalUse isValidArray:[info objectForKey:@"images"]])
         {
             NSArray * images = [info objectForKey:@"images"];
-            [imageView sd_setImageWithURL:[images objectAtIndex:0]];
+//            [imageView sd_setImageWithURL:[images objectAtIndex:0]];
 
-            
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
         [self.contentScrollView addSubview:imageView];
         

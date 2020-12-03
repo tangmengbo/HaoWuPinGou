@@ -319,12 +319,16 @@
         if ([NormalUse isValidArray:[self.dianPuInfo objectForKey:@"image"]]) {
             
             NSArray * images = [self.dianPuInfo objectForKey:@"image"];
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+//            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
             
         }
         else if ([NormalUse isValidString:[self.dianPuInfo objectForKey:@"image"]])
         {
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
+           // [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]]];
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.dianPuInfo objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         }
 
 

@@ -1078,8 +1078,9 @@
         headerImageView.autoresizingMask = UIViewAutoresizingNone;
         headerImageView.clipsToBounds = YES;
         [contentView addSubview:headerImageView];
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
-        
+       // [headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]]];
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
         
         UIView *  jiaoBiaoView = [[UILabel alloc] initWithFrame:CGRectMake(contentView.width-39*BiLiWidth,0,39*BiLiWidth,18*BiLiWidth)];
         [contentView addSubview:jiaoBiaoView];
@@ -1287,9 +1288,10 @@
     }
     //在这里下载网络图片
           NSDictionary * info = [self.bannerArray objectAtIndex:index];
-          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
-//    bannerView.mainImageView.image = self.imageArray[index];
-    
+          //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]]];
+
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTP_REQUESTURL,[info objectForKey:@"picture"]]] placeholderImage:[UIImage imageNamed:@"banner_kong"]];
+
     return bannerView;
 }
 

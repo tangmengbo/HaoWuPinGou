@@ -84,7 +84,8 @@
 {
     if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
+      //  [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
     }
 
@@ -93,7 +94,8 @@
         NSArray * images = [info objectForKey:@"images"];
         if ([NormalUse isValidArray:images]) {
             
-            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
     }

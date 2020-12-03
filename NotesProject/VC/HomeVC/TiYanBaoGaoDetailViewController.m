@@ -394,11 +394,10 @@
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
-    //在这里下载网络图片
-//          NSDictionary * info = [self.images objectAtIndex:index];
-          [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:index]]];
-//    bannerView.mainImageView.image = self.imageArray[index];
-    
+         //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:index]]];
+
+    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[self.images objectAtIndex:index]] placeholderImage:[UIImage imageNamed:@"banner_kong"]];
+
     return bannerView;
 }
 

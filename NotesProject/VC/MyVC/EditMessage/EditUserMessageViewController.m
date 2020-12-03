@@ -50,7 +50,9 @@
     self.headerImageView.clipsToBounds = YES;
     self.headerImageView.layer.cornerRadius = 72*BiLiWidth/2;
     self.headerImageView.userInteractionEnabled = YES;
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfo objectForKey:@"avatar"]]];
+//    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfo objectForKey:@"avatar"]]];
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[self.userInfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+
     [self.view addSubview:self.headerImageView];
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editPhoto)];

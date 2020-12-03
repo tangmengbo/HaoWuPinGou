@@ -89,7 +89,8 @@
     
     if ([NormalUse isValidString:[info objectForKey:@"avatar"]]) {
         
-        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatar"]]];
+       // [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatar"]]];
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
     }
 
