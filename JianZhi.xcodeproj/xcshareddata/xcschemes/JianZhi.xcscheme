@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5FE3EA66235599D200C77F4D"
-               BuildableName = "YoYo.app"
+               BuildableName = "JianZhi.app"
                BlueprintName = "JianZhi"
                ReferencedContainer = "container:JianZhi.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5FE3EA66235599D200C77F4D"
-            BuildableName = "YoYo.app"
+            BuildableName = "JianZhi.app"
             BlueprintName = "JianZhi"
             ReferencedContainer = "container:JianZhi.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5FE3EA66235599D200C77F4D"
-            BuildableName = "YoYo.app"
+            BuildableName = "JianZhi.app"
             BlueprintName = "JianZhi"
             ReferencedContainer = "container:JianZhi.xcodeproj">
          </BuildableReference>

@@ -44,8 +44,6 @@
     NSDictionary * jsInfo = [NormalUse defaultsGetObjectKey:AppSiteUrls];
     NSError *err = nil;
     NSDictionary *dict = @{
-//        @"httpHost": @"https://ddjy123.com:55777",
-//        @"imHost": @"wss://ddjy123.com:6060",
         @"httpHost": [jsInfo objectForKey:@"http_addr"],
         @"imHost": [jsInfo objectForKey:@"socket_addr"],
         @"appFlag": @"lt01223",
@@ -65,7 +63,6 @@
     NSData *base64 = [thirdConfig dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [base64 base64EncodedStringWithOptions:0];
 
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@", @"https://ddjy123.com:8088/#/init/", base64String];
 
     NSString *urlString = [NSString stringWithFormat:@"%@%@", [jsInfo objectForKey:@"change_h5_url"], base64String];
 

@@ -642,6 +642,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
         
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
 
