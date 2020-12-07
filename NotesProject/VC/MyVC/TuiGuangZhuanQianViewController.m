@@ -53,7 +53,7 @@
     [self.mainScrollView addSubview:tipLable];
     
     UIImageView * erWeiMaImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-103*BiLiWidth)/2, tipLable.top+tipLable.height+26*BiLiWidth, 103*BiLiWidth, 103*BiLiWidth)];
-    erWeiMaImageView.image = [NormalUse shengChengErWeiMa:[NSString stringWithFormat:@"%@?share_code=%@",[NormalUse defaultsGetObjectKey:@"ios_pkg"],self.share_code]];
+    erWeiMaImageView.image = [NormalUse shengChengErWeiMa:self.qrcode_url];
     [self.mainScrollView addSubview:erWeiMaImageView];
     
     UILabel * tuiGuangMaLable = [[UILabel alloc] initWithFrame:CGRectMake(0, erWeiMaImageView.top+erWeiMaImageView.height+28*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];
@@ -148,7 +148,7 @@
 -(void)fuZhiLianJieButtonClick
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [NormalUse defaultsGetObjectKey:@"ios_pkg"];
+    pasteboard.string = self.kaoBei_content;//[NormalUse defaultsGetObjectKey:@"ios_pkg"];
     
     [NormalUse showToastView:@"链接已复制" view:self.view];
 }

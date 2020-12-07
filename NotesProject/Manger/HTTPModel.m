@@ -3886,7 +3886,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 
 }
 //上传share_code appi/user/getPshareCode
-+(void)uploadShareCode:(NSDictionary *_Nullable)parameter
++(void)getShareCode:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
 {
     NSString *url =  [NSString stringWithFormat:@"%@/appi/user/getPshareCode",HTTP_REQUESTURL];

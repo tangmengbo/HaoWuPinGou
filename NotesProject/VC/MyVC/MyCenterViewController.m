@@ -610,6 +610,8 @@
 {
     TuiGuangZhuanQianViewController * vc = [[TuiGuangZhuanQianViewController alloc] init];
     vc.share_code = [self.userInfo objectForKey:@"share_code"];
+    vc.qrcode_url = [self.userInfo objectForKey:@"qrcode_url"];
+    vc.kaoBei_content = [self.userInfo objectForKey:@"copy_content"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)tianXieYaoQingMaButtonClick

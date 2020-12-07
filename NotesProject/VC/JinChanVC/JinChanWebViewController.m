@@ -151,7 +151,7 @@
         NSURL * url = [NSURL URLWithString:@"alipay://"];
         BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:url];
         if (canOpen) {
-            
+
             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
                 
             }];

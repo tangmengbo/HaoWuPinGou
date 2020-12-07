@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TuiGuangZhuanQianViewController : MainBaseViewController
 
 @property(nonatomic,strong)NSString * share_code;
+@property(nonatomic,strong)NSString * kaoBei_content;
+@property(nonatomic,strong)NSString * qrcode_url;
 @end
 
 NS_ASSUME_NONNULL_END

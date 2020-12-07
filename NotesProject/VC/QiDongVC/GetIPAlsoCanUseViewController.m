@@ -470,7 +470,7 @@
                     }
                 }];
                 
-                //只有首次执行到这里的时候进入
+                //只有首次安装时执行到这里的时候进入
                 if (![@"true" isEqualToString:[NormalUse defaultsGetObjectKey:@"share_codeDefaults"]]) {
                     
                     [NormalUse defaultsSetObject:@"true" forKey:@"share_codeDefaults"];
@@ -478,12 +478,17 @@
                     //获取剪切板是否有信息，share_code
                     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
                     if ([NormalUse isValidString:pasteboard.string]) {
-                        //获取并上传share_code
-                        [HTTPModel uploadShareCode:[[NSDictionary alloc]initWithObjectsAndKeys:pasteboard.string,@"share_code", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
+                        [self uploadShareCode:pasteboard.string];
+                    }
+                    else
+                    {
+                        [HTTPModel getShareCode:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                             
                             if (status==1) {
                                 
-                                NSLog(@"上传成功");
+                                [self uploadShareCode:[NormalUse getobjectForKey:[responseObject objectForKey:@"share_code"]]];
+                                
                             }
 
                         }];
@@ -498,6 +503,20 @@
             }
         }];
     }
+
+}
+
+-(void)uploadShareCode:(NSString *)share_code
+{
+    [HTTPModel tianXieYaoQingMa:[[NSDictionary alloc] initWithObjectsAndKeys:share_code,@"share_code", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+        }
+        else
+        {
+        }
+    }];
 
 }
 

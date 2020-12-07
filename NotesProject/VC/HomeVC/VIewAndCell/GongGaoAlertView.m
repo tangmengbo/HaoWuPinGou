@@ -17,7 +17,7 @@
         
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         
-        UIImageView * contentImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-319*BiLiWidth)/2, (HEIGHT_PingMu-401*BiLiWidth+20*BiLiWidth)/2, 319*BiLiWidth, 401*BiLiWidth-20*BiLiWidth)];
+        UIImageView * contentImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-319*BiLiWidth)/2, (HEIGHT_PingMu-401*BiLiWidth+20*BiLiWidth-60*BiLiHeight)/2, 319*BiLiWidth, 401*BiLiWidth-20*BiLiWidth+60*BiLiHeight)];
         contentImageView.image = [UIImage imageNamed:@"home_gongGao"];
         contentImageView.userInteractionEnabled = YES;
         [self addSubview:contentImageView];
@@ -34,7 +34,7 @@
         titleLable.text = @"滴滴约公告：";
         [contentImageView addSubview:titleLable];
         
-        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 140*BiLiHeight)];
+        UITextView * messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(50*BiLiWidth, titleLable.top+titleLable.height+15*BiLiWidth, contentImageView.width-100*BiLiWidth, 140*BiLiHeight+60*BiLiHeight)];
         messageTextView.textColor = RGBFormUIColor(0x343434);
         messageTextView.font = [UIFont systemFontOfSize:14*BiLiWidth];
         messageTextView.textAlignment = NSTextAlignmentCenter;
