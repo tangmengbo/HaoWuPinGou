@@ -282,7 +282,15 @@
 
 
     //auth_vip 2终身会员 1年会员 0非会员
-    self.auth_vip = [self.info objectForKey:@"auth_vip"];
+    if ([NormalUse isValidDictionary:self.info]) {
+        
+        self.auth_vip = [self.info objectForKey:@"auth_vip"];
+
+    }
+    else
+    {
+        self.auth_vip = [NormalUse defaultsGetObjectKey:@"UserAlsoVip"];
+    }
     if (self.auth_vip.intValue!=1) {
         
         self.nianKaTipLable.hidden = YES;
@@ -537,12 +545,15 @@
 
             self.kaiTongButton.hidden = YES;
 
+            //2终身会员 1年会员 0非会员
             if ([@"vip_year" isEqualToString:self.vip_type]) {
                 
                 self.nianKaTipLable.hidden = NO;
                 self.yongJiuTipLable.hidden = YES;
                 self.auth_vip = [NSNumber numberWithInt:1];
                 kaiTongHuiYuanQueRenViewTipLable.text = @"年卡会员开通成功";
+                
+                [NormalUse defaultsSetObject:[NSNumber numberWithInt:1] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }
             else
@@ -551,6 +562,7 @@
                 self.yongJiuTipLable.hidden = NO;
                 self.auth_vip = [NSNumber numberWithInt:2];
                 kaiTongHuiYuanQueRenViewTipLable.text = @"永久卡会员开通成功";
+                [NormalUse defaultsSetObject:[NSNumber numberWithInt:2] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }
             

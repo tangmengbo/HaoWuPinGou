@@ -30,8 +30,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiKouFeiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "-uploadVideo:"
             landmarkType = "7">
          </BreakpointContent>
@@ -279,16 +279,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F5429CFB-D1A8-4107-A841-9A7E1A1DEE55"
+            uuid = "B47907C2-A449-4E56-BBE2-8922C1250B47"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/QiDongVC/GetIPAlsoCanUseViewController.m"
+            filePath = "NotesProject/Normal/NormalUse.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
-            landmarkName = "-goInApp"
+            startingLineNumber = "1613"
+            endingLineNumber = "1613"
+            landmarkName = "+getSheBeiBianMa"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

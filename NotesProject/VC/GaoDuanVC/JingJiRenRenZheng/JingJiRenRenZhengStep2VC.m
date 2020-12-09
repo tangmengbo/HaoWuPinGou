@@ -217,7 +217,17 @@
         else
         {
             [self yinCangLoadingView];
-            [NormalUse showToastView:msg view:self.view];
+            if(status==11402)
+            {
+                ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+                [self.view addSubview:view];
+
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+
+            }
         }
     }];
 }

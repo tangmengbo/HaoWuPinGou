@@ -153,9 +153,11 @@
     }
     else
     {
-        JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
-        vc.forWhat = @"mall";
-        [self.navigationController pushViewController:vc animated:YES];
+//        JinChanWebViewController * vc = [[JinChanWebViewController alloc] init];
+//        vc.forWhat = @"mall";
+//        [self.navigationController pushViewController:vc animated:YES];
+        ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+        [self.view addSubview:view];
 
     }
 

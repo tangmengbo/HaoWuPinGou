@@ -46,7 +46,7 @@
             NSNumber * base_coinNumber = [responseObject objectForKey:@"coin"];
             NSString * base_coinStr = [NSString stringWithFormat:@"%d",base_coinNumber.intValue];
             self.yuELable.text = base_coinStr;
-
+            self.yuEStr = base_coinStr;
         }
     }];
 

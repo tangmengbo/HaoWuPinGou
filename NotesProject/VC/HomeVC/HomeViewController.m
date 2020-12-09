@@ -174,8 +174,8 @@
         [self closeUploadTipKuangView];
 
     }
-    NSString *textURL = @"http://www.baidu.com";
-    NSURL *cleanURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", textURL]];
+    NSString *textURL = [NormalUse getJinBiStr:@"update_app_url"];
+    NSURL *cleanURL = [NSURL URLWithString:[NormalUse getobjectForKey:textURL]];
     [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
         
     }];
@@ -538,7 +538,7 @@
                 
                 if ([NormalUse isValidDictionary:userRoleDic]) {
                     
-                    if (![info isEqual:userRoleDic]) {
+                    if (![info isEqual:userRoleDic]&&[NormalUse isValidDictionary:info]) {
                         
                         [NormalUse defaultsSetObject:info forKey:defaultsKey];
                     }
@@ -638,7 +638,11 @@
     }];
 
 }
-
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+//    [self.view addSubview:view];
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

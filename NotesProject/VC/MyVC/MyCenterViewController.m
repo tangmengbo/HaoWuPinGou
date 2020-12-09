@@ -432,7 +432,7 @@
     self.jingJiRenButton.button_imageView1.frame = CGRectMake(self.jingJiRenButton.width-9*BiLiWidth-12*BiLiWidth, (self.jingJiRenButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
     self.jingJiRenButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
     [self.mainScrollView addSubview:self.jingJiRenButton];
-
+    self.jingJiRenButton.hidden = YES;
 
     self.myJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, lineView.top+lineView.height+9*BiLiWidth, WIDTH_PingMu, 50*BiLiWidth)];
     [self.myJieSuoButton addTarget:self action:@selector(myJieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];

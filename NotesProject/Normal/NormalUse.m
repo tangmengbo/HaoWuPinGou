@@ -1610,6 +1610,7 @@
         sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
 
     }
+    NSLog(@"%@",sheBeiBianMa);
     return sheBeiBianMa;
 }
 +(void)defaultsSetObject:(id)value forKey:(NSString *)key
