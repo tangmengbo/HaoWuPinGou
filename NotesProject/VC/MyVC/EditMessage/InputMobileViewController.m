@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self yinCangTabbar];
     self.loadingFullScreen = @"yes";
     
     self.topTitleLale.text = @"绑定手机号";

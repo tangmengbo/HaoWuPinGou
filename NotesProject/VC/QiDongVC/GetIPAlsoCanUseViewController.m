@@ -8,6 +8,7 @@
 
 #import "GetIPAlsoCanUseViewController.h"
 #import "ZYNetworkAccessibility.h"
+#import "InputMobileViewController.h"
 
 
 @interface GetIPAlsoCanUseViewController ()
@@ -381,7 +382,6 @@
 -(void)goInApp
 {
     
-    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
     [HTTPModel getJSSiteUrls:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
 
@@ -401,6 +401,38 @@
         }
     }];
     
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
+    [HTTPModel acountAlsoCanUse:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            [self accountZhengChang];
+        }
+        else if (status==-1)//账号被删除 重新生成账号
+        {
+            [self noAccountRegistInit];
+
+        }
+        else if (status==0)//禁用：提示并跳到切换账号界面
+        {
+            [delegate setYiDengLuTabBar];
+            [delegate.tabbar setItemSelected:4];
+            InputMobileViewController * vc = [[InputMobileViewController alloc] init];
+            vc.bangDingOrQieHuan = @"2";
+            UINavigationController * nav =[delegate.tabbar.viewControllers objectAtIndex:4];
+            [nav pushViewController:vc animated:YES];
+
+        }
+    }];
+    
+   
+}
+//账号无异常 进入正常的登录注册流程
+-(void)accountZhengChang
+{
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
     //用户已经登录
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
@@ -439,74 +471,80 @@
     else
     {
 //
-        //未登录用户先 获取初始化账号
-        [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
-                    
-                    NSDictionary * userInfo = [responseObject objectForKey:@"info"];
-                    [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
-                    [[RongYManager getInstance] connectRongCloud];
-
-
-                }
-                //获取初始化账号 成功后调用登录 获取到logintoken
-                [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-                    
-                    if (status==1) {
-                        
-                        NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
-                        [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
-
-                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                        [formatter setDateFormat:@"YYYY-MM-dd"];
-                        NSDate *datenow = [NSDate date];
-                        NSString *currentTimeString = [formatter stringFromDate:datenow];
-                        [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
-
-                        [delegate setQiDongTabbar];
-
-                    }
-                }];
-                
-                //只有首次安装时执行到这里的时候进入
-                if (![@"true" isEqualToString:[NormalUse defaultsGetObjectKey:@"share_codeDefaults"]]) {
-                    
-                    [NormalUse defaultsSetObject:@"true" forKey:@"share_codeDefaults"];
-                    
-                    //获取剪切板是否有信息，share_code
-                    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                    if ([NormalUse isValidString:pasteboard.string]) {
-
-                        [self uploadShareCode:pasteboard.string];
-                    }
-                    else
-                    {
-                        [HTTPModel getShareCode:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-                            
-                            if (status==1) {
-                                
-                                [self uploadShareCode:[NormalUse getobjectForKey:[responseObject objectForKey:@"share_code"]]];
-                                
-                            }
-
-                        }];
-
-
-                    }
-                }
-            }
-            else
-            {
-                [NormalUse showToastView:msg view:self.view];
-            }
-        }];
+        [self noAccountRegistInit];
     }
 
 }
+//没有登陆 或 账号被删除 重新init生成账号
+-(void)noAccountRegistInit
+{
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
+    //未登录用户先 获取初始化账号
+    [HTTPModel registerInit:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            if ([NormalUse isValidDictionary:[responseObject objectForKey:@"info"]]) {
+                
+                NSDictionary * userInfo = [responseObject objectForKey:@"info"];
+                [NormalUse defaultsSetObject:[userInfo objectForKey:@"ryuser"] forKey:UserRongYunInfo];
+                [[RongYManager getInstance] connectRongCloud];
+
+
+            }
+            //获取初始化账号 成功后调用登录 获取到logintoken
+            [HTTPModel login:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                
+                if (status==1) {
+                    
+                    NSString *  logintoken = [responseObject objectForKey:@"logintoken"];
+                    [NormalUse defaultsSetObject:logintoken forKey:LoginToken];
+
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"YYYY-MM-dd"];
+                    NSDate *datenow = [NSDate date];
+                    NSString *currentTimeString = [formatter stringFromDate:datenow];
+                    [NormalUse defaultsSetObject:@"1" forKey:currentTimeString];
+
+                    [delegate setQiDongTabbar];
+
+                }
+            }];
+            
+            //只有首次安装时执行到这里的时候进入
+            if (![@"true" isEqualToString:[NormalUse defaultsGetObjectKey:@"share_codeDefaults"]]) {
+                
+                [NormalUse defaultsSetObject:@"true" forKey:@"share_codeDefaults"];
+                
+                //获取剪切板是否有信息，share_code
+                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                if ([NormalUse isValidString:pasteboard.string]) {
+
+                    [self uploadShareCode:pasteboard.string];
+                }
+                else
+                {
+                    [HTTPModel getShareCode:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                        
+                        if (status==1) {
+                            
+                            [self uploadShareCode:[NormalUse getobjectForKey:[responseObject objectForKey:@"share_code"]]];
+                            
+                        }
+
+                    }];
+
+
+                }
+            }
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+}
 -(void)uploadShareCode:(NSString *)share_code
 {
     [HTTPModel tianXieYaoQingMa:[[NSDictionary alloc] initWithObjectsAndKeys:share_code,@"share_code", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
@@ -516,6 +554,7 @@
         }
         else
         {
+            
         }
     }];
 

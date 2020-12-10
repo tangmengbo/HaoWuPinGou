@@ -99,6 +99,11 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)editUserInfo:(NSDictionary *_Nullable)parameter
            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//检测账号是否可用 appi/common/getUserStatus
+
++(void)acountAlsoCanUse:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 
 //获取初始化账号
 +(void)registerInit:(NSDictionary *_Nullable)parameter
