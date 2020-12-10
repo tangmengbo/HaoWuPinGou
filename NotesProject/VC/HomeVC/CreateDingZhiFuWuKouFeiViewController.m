@@ -167,6 +167,7 @@
 //        [self.navigationController pushViewController:vc animated:YES];
 
         ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+        [view initData];
         [self.view addSubview:view];
 
     }

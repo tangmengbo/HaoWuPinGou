@@ -539,6 +539,7 @@
             if(status==11402)
             {
                 ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+                [view initData];
                 [self.view addSubview:view];
 
             }

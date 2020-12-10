@@ -569,7 +569,21 @@
         }
         else
         {
-            [NormalUse showToastView:msg view:self.view];
+            
+            if(status==11402)
+            {
+                ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+                view.alsoFromVipVC = YES;
+                [view initData];
+                [self.view addSubview:view];
+
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+
+            }
+            
         }
         
     }];

@@ -545,7 +545,11 @@
                 }
                 else
                 {
-                    [NormalUse defaultsSetObject:info forKey:defaultsKey];
+                    if([NormalUse isValidDictionary:info])
+                    {
+                        [NormalUse defaultsSetObject:info forKey:defaultsKey];
+
+                    }
                 }
             }
         }];

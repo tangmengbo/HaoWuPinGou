@@ -325,6 +325,7 @@
 }
 -(void)yanZhengIp:(NSString *)ipStr
 {
+
     ipIndex2 = ipIndex2+1;
     NSString * testUrl = [NSString stringWithFormat:@"http://%@:8089/appi/common/curCity",ipStr];
     [HTTPModel IpTestCheck:[[NSDictionary alloc]initWithObjectsAndKeys:testUrl,@"testIp", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {

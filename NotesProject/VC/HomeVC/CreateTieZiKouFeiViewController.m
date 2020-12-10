@@ -76,16 +76,16 @@
             [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x333333) range:NSMakeRange(0, 7)];
             yuELable.attributedText = str;
             
-            if (self.publish_post_coin.intValue<=self.yuEStr.intValue) {
+//            if (self.publish_post_coin.intValue<=self.yuEStr.intValue) {
                 
                 self.tiJiaoLable.text = @"立即支付";
 
-            }
-            else
-            {
-                self.tiJiaoLable.text = @"充值";
-
-            }
+//            }
+//            else
+//            {
+//                self.tiJiaoLable.text = @"充值";
+//
+//            }
 
         }
 
@@ -175,6 +175,7 @@
 //        [self.navigationController pushViewController:vc animated:YES];
 
         ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+        [view initData];
         [self.view addSubview:view];
 
     }
