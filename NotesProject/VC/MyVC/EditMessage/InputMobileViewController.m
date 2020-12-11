@@ -20,11 +20,33 @@
 
 @implementation InputMobileViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self yinCangTabbar];
+
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(self.alsoNotCanPop)
+    {
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    
+    //YES：允许右滑返回  NO：禁止右滑返回
+    return NO;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self yinCangTabbar];
     self.loadingFullScreen = @"yes";
+    
     
     self.topTitleLale.text = @"绑定手机号";
     
@@ -102,6 +124,18 @@
     [wangJiMiMaButton addTarget:self action:@selector(wangJiMiMaButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wangJiMiMaButton];
     
+    if(self.alsoNotCanPop)
+    {
+        self.leftButton.hidden = YES;
+        UILabel * jinFengTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, wangJiMiMaButton.top+wangJiMiMaButton.height+30*BiLiWidth, WIDTH_PingMu, 17*BiLiWidth)];
+        jinFengTipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        jinFengTipLable.text = @"账号已禁封，请切换账号";
+        jinFengTipLable.textAlignment = NSTextAlignmentCenter;
+        jinFengTipLable.textColor = RGBFormUIColor(0xFF0876);
+        [self.view addSubview:jinFengTipLable];
+
+    }
+
 }
 -(void)viewTap
 {

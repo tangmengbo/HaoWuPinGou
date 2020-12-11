@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * bangDingOrQieHuan;//@"1" 绑定 2 切换
 
+@property(nonatomic,assign)BOOL alsoNotCanPop;//是否不可返回 yes时不可以返回
+
 @end
 
 NS_ASSUME_NONNULL_END

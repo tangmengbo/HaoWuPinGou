@@ -405,21 +405,23 @@
 
     [HTTPModel acountAlsoCanUse:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
-        if (status==1) {
+        NSNumber * statusCode = [responseObject objectForKey:@"status"];
+        if (statusCode.intValue==1) {
             
             [self accountZhengChang];
         }
-        else if (status==-1)//账号被删除 重新生成账号
+        else if (statusCode.intValue==-1)//账号被删除 重新生成账号
         {
             [self noAccountRegistInit];
 
         }
-        else if (status==0)//禁用：提示并跳到切换账号界面
+        else if (statusCode.intValue==0)//禁用：提示并跳到切换账号界面
         {
             [delegate setYiDengLuTabBar];
             [delegate.tabbar setItemSelected:4];
             InputMobileViewController * vc = [[InputMobileViewController alloc] init];
             vc.bangDingOrQieHuan = @"2";
+            vc.alsoNotCanPop = YES;
             UINavigationController * nav =[delegate.tabbar.viewControllers objectAtIndex:4];
             [nav pushViewController:vc animated:YES];
 
