@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
 
 
-
+@property(nonatomic,strong)NSString * lianXieFangShiStr;
 
 
 @end

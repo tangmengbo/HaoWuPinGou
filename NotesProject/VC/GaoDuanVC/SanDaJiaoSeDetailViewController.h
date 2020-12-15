@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
 
+@property(nonatomic,strong)NSString * lianXieFangShiStr;
+
 
 @end
 

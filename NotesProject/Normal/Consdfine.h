@@ -97,4 +97,11 @@
 
 //开发者账号 360057466@qq.com JYcx2019
 
+//adhoc打包地址
+/*
+ https://myshoufa.com/upload/app/image.small.png
+ https://myshoufa.com/upload/app/image.full.png
+ https://myshoufa.com/upload/app/myapp.ipa
+ */
+
 #endif /* Consdfine_h */

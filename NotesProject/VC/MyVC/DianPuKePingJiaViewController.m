@@ -520,6 +520,11 @@
                 
                 NSDictionary * contact = [self.dianPuInfo objectForKey:@"contact"];
                 [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+                
+                UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];//初始化一个长按手势
+                [longPress setMinimumPressDuration:1];//设置按多久之后触发事件
+                [self.jieSuoButton addGestureRecognizer:longPress];
+
                 NSString * wechat = [contact objectForKey:@"wechat"];
                 NSString * qq = [contact objectForKey:@"qq"];
                 NSNumber * mobile = [contact objectForKey:@"mobile"];
@@ -538,6 +543,7 @@
                     lianXieFangShiStr = [lianXieFangShiStr stringByAppendingString:[NSString stringWithFormat:@"  电话:%d",mobile.intValue]];
                     
                 }
+                self.lianXieFangShiStr = lianXieFangShiStr;
                 self.jieSuoButton.button_lable.left = 10*BiLiWidth;
                 self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
                 self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
@@ -610,6 +616,11 @@
             NSDictionary * contact = responseObject;
             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             
+            UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];//初始化一个长按手势
+            [longPress setMinimumPressDuration:1];//设置按多久之后触发事件
+            [self.jieSuoButton addGestureRecognizer:longPress];
+
+            
             NSString * lianXieFangShiStr = @"";
 
             if ([NormalUse isValidDictionary:contact]) {
@@ -633,6 +644,7 @@
                 }
 
             }
+            self.lianXieFangShiStr = lianXieFangShiStr;
             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
@@ -661,6 +673,21 @@
         
     }];
     
+}
+-(void)longPressAction:(UILongPressGestureRecognizer *)tap
+{
+    if (tap.state == UIGestureRecognizerStateBegan) {
+        
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = self.lianXieFangShiStr;
+
+        [NormalUse showToastView:@"已复制到剪切板" view:self.view];
+        
+        
+        }else {
+            NSLog(@"long pressTap state :end");
+        }
+
 }
 -(void)guanZhuButtonClick:(UIButton *)button
 {

@@ -110,8 +110,8 @@
             filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "773"
-            endingLineNumber = "773"
+            startingLineNumber = "798"
+            endingLineNumber = "798"
             landmarkName = "-shouCangOrQuXiaoShouCang:"
             landmarkType = "7">
          </BreakpointContent>
@@ -241,22 +241,6 @@
             startingLineNumber = "90"
             endingLineNumber = "90"
             landmarkName = "-nextClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "45A3701F-FC0C-4CEE-BD66-5C7230F221FF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/FuQiJiaoVC/FuQiJiaoDetailViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
-            landmarkName = "-initTopMessageView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

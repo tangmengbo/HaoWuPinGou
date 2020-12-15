@@ -12,6 +12,9 @@
 #import "TiXianViewController.h"
 
 @interface ZhangHuDetailViewController ()
+{
+    int payTypeIndex;
+}
 
 @property(nonatomic,strong)UILabel * yuELable;
 
@@ -26,8 +29,8 @@
 
 @property(nonatomic,strong)NSArray * products;
 
-@property(nonatomic,strong)Lable_ImageButton * zfbButton;
-@property(nonatomic,strong)Lable_ImageButton * wxButton;
+@property(nonatomic,strong)NSArray * payTypeList;
+@property(nonatomic,strong)NSMutableArray * payTypeButtonArray;
 
 @property(nonatomic,strong)NSString * orderId;
 
@@ -201,6 +204,7 @@
         if (status==1) {
             
             self.products = [responseObject objectForKey:@"products"];
+            self.payTypeList = [responseObject objectForKey:@"pay_type"];
             [self initChongZhiItemView];
         }
         else
@@ -221,6 +225,7 @@
         if (i==0) {
             
             self.jinBiButtonBottom = [[UIButton alloc] initWithFrame:CGRectMake(originX+110*BiLiWidth*(i%3), self.zaiXianZhiFuButton.top+self.zaiXianZhiFuButton.height+25*BiLiWidth+64*BiLiWidth*(i/3), 100*BiLiWidth, 54*BiLiWidth)];
+            self.jinBiButtonBottom.tag = 0;
             //渐变设置
             UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
             UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -255,6 +260,11 @@
         [self.contentScrollView addSubview:button];
         [self.buttonArray addObject:button];
         
+        if (i==0) {
+         
+            [button sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }
+        
         NSNumber * cny = [info objectForKey:@"cny"];
         NSNumber * coin = [info objectForKey:@"coin"];
         button.button_lable.text = [NSString stringWithFormat:@"%d金币",coin.intValue];
@@ -263,38 +273,49 @@
         originY = button.top+button.height+20*BiLiWidth;
         
     }
+    payTypeIndex = 0;
+    self.payTypeButtonArray = [NSMutableArray array];
+    for(int i=0;i<self.payTypeList.count;i++)
+    {
+        NSDictionary * info = [self.payTypeList objectAtIndex:i];
+        NSString * pay_channel = [info objectForKey:@"pay_channel"];
+        
+        Lable_ImageButton * button  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
+        [button addTarget:self action:@selector(payTypeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        button.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
+        button.button_lable.frame = CGRectMake(button.button_imageView.left+button.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
+        button.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        button.button_lable.textColor = RGBFormUIColor(0x343434);
+        button.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (button.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
+        button.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
+        button.button_imageView1.layer.masksToBounds = YES;
+        button.button_imageView1.layer.borderWidth = 1;
+        button.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
+        button.tag = i;
+        [self.contentScrollView addSubview:button];
+        
+        if (i==0) {
+            
+            [button.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
+            button.button_imageView1.layer.borderWidth = 0;
+
+        }
+        if ([@"1" isEqualToString:pay_channel]) {
+            
+            button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
+            button.button_lable.text = [info objectForKey:@"pay_name"];
+        }else if ([@"2" isEqualToString:pay_channel])
+        {
+            button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
+            button.button_lable.text = [info objectForKey:@"pay_name"];
+
+        }
+        
+        [self.payTypeButtonArray addObject:button];
+        originY = originY+40*BiLiWidth;
+    }
     
-//    self.zfbButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
-//    self.zfbButton.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
-//    [self.zfbButton addTarget:self action:@selector(zfbButtonClick) forControlEvents:UIControlEventTouchUpInside];
-//    self.zfbButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
-//    self.zfbButton.button_lable.frame = CGRectMake(self.zfbButton.button_imageView.left+self.zfbButton.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
-//    self.zfbButton.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-//    self.zfbButton.button_lable.textColor = RGBFormUIColor(0x343434);
-//    self.zfbButton.button_lable.text = @"支付宝支付";
-//    self.zfbButton.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (self.zfbButton.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
-//    self.zfbButton.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
-//    self.zfbButton.button_imageView1.layer.masksToBounds = YES;
-//    self.zfbButton.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
-//    self.zfbButton.button_imageView1.layer.borderWidth = 1;
-//    [self.contentScrollView addSubview:self.zfbButton];
-    
-    self.wxButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
-    [self.wxButton addTarget:self action:@selector(wxButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    self.wxButton.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
-    self.wxButton.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
-    self.wxButton.button_lable.frame = CGRectMake(self.wxButton.button_imageView.left+self.wxButton.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
-    self.wxButton.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    self.wxButton.button_lable.textColor = RGBFormUIColor(0x343434);
-    self.wxButton.button_lable.text = @"微信支付";
-    self.wxButton.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (self.zfbButton.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
-    self.wxButton.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
-    self.wxButton.button_imageView1.layer.masksToBounds = YES;
-    self.wxButton.button_imageView1.layer.borderWidth = 1;
-    self.wxButton.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
-    [self.contentScrollView addSubview:self.wxButton];
-    
-    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, self.wxButton.top+self.wxButton.height+35*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
+    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, originY+35*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
     [chongZhiButton addTarget:self action:@selector(chongZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentScrollView addSubview:chongZhiButton];
     
@@ -318,6 +339,21 @@
     tiJiaoLable.textColor = [UIColor whiteColor];
     [chongZhiButton addSubview:tiJiaoLable];
 
+
+}
+-(void)payTypeButtonClick:(Lable_ImageButton *)selectButton
+{
+    payTypeIndex = (int)selectButton.tag;
+    
+    for (Lable_ImageButton * button in self.payTypeButtonArray) {
+        
+        [button.button_imageView1 setImage:nil];
+        button.button_imageView1.layer.borderWidth = 1;
+
+
+    }
+    [selectButton.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
+    selectButton.button_imageView1.layer.borderWidth = 0;
 
 }
 #pragma mark--UIButtonClick
@@ -367,8 +403,9 @@
     }
 }
 
--(void)jinEItemButtonClick:(UIButton *)selectButton
+-(void)jinEItemButtonClick:(Lable_ImageButton *)selectButton
 {
+    NSLog(@"%d",selectButton.tag);
     for (Lable_ImageButton * button in self.buttonArray) {
         
         self.jinBiButtonBottom.hidden = NO;
@@ -391,24 +428,8 @@
         }
     }
 }
--(void)zfbButtonClick
-{
-    [self.zfbButton.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
-    self.zfbButton.button_imageView1.layer.borderWidth = 0;
-
-    [self.wxButton.button_imageView1 setImage:nil];
-    self.wxButton.button_imageView1.layer.borderWidth = 1;
 
 
-}
--(void)wxButtonClick
-{
-    [self.zfbButton.button_imageView1 setImage:nil];
-    self.zfbButton.button_imageView1.layer.borderWidth = 1;
-
-    [self.wxButton.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
-    self.wxButton.button_imageView1.layer.borderWidth = 0;
-}
 -(void)chongZhiButtonClick
 {
     [self xianShiLoadingView:@"下单中..." view:self.view];
@@ -419,10 +440,11 @@
         if (status==1) {
             
             self.orderId = responseObject;
+            NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
             NSDictionary * info = [self.products objectAtIndex:self.jinBiButtonBottom.tag];
             NSNumber * coin = [info objectForKey:@"coin"];
             NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
-            url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken]]];
+            url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"]]];
             
             NSURL *cleanURL = [NSURL URLWithString:url];
             [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {

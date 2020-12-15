@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIScrollView * bottomContentScollView;
 
+@property(nonatomic,strong)NSString * lianXieFangShiStr;//联系方式
+
 
 @end
 
