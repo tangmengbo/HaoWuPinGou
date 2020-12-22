@@ -322,7 +322,17 @@
     
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
     
-    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+    if(self.auth_vip.intValue==1)
+    {
+        self.kaiTongButton.enabled = NO;
+        self.kaiTongJinBiLable.text = @"已开通";
+
+    }
+    else
+    {
+        self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+
+    }
 
 
 }
