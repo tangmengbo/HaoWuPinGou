@@ -242,10 +242,10 @@
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
-                    self.huiYuanTitleLable.text = @"会员到期时间";
+                    self.huiYuanTitleLable.text = @"";
                     self.huiYuanTitleLable.textColor = [UIColor whiteColor];
                     self.huiYuanDaoQiLable.textColor = [UIColor whiteColor];
-                    self.huiYuanDaoQiLable.text = [self.userInfo objectForKey:@"vip_expiration_date"];
+                    self.huiYuanDaoQiLable.text = @"";
 
 
                 }
