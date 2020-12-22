@@ -26,12 +26,126 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 @implementation AppDelegate
 
+-(void)xiancheng
+{
+    NSMutableArray * array = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
+    for (int i=0; i<array.count; i++) {
+        
+        for (int j=0; j<array.count-1-i; j++) {
+            
+            if ([array objectAtIndex:j]>[array objectAtIndex:j+1]) {
+                
+                [array exchangeObjectAtIndex:j withObjectAtIndex:j+1];
+            }
+        }
+        
+    }
+    NSLog(@"%@",array);
+    NSMutableArray * array1 = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
 
+    for (int i=0; i<array1.count-1; i++) {
+        
+        for (int j = i+1; j<array1.count; j++) {
+            
+            if ([array1 objectAtIndex:i]>[array1 objectAtIndex:j]) {
+                
+                [array1 exchangeObjectAtIndex:i withObjectAtIndex:j];
+            }
+
+        }
+    }
+    NSLog(@"%@",array1);
+
+//    // 创建队列
+//    dispatch_queue_t queue = dispatch_queue_create("test", DISPATCH_QUEUE_SERIAL);
+//    // 创建队列组
+//    dispatch_group_t group = dispatch_group_create();
+//    dispatch_group_enter(group);
+//
+//    dispatch_group_async(group, queue, ^{
+//
+//        NSLog(@"线程一一执行完成%@",[NSThread currentThread]);
+//
+//        [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//                NSLog(@"线程一执行完成%@",[NSThread currentThread]);
+//                dispatch_group_leave(group);
+//            }
+//        }];
+//
+//    });
+//
+//
+//    dispatch_group_enter(group);
+//    dispatch_group_async(group, queue, ^{
+//
+//        NSLog(@"线程二二执行完成%@",[NSThread currentThread]);
+//
+//        [HTTPModel getXiTongGongGao:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//            if (status==1) {
+//                NSLog(@"线程二执行完成%@",[NSThread currentThread]);
+//                dispatch_group_leave(group);
+//            }
+//        }];
+//
+//    });
+//    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+//
+//        NSLog(@"end");
+//    });
+//
+//    NSLog(@"****************************123");
+//
+//        dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
+//        //进行异步操作
+//        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//            NSLog(@"异步操作1111：%@", [NSThread currentThread]);
+//            dispatch_semaphore_signal(semaphore);
+//        });
+//
+//        //异步操作2
+//        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            sleep(2);
+//            NSLog(@"异步操作2222：%@", [NSThread currentThread]);
+//            dispatch_semaphore_signal(semaphore);
+//        });
+//        //异步操作3
+//        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            sleep(3);
+//            NSLog(@"异步操作3333：%@", [NSThread currentThread]);
+//            dispatch_semaphore_signal(semaphore);
+//        });
+    NSOperationQueue * operationQueue = [[NSOperationQueue alloc] init];
+    NSBlockOperation * operation1 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i=0; i<10; i++) {
+            
+            NSLog(@"线程一%d",i);
+        }
+    }];
+    NSBlockOperation * operation2 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        for (int i=0; i<10; i++) {
+            
+            NSLog(@"线程二%d,%@",i,[NSThread currentThread]);
+        }
+    }];
+//    [operation2 addDependency:operation1];
+    [operationQueue addOperation:operation1];
+    [operationQueue addOperation:operation2];
+    
+    
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 //    [self registerAPNs];
     
-
+    [self xiancheng];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;//设置状态栏文字颜色
     
     [NormalUse defaultsSetObject:nil forKey:@"CityInfoDefaults"];
@@ -148,7 +262,6 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"YanZhengDingDanNotification" object:nil];
-
 
 }
 

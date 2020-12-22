@@ -8,13 +8,13 @@
 
 #import "HuiYuanViewController.h"
 
-@interface HuiYuanViewController ()<UIScrollViewDelegate>
+@interface HuiYuanViewController ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource>
 
 
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
-@property(nonatomic,strong)UIScrollView * topScrollView;
+@property(nonatomic,strong)UIScrollView * itemScrollView;
 
 @property(nonatomic,strong)Lable_ImageButton * nianKaVipButton;
 @property(nonatomic,strong)Lable_ImageButton * yongJiuVipButton;
@@ -210,78 +210,47 @@
     
     self.vip_type = @"vip_year";
     
-    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.topNavView.height+self.topNavView.top, WIDTH_PingMu, HEIGHT_PingMu-(self.topNavView.height+self.topNavView.top))];
+    
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
     self.mainScrollView.showsVerticalScrollIndicator = NO;
     self.mainScrollView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:self.mainScrollView];
-    
-    self.topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 157*BiLiWidth)];
-    self.topScrollView.showsVerticalScrollIndicator = NO;
-    self.topScrollView.showsHorizontalScrollIndicator = NO;
-    self.topScrollView.clipsToBounds = NO;
-    self.topScrollView.pagingEnabled = YES;
-    self.topScrollView.delegate = self;
-    self.topScrollView.tag = 1001;
-    [self.mainScrollView addSubview:self.topScrollView];
-    
-    self.nianKaVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(12*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
-    self.nianKaVipButton.clipsToBounds = YES;
-    [self.nianKaVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yearCard"] forState:UIControlStateNormal];
-//    [self.nianKaVipButton addTarget:self action:@selector(nianKaVipClick) forControlEvents:UIControlEventTouchUpInside];
-    self.nianKaVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, self.nianKaVipButton.width, 20*BiLiWidth);
-    self.nianKaVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
-    self.nianKaVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.nianKaVipButton.button_lable.textColor = [UIColor whiteColor];
-    self.nianKaVipButton.button_lable.text = @"永恒钻石VIP";
-    self.nianKaVipButton.button_lable1.frame = CGRectMake(0, self.nianKaVipButton.button_lable.top+self.nianKaVipButton.button_lable.height+11*BiLiWidth, self.nianKaVipButton.width, 14*BiLiWidth);
-    self.nianKaVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    self.nianKaVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.nianKaVipButton.button_lable1.textColor = [UIColor whiteColor];
-    self.nianKaVipButton.button_lable1.text = @"年卡";
-    [self.topScrollView addSubview:self.nianKaVipButton];
-    
-    
-    self.yongJiuVipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.nianKaVipButton.left+self.nianKaVipButton.width+5*BiLiWidth, 0, 310*BiLiWidth, 157*BiLiWidth)];
-    self.yongJiuVipButton.clipsToBounds = YES;
-    [self.yongJiuVipButton setBackgroundImage:[UIImage imageNamed:@"huiYuan_yongJiu"] forState:UIControlStateNormal];
-//    [self.yongJiuVipButton addTarget:self action:@selector(yongJiuVipClick) forControlEvents:UIControlEventTouchUpInside];
-    self.yongJiuVipButton.button_lable.frame = CGRectMake(0, 61.5*BiLiWidth, self.yongJiuVipButton.width, 20*BiLiWidth);
-    self.yongJiuVipButton.button_lable.font = [UIFont systemFontOfSize:20*BiLiWidth];
-    self.yongJiuVipButton.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.yongJiuVipButton.button_lable.textColor = [UIColor whiteColor];
-    self.yongJiuVipButton.button_lable.text = @"最强王者VIP";
-    self.yongJiuVipButton.button_lable1.frame = CGRectMake(0, self.yongJiuVipButton.button_lable.top+self.yongJiuVipButton.button_lable.height+11*BiLiWidth, self.yongJiuVipButton.width, 14*BiLiWidth);
-    self.yongJiuVipButton.button_lable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    self.yongJiuVipButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.yongJiuVipButton.button_lable1.textColor = [UIColor whiteColor];
-    self.yongJiuVipButton.button_lable1.text = @"永久卡";
-    [self.topScrollView addSubview:self.yongJiuVipButton];
-    
-    self.yongJiuVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+    if (@available(iOS 11.0, *)) {
+        self.mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
 
     
-    self.nianKaTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
-    self.nianKaTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-    self.nianKaTipLable.layer.cornerRadius = 25*BiLiWidth/2;
-    self.nianKaTipLable.layer.masksToBounds = YES;
-    self.nianKaTipLable.textAlignment = NSTextAlignmentCenter;
-    self.nianKaTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    self.nianKaTipLable.textColor = [UIColor whiteColor];
-    self.nianKaTipLable.text = @"已拥有";
-    [self.nianKaVipButton addSubview:self.nianKaTipLable];
+    UIImageView * topBgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, WIDTH_PingMu*645/1125)];
+    topBgImageView.image = [UIImage imageNamed:@"vip_topBG"];
+    [self.mainScrollView addSubview:topBgImageView];
     
-    self.yongJiuTipLable = [[UILabel alloc] initWithFrame:CGRectMake(-8*BiLiWidth, 115*BiLiWidth, 68*BiLiWidth, 25*BiLiWidth)];
-    self.yongJiuTipLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-    self.yongJiuTipLable.layer.cornerRadius = 25*BiLiWidth/2;
-    self.yongJiuTipLable.layer.masksToBounds = YES;
-    self.yongJiuTipLable.textAlignment = NSTextAlignmentCenter;
-    self.yongJiuTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    self.yongJiuTipLable.textColor = [UIColor whiteColor];
-    self.yongJiuTipLable.text = @"已拥有";
-    [self.yongJiuVipButton addSubview:self.yongJiuTipLable];
+    [self.view bringSubviewToFront:self.topNavView];
+    self.topNavView.backgroundColor = [UIColor clearColor];
+    self.backImageView.frame = CGRectMake(self.backImageView.left, (self.topNavView.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.backImageView.image = [UIImage imageNamed:@"white_back"];
+    self.topTitleLale.textColor = [UIColor whiteColor];
+    
+    self.bannerArray = [[NSArray alloc] initWithObjects:@"vip_nianKa",@"vip_jiaoLong",@"vip_zuiQiangWangZhe", nil];
+    
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 157*BiLiWidth)];
+    pageFlowView.delegate = self;
+    pageFlowView.dataSource = self;
+    pageFlowView.minimumPageAlpha = 0.1;
+    pageFlowView.isCarousel = YES;
+    pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+    pageFlowView.isOpenAutoScroll = NO;
+    pageFlowView.orginPageCount = self.bannerArray.count;
+    [pageFlowView reloadData];
+    [self.mainScrollView addSubview:pageFlowView];
 
+    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((self.view.width-200*BiLiWidth)/2, pageFlowView.top+pageFlowView.height+8*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth)];
+    self.pageControl.currentPage = 0;      //设置当前页指示点
+    self.pageControl.pageIndicatorTintColor = RGBFormUIColor(0xEEEEEE);        //设置未激活的指示点颜色
+    self.pageControl.currentPageIndicatorTintColor = RGBFormUIColor(0x999999);     //设置当前页指示点颜色
+    self.pageControl.numberOfPages = self.bannerArray.count;
+    [self.mainScrollView addSubview:self.pageControl];
 
-    //auth_vip 2终身会员 1年会员 0非会员
+    //auth_vip 3蛟龙炮神会员 2终身会员 1年会员 0非会员
     if ([NormalUse isValidDictionary:self.info]) {
         
         self.auth_vip = [self.info objectForKey:@"auth_vip"];
@@ -301,88 +270,41 @@
         self.yongJiuTipLable.hidden = YES;
     }
 
-    
-    [self.topScrollView setContentSize:CGSizeMake(self.yongJiuVipButton.left+self.yongJiuVipButton.width+20*BiLiWidth, self.topScrollView.height)];
-
-    
-    UIImageView * tieQuanImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-16*BiLiWidth*329/38)/2, self.nianKaVipButton.top+self.nianKaVipButton.height+36*BiLiWidth, 16*BiLiWidth*329/38, 16*BiLiWidth)];
-    tieQuanImageView.image = [UIImage imageNamed:@"huiYuan_tip"];
+    UIImageView * tieQuanImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-26*BiLiWidth)/2, self.pageControl.top+self.pageControl.height+25*BiLiWidth, 26*BiLiWidth, 20.5*BiLiWidth)];
+    tieQuanImageView.image = [UIImage imageNamed:@"vip_title"];
     [self.mainScrollView addSubview:tieQuanImageView];
     
-    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, tieQuanImageView.top, WIDTH_PingMu, 15*BiLiWidth)];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, tieQuanImageView.top+tieQuanImageView.height+4*BiLiWidth, WIDTH_PingMu, 15*BiLiWidth)];
     tipLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
     tipLable.textColor = RGBFormUIColor(0x333333);
     tipLable.textAlignment = NSTextAlignmentCenter;
     tipLable.text = @"会员特权";
     [self.mainScrollView addSubview:tipLable];
-    
-
-
-    self.button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+26*BiLiWidth, WIDTH_PingMu/3, 87*BiLiWidth)];
-    self.button1.button_imageView.frame = CGRectMake((self.button1.width-50*BiLiWidth)/2, 0, 50*BiLiWidth, 50*BiLiWidth);
-    self.button1.button_imageView.image = [UIImage imageNamed:@"huiYuan_jinBi"];
-    self.button1.button_lable.frame = CGRectMake(0, self.button1.button_imageView.top+self.button1.button_imageView.height+11*BiLiWidth, self.button1.width, 13*BiLiWidth);
-    self.button1.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.button1.button_lable.textColor = RGBFormUIColor(0x333333);
-    self.button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    self.button1.button_lable.text = @"金币礼包";
-    self.button1.button_lable1.frame = CGRectMake(0, self.button1.button_lable.top+self.button1.button_lable.height+7*BiLiWidth, self.button1.width, 12*BiLiWidth);
-    self.button1.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.button1.button_lable1.textColor = RGBFormUIColor(0x999999);
-    self.button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.mainScrollView addSubview:self.button1];
-
-    self.button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3, self.button1.top, WIDTH_PingMu/3, 87*BiLiWidth)];
-    self.button2.button_imageView.frame = CGRectMake((self.button2.width-50*BiLiWidth)/2, 0, 50*BiLiWidth, 50*BiLiWidth);
-    self.button2.button_imageView.image = [UIImage imageNamed:@"huiYuan_freeMessage"];
-    self.button2.button_lable.frame = CGRectMake(0, self.button2.button_imageView.top+self.button2.button_imageView.height+11*BiLiWidth, self.button2.width, 15*BiLiWidth);
-    self.button2.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.button2.button_lable.textColor = RGBFormUIColor(0x333333);
-    self.button2.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    self.button2.button_lable.text = @"基本信息免费看";
-    self.button2.button_lable1.frame = CGRectMake(0, self.button2.button_lable.top+self.button2.button_lable.height+7*BiLiWidth, self.button2.width, 12*BiLiWidth);
-    self.button2.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.button2.button_lable1.textColor = RGBFormUIColor(0x999999);
-    self.button2.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.mainScrollView addSubview:self.button2];
 
     
-    self.button3 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3*2, self.button1.top, WIDTH_PingMu/3, 87*BiLiWidth)];
-    self.button3.button_imageView.frame = CGRectMake((self.button1.width-50*BiLiWidth)/2, 0, 50*BiLiWidth, 50*BiLiWidth);
-    self.button3.button_imageView.image = [UIImage imageNamed:@"huiYuan_freeFaBu"];
-    self.button3.button_lable.frame = CGRectMake(0, self.button3.button_imageView.top+self.button3.button_imageView.height+11*BiLiWidth, self.button3.width, 15*BiLiWidth);
-    self.button3.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.button3.button_lable.textColor = RGBFormUIColor(0x333333);
-    self.button3.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    self.button3.button_lable.text = @"免费发布信息";
-    self.button3.button_lable1.frame = CGRectMake(0, self.button3.button_lable.top+self.button3.button_lable.height+7*BiLiWidth, self.button3.width, 12*BiLiWidth);
-    self.button3.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.button3.button_lable1.textColor = RGBFormUIColor(0x999999);
-    self.button3.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    [self.mainScrollView addSubview:self.button3];
-    
-    self.button4 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.button1.top+self.button1.height+34*BiLiWidth, WIDTH_PingMu/3, 87*BiLiWidth)];
-    self.button4.button_imageView.frame = CGRectMake((self.button1.width-50*BiLiWidth)/2, 0, 50*BiLiWidth, 50*BiLiWidth);
-    self.button4.button_imageView.image = [UIImage imageNamed:@"huiYuan_more"];
-    self.button4.button_lable.frame = CGRectMake(0, self.button3.button_imageView.top+self.button3.button_imageView.height+11*BiLiWidth, self.button3.width, 15*BiLiWidth);
-    self.button4.button_lable.textAlignment = NSTextAlignmentCenter;
-    self.button4.button_lable.textColor = RGBFormUIColor(0x333333);
-    self.button4.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    self.button4.button_lable.text = @"更多权益";
-    self.button4.button_lable1.frame = CGRectMake(0, self.button3.button_lable.top+self.button3.button_lable.height+7*BiLiWidth, self.button3.width, 12*BiLiWidth);
-    self.button4.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.button4.button_lable1.textColor = RGBFormUIColor(0x999999);
-    self.button4.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.button4.button_lable1.text = @"敬请期待";
-    [self.mainScrollView addSubview:self.button4];
+    self.itemScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+15*BiLiWidth, WIDTH_PingMu, 275*BiLiWidth)];
+    self.itemScrollView.showsVerticalScrollIndicator = NO;
+    self.itemScrollView.showsHorizontalScrollIndicator = NO;
+    self.itemScrollView.clipsToBounds = NO;
+    self.itemScrollView.pagingEnabled = YES;
+    self.itemScrollView.delegate = self;
+    self.itemScrollView.scrollEnabled = NO;
+    [self.mainScrollView addSubview:self.itemScrollView];
 
 
-    self.kaiTongButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-153*BiLiWidth)/2, self.button4.top+self.button4.height+32*BiLiWidth, 153*BiLiWidth, 40*BiLiWidth)];
+    [self setYongJiuVipItem];
+    [self setJiaoLongVipItem];
+    [self setWangZheVipItem];
+
+
+
+
+    self.kaiTongButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-280*BiLiWidth)/2, HEIGHT_PingMu-50*BiLiWidth, 280*BiLiWidth, 40*BiLiWidth)];
     [self.kaiTongButton addTarget:self action:@selector(tiJiaoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:self.kaiTongButton];
+    [self.view addSubview:self.kaiTongButton];
     //渐变设置
-    UIColor *colorOne = RGBFormUIColor(0xF8E29F);
-    UIColor *colorTwo = RGBFormUIColor(0xEAC384);
+    UIColor *colorOne = RGBFormUIColor(0xFF6B6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0A76);
     CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
     gradientLayer1.frame = self.kaiTongButton.bounds;
     gradientLayer1.cornerRadius = 20*BiLiWidth;
@@ -399,29 +321,141 @@
     [self.kaiTongButton addSubview:self.kaiTongJinBiLable];
     
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
+    
+    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
 
-//    [self.nianKaVipButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    [self nianKaVipClick];
 
 }
+-(void)setYongJiuVipItem
+{
+    Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
+    [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+    button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
+    button1.button_imageView.image = [UIImage imageNamed:@"vip_jieSuo"];
+    button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
+    button1.button_lable.textAlignment = NSTextAlignmentCenter;
+    button1.button_lable.textColor = RGBFormUIColor(0x333333);
+    button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+    button1.button_lable.text = @"特权一";
+    button1.button_lable1.frame = CGRectMake((button1.width-71*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height+9*BiLiWidth, 71*BiLiWidth, 30*BiLiWidth);
+    button1.button_lable1.textAlignment = NSTextAlignmentCenter;
+    button1.button_lable1.textColor = RGBFormUIColor(0x999999);
+    button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    button1.button_lable1.numberOfLines = 2;
+    button1.button_lable1.text = @"基础信息免费解锁";
+    [self.itemScrollView addSubview:button1];
+
+    Lable_ImageButton * button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+25.5*BiLiWidth, button1.top, button1.width, button1.height)];
+    [button2 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+    button2.button_imageView.frame = button1.button_imageView.frame;
+    button2.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
+    button2.button_lable.frame = button1.button_lable.frame;
+    button2.button_lable.textAlignment = NSTextAlignmentCenter;
+    button2.button_lable.textColor = RGBFormUIColor(0x333333);
+    button2.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+    button2.button_lable.text = @"特权二";
+    button2.button_lable1.frame = button1.button_lable1.frame;
+    button2.button_lable1.textAlignment = NSTextAlignmentCenter;
+    button2.button_lable1.textColor = RGBFormUIColor(0x999999);
+    button2.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    button2.button_lable1.text = @"免费发布信息";
+    button2.button_lable1.numberOfLines = 2;
+    [self.itemScrollView addSubview:button2];
+
+    
+}
+-(void)setJiaoLongVipItem
+{
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"定制服务免费发布",@"message",@"vip_dingZhi",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取五组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
+    [array addObject:info1];
+    [array addObject:info2];
+    [array addObject:info3];
+    [array addObject:info4];
+    [array addObject:info5];
+    
+    for (int i=0; i<array.count; i++) {
+        
+        NSDictionary * info = [array objectAtIndex:i];
+        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu+10.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
+        [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+        button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
+        button1.button_imageView.image = [UIImage imageNamed:[info objectForKey:@"imageName"]];
+        button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
+        button1.button_lable.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable.textColor = RGBFormUIColor(0x333333);
+        button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+        button1.button_lable.text = [info objectForKey:@"title"];
+        button1.button_lable1.frame = CGRectMake((button1.width-71*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height+9*BiLiWidth, 71*BiLiWidth, 30*BiLiWidth);
+        button1.button_lable1.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable1.textColor = RGBFormUIColor(0x999999);
+        button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        button1.button_lable1.numberOfLines = 2;
+        button1.button_lable1.text = [info objectForKey:@"message"];
+        button1.button_lable1.adjustsFontSizeToFitWidth = YES;
+        [self.itemScrollView addSubview:button1];
+
+    }
+
+
+}
+-(void)setWangZheVipItem
+{
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取一组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
+    [array addObject:info1];
+    [array addObject:info2];
+    [array addObject:info3];
+    [array addObject:info4];
+    for (int i=0; i<array.count; i++) {
+        
+        NSDictionary * info = [array objectAtIndex:i];
+        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+10.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
+        [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+        button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
+        button1.button_imageView.image = [UIImage imageNamed:[info objectForKey:@"imageName"]];
+        button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
+        button1.button_lable.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable.textColor = RGBFormUIColor(0x333333);
+        button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+        button1.button_lable.text = [info objectForKey:@"title"];
+        button1.button_lable1.frame = CGRectMake((button1.width-71*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height+9*BiLiWidth, 71*BiLiWidth, 30*BiLiWidth);
+        button1.button_lable1.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable1.textColor = RGBFormUIColor(0x999999);
+        button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        button1.button_lable1.numberOfLines = 2;
+        button1.button_lable1.adjustsFontSizeToFitWidth = YES;
+        button1.button_lable1.text = [info objectForKey:@"message"];
+        [self.itemScrollView addSubview:button1];
+
+    }
+}
+/*
 -(void)nianKaVipClick
 {
-    /*
-    "vip_funlock_num":"15",//终身会员当天解锁次数
-    "vip_fpost_num":"15",//终身会员当天发帖次数
-    "vip_ypost_num":"10",//年会员当天发帖次数
-    "vip_yunlock_num":"10",//年会员当天解锁次数
-    "vip_fpack_coin":"1000",//开通终身会员送的金币
-    "vip_ypack_coin":"500",//开通年会员送的金币
+    
+    "vip_funlock_num":"15",终身会员当天解锁次数
+    "vip_fpost_num":"15",终身会员当天发帖次数
+    "vip_ypost_num":"10",年会员当天发帖次数
+    "vip_yunlock_num":"10",年会员当天解锁次数
+    "vip_fpack_coin":"1000",开通终身会员送的金币
+    "vip_ypack_coin":"500",开通年会员送的金币
      
-     "vip_forever_coin":"1000000",//终身会员金币
-     "vip_year_coin":"100000",//年会员金币
+     "vip_forever_coin":"1000000",终身会员金币
+     "vip_year_coin":"100000",年会员金币
 
-     */
+     
 
-    self.button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_ypack_coin"]];
-    self.button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_yunlock_num"]];
-    self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_ypost_num"]];
+    button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_ypack_coin"]];
+    button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_yunlock_num"]];
+    button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_ypost_num"]];
     self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
     
     self.vip_type = @"vip_year";
@@ -440,9 +474,9 @@
 }
 -(void)yongJiuVipClick
 {
-    self.button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_fpack_coin"]];
-    self.button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_funlock_num"]];
-    self.button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_fpost_num"]];
+    button1.button_lable1.text = [NSString stringWithFormat:@"获得%@金币",[NormalUse getJinBiStr:@"vip_fpack_coin"]];
+    button2.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_funlock_num"]];
+    button3.button_lable1.text = [NSString stringWithFormat:@"每日%@次",[NormalUse getJinBiStr:@"vip_fpost_num"]];
     self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
 
     self.vip_type = @"vip_forever";
@@ -459,6 +493,7 @@
     
 
 }
+*/
 -(void)tiJiaoButtonClick
 {
     
@@ -472,9 +507,14 @@
             self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通年卡";
 
         }
-        else
+        else if ([@"vip_forever" isEqualToString:self.vip_type])
         {
             self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通永久卡";
+
+        }
+        else
+        {
+            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通蛟龙炮神卡";
         }
 
     }
@@ -543,7 +583,9 @@
             sureLable.textColor = [UIColor whiteColor];
             [sureButton addSubview:sureLable];
 
-            self.kaiTongButton.hidden = YES;
+
+            self.kaiTongButton.enabled = NO;
+            self.kaiTongJinBiLable.text = @"已开通";
 
             //2终身会员 1年会员 0非会员
             if ([@"vip_year" isEqualToString:self.vip_type]) {
@@ -556,13 +598,22 @@
                 [NormalUse defaultsSetObject:[NSNumber numberWithInt:1] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }
-            else
+            else if ([@"vip_forever" isEqualToString:self.vip_type])
             {
                 self.nianKaTipLable.hidden = YES;
                 self.yongJiuTipLable.hidden = NO;
                 self.auth_vip = [NSNumber numberWithInt:2];
                 kaiTongHuiYuanQueRenViewTipLable.text = @"永久卡会员开通成功";
                 [NormalUse defaultsSetObject:[NSNumber numberWithInt:2] forKey:@"UserAlsoVip"];//本地存储会员身份
+
+            }
+            else
+            {
+                self.nianKaTipLable.hidden = YES;
+                self.yongJiuTipLable.hidden = NO;
+                self.auth_vip = [NSNumber numberWithInt:3];
+                kaiTongHuiYuanQueRenViewTipLable.text = @"蛟龙炮神卡会员开通成功";
+                [NormalUse defaultsSetObject:[NSNumber numberWithInt:3] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }
             
@@ -593,38 +644,100 @@
 {
     [self.kaiTongSuccessTipView removeFromSuperview];
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
-{
-    if (scrollView.tag==1001) {
-        
-//        int  specialIndex = scrollView.contentOffset.x/scrollView.width;
-        
-        if (scrollView.contentOffset.x==0)
-        {
-            [UIView animateWithDuration:0.25 animations:^{
-                
-                self.nianKaVipButton.transform = CGAffineTransformIdentity;
-                self.yongJiuVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
 
-            }];
-            [self nianKaVipClick];
+#pragma mark NewPagedFlowView Delegate
+#pragma mark NewPagedFlowView Delegate
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+    
+    return CGSizeMake(WIDTH_PingMu-60*BiLiWidth,flowView.frame.size.height);
+}
+
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+    
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    if (subIndex==-1) {
+        subIndex = subIndex+1;
+    }
+    
+   // NSDictionary * info = [self.bannerArray objectAtIndex:subIndex];
+}
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    
+    self.pageControl.currentPage = pageNumber;
+    [self.itemScrollView setContentOffset:CGPointMake(WIDTH_PingMu*pageNumber, 0)];
+    
+//    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
+// self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+
+    if (pageNumber==0) {
+        
+        self.vip_type = @"vip_year";
+        
+        if(self.auth_vip.intValue==1)
+        {
+            self.kaiTongButton.enabled = NO;
+            self.kaiTongJinBiLable.text = @"已开通";
+        }
+        
+        else
+        {
+            self.kaiTongButton.enabled = YES;
+            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+        }
+    }
+    else if (pageNumber==1)
+    {
+        self.vip_type = @"svip_forever";
+        
+        if(self.auth_vip.intValue==3)
+        {
+            self.kaiTongButton.enabled = NO;
+            self.kaiTongJinBiLable.text = @"已开通";
+
         }
         else
         {
-            
-            [UIView animateWithDuration:0.25 animations:^{
-                
-                self.yongJiuVipButton.transform = CGAffineTransformIdentity;
-                self.nianKaVipButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
-
-            }];
-
-
-            [self yongJiuVipClick];
+            self.kaiTongButton.enabled = YES;
+            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
         }
-        
     }
+    else
+    {
+        self.vip_type = @"vip_forever";
+        
+        if(self.auth_vip.intValue==2)
+        {
+            self.kaiTongButton.enabled = NO;
+            self.kaiTongJinBiLable.text = @"已开通";
 
+        }
+        else
+        {
+            self.kaiTongButton.enabled = YES;
+            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
+        }
+    }
+}
+
+#pragma mark NewPagedFlowView Datasource
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+    
+    return self.bannerArray.count;
+    
+}
+
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] init];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
+    }
+   bannerView.mainImageView.image = [UIImage imageNamed:[self.bannerArray objectAtIndex:index]];
+    
+    return bannerView;
 }
 
 @end

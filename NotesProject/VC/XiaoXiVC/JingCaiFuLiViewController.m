@@ -20,6 +20,7 @@
 @property(nonatomic,strong)UILabel * numberLable;
 @property(nonatomic,strong)UIButton * jinBiGouMaiButton;
 
+@property(nonatomic,strong)Lable_ImageButton * vipButton;
 
 @property(nonatomic,strong)Lable_ImageButton * haoYouShangXianButton;
 
@@ -260,6 +261,21 @@
     [super viewWillAppear:animated];
     
     [self xianShiTabBar];
+    NSNumber * auth_vip = [NormalUse defaultsGetObjectKey:@"UserAlsoVip"];
+
+    if (auth_vip.intValue==3) {//蛟龙炮神卡
+        
+        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vips_ticket_nums_day"]];
+        self.vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vips_ticket_nums_day"]];
+
+    }
+    else
+    {
+        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+        self.vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+
+    }
+
 }
 
 - (void)viewDidLoad {
@@ -408,42 +424,43 @@
     [bottomImageView addSubview:tipLable];
     
     //VIP免费领取1组兑奖号码
-    Lable_ImageButton * vipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+20*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
-    vipButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
-    vipButton.button_imageView.image = [UIImage imageNamed:@"vip_lingQuChouJiang"];
-    vipButton.button_lable.frame = CGRectMake(vipButton.button_imageView.left+vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
-    vipButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    vipButton.button_lable.textColor = RGBFormUIColor(0x333333);
-    vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
-    vipButton.button_lable1.frame = CGRectMake(vipButton.button_lable.left, vipButton.button_lable.top+vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
-    vipButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
-    vipButton.button_lable1.textColor = RGBFormUIColor(0x999999);
-    vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
-    [bottomImageView addSubview:vipButton];
+    self.vipButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+20*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
+    self.vipButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
+    self.vipButton.button_imageView.image = [UIImage imageNamed:@"vip_lingQuChouJiang"];
+    self.vipButton.button_lable.frame = CGRectMake(self.vipButton.button_imageView.left+self.vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
+    self.vipButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.vipButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+    self.vipButton.button_lable1.frame = CGRectMake(self.vipButton.button_lable.left, self.vipButton.button_lable.top+self.vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
+    self.vipButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
+    self.vipButton.button_lable1.textColor = RGBFormUIColor(0x999999);
+    self.vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+    
+    [bottomImageView addSubview:self.vipButton];
 
-    self.vipLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
+    self.vipLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (self.vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
     self.vipLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
     self.vipLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
     [self.vipLingQuButton setTitle:@"领取" forState:UIControlStateNormal];
     [self.vipLingQuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.vipLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
     [self.vipLingQuButton addTarget:self action:@selector(vipLingQuButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [vipButton addSubview:self.vipLingQuButton];
+    [self.vipButton addSubview:self.vipLingQuButton];
 
     //好友每日上线1次获得50金币
-    self.haoYouShangXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, vipButton.top+vipButton.height+23*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
+    self.haoYouShangXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.vipButton.top+self.vipButton.height+23*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
     self.haoYouShangXianButton.button_imageView.frame = CGRectMake(32*BiLiWidth, 0, 33*BiLiWidth, 33*BiLiWidth);
     self.haoYouShangXianButton.button_imageView.image = [UIImage imageNamed:@"haoYouShangXian_lingJinBi"];
-    self.haoYouShangXianButton.button_lable.frame = CGRectMake(vipButton.button_imageView.left+vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
+    self.haoYouShangXianButton.button_lable.frame = CGRectMake(self.vipButton.button_imageView.left+self.vipButton.button_imageView.width+7*BiLiWidth, 0, 200*BiLiWidth, 12*BiLiWidth);
     self.haoYouShangXianButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.haoYouShangXianButton.button_lable.textColor = RGBFormUIColor(0x333333);
     self.haoYouShangXianButton.button_lable.text = [NSString stringWithFormat:@"好友每日上线1次获得%@金币",[NormalUse getJinBiStr:@"ticket_coin_day"]];
-    self.haoYouShangXianButton.button_lable1.frame = CGRectMake(vipButton.button_lable.left, vipButton.button_lable.top+vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
+    self.haoYouShangXianButton.button_lable1.frame = CGRectMake(self.vipButton.button_lable.left, self.vipButton.button_lable.top+self.vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
     self.haoYouShangXianButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.haoYouShangXianButton.button_lable1.textColor = RGBFormUIColor(0x999999);
     [bottomImageView addSubview:self.haoYouShangXianButton];
 
-    self.haoYouShangXianLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
+    self.haoYouShangXianLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (self.vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
     self.haoYouShangXianLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
     self.haoYouShangXianLingQuButton.backgroundColor = RGBFormUIColor(0xFFA217);
     [self.haoYouShangXianLingQuButton setTitle:@"领取" forState:UIControlStateNormal];

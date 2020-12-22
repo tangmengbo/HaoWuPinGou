@@ -221,6 +221,11 @@
             
             [NormalUse defaultsSetObject:auth_vip forKey:@"UserAlsoVip"];//本地存储会员身份
 
+            self.mianFeiJieSuoButton.button_lable.hidden = NO;
+            self.mianFeiJieSuoButton.button_imageView.hidden = YES;
+            self.mianFeiFaBuButton.button_lable.hidden = NO;
+            self.mianFeiFaBuButton.button_imageView.hidden = YES;
+
             if ([auth_vip isKindOfClass:[NSNumber class]]) {
                 
                 if (auth_vip.intValue==0) {
@@ -233,7 +238,7 @@
                 }
                 else if(auth_vip.intValue==1)
                 {
-                    self.messageLable.text = @"年卡";
+                    self.messageLable.text = [NSString stringWithFormat:@"%@到期",[self.userInfo objectForKey:@"vip_expiration_date"]];//@"年卡";
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
@@ -257,7 +262,24 @@
                     self.huiYuanDaoQiLable.text = @"";//[self.userInfo objectForKey:@"vip_expiration_date"];
 
                 }
+                else if (auth_vip.intValue==3)
+                {
+                    self.messageLable.text = @"永久卡";
+
+                    [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_jiaolongVip"] forState:UIControlStateNormal];
+                    
+                    self.huiYuanTitleLable.text = @"";//@"会员到期时间";
+                    self.huiYuanDaoQiLable.text = @"";//[self.userInfo objectForKey:@"vip_expiration_date"];
+
+                    self.mianFeiJieSuoButton.button_lable.hidden = YES;
+                    self.mianFeiJieSuoButton.button_imageView.hidden = NO;
+                    self.mianFeiFaBuButton.button_lable.hidden = YES;
+                    self.mianFeiFaBuButton.button_imageView.hidden = NO;
+
+                }
+                
             }
+
             if([NormalUse isValidString:[self.userInfo objectForKey:@"from_share_code"]])
             {
                 self.tianXieYaoQingMaButton.button_lable1.text = [self.userInfo objectForKey:@"from_share_code"];
@@ -333,6 +355,8 @@
     
     
     self.mianFeiJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiJieSuoButton.button_imageView.frame = CGRectMake((self.mianFeiJieSuoButton.width-26*BiLiWidth)/2, 0, 26*BiLiWidth, 13.5*BiLiWidth);
+    self.mianFeiJieSuoButton.button_imageView.image = [UIImage imageNamed:@"my_vipWuXian"];
     self.mianFeiJieSuoButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
     self.mianFeiJieSuoButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.mianFeiJieSuoButton.button_lable.textColor = RGBFormUIColor(0x343434);
@@ -345,6 +369,8 @@
     [self.mainScrollView addSubview:self.mianFeiJieSuoButton];
     
     self.mianFeiFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-50*BiLiWidth)/2, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiFaBuButton.button_imageView.frame = CGRectMake((self.mianFeiJieSuoButton.width-26*BiLiWidth)/2, 0, 26*BiLiWidth, 13.5*BiLiWidth);
+    self.mianFeiFaBuButton.button_imageView.image = [UIImage imageNamed:@"my_vipWuXian"];
     self.mianFeiFaBuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
     self.mianFeiFaBuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];
     self.mianFeiFaBuButton.button_lable.textColor = RGBFormUIColor(0x343434);
@@ -389,25 +415,24 @@
     
     UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.huiYuanButton.left+self.huiYuanButton.width+16*BiLiWidth, self.huiYuanButton.top, self.huiYuanButton.width, self.huiYuanButton.height)];
     [chongZhiButton setBackgroundImage:[UIImage imageNamed:@"my_jinBiBottom"] forState:UIControlStateNormal];
-//    [chongZhiButton setBackgroundColor:RGBFormUIColor(0x403b3f)];
     [chongZhiButton addTarget:self action:@selector(myZhangHuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     chongZhiButton.layer.cornerRadius = 5*BiLiWidth;
     [self.mainScrollView addSubview:chongZhiButton];
     
-//    UIImageView *  jinBiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*BiLiWidth, (chongZhiButton.height-39*BiLiWidth)/2, 39*BiLiWidth, 39*BiLiWidth)];
-//    jinBiImageView.image = [UIImage imageNamed:@"chongZhi_jinBi"];
-//    [chongZhiButton addSubview:jinBiImageView];
+    UIImageView *  jinBiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(7*BiLiWidth, 8.5*BiLiWidth, 58*BiLiWidth, 66*BiLiWidth)];
+    jinBiImageView.image = [UIImage imageNamed:@"vip_jinBiLogo"];
+    [chongZhiButton addSubview:jinBiImageView];
 //
-//    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 20*BiLiWidth, 70*BiLiWidth, 14*BiLiWidth)];
-//    tipLable.textColor = [UIColor whiteColor];//RGBFormUIColor(0x5d3f14);
-//    tipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-//    tipLable.text = @"金币充值";
-//    [chongZhiButton addSubview:tipLable];
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(71.5*BiLiWidth, 20*BiLiWidth, 70*BiLiWidth, 17*BiLiWidth)];
+    tipLable.textColor = [UIColor whiteColor];//RGBFormUIColor(0x5d3f14);
+    tipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    tipLable.text = @"金币充值";
+    [chongZhiButton addSubview:tipLable];
 //
-    UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(63*BiLiWidth, 44.5*BiLiWidth, 30*BiLiWidth, 17*BiLiWidth)];
+    UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(71.5*BiLiWidth, 44.5*BiLiWidth, 30*BiLiWidth, 17*BiLiWidth)];
     tipLable1.textColor = [UIColor whiteColor];//RGBFormUIColor(0x5d3f14);
     tipLable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    tipLable1.text = @"";//@"余额:";
+    tipLable1.text = @"余额:";
     [chongZhiButton addSubview:tipLable1];
 
     

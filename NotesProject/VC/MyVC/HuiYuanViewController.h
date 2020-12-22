@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSArray * bannerArray;
 
+@property(nonatomic,strong)UIPageControl * pageControl;
+
 @end
 
 NS_ASSUME_NONNULL_END
