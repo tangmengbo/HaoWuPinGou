@@ -19,6 +19,10 @@
     if (self) {
         
         [self addSubview:self.mainImageView];
+        [self.mainImageView addSubview:self.tipLable];
+        [self.tipLable addSubview:self.lineView];
+        [self.mainImageView addSubview:self.tipLable1];
+        [self.tipLable1 addSubview:self.lineView1];
         [self addSubview:self.coverView];
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleCellTapAction:)];
         [self addGestureRecognizer:singleTap];
@@ -40,6 +44,10 @@
     }
     
     self.mainImageView.frame = superViewBounds;
+    self.tipLable.frame = CGRectMake(20, self.mainImageView.height-30, 200, 30);
+    self.lineView.frame = CGRectMake(50, (self.tipLable.height-1)/2, 60, 1);
+    self.tipLable1.frame = CGRectMake(20, 0, 200, 30);
+    self.lineView1.frame = CGRectMake(40, (self.tipLable1.height-1)/2, 60, 1);
     self.coverView.frame = superViewBounds;
 }
 
@@ -56,7 +64,36 @@
     }
     return _mainImageView;
 }
-
+- (UILabel *)tipLable {
+    
+    if (_tipLable == nil) {
+        _tipLable = [[UILabel alloc] init];
+    }
+    return _tipLable;
+}
+- (UIView *)lineView {
+    
+    if (_lineView == nil) {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = [UIColor clearColor];
+    }
+    return _lineView;
+}
+- (UILabel *)tipLable1 {
+    
+    if (_tipLable1 == nil) {
+        _tipLable1 = [[UILabel alloc] init];
+    }
+    return _tipLable1;
+}
+- (UIView *)lineView1 {
+    
+    if (_lineView1 == nil) {
+        _lineView1 = [[UIView alloc] init];
+        _lineView1.backgroundColor = [UIColor clearColor];
+    }
+    return _lineView1;
+}
 - (UIView *)coverView {
     if (_coverView == nil) {
         _coverView = [[UIView alloc] init];

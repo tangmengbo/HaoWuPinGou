@@ -23,6 +23,10 @@
  */
 @property (nonatomic, strong) UIImageView *mainImageView;
 
+@property (nonatomic, strong) UILabel * tipLable;
+@property (nonatomic, strong) UIView * lineView;
+@property (nonatomic, strong) UILabel * tipLable1;
+@property (nonatomic, strong) UIView * lineView1;
 /**
  *  用来变色的view
  */

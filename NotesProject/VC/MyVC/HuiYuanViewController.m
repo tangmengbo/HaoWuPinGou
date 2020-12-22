@@ -746,7 +746,81 @@
         bannerView.layer.masksToBounds = YES;
     }
    bannerView.mainImageView.image = [UIImage imageNamed:[self.bannerArray objectAtIndex:index]];
-    
+    if (index==0) {
+        
+        bannerView.tipLable1.text = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_year_coin"],@"1000"];
+        bannerView.tipLable.text = @"";
+        bannerView.lineView.backgroundColor = [UIColor clearColor];
+        
+        bannerView.tipLable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        bannerView.tipLable1.textColor = RGBFormUIColor(0xB2B2B2);
+        bannerView.lineView1.backgroundColor = RGBFormUIColor(0xB2B2B2);
+        
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_year_coin"],@"1000"];
+
+        NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"vip_year_coin"]];
+        
+        NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+        
+        NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+        
+        [text1 addAttribute:NSFontAttributeName
+                      value:[UIFont systemFontOfSize:12*BiLiWidth]
+                      range:NSMakeRange(0, xianJiaStr.length)];
+        
+        bannerView.tipLable1.attributedText = text1;
+
+    }
+    else if (index==1)
+    {
+        bannerView.tipLable1.text = @"";
+        bannerView.lineView1.backgroundColor = [UIColor clearColor];
+
+        bannerView.tipLable.text = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"svip_forever_coin"],@"10000"];
+        bannerView.tipLable.textColor = RGBFormUIColor(0xBDA757);
+        bannerView.lineView.backgroundColor = RGBFormUIColor(0xBDA757);
+        bannerView.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"svip_forever_coin"],@"10000"];
+        NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"svip_forever_coin"]];
+        
+        NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+        
+        NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+        
+        [text1 addAttribute:NSFontAttributeName
+                      value:[UIFont systemFontOfSize:12*BiLiWidth]
+                      range:NSMakeRange(0, xianJiaStr.length)];
+        
+        bannerView.tipLable.attributedText = text1;
+
+    }
+    else
+    {
+        
+        bannerView.tipLable.text = @"";
+        bannerView.lineView.backgroundColor = [UIColor clearColor];
+
+        bannerView.tipLable1.textColor = RGBFormUIColor(0xBDA757);
+        bannerView.lineView1.backgroundColor = RGBFormUIColor(0xBDA757);
+        bannerView.tipLable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
+
+        
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_forever_coin"],@"10000"];
+        NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"vip_forever_coin"]];
+        
+        NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+        
+        NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+        
+        [text1 addAttribute:NSFontAttributeName
+                      value:[UIFont systemFontOfSize:12*BiLiWidth]
+                      range:NSMakeRange(0, xianJiaStr.length)];
+        
+        bannerView.tipLable1.attributedText = text1;
+
+
+    }
     return bannerView;
 }
 
