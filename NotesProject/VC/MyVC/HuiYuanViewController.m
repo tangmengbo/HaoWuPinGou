@@ -341,7 +341,7 @@
     Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
     [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
     button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
-    button1.button_imageView.image = [UIImage imageNamed:@"vip_jieSuo"];
+    button1.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
     button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
     button1.button_lable.textAlignment = NSTextAlignmentCenter;
     button1.button_lable.textColor = RGBFormUIColor(0x333333);
@@ -352,13 +352,13 @@
     button1.button_lable1.textColor = RGBFormUIColor(0x999999);
     button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
     button1.button_lable1.numberOfLines = 2;
-    button1.button_lable1.text = @"基础信息免费解锁";
+    button1.button_lable1.text = @"免费发布信息";
     [self.itemScrollView addSubview:button1];
 
     Lable_ImageButton * button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+25.5*BiLiWidth, button1.top, button1.width, button1.height)];
     [button2 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
     button2.button_imageView.frame = button1.button_imageView.frame;
-    button2.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
+    button2.button_imageView.image = [UIImage imageNamed:@"vip_jieSuo"];
     button2.button_lable.frame = button1.button_lable.frame;
     button2.button_lable.textAlignment = NSTextAlignmentCenter;
     button2.button_lable.textColor = RGBFormUIColor(0x333333);
@@ -368,7 +368,7 @@
     button2.button_lable1.textAlignment = NSTextAlignmentCenter;
     button2.button_lable1.textColor = RGBFormUIColor(0x999999);
     button2.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    button2.button_lable1.text = @"免费发布信息";
+    button2.button_lable1.text = @"基础信息免费解锁";
     button2.button_lable1.numberOfLines = 2;
     [self.itemScrollView addSubview:button2];
 
@@ -379,7 +379,7 @@
     NSMutableArray * array = [[NSMutableArray alloc] init];
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
     NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布所有信息",@"message",@"vip_faBu",@"imageName", nil];
     NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"定制服务免费发布",@"message",@"vip_dingZhi",@"imageName", nil];
     NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取五组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
     [array addObject:info1];
@@ -418,7 +418,7 @@
     NSMutableArray * array = [[NSMutableArray alloc] init];
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
     NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布基础信息",@"message",@"vip_faBu",@"imageName", nil];
     NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取一组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
     [array addObject:info1];
     [array addObject:info2];
