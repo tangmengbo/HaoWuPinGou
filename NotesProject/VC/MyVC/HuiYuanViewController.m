@@ -378,10 +378,11 @@
 {
     NSMutableArray * array = [[NSMutableArray alloc] init];
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息无限制免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
     NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布所有信息",@"message",@"vip_faBu",@"imageName", nil];
     NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"定制服务免费发布",@"message",@"vip_dingZhi",@"imageName", nil];
-    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取五组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"svip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
+    
     [array addObject:info1];
     [array addObject:info2];
     [array addObject:info3];
@@ -419,7 +420,8 @@
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
     NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
     NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布基础信息",@"message",@"vip_faBu",@"imageName", nil];
-    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"每日领取一组金币兑奖号码",@"message",@"vip_teQuan",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
+    
     [array addObject:info1];
     [array addObject:info2];
     [array addObject:info3];
