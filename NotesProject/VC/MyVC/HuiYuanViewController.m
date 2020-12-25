@@ -748,6 +748,8 @@
    bannerView.mainImageView.image = [UIImage imageNamed:[self.bannerArray objectAtIndex:index]];
     if (index==0) {
         
+        NSDictionary * info = [self.vipListInfo objectForKey:@"vip_year"];
+        
         bannerView.tipLable1.text = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_year_coin"],@"1000"];
         bannerView.tipLable.text = @"";
         bannerView.lineView.backgroundColor = [UIColor clearColor];
@@ -756,7 +758,7 @@
         bannerView.tipLable1.textColor = RGBFormUIColor(0xB2B2B2);
         bannerView.lineView1.backgroundColor = RGBFormUIColor(0xB2B2B2);
         
-        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_year_coin"],@"1000"];
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_year_coin"],[info objectForKey:@"vip_coin_label"]];
 
         NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"vip_year_coin"]];
         
@@ -773,6 +775,8 @@
     }
     else if (index==1)
     {
+        NSDictionary * info = [self.vipListInfo objectForKey:@"svip_forever"];
+
         bannerView.tipLable1.text = @"";
         bannerView.lineView1.backgroundColor = [UIColor clearColor];
 
@@ -781,7 +785,7 @@
         bannerView.lineView.backgroundColor = RGBFormUIColor(0xBDA757);
         bannerView.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
 
-        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"svip_forever_coin"],@"10000"];
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"svip_forever_coin"],[info objectForKey:@"vip_coin_label"]];
         NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"svip_forever_coin"]];
         
         NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
@@ -797,7 +801,8 @@
     }
     else
     {
-        
+        NSDictionary * info = [self.vipListInfo objectForKey:@"vip_forever"];
+
         bannerView.tipLable.text = @"";
         bannerView.lineView.backgroundColor = [UIColor clearColor];
 
@@ -806,7 +811,7 @@
         bannerView.tipLable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
 
         
-        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_forever_coin"],@"10000"];
+        NSString * str = [NSString stringWithFormat:@"%@元 原价%@元",[NormalUse getJinBiStr:@"vip_forever_coin"],[info objectForKey:@"vip_coin_label"]];
         NSString * xianJiaStr = [NSString stringWithFormat:@"%@元",[NormalUse getJinBiStr:@"vip_forever_coin"]];
         
         NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];

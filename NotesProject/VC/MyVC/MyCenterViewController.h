@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UILabel * huiYuanDaoQiLable;
 @property(nonatomic,strong)UILabel * yuELable;
 
+@property(nonatomic,strong)NSDictionary * vipListInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

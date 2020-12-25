@@ -295,6 +295,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [HTTPModel huiYuanMiaoShuXinXi:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.vipListInfo =  responseObject;
+        }
+    }];
     self.topNavView.hidden = YES;
     
     self.mainScrollView = [[MyScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu-BottomHeight_PingMu)];
@@ -589,6 +596,7 @@
 {
     HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
     vc.info = self.userInfo;
+    vc.vipListInfo = self.vipListInfo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)myZhangHuButtonClick

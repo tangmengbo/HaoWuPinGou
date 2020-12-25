@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSDictionary * info;
 
+@property(nonatomic,strong)NSDictionary * vipListInfo;
+
 @property(nonatomic,strong)NSArray * bannerArray;
 
 @property(nonatomic,strong)UIPageControl * pageControl;
