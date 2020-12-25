@@ -230,7 +230,7 @@
     self.backImageView.image = [UIImage imageNamed:@"white_back"];
     self.topTitleLale.textColor = [UIColor whiteColor];
     
-    self.bannerArray = [[NSArray alloc] initWithObjects:@"vip_nianKa",@"vip_jiaoLong",@"vip_zuiQiangWangZhe", nil];
+    self.bannerArray = [[NSArray alloc] initWithObjects:@"vip_jiaoLong",@"vip_zuiQiangWangZhe",@"vip_nianKa", nil];
     
     NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, self.topNavView.top+self.topNavView.height, WIDTH_PingMu, 157*BiLiWidth)];
     pageFlowView.delegate = self;
@@ -238,7 +238,7 @@
     pageFlowView.minimumPageAlpha = 0.1;
     pageFlowView.isCarousel = YES;
     pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-    pageFlowView.isOpenAutoScroll = NO;
+    pageFlowView.isOpenAutoScroll = YES;
     pageFlowView.orginPageCount = self.bannerArray.count;
     [pageFlowView reloadData];
     [self.mainScrollView addSubview:pageFlowView];
@@ -322,7 +322,7 @@
     
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
     
-    if(self.auth_vip.intValue==1)
+    if(self.auth_vip.intValue==3)
     {
         self.kaiTongButton.enabled = NO;
         self.kaiTongJinBiLable.text = @"已开通";
@@ -330,7 +330,7 @@
     }
     else
     {
-        self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+        self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
 
     }
 
@@ -338,7 +338,7 @@
 }
 -(void)setYongJiuVipItem
 {
-    Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
+    Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
     [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
     button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
     button1.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
@@ -392,7 +392,7 @@
     for (int i=0; i<array.count; i++) {
         
         NSDictionary * info = [array objectAtIndex:i];
-        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu+10.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
+        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
         [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
         button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
         button1.button_imageView.image = [UIImage imageNamed:[info objectForKey:@"imageName"]];
@@ -420,7 +420,7 @@
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
     NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
     NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布基础信息",@"message",@"vip_faBu",@"imageName", nil];
-    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
     
     [array addObject:info1];
     [array addObject:info2];
@@ -429,7 +429,7 @@
     for (int i=0; i<array.count; i++) {
         
         NSDictionary * info = [array objectAtIndex:i];
-        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+10.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
+        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu+10.5*BiLiWidth+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
         [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
         button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
         button1.button_imageView.image = [UIImage imageNamed:[info objectForKey:@"imageName"]];
@@ -682,7 +682,7 @@
 //    self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
 // self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
 
-    if (pageNumber==0) {
+    if (pageNumber==2) {
         
         self.vip_type = @"vip_year";
         
@@ -698,7 +698,7 @@
             self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@金币开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
         }
     }
-    else if (pageNumber==1)
+    else if (pageNumber==0)
     {
         self.vip_type = @"svip_forever";
         
@@ -748,7 +748,7 @@
         bannerView.layer.masksToBounds = YES;
     }
    bannerView.mainImageView.image = [UIImage imageNamed:[self.bannerArray objectAtIndex:index]];
-    if (index==0) {
+    if (index==2) {
         
         NSDictionary * info = [self.vipListInfo objectForKey:@"vip_year"];
         
@@ -775,7 +775,7 @@
         bannerView.tipLable1.attributedText = text1;
 
     }
-    else if (index==1)
+    else if (index==0)
     {
         NSDictionary * info = [self.vipListInfo objectForKey:@"svip_forever"];
 

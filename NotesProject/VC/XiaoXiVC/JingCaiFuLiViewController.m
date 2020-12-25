@@ -271,14 +271,14 @@
     }
     else if (auth_vip.intValue==2)
     {
-        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];//svip_ticket_nums_day
-        self.vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"永久VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];//svip_ticket_nums_day
+        self.vipButton.button_lable.text = [NSString stringWithFormat:@"永久VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
 
     }
     else
     {
-        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
-        self.vipButton.button_lable.text = [NSString stringWithFormat:@"VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+        self.vipButton.button_lable1.text = [NSString stringWithFormat:@"永久VIP用户每日可免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
+        self.vipButton.button_lable.text = [NSString stringWithFormat:@"永久VIP免费领取%@组兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]];
 
     }
 

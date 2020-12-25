@@ -300,11 +300,11 @@
             button.button_imageView1.layer.borderWidth = 0;
 
         }
-        if ([@"1" isEqualToString:pay_channel]) {
+        if ([@"微信支付" isEqualToString:[info objectForKey:@"pay_name"]]) {
             
             button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
             button.button_lable.text = [info objectForKey:@"pay_name"];
-        }else if ([@"2" isEqualToString:pay_channel])
+        }else
         {
             button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
             button.button_lable.text = [info objectForKey:@"pay_name"];
@@ -443,8 +443,19 @@
             NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
             NSDictionary * info = [self.products objectAtIndex:self.jinBiButtonBottom.tag];
             NSNumber * coin = [info objectForKey:@"coin"];
-            NSString *url =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
-            url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"]]];
+            NSString *url;
+            
+            if ([@"1" isEqualToString:[payTypeInfo objectForKey:@"pay_channel"]]) {
+                
+             url   =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
+                           url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+            }
+            else
+            {
+                url   =  [NSString stringWithFormat:@"%@/appi/mlpay/dd2Ordering",HTTP_REQUESTURL];
+                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+            }
+           
             
             NSURL *cleanURL = [NSURL URLWithString:url];
             [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
