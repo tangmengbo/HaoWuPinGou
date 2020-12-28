@@ -352,7 +352,7 @@
     button1.button_lable1.textColor = RGBFormUIColor(0x999999);
     button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
     button1.button_lable1.numberOfLines = 2;
-    button1.button_lable1.text = @"免费发布信息";
+    button1.button_lable1.text = @"发布基础信息";
     [self.itemScrollView addSubview:button1];
 
     Lable_ImageButton * button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+25.5*BiLiWidth, button1.top, button1.width, button1.height)];
