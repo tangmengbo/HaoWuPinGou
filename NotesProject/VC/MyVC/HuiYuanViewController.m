@@ -208,7 +208,7 @@
     
     self.topTitleLale.text = @"VIP 会员";
     
-    self.vip_type = @"vip_year";
+    self.vip_type = @"svip_forever";
     
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
@@ -238,7 +238,7 @@
     pageFlowView.minimumPageAlpha = 0.1;
     pageFlowView.isCarousel = YES;
     pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-    pageFlowView.isOpenAutoScroll = YES;
+    pageFlowView.isOpenAutoScroll = NO;
     pageFlowView.orginPageCount = self.bannerArray.count;
     [pageFlowView reloadData];
     [self.mainScrollView addSubview:pageFlowView];

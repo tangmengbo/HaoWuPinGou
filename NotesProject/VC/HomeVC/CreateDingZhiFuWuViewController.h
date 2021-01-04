@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * leiXingStr;
 @property(nonatomic,strong)NSString * xiangMuStr;
 
+@property(nonatomic,strong)NSNumber * auth_vip;
+
 
 
 @end

@@ -216,7 +216,7 @@
             NSNumber * coin = [self.userInfo objectForKey:@"coin"];
             self.yuELable.text = [NSString stringWithFormat:@"%d",coin.intValue];
 
-            //auth_vip 2终身会员 1年会员 0非会员
+            //auth_vip 2终身会员 1年会员 3蛟龙炮神 0非会员
             NSNumber * auth_vip = [self.userInfo objectForKey:@"auth_vip"];
             
             [NormalUse defaultsSetObject:auth_vip forKey:@"UserAlsoVip"];//本地存储会员身份

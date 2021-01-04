@@ -57,7 +57,7 @@
     [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
-            
+                    
 
             NSNumber * coin = [responseObject objectForKey:@"coin"];
             self.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
@@ -105,6 +105,7 @@
 }
 -(void)nextButtonClick
 {
+
     if (self.made_requirement_coin.intValue<=self.yuEStr.intValue) {
         
         [self xianShiLoadingView:@"提交中..." view:self.view];
