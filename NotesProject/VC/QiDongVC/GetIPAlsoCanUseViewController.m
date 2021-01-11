@@ -405,25 +405,29 @@
 
     [HTTPModel acountAlsoCanUse:[[NSDictionary alloc]initWithObjectsAndKeys:[NormalUse getSheBeiBianMa],@"phone_ucode",@"2",@"platform", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
-        NSNumber * statusCode = [responseObject objectForKey:@"status"];
-        if (statusCode.intValue==1) {
+        if ([NormalUse isValidDictionary:responseObject]) {
             
-            [self accountZhengChang];
-        }
-        else if (statusCode.intValue==-1)//账号被删除 重新生成账号
-        {
-            [self noAccountRegistInit];
+            NSNumber * statusCode = [responseObject objectForKey:@"status"];
+            if (statusCode.intValue==1) {
+                
+                [self accountZhengChang];
+            }
+            else if (statusCode.intValue==-1)//账号被删除 重新生成账号
+            {
+                [self noAccountRegistInit];
 
-        }
-        else if (statusCode.intValue==0)//禁用：提示并跳到切换账号界面
-        {
-            [delegate setYiDengLuTabBar];
-            [delegate.tabbar setItemSelected:4];
-            InputMobileViewController * vc = [[InputMobileViewController alloc] init];
-            vc.bangDingOrQieHuan = @"2";
-            vc.alsoNotCanPop = YES;
-            UINavigationController * nav =[delegate.tabbar.viewControllers objectAtIndex:4];
-            [nav pushViewController:vc animated:YES];
+            }
+            else if (statusCode.intValue==0)//禁用：提示并跳到切换账号界面
+            {
+                [delegate setYiDengLuTabBar];
+                [delegate.tabbar setItemSelected:4];
+                InputMobileViewController * vc = [[InputMobileViewController alloc] init];
+                vc.bangDingOrQieHuan = @"2";
+                vc.alsoNotCanPop = YES;
+                UINavigationController * nav =[delegate.tabbar.viewControllers objectAtIndex:4];
+                [nav pushViewController:vc animated:YES];
+
+            }
 
         }
     }];

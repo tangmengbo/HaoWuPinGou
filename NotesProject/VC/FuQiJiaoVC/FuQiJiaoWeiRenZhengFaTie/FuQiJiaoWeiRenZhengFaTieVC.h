@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UITextField * biaoTiTF;
 @property(nonatomic,strong)UIButton * diQuButton;
+@property(nonatomic,strong)UITextField * addressTF;
 @property(nonatomic,strong)UITextField * maleTF;
 @property(nonatomic,strong)UITextField * famaleTF;
 @property(nonatomic,strong)UITextField * beginPriceTF;

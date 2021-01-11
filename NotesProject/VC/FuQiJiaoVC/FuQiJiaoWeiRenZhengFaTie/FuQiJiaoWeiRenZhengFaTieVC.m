@@ -197,8 +197,25 @@
     [self.mainScrollView addSubview:lineView2];
 
     
+    UILabel * addressLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView2.top+lineView2.height, 100*BiLiWidth, 39.5*BiLiWidth)];
+    addressLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
+    addressLable.textColor = RGBFormUIColor(0x333333);
+    addressLable.text = @"详细地址";
+    [self.mainScrollView addSubview:addressLable];
+
+    self.addressTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth-80*BiLiWidth, addressLable.top, 100*BiLiWidth+80*BiLiWidth, 39.5*BiLiWidth)];
+    self.addressTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [NormalUse setTextFieldPlaceholder:@"填写详细地址" placeHoldColor:RGBFormUIColor(0xDEDEDE) textField:self.addressTF];
+    self.addressTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
+    self.addressTF.textColor = RGBFormUIColor(0x343434);
+    self.addressTF.textAlignment = NSTextAlignmentRight;
+    [self.mainScrollView addSubview:self.addressTF];
+
+    UIView * lineViewAddress = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, addressLable.top+addressLable.height, 270*BiLiWidth, 1)];
+    lineViewAddress.backgroundColor = RGBFormUIColor(0xEEEEEE);
+    [self.mainScrollView addSubview:lineViewAddress];
     
-    UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineView2.top+lineView2.height, 100*BiLiWidth, 39.5*BiLiWidth)];
+    UILabel * ageLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, lineViewAddress.top+lineViewAddress.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     ageLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:14*BiLiWidth];
     ageLable.textColor = RGBFormUIColor(0x333333);
     ageLable.text = @"丈夫年龄";
@@ -819,6 +836,12 @@
         [NormalUse showToastView:@"请选择所在区域" view:self.view];
         return;
     }
+    if(![NormalUse isValidString:self.addressTF.text])
+    {
+        [NormalUse showToastView:@"请填写详细地址" view:self.view];
+        return;
+
+    }
     if (![NormalUse isValidString:self.maleTF.text]) {
         
         [NormalUse showToastView:@"请填丈夫年龄" view:self.view];
@@ -1231,6 +1254,7 @@
                 [dicInfo setObject:self.biaoTiTF.text forKey:@"title"];
                 NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
                 [dicInfo setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
+                [dicInfo setObject:self.addressTF.text forKey:@"address_detail"];
                 [dicInfo setObject:self.maleTF.text forKey:@"age_male"];
                 [dicInfo setObject:self.famaleTF.text forKey:@"age_famale"];
                 [dicInfo setObject:self.beginPriceTF.text forKey:@"min_price"];

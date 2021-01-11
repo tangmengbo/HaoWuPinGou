@@ -317,7 +317,8 @@
         renZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
         renZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
         renZhengButton.button_lable.text = @"滴滴约认证";
-        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        renZhengButton.tag = 1;
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:renZhengButton];
         
         Lable_ImageButton * faTieButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-58.5*BiLiWidth-59*BiLiWidth, 35.5*BiLiWidth, 58.5*BiLiWidth, 84*BiLiWidth)];
@@ -363,7 +364,7 @@
     
     
     self.chaXiaoErFaTieRenZhengView.hidden = NO;
-    self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
     [UIView animateWithDuration:0.5 animations:^{
         
         self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
@@ -411,8 +412,10 @@
         [faTieButton addTarget:self action:@selector(faTieButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:faTieButton];
 
+        
         UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(faTieButton.left+faTieButton.width+11.5*BiLiWidth, faTieButton.top, 115*BiLiWidth, 40*BiLiWidth)];
-        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        renZhengButton.tag = 0;
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:renZhengButton];
         
         //渐变设置
@@ -434,9 +437,6 @@
         sureLable.textColor = [UIColor whiteColor];
         [renZhengButton addSubview:sureLable];
         
-
-        
-
     }
     return _chaXiaoErFaTieRenZhengView;
 }
@@ -445,7 +445,7 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         
-        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
 
     } completion:^(BOOL finished) {
              
@@ -454,8 +454,176 @@
     }];
 }
 
--(void)chaXiaoErRenZheng
+-(void)chaXiaoErRenZheng:(UIButton *)button
 {
+    if (button.tag==0) {
+     
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+        }];
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+            
+        } completion:^(BOOL finished) {
+            
+            self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+        }];
+
+        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+        NSString * defaultsKey = [UserRole stringByAppendingString:token];
+        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+        
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+            
+            if (auth_nomal.intValue==0) {
+                
+                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+                vc.renZhengType = @"1";
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }
+            else if (auth_nomal.intValue==2)
+            {
+                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+                vc.alsoShowBackButton = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }
+        }
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+        }];
+        
+        
+        self.chaXiaoErRenZhengTipView.hidden = NO;
+        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.chaXiaoErRenZhengTipView.transform = CGAffineTransformIdentity;
+        }];
+
+    }
+    
+    
+}
+-(void)faTieButtonClick
+{
+    CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
+    vc.from_flg = @"0";
+    [self.navigationController pushViewController:vc animated:YES];
+    self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+}
+-(UIView *)chaXiaoErRenZhengTipView
+{
+    if (!_chaXiaoErRenZhengTipView) {
+        
+        _chaXiaoErRenZhengTipView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _chaXiaoErRenZhengTipView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        [[UIApplication sharedApplication].keyWindow addSubview:_chaXiaoErRenZhengTipView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_chaXiaoErRenZhengTipView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeChaXiaoErRenZhengTipView) forControlEvents:UIControlEventTouchUpInside];
+        [_chaXiaoErRenZhengTipView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33.5*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * tipLable2 = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 80*BiLiWidth)];
+        tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        tipLable2.textColor = RGBFormUIColor(0x343434);
+        tipLable2.numberOfLines = 4;
+        tipLable2.text = @"必须是真实信息和有效联系方式，认证后可在首页发布信息且拥有官方认证标识和官方推荐红榜特权";
+        [kuangImageView addSubview:tipLable2];
+        
+        
+        UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, tipLable2.top+tipLable2.height+25*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+        [faTieButton setTitle:@"取消" forState:UIControlStateNormal];
+        faTieButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        faTieButton.layer.cornerRadius = 20*BiLiWidth;
+        [faTieButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+        faTieButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [faTieButton addTarget:self action:@selector(closeChaXiaoErRenZhengTipView) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:faTieButton];
+
+        
+        UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(faTieButton.left+faTieButton.width+11.5*BiLiWidth, faTieButton.top, 115*BiLiWidth, 40*BiLiWidth)];
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZhengTipViewRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:renZhengButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = renZhengButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [renZhengButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, renZhengButton.width, renZhengButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"继续认证";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [renZhengButton addSubview:sureLable];
+        
+    }
+    return _chaXiaoErRenZhengTipView;
+}
+-(void)closeChaXiaoErRenZhengTipView
+{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+
+    } completion:^(BOOL finished) {
+             
+        self.chaXiaoErRenZhengTipView.hidden = YES;
+
+    }];
+}
+
+-(void)chaXiaoErRenZhengTipViewRenZhengButtonClick
+{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    }];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+        
+    } completion:^(BOOL finished) {
+        
+        self.chaXiaoErRenZhengTipView.hidden = YES;
+
+    }];
+
     NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
     NSString * defaultsKey = [UserRole stringByAppendingString:token];
     NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
@@ -478,31 +646,9 @@
 
         }
     }
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-    }];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-        
-    } completion:^(BOOL finished) {
-        
-        self.chaXiaoErFaTieRenZhengView.hidden = YES;
-
-    }];
-
 
 }
--(void)faTieButtonClick
-{
-    CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
-    vc.from_flg = @"0";
-    [self.navigationController pushViewController:vc animated:YES];
-    self.chaXiaoErFaTieRenZhengView.hidden = YES;
 
-}
 
 -(void)viewWillAppear:(BOOL)animated
 {

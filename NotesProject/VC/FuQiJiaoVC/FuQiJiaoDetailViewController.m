@@ -238,10 +238,11 @@
 
     }
 
-    UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, 200*BiLiWidth, 11*BiLiWidth)];
+    UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, WIDTH_PingMu-nickLable.left-50*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    cityLable.textColor = RGBFormUIColor(0x9A9A9A);
-    cityLable.text = [self.tieZiInfo objectForKey:@"city_name"];
+    cityLable.textColor = RGBFormUIColor(0xFF0101);
+    cityLable.adjustsFontSizeToFitWidth = YES;
+    cityLable.text = [NSString stringWithFormat:@"%@ %@",[NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"city_name"]],[NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"address_detail"]]];
     [self.messageContentView addSubview:cityLable];
     
     Lable_ImageButton * shouCangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-21*BiLiWidth-14*BiLiWidth, 14*BiLiWidth, 21*BiLiWidth, 35.5*BiLiWidth)];

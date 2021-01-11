@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * headerView;
 
+@property(nonatomic,strong)UIView * jingJiRenRenZhengTipView;//经纪人认证前提示view
+
+
 @end
 
 NS_ASSUME_NONNULL_END

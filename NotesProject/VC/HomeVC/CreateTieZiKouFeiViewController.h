@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * message_type;
 @property(nonatomic,strong)NSString * titleStr;
 @property(nonatomic,strong)NSString * city_code;
+@property(nonatomic,strong)NSString * address_detail;
 @property(nonatomic,strong)NSString * age;
 @property(nonatomic,strong)NSString * nums;
 @property(nonatomic,strong)NSString * min_price;

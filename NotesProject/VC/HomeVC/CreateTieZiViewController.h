@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIButton * xinXiButton;
 @property(nonatomic,strong)UITextField * biaoTiTF;
 @property(nonatomic,strong)UIButton * diQuButton;
+@property(nonatomic,strong)UITextField * addressTF;
 @property(nonatomic,strong)UITextField * ageTF;
 @property(nonatomic,strong)UITextField * chanPinShuLiangTF;
 @property(nonatomic,strong)UITextField * beginPriceTF;

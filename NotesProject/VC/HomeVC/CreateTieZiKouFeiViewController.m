@@ -488,6 +488,7 @@
                 [dicInfo setObject:self.message_type forKey:@"message_type"];
                 [dicInfo setObject:self.titleStr forKey:@"title"];
                 [dicInfo setObject:self.city_code forKey:@"city_code"];
+                [dicInfo setObject:self.address_detail forKey:@"address_detail"];
                 [dicInfo setObject:self.age forKey:@"age"];
                 [dicInfo setObject:self.nums forKey:@"nums"];
                 [dicInfo setObject:self.min_price forKey:@"min_price"];

@@ -72,7 +72,7 @@
         tipLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
         tipLable2.textColor = RGBFormUIColor(0x343434);
         tipLable2.numberOfLines = 4;
-        tipLable2.text = @"您当前是未认证用户，发布的信息不会得到官方认证。若需要获得官方认证，请先进行身份认证或者开通会员！";
+        tipLable2.text = @"您当前是未认证用户，发布的信息不会得到官方认证且不享有任何官方特权，如需享有官方特权和扶持请尽快认证滴滴约";
         [kuangImageView addSubview:tipLable2];
         
         
