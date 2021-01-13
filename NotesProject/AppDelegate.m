@@ -28,33 +28,33 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 -(void)xiancheng
 {
-    NSMutableArray * array = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
-    for (int i=0; i<array.count; i++) {
-        
-        for (int j=0; j<array.count-1-i; j++) {
-            
-            if ([array objectAtIndex:j]>[array objectAtIndex:j+1]) {
-                
-                [array exchangeObjectAtIndex:j withObjectAtIndex:j+1];
-            }
-        }
-        
-    }
-    NSLog(@"%@",array);
-    NSMutableArray * array1 = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
-
-    for (int i=0; i<array1.count-1; i++) {
-        
-        for (int j = i+1; j<array1.count; j++) {
-            
-            if ([array1 objectAtIndex:i]>[array1 objectAtIndex:j]) {
-                
-                [array1 exchangeObjectAtIndex:i withObjectAtIndex:j];
-            }
-
-        }
-    }
-    NSLog(@"%@",array1);
+//    NSMutableArray * array = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
+//    for (int i=0; i<array.count; i++) {
+//
+//        for (int j=0; j<array.count-1-i; j++) {
+//
+//            if ([array objectAtIndex:j]>[array objectAtIndex:j+1]) {
+//
+//                [array exchangeObjectAtIndex:j withObjectAtIndex:j+1];
+//            }
+//        }
+//
+//    }
+//    NSLog(@"%@",array);
+//    NSMutableArray * array1 = [[NSMutableArray alloc] initWithObjects:@"6",@"3",@"2",@"4",nil];
+//
+//    for (int i=0; i<array1.count-1; i++) {
+//
+//        for (int j = i+1; j<array1.count; j++) {
+//
+//            if ([array1 objectAtIndex:i]>[array1 objectAtIndex:j]) {
+//
+//                [array1 exchangeObjectAtIndex:i withObjectAtIndex:j];
+//            }
+//
+//        }
+//    }
+//    NSLog(@"%@",array1);
 
 //    // 创建队列
 //    dispatch_queue_t queue = dispatch_queue_create("test", DISPATCH_QUEUE_SERIAL);

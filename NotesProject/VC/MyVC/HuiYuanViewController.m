@@ -167,6 +167,8 @@
 }
 -(void)liJiZhiFuButtonClick
 {
+    [self closeJieSuoTipView];
+    
     if (payTypeIndex==-1) {
         
         [NormalUse showToastView:@"请选择支付方式" view:self.view];
@@ -178,20 +180,20 @@
         [self yinCangLoadingView];
 
         if (status==1) {
-            
+        //vip_forever：永久会员；svip_forever:炮神会员 ；vip_year:普通年会员
             self.orderId = responseObject;
             NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
             NSString *url;
             
             if ([@"1" isEqualToString:[payTypeInfo objectForKey:@"pay_channel"]]) {
                 
-             url   =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
-                           url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@&pay_code=%@",self.huiYuanCoinsStr,self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+             url   =  [NSString stringWithFormat:@"%@/appi/user/VipByRy",HTTP_REQUESTURL];
+                           url = [url stringByAppendingString:[NSString stringWithFormat:@"?vip_type=%@&orderId=%@&logintoken=%@&pay_code=%@",self.vip_type,self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_code"]]];
             }
             else
-            {
-                url   =  [NSString stringWithFormat:@"%@/appi/mlpay/dd2Ordering",HTTP_REQUESTURL];
-                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",self.huiYuanCoinsStr,self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+            {//self.huiYuanCoinsStr
+                url   =  [NSString stringWithFormat:@"%@/appi/user/VipByHh",HTTP_REQUESTURL];
+                url = [url stringByAppendingString:[NSString stringWithFormat:@"?vip_type=%@&orderId=%@&logintoken=%@&pay_code=%@",self.vip_type,self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_code"]]];
             }
            
             
@@ -323,6 +325,10 @@
                 [NormalUse showToastView:@"订单支付失败" view:self.view];
 
             }
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
         }
     }];
     
