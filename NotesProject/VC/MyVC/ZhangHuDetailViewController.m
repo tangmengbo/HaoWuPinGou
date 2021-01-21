@@ -209,7 +209,8 @@
         }
         else
         {
-            [NormalUse showToastView:msg view:self.view];
+            //[NormalUse showToastView:msg view:self.view];
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
         }
     }];
     

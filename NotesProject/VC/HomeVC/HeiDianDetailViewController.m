@@ -252,9 +252,23 @@
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
         
-        vImageView.image = [UIImage imageNamed:@"vip_black"];
+        if (auth_vip.intValue==1) {
+            
+            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+        }
+        else if (auth_vip.intValue==2)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+        }
+        else if (auth_vip.intValue==3)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+        }
 
     }
     else
@@ -511,7 +525,7 @@
 //    self.tipLable.textColor = RGBFormUIColor(0xFF0101);
 //    [self.messageContentView addSubview:self.tipLable];
     
-
+    
 //    self.jiBenXinXiButton = [[UIButton alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+19*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
 //    [self.jiBenXinXiButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
 //    self.jiBenXinXiButton.titleLabel.font = [UIFont systemFontOfSize:16*BiLiWidth];
@@ -571,11 +585,12 @@
 //    [self initXiangQingJieShaoView];
 //    [self initChenYouPingJiaTableView];
     
-    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu, 10*BiLiWidth)];
+    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
     self.tipLable.textAlignment = NSTextAlignmentCenter;
-    self.tipLable.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
+    self.tipLable.numberOfLines = 2;
     [self.messageContentView addSubview:self.tipLable];
     
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];

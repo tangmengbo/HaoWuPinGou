@@ -431,9 +431,23 @@
         
 
         NSNumber * auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
-        if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
+        if ([auth_vip isKindOfClass:[NSNumber class]]) {
             
-            vipImageView.image = [UIImage imageNamed:@"vip_black"];
+            if (auth_vip.intValue==1) {
+                
+                vipImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+            }
+            else if (auth_vip.intValue==2)
+            {
+                vipImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+            }
+            else if (auth_vip.intValue==3)
+            {
+                vipImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+            }
 
         }
         else

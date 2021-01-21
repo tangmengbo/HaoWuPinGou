@@ -7,6 +7,7 @@
 //
 
 #import "HuiYuanViewController.h"
+#import "ZhangHuDetailViewController.h"
 
 @interface HuiYuanViewController ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource>
 {
@@ -51,6 +52,10 @@
 @property(nonatomic,strong)UIView *zhiFuView;
 @property(nonatomic,strong)NSString * orderId;
 @property(nonatomic,strong)NSString * huiYuanCoinsStr;
+
+@property(nonatomic,strong)NSString * max_value;//支付渠道的最大金额
+
+@property(nonatomic,strong)NSString * yuEStr;//当前余额
 
 @end
 
@@ -408,20 +413,52 @@
 }
 -(void)queRenViewSureButtonClick
 {
-
     self.kaiTongHuiYuanQueRenView.hidden = YES;
 
    // [self kaiTongHuiYuan];
-    
-    self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
-    [UIView animateWithDuration:0.25 animations:^{
-        
-        self.zhiFuView.top = 0;
+    //如果支付通道最大金额小于要开通的会员金额
+    NSLog(@"%@",self.payTypeList);
 
-    } completion:^(BOOL finished) {
+    if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-    }];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"由于支付通道的限制，目前无法通过在线支付开通此会员，您可以通过支付%@金币(兑换比例1:1)开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self kaiTongHuiYuan];
+        }];
+        
+        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        
+        [alert addAction:cancleAction];
+        [alert addAction:addBalckAction];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        if([NormalUse isValidArray:self.payTypeList])
+        {
+            self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                self.zhiFuView.top = 0;
+
+            } completion:^(BOOL finished) {
+                
+                self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+            }];
+        }
+        else
+        {
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+        }
+
+    }
+    
 
 
 }
@@ -496,17 +533,50 @@
 -(void)sureButtonClick
 {
     self.tiShiKuangView.hidden = YES;
+    
 //    [self kaiTongHuiYuan];
     
-    self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
-    [UIView animateWithDuration:0.25 animations:^{
+    //如果支付通道最大金额小于要开通的会员金额
+    if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        self.zhiFuView.top = 0;
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"由于支付通道的限制，目前无法通过在线支付开通此会员，您可以通过支付%@金币(兑换比例1:1)开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self kaiTongHuiYuan];
+        }];
+        
+        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        
+        [alert addAction:cancleAction];
+        [alert addAction:addBalckAction];
+        [self presentViewController:alert animated:YES completion:nil];
 
-    } completion:^(BOOL finished) {
-        
-        self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-    }];
+    }
+    else
+    {
+        if([NormalUse isValidArray:self.payTypeList])
+        {
+            self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                self.zhiFuView.top = 0;
+
+            } completion:^(BOOL finished) {
+                
+                self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+            }];
+        }
+        else
+        {
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+        }
+
+    }
+    
 
 }
 -(void)closeTipKuangView
@@ -517,7 +587,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yanZhengOrder) name:@"YanZhengDingDanNotification" object:nil];
     
     payTypeIndex = -1;//支付方式下标
@@ -649,9 +719,28 @@
     }
     else
     {
+        if([NormalUse isValidArray:self.payTypeList])
+        {
+            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
+
+        }
+        else
+        {
+            self.kaiTongJinBiLable.text = @"支付通道维护中 请稍后充值";
+        }
+
         self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
 
     }
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+                    
+            NSNumber * coin = [responseObject objectForKey:@"coin"];
+            self.yuEStr = [NSString stringWithFormat:@"%d",coin.intValue];
+        }
+    }];
+
 
     [HTTPModel getZFJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
@@ -659,12 +748,17 @@
             
             self.products = [responseObject objectForKey:@"products"];
             self.payTypeList = [responseObject objectForKey:@"pay_type"];
-            
             self.zhiFuView.alpha = 1;
+            if ([NormalUse isValidArray:self.payTypeList]) {
+                NSDictionary * info = [self.payTypeList objectAtIndex:0];
+                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                self.max_value = [NSString stringWithFormat:@"%d",max_valueNumber.intValue];
+            }
         }
         else
         {
-            [NormalUse showToastView:msg view:self.view];
+            //[NormalUse showToastView:msg view:self.view];
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
         }
     }];
 }
@@ -1032,9 +1126,18 @@
         
         else
         {
-            self.kaiTongButton.enabled = YES;
-            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
-            self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"vip_year_coin"];
+            if ([NormalUse isValidArray:self.payTypeList]) {
+                
+                self.kaiTongButton.enabled = YES;
+                self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"vip_year_coin"]];
+                self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"vip_year_coin"];
+
+            }
+            else
+            {
+                self.kaiTongButton.enabled = NO;
+                self.kaiTongJinBiLable.text = @"支付通道维护中 请稍后充值";
+            }
         }
     }
     else if (pageNumber==0)
@@ -1049,9 +1152,19 @@
         }
         else
         {
-            self.kaiTongButton.enabled = YES;
-            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
-            self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"svip_forever_coin"];
+            if ([NormalUse isValidArray:self.payTypeList]) {
+
+                self.kaiTongButton.enabled = YES;
+                self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"svip_forever_coin"]];
+                self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"svip_forever_coin"];
+
+            }
+            else
+            {
+                self.kaiTongButton.enabled = NO;
+                self.kaiTongJinBiLable.text = @"支付通道维护中 请稍后充值";
+
+            }
 
         }
     }
@@ -1067,9 +1180,19 @@
         }
         else
         {
-            self.kaiTongButton.enabled = YES;
-            self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
-            self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"vip_forever_coin"];
+            if ([NormalUse isValidArray:self.payTypeList]) {
+                
+                self.kaiTongButton.enabled = YES;
+                self.kaiTongJinBiLable.text = [NSString stringWithFormat:@"%@元开启",[NormalUse getJinBiStr:@"vip_forever_coin"]];
+                self.huiYuanCoinsStr = [NormalUse getJinBiStr:@"vip_forever_coin"];
+
+            }
+            else
+            {
+                self.kaiTongButton.enabled = NO;
+                self.kaiTongJinBiLable.text = @"支付通道维护中 请稍后充值";
+
+            }
 
         }
     }

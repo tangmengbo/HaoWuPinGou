@@ -41,7 +41,6 @@
         [self.contentView1 addSubview:self.cityLable1];
         
         self.zuanShiImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.cityLable1.top, 16*BiLiWidth, 14*BiLiWidth)];
-        self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_black"];
         [self.contentView1 addSubview:self.zuanShiImageView1];
         
         self.messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView1.width-62*BiLiWidth, self.cityLable1.top, 50*BiLiWidth, 14*BiLiWidth)];
@@ -135,16 +134,34 @@
 -(void)initData:(NSDictionary *)info1 info2:(NSDictionary * _Nullable)info2
 {
     
-    if ([self.auth_vip isKindOfClass:[NSNumber class]] && self.auth_vip.intValue==1) {
+    if ([self.auth_vip isKindOfClass:[NSNumber class]]) {
         
         self.zuanShiImageView1.hidden  = NO;
         self.zuanShiImageView2.hidden  = NO;
+        if (self.auth_vip.intValue==1) {
+            
+            self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_zuanShi"];
+            self.zuanShiImageView2.image = [UIImage imageNamed:@"vip_zuanShi"];
+        }
+        else if (self.auth_vip.intValue==2)
+        {
+            self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_wangZhe"];
+            self.zuanShiImageView2.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+        }
+        else if (self.auth_vip.intValue==3)
+        {
+            self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_paoShen"];
+            self.zuanShiImageView2.image = [UIImage imageNamed:@"vip_paoShen"];
+
+        }
+
 
     }
     else
     {
         self.zuanShiImageView1.hidden = YES;
-        self.zuanShiImageView2.hidden  = NO;
+        self.zuanShiImageView2.hidden  = YES;
 
     }
 

@@ -88,8 +88,8 @@
     [contentView addSubview:titleLable1];
     
     UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(contentView.width-60*BiLiHeight, titleLable1.top-10*BiLiHeight, 60*BiLiWidth, 34*BiLiWidth)];
-    [shaiXuanButton setTitle:@"筛选" forState:UIControlStateNormal];
-    [shaiXuanButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+    [shaiXuanButton setTitle:@"确定" forState:UIControlStateNormal];
+    [shaiXuanButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
     shaiXuanButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
     [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:shaiXuanButton];

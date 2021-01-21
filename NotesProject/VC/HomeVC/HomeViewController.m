@@ -1010,7 +1010,7 @@
     self.sliderView.alpha = 0.8;
     [self.itemButtonContentView addSubview:self.sliderView];
     
-    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-14*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-13.5*BiLiWidth)/2, 14*BiLiWidth, 13.5*BiLiWidth)];
+    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-22*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-22*BiLiWidth)/2, 22*BiLiWidth, 22*BiLiWidth)];
     [shaiXuanButton setBackgroundImage:[UIImage imageNamed:@"icon_post_fild"] forState:UIControlStateNormal];
     [shaiXuanButton addTarget:self action:@selector(tiJianShaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.itemButtonContentView addSubview:shaiXuanButton];

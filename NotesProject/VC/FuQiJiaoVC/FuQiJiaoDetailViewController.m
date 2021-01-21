@@ -63,7 +63,7 @@
     [self.autoLabel removeFromSuperview];
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
     self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
-    self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
     [self.mainScrollView addSubview:self.autoLabel];
 
@@ -74,7 +74,7 @@
     [super viewDidLoad];
     
     [self yinCangTabbar];
-    
+    [self.rightButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
     [self.rightButton setTitle:@"投诉" forState:UIControlStateNormal];
     self.topTitleLale.text = @"详情";
 
@@ -182,7 +182,7 @@
 
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
     self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
-    self.autoLabel.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
     [self.mainScrollView addSubview:self.autoLabel];
     
@@ -191,12 +191,6 @@
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth-40*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:self.messageContentView];
-    //某个角圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.messageContentView.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.messageContentView.layer.mask = maskLayer;
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
     CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
@@ -210,9 +204,23 @@
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    if ([auth_vip isKindOfClass:[NSNumber class]] && auth_vip.intValue!=0) {
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
         
-        vImageView.image = [UIImage imageNamed:@"vip_black"];
+        if (auth_vip.intValue==1) {
+            
+            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+        }
+        else if (auth_vip.intValue==2)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+        }
+        else if (auth_vip.intValue==3)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+        }
 
     }
     else
@@ -519,13 +527,21 @@
 //    [self initXiangQingJieShaoView];
 //    [self initChenYouPingJiaTableView];
     
-    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu, 10*BiLiWidth)];
-    self.tipLable.textAlignment = NSTextAlignmentCenter;
-    self.tipLable.text = @"未见本人就要定金 、押金 、路费的。100%是骗子，切记！";
+    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
+    self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.tipLable.textColor = RGBFormUIColor(0xFF0101);
+    self.tipLable.numberOfLines = 2;
     [self.messageContentView addSubview:self.tipLable];
     
+    self.messageContentView.height = self.messageContentView.height+8*BiLiWidth;
+    //某个角圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.messageContentView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.messageContentView.layer.mask = maskLayer;
+
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
 }
