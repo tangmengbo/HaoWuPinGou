@@ -8,6 +8,8 @@
 
 #import "MainBaseViewController.h"
 #import "HomeShaiXuanView.h"
+#import "HomeNvShenCell.h"
+#import "HomeNvShenShaiXuanView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,9 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIView * chaXiaoErRenZhengTipView;//茶小儿认证前提示view
 
 @property(nonatomic,strong)HomeShaiXuanView * shaiXuanView;//筛选条件view
+@property(nonatomic,strong)HomeNvShenShaiXuanView * nvShenShaiXuanView;//筛选女神列表
 
+@property(nonatomic,strong)Lable_ImageButton * renZhengButton;
+@property(nonatomic,strong)Lable_ImageButton * nvShenRenZhengButton;
 
+@property(nonatomic,strong)UIView * sanDaJiaSeFaTieRenZhengView;
 
+@property(nonatomic,strong)NSString * nvShenFaTieOrChaXiaoErFaTie;//0 茶小二发帖 1 女神发帖
 
 @end
 

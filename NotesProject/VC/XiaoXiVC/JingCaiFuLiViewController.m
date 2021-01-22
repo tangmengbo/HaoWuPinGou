@@ -464,7 +464,7 @@
     self.haoYouShangXianButton.button_lable1.frame = CGRectMake(self.vipButton.button_lable.left, self.vipButton.button_lable.top+self.vipButton.button_lable.height+5.5*BiLiWidth, 200*BiLiWidth, 10*BiLiWidth);
     self.haoYouShangXianButton.button_lable1.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.haoYouShangXianButton.button_lable1.textColor = RGBFormUIColor(0x999999);
-    [bottomImageView addSubview:self.haoYouShangXianButton];
+   // [bottomImageView addSubview:self.haoYouShangXianButton];
 
     self.haoYouShangXianLingQuButton = [[UIButton alloc] initWithFrame:CGRectMake(271*BiLiWidth, (self.vipButton.height-21*BiLiWidth)/2, 52*BiLiWidth, 21*BiLiWidth)];
     self.haoYouShangXianLingQuButton.layer.cornerRadius = 21*BiLiWidth/2;
@@ -474,7 +474,7 @@
     self.haoYouShangXianLingQuButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
     [self.haoYouShangXianLingQuButton addTarget:self action:@selector(haoYouShangXianLingQuButtonClick) forControlEvents:UIControlEventTouchUpInside];
 
-    [self.haoYouShangXianButton addSubview:self.haoYouShangXianLingQuButton];
+   [self.haoYouShangXianButton addSubview:self.haoYouShangXianLingQuButton];
     
     
     [self.mainScrollView.mj_header beginRefreshing];

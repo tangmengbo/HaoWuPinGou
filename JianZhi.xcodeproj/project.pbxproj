@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		284E201A25B98A34006713D0 /* HomeNvShenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284E201925B98A34006713D0 /* HomeNvShenCell.m */; };
+		28CF376F25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */; };
 		5F084FA125185DE000F2D64C /* MyXiaoXi_GuanFangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA025185DE000F2D64C /* MyXiaoXi_GuanFangCell.m */; };
 		5F084FA4251876D000F2D64C /* MyXiaoXi_ShenHeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA3251876D000F2D64C /* MyXiaoXi_ShenHeCell.m */; };
 		5F084FA7251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA6251877A200F2D64C /* GuanFangXiaoXiDetailViewController.m */; };
@@ -214,6 +216,10 @@
 		04715AC323963D2A009CD914 /* KKlive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KKlive.entitlements; sourceTree = "<group>"; };
 		10AF6F451413B0C5EC4B83CB /* Pods-NewChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewChat.release.xcconfig"; path = "Target Support Files/Pods-NewChat/Pods-NewChat.release.xcconfig"; sourceTree = "<group>"; };
 		1ACB60475A30615544A412C1 /* Pods-NotesProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesProject.debug.xcconfig"; path = "Target Support Files/Pods-NotesProject/Pods-NotesProject.debug.xcconfig"; sourceTree = "<group>"; };
+		284E201825B98A34006713D0 /* HomeNvShenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenCell.h; sourceTree = "<group>"; };
+		284E201925B98A34006713D0 /* HomeNvShenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNvShenCell.m; sourceTree = "<group>"; };
+		28CF376D25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenShaiXuanView.h; sourceTree = "<group>"; };
+		28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNvShenShaiXuanView.m; sourceTree = "<group>"; };
 		3EAA70B96634DEB9F58F4FF5 /* Pods-JianZhi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JianZhi.release.xcconfig"; path = "Target Support Files/Pods-JianZhi/Pods-JianZhi.release.xcconfig"; sourceTree = "<group>"; };
 		55246EC849A8269716F55318 /* Pods_JianZhi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JianZhi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F084F9F25185DE000F2D64C /* MyXiaoXi_GuanFangCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyXiaoXi_GuanFangCell.h; sourceTree = "<group>"; };
@@ -834,6 +840,8 @@
 			children = (
 				5F34DCC324EE15CA00DE15A1 /* HomeListCell.h */,
 				5F34DCC424EE15CA00DE15A1 /* HomeListCell.m */,
+				284E201825B98A34006713D0 /* HomeNvShenCell.h */,
+				284E201925B98A34006713D0 /* HomeNvShenCell.m */,
 				5FD4143D2522D448004265E8 /* HeiDianBaoGuangListCell.h */,
 				5FD4143E2522D448004265E8 /* HeiDianBaoGuangListCell.m */,
 				5F2650EC24FDDC0A00171684 /* TiYanBaoGaoCell.h */,
@@ -850,6 +858,8 @@
 				5FD850562509BB8C009286CE /* GongGaoAlertView.m */,
 				5FC165882519F54800FA99D2 /* HomeShaiXuanView.h */,
 				5FC165892519F54800FA99D2 /* HomeShaiXuanView.m */,
+				28CF376D25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.h */,
+				28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */,
 				5FBAD7CC251C6986004C153E /* CityListCell.h */,
 				5FBAD7CD251C6986004C153E /* CityListCell.m */,
 				5FCC70D9256BCE1000CC68A8 /* ForeignCityListCell.h */,
@@ -1517,6 +1527,7 @@
 				5F34DCDD24EF716500DE15A1 /* MyScrollView.m in Sources */,
 				5F565DEC254410E300C823C2 /* Reachability.m in Sources */,
 				5F66738F25184441000C6810 /* GouMaiJiLuCell.m in Sources */,
+				284E201A25B98A34006713D0 /* HomeNvShenCell.m in Sources */,
 				5F66736C251455CC000C6810 /* JingJiRenDianPuDetailViewController.m in Sources */,
 				5F2650D824FC8C9A00171684 /* JYWeakTimer.m in Sources */,
 				5F2650FF24FE3F6600171684 /* NvShenRenZhengStep1VC.m in Sources */,
@@ -1665,6 +1676,7 @@
 				5FE3EC142355A3E400C77F4D /* TZPhotoPreviewController.m in Sources */,
 				5F34DCC524EE15CA00DE15A1 /* HomeListCell.m in Sources */,
 				5FE3EC5B2355B1B500C77F4D /* SheZhiViewController.m in Sources */,
+				28CF376F25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m in Sources */,
 				5F6673632511E20D000C6810 /* HeiDianPingJiaViewController.m in Sources */,
 				5F2650EE24FDDC0A00171684 /* TiYanBaoGaoCell.m in Sources */,
 				5F7ED85F251B388A00D23823 /* GengHuanMobileViewController.m in Sources */,

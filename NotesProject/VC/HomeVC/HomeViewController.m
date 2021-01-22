@@ -10,6 +10,7 @@
 #import "YanCheBaoGaoTableViewCell.h"
 #import "HomeShaiXuanView.h"
 #import "ZYNetworkAccessibility.h"
+#import "JiaoSeWeiRenZhengFaTieVC.h"
 
 
 @interface HomeViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,CityListViewControllerDelegate>
@@ -49,6 +50,8 @@
 @property(nonatomic,strong)NSString * field;
 @property(nonatomic,strong)NSString * order;
 @property(nonatomic,strong)NSString * message_type;
+
+@property(nonatomic,strong)NSString * nvShenField;//女神筛选条件
 
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn1;
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn2;
@@ -267,8 +270,8 @@
             
             [wself firstGetTieZiList];
             [wself firstGetRedList];
-            [wself firstGetYanZhengBangDanList];
-            [wself firstGetYanCheBaoGaoList];
+//            [wself firstGetYanZhengBangDanList];
+//            [wself firstGetYanCheBaoGaoList];
 
         }];
         [_shaiXuanView setLeiXingSelect:^(NSString * _Nonnull message_type) {
@@ -276,8 +279,8 @@
             wself.message_type = message_type;
             [wself firstGetTieZiList];
             [wself firstGetRedList];
-            [wself firstGetYanZhengBangDanList];
-            [wself firstGetYanCheBaoGaoList];
+//            [wself firstGetYanZhengBangDanList];
+//            [wself firstGetYanCheBaoGaoList];
 
         }];
         [[UIApplication sharedApplication].keyWindow addSubview:_shaiXuanView];
@@ -287,6 +290,24 @@
     return _shaiXuanView;
     
 }
+-(HomeNvShenShaiXuanView *)nvShenShaiXuanView
+{
+    if (!_nvShenShaiXuanView) {
+        
+        _nvShenShaiXuanView = [[HomeNvShenShaiXuanView alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu, WIDTH_PingMu, HEIGHT_PingMu)];
+        [[UIApplication sharedApplication].keyWindow addSubview:_nvShenShaiXuanView];
+        
+        __weak typeof(self) wself = self;
+        [_nvShenShaiXuanView setPaiXuSelect:^(NSString * _Nonnull field) {
+            
+            wself.nvShenField = field;
+            [wself firstGetNvShenList];
+            
+        }];
+    }
+    return _nvShenShaiXuanView;
+}
+
 -(UIView *)chaXiaoErFaTieRenZhengView1
 {
     if (!_chaXiaoErFaTieRenZhengView1) {
@@ -308,30 +329,57 @@
 
         
         
-        Lable_ImageButton * renZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(62*BiLiWidth, 35.5*BiLiWidth, 74*BiLiWidth, 84*BiLiWidth)];
-        renZhengButton.button_imageView.frame = CGRectMake(9*BiLiWidth, 0, 57*BiLiWidth, 57*BiLiWidth);
-        renZhengButton.button_imageView.image = [UIImage imageNamed:@"home_RenZheng"];
-        renZhengButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, renZhengButton.width, 14*BiLiWidth);
-        renZhengButton.button_lable.textAlignment = NSTextAlignmentCenter;
-        renZhengButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-        renZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
-        renZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
-        renZhengButton.button_lable.text = @"滴滴约认证";
-        renZhengButton.tag = 1;
-        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
-        [kuangImageView addSubview:renZhengButton];
+        self.renZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(16*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
+        self.renZhengButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
+        self.renZhengButton.button_imageView.image = [UIImage imageNamed:@"home_RenZheng"];
+        self.renZhengButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, self.renZhengButton.width, 14*BiLiWidth);
+        self.renZhengButton.button_lable.textAlignment = NSTextAlignmentCenter;
+        self.renZhengButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.renZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
+        self.renZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
+        self.renZhengButton.button_lable.text = @"滴滴约认证";
+        self.renZhengButton.tag = 1;
+        [self.renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:self.renZhengButton];
         
-        Lable_ImageButton * faTieButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-58.5*BiLiWidth-59*BiLiWidth, 35.5*BiLiWidth, 58.5*BiLiWidth, 84*BiLiWidth)];
-        faTieButton.button_imageView.frame = CGRectMake(0.75*BiLiWidth, 0, 57*BiLiWidth, 57*BiLiWidth);
+        Lable_ImageButton * faTieButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(100*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
+        faTieButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
         faTieButton.button_imageView.image = [UIImage imageNamed:@"home_FaTie"];
         faTieButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, faTieButton.width, 14*BiLiWidth);
         faTieButton.button_lable.textAlignment = NSTextAlignmentCenter;
         faTieButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
         faTieButton.button_lable.textColor = RGBFormUIColor(0x343434);
         faTieButton.button_lable.adjustsFontSizeToFitWidth = YES;
-        faTieButton.button_lable.text = @"发布帖子";
-        [faTieButton addTarget:self action:@selector(faTieButtonClick1) forControlEvents:UIControlEventTouchUpInside];
+        faTieButton.button_lable.text = @"发布信息";
+        faTieButton.tag = 0;
+        [faTieButton addTarget:self action:@selector(faTieButtonClick1:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:faTieButton];
+        
+        self.nvShenRenZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(188*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
+        self.nvShenRenZhengButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
+        self.nvShenRenZhengButton.button_imageView.image = [UIImage imageNamed:@"home_nvShenRenZheng"];
+        self.nvShenRenZhengButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, self.renZhengButton.width, 14*BiLiWidth);
+        self.nvShenRenZhengButton.button_lable.textAlignment = NSTextAlignmentCenter;
+        self.nvShenRenZhengButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.nvShenRenZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
+        self.nvShenRenZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
+        self.nvShenRenZhengButton.button_lable.text = @"女神认证";
+        [self.nvShenRenZhengButton addTarget:self action:@selector(nvShenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:self.nvShenRenZhengButton];
+        
+        Lable_ImageButton * nvShenFaBuXinXiButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(275*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
+        nvShenFaBuXinXiButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
+        nvShenFaBuXinXiButton.button_imageView.image = [UIImage imageNamed:@"home_nvShenFaBu"];
+        nvShenFaBuXinXiButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, faTieButton.width, 14*BiLiWidth);
+        nvShenFaBuXinXiButton.button_lable.textAlignment = NSTextAlignmentCenter;
+        nvShenFaBuXinXiButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        nvShenFaBuXinXiButton.button_lable.textColor = RGBFormUIColor(0x343434);
+        nvShenFaBuXinXiButton.button_lable.adjustsFontSizeToFitWidth = YES;
+        nvShenFaBuXinXiButton.button_lable.text = @"女神发帖";
+        nvShenFaBuXinXiButton.tag = 1;
+        [nvShenFaBuXinXiButton addTarget:self action:@selector(faTieButtonClick1:) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:nvShenFaBuXinXiButton];
+
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, kuangImageView.height-54*BiLiWidth, WIDTH_PingMu, 1)];
         lineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -355,20 +403,66 @@
         self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
     }];
 }
--(void)faTieButtonClick1
+-(void)faTieButtonClick1:(UIButton *)button
 {
+    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+    NSString * defaultsKey = [UserRole stringByAppendingString:token];
+    NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+
+    if (button.tag==0) {
+        
+        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+        if (auth_nomal.intValue==1)
+        {
+            [self faTieButtonClick];
+        }
+        else
+        {
+            self.nvShenFaTieOrChaXiaoErFaTie = @"0";
+            
+            self.chaXiaoErFaTieRenZhengView.hidden = NO;
+            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
+            }];
+
+        }
+
+    }
+    else
+    {
+        NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+        if (auth_goddess.intValue==1) {
+            
+            JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
+            vc.renZhengType = @"1";
+            vc.renZhengStatus = 1;
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+        else
+        {
+            self.nvShenFaTieOrChaXiaoErFaTie = @"1";
+
+            self.chaXiaoErFaTieRenZhengView.hidden = NO;
+            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
+            }];
+
+        }
+
+    }
+    
+
     [UIView animateWithDuration:0.5 animations:^{
         
         self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
     }];
+
     
-    
-    self.chaXiaoErFaTieRenZhengView.hidden = NO;
-    self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
-    }];
 }
 -(UIView *)chaXiaoErFaTieRenZhengView
 {
@@ -456,71 +550,99 @@
 
 -(void)chaXiaoErRenZheng:(UIButton *)button
 {
-    if (button.tag==0) {
-     
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-        }];
+    self.chaXiaoErFaTieRenZhengView.hidden = YES;
+    if ([@"0" isEqualToString:self.nvShenFaTieOrChaXiaoErFaTie]) {
         
-        [UIView animateWithDuration:0.25 animations:^{
-            
-            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-            
-        } completion:^(BOOL finished) {
-            
-            self.chaXiaoErFaTieRenZhengView.hidden = YES;
+        JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"1";
+        [self.navigationController pushViewController:vc animated:YES];
 
-        }];
-
-        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
-        NSString * defaultsKey = [UserRole stringByAppendingString:token];
-        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
-        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
-        
-        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
-            
-            if (auth_nomal.intValue==0) {
-                
-                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
-                vc.renZhengType = @"1";
-                [self.navigationController pushViewController:vc animated:YES];
-
-            }
-            else if (auth_nomal.intValue==2)
-            {
-                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
-                vc.alsoShowBackButton = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-
-            }
-        }
     }
     else
     {
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-        }];
-        
-        
-        self.chaXiaoErRenZhengTipView.hidden = NO;
-        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            self.chaXiaoErRenZhengTipView.transform = CGAffineTransformIdentity;
-        }];
+        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"1";
+        [self.navigationController pushViewController:vc animated:YES];
 
     }
-    
+
+//    if (button.tag==0) {
+//
+//        [UIView animateWithDuration:0.5 animations:^{
+//
+//            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+//        }];
+//
+//        [UIView animateWithDuration:0.25 animations:^{
+//
+//            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+//
+//        } completion:^(BOOL finished) {
+//
+//            self.chaXiaoErFaTieRenZhengView.hidden = YES;
+//
+//        }];
+//
+//        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+//        NSString * defaultsKey = [UserRole stringByAppendingString:token];
+//        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+//        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+//
+//        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+//
+//            if (auth_nomal.intValue==0) {
+//
+//                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+//                vc.renZhengType = @"1";
+//                [self.navigationController pushViewController:vc animated:YES];
+//
+//            }
+//            else if (auth_nomal.intValue==2)
+//            {
+//                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+//                vc.alsoShowBackButton = YES;
+//                [self.navigationController pushViewController:vc animated:YES];
+//
+//            }
+//        }
+//    }
+//    else
+//    {
+//        [UIView animateWithDuration:0.5 animations:^{
+//
+//            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+//        }];
+//
+//
+//        self.chaXiaoErRenZhengTipView.hidden = NO;
+//        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+//        [UIView animateWithDuration:0.5 animations:^{
+//
+//            self.chaXiaoErRenZhengTipView.transform = CGAffineTransformIdentity;
+//        }];
+//
+//    }
+//
     
 }
 -(void)faTieButtonClick
 {
-    CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
-    vc.from_flg = @"0";
-    [self.navigationController pushViewController:vc animated:YES];
     self.chaXiaoErFaTieRenZhengView.hidden = YES;
+    if ([@"0" isEqualToString:self.nvShenFaTieOrChaXiaoErFaTie]) {
+        
+        CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
+        vc.from_flg = @"0";
+        [self.navigationController pushViewController:vc animated:YES];
+        self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+    }
+    else
+    {
+        JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
+        vc.renZhengType = @"1";
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
 
 }
 -(UIView *)chaXiaoErRenZhengTipView
@@ -648,8 +770,97 @@
     }
 
 }
+-(UIView *)sanDaJiaSeFaTieRenZhengView
+{
+    if (!_sanDaJiaSeFaTieRenZhengView) {
+        
+        _sanDaJiaSeFaTieRenZhengView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _sanDaJiaSeFaTieRenZhengView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        [[UIApplication sharedApplication].keyWindow addSubview:_sanDaJiaSeFaTieRenZhengView];
+        
+        UIImageView * kuangImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-287*BiLiWidth)/2, (HEIGHT_PingMu-274*BiLiWidth)/2, 287*BiLiWidth, 274*BiLiWidth)];
+        kuangImageView.image = [UIImage imageNamed:@"zhangHu_tipKuang"];
+        kuangImageView.userInteractionEnabled = YES;
+        [_sanDaJiaSeFaTieRenZhengView addSubview:kuangImageView];
+        
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(kuangImageView.left+kuangImageView.width-33*BiLiWidth/2*1.5, kuangImageView.top-33*BiLiWidth/3, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeTipKuangView) forControlEvents:UIControlEventTouchUpInside];
+        [_sanDaJiaSeFaTieRenZhengView addSubview:closeButton];
+        
+        UILabel * tipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 33.5*BiLiWidth, kuangImageView.width, 17*BiLiWidth)];
+        tipLable1.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        tipLable1.textColor = RGBFormUIColor(0x343434);
+        tipLable1.textAlignment = NSTextAlignmentCenter;
+        tipLable1.text = @"提示";
+        [kuangImageView addSubview:tipLable1];
+        
+        UILabel * sanDaJiaSeFaTieRenZhengViewTipLable = [[UILabel alloc] initWithFrame:CGRectMake(37*BiLiWidth, tipLable1.top+tipLable1.height+25*BiLiWidth, kuangImageView.width-37*BiLiWidth*2, 80*BiLiWidth)];
+        sanDaJiaSeFaTieRenZhengViewTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sanDaJiaSeFaTieRenZhengViewTipLable.textColor = RGBFormUIColor(0x343434);
+        sanDaJiaSeFaTieRenZhengViewTipLable.numberOfLines = 4;
+        sanDaJiaSeFaTieRenZhengViewTipLable.text = @"女神必须本人真实认证，认证后拥有官方独立信息展示区、官方推荐资格和官方认证标识同时平台给予更多流量扶持";
+        [kuangImageView addSubview:sanDaJiaSeFaTieRenZhengViewTipLable];
+        
+        
+        UIButton * sanDaJiaSeFaTieRenZhengViewFaTieButton = [[UIButton alloc] initWithFrame:CGRectMake((kuangImageView.width-85.5*BiLiWidth-11.5*BiLiWidth-115*BiLiWidth)/2, sanDaJiaSeFaTieRenZhengViewTipLable.top+sanDaJiaSeFaTieRenZhengViewTipLable.height+25*BiLiWidth, 85.5*BiLiWidth, 40*BiLiWidth)];
+        [sanDaJiaSeFaTieRenZhengViewFaTieButton setTitle:@"取消" forState:UIControlStateNormal];
+        sanDaJiaSeFaTieRenZhengViewFaTieButton.backgroundColor = RGBFormUIColor(0xEEEEEE);
+        sanDaJiaSeFaTieRenZhengViewFaTieButton.layer.cornerRadius = 20*BiLiWidth;
+        [sanDaJiaSeFaTieRenZhengViewFaTieButton setTitleColor:RGBFormUIColor(0x9A9A9A) forState:UIControlStateNormal];
+        sanDaJiaSeFaTieRenZhengViewFaTieButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        [sanDaJiaSeFaTieRenZhengViewFaTieButton addTarget:self action:@selector(quXiaoNvShenRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:sanDaJiaSeFaTieRenZhengViewFaTieButton];
 
+        UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(sanDaJiaSeFaTieRenZhengViewFaTieButton.left+sanDaJiaSeFaTieRenZhengViewFaTieButton.width+11.5*BiLiWidth, sanDaJiaSeFaTieRenZhengViewFaTieButton.top, 115*BiLiWidth, 40*BiLiWidth)];
+        [renZhengButton addTarget:self action:@selector(nvShenRenZheng) forControlEvents:UIControlEventTouchUpInside];
+        [kuangImageView addSubview:renZhengButton];
+        
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = renZhengButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [renZhengButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * sureLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, renZhengButton.width, renZhengButton.height)];
+        sureLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        sureLable.text = @"继续认证";
+        sureLable.textAlignment = NSTextAlignmentCenter;
+        sureLable.textColor = [UIColor whiteColor];
+        [renZhengButton addSubview:sureLable];
+        
+    }
+    return _sanDaJiaSeFaTieRenZhengView;
+}
+-(void)nvShenRenZhengButtonClick
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    }];
 
+    self.sanDaJiaSeFaTieRenZhengView.hidden = NO;
+
+}
+-(void)nvShenRenZheng
+{
+    self.sanDaJiaSeFaTieRenZhengView.hidden = YES;
+    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    vc.renZhengType =@"1";
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+-(void)quXiaoNvShenRenZheng
+{
+    self.sanDaJiaSeFaTieRenZhengView.hidden = YES;
+
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -697,6 +908,45 @@
 
                     }
                 }
+                NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+                if (auth_nomal.intValue==1) {
+                    
+                    self.renZhengButton.button_lable.text = @"已认证";
+                    self.renZhengButton.enabled = NO;
+                }
+                else if (auth_nomal.intValue==2)
+                {
+                    self.renZhengButton.button_lable.text = @"审核中";
+                    self.renZhengButton.enabled = NO;
+
+                }
+                else
+                {
+                    self.renZhengButton.button_lable.text = @"滴滴约认证";
+                    self.renZhengButton.enabled = YES;
+
+                }
+                
+                NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+                if (auth_goddess.intValue==1) {
+                    
+                    self.nvShenRenZhengButton.button_lable.text = @"已认证";
+                    self.nvShenRenZhengButton.enabled = NO;
+                }
+                else if (auth_goddess.intValue==2)
+                {
+                    self.nvShenRenZhengButton.button_lable.text = @"审核中";
+                    self.nvShenRenZhengButton.enabled = NO;
+
+                }
+                else
+                {
+                    self.nvShenRenZhengButton.button_lable.text = @"女神认证";
+                    self.nvShenRenZhengButton.enabled = YES;
+
+                }
+
+
             }
         }];
         
@@ -973,7 +1223,9 @@
     [self.mainScrollView addSubview:self.itemButtonContentView];
     
     self.listButtonArray = [NSMutableArray array];
-    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"验证榜单",@"验车报告", nil];
+//    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"验证榜单",@"验车报告", nil];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"认证女神",nil];
+
     float originx = 20*BiLiWidth;
     CGSize size;
     for (int i=0; i<array.count; i++) {
@@ -1010,9 +1262,15 @@
     self.sliderView.alpha = 0.8;
     [self.itemButtonContentView addSubview:self.sliderView];
     
-    UIButton * shaiXuanButton = [[UIButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-22*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-22*BiLiWidth)/2, 22*BiLiWidth, 22*BiLiWidth)];
-    [shaiXuanButton setBackgroundImage:[UIImage imageNamed:@"icon_post_fild"] forState:UIControlStateNormal];
-    [shaiXuanButton addTarget:self action:@selector(tiJianShaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    Lable_ImageButton * shaiXuanButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(self.itemButtonContentView.width-52*BiLiWidth-13.5*BiLiWidth, (self.itemButtonContentView.height-22*BiLiWidth)/2, 52*BiLiWidth, 22*BiLiWidth)];
+    shaiXuanButton.button_lable.frame = CGRectMake(0, 0, 30*BiLiWidth, 22*BiLiWidth);
+    shaiXuanButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    shaiXuanButton.button_lable.text = @"筛选";
+    shaiXuanButton.button_lable.textAlignment = NSTextAlignmentCenter;
+    shaiXuanButton.button_lable.textColor = RGBFormUIColor(0xFF0876);
+    shaiXuanButton.button_imageView.frame = CGRectMake(30*BiLiWidth, 0, 22*BiLiWidth, 22*BiLiWidth);
+    shaiXuanButton.button_imageView.image = [UIImage imageNamed:@"icon_post_fild"];
+    [shaiXuanButton addTarget:self action:@selector(tiJianuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.itemButtonContentView addSubview:shaiXuanButton];
     
     //渐变设置
@@ -1063,11 +1321,12 @@
     }
     [self firstGetTieZiList];
     [self firstGetRedList];
-    [self firstGetYanZhengBangDanList];
-    [self firstGetYanCheBaoGaoList];
+    [self firstGetNvShenList];
+//    [self firstGetYanZhengBangDanList];
+//    [self firstGetYanCheBaoGaoList];
     
     UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-60*BiLiWidth-BottomHeight_PingMu, 50*BiLiWidth, 50*BiLiWidth)];
-    [faTieButton setBackgroundImage:[UIImage imageNamed:@"guanFangMessage_image"] forState:UIControlStateNormal];
+    [faTieButton setBackgroundImage:[UIImage imageNamed:@"home_faBurenZheng"] forState:UIControlStateNormal];
     faTieButton.layer.cornerRadius = 25*BiLiWidth;
     [faTieButton addTarget:self action:@selector(faTieOrRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:faTieButton];
@@ -1196,6 +1455,64 @@
         
     }];
 
+}
+-(void)firstGetNvShenList
+{
+    NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
+    [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@"1" forKey:@"page"];
+    [dic setObject:@"1" forKey:@"type_id"];
+    if ([NormalUse isValidString:self.nvShenField]) {
+        
+        [dic setObject:[NormalUse getobjectForKey:self.nvShenField] forKey:@"field"];
+    }
+
+
+    [HTTPModel getSanDaGirlList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        
+        if (status==1) {
+            
+            NSNumber * pageIndexNumber = [NSNumber numberWithInt:2];
+            [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
+            
+            NSArray * dataArray = [responseObject objectForKey:@"data"];
+            NSMutableArray * sourceArray = [[NSMutableArray alloc] initWithArray:dataArray];
+            [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
+            
+            
+            UITableView * tableView = [self.tableViewArray objectAtIndex:2];
+            [self.mainScrollView.mj_header endRefreshing];
+            [self.mainScrollView.mj_footer endRefreshing];
+            
+            if([NormalUse isValidArray:dataArray])
+            {
+                [self.noMessageTipButotn3 removeFromSuperview];
+                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
+                
+            }
+            else
+            {
+                [tableView addSubview:self.noMessageTipButotn3];
+                tableView.height = self.noMessageTipButotn3.top+self.noMessageTipButotn3.height;
+            }
+            
+            [tableView reloadData];
+            
+            if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*2) {
+                
+                [self setMainScrollViewContentSize:tableView];
+            }
+            
+            
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+        }
+    }];
+    
 }
 -(void)firstGetYanZhengBangDanList
 {
@@ -1344,11 +1661,12 @@
     }
     else if(index==2)
     {
-        [self firstGetYanZhengBangDanList];
+        [self firstGetNvShenList];
+       // [self firstGetYanZhengBangDanList];
     }
     else if(index==3)
     {
-        [self firstGetYanCheBaoGaoList];
+        //[self firstGetYanCheBaoGaoList];
     }
     
 
@@ -1476,35 +1794,25 @@
 
 
     }
-    else if(index==2)
+    else if (index==2)
     {
-        
         NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-        if ([NormalUse isValidString:self.field]) {
-            
-            [dic setObject:self.field forKey:@"field"];
-        }
-        if ([NormalUse isValidString:self.order]) {
-            
-            [dic setObject:self.order forKey:@"order"];
-        }
-        if ([NormalUse isValidString:self.message_type]) {
-            
-            [dic setObject:self.message_type forKey:@"message_type"];
-        }
-
+        [dic setObject:@"1" forKey:@"type_id"];
         NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
-        
         [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+        if ([NormalUse isValidString:self.nvShenField]) {
+            
+            [dic setObject:[NormalUse getobjectForKey:self.nvShenField] forKey:@"field"];
+        }
 
-        [HTTPModel getYanZhengList:dic
-                          callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel getSanDaGirlList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
             
             if (status==1) {
                 
                 NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
                 pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-                [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+                [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
                 
                 NSArray * dataArray = [responseObject objectForKey:@"data"];
                 NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:2];
@@ -1515,7 +1823,7 @@
                 [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
                 
                 UITableView * tableView = [self.tableViewArray objectAtIndex:2];
-                    
+                
                 [self.mainScrollView.mj_footer endRefreshing];
                 [tableView reloadData];
                 
@@ -1525,78 +1833,137 @@
                     
                     [self setMainScrollViewContentSize:tableView];
                 }
-
-
+                
+                
                 
             }
-            
-        }];
-
-
-    }
-    else if(index==3)
-    {
-        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-        if ([NormalUse isValidString:self.field]) {
-            
-            [dic setObject:self.field forKey:@"field"];
-        }
-        if ([NormalUse isValidString:self.order]) {
-            
-            [dic setObject:self.order forKey:@"order"];
-        }
-        if ([NormalUse isValidString:self.message_type]) {
-            
-            [dic setObject:self.message_type forKey:@"message_type"];
-        }
-
-        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
-        
-        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
-
-        [HTTPModel getYanCheBaoGaoList:dic
-                              callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
-                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
-                [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
-                
-                NSArray * dataArray = [responseObject objectForKey:@"data"];
-                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:3];
-                for (NSDictionary * info in dataArray) {
-                    
-                    [sourceArray addObject:info];
-                }
-                [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
-                
-                UITableView * tableView = [self.tableViewArray objectAtIndex:3];
-                    
-                [self.mainScrollView.mj_footer endRefreshing];
-
-                [tableView reloadData];
-               
-                
-                float tableViewHeight  = 0;
-                for (NSDictionary * info in sourceArray) {
-                    
-                    tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
-                }
-                
-                tableView.height = tableViewHeight;
-                
-                if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*3) {
-                    
-                    [self setMainScrollViewContentSize:tableView];
-                }
-
-
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
             }
-            
         }];
-
     }
+//    else if(index==2)
+//    {
+//
+//        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+//        if ([NormalUse isValidString:self.field]) {
+//
+//            [dic setObject:self.field forKey:@"field"];
+//        }
+//        if ([NormalUse isValidString:self.order]) {
+//
+//            [dic setObject:self.order forKey:@"order"];
+//        }
+//        if ([NormalUse isValidString:self.message_type]) {
+//
+//            [dic setObject:self.message_type forKey:@"message_type"];
+//        }
+//
+//        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
+//
+//        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+//
+//        [HTTPModel getYanZhengList:dic
+//                          callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//
+//                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:2];
+//                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+//                [self.pageIndexArray replaceObjectAtIndex:1 withObject:pageIndexNumber];
+//
+//                NSArray * dataArray = [responseObject objectForKey:@"data"];
+//                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:2];
+//                for (NSDictionary * info in dataArray) {
+//
+//                    [sourceArray addObject:info];
+//                }
+//                [self.dataSourceArray replaceObjectAtIndex:2 withObject:sourceArray];
+//
+//                UITableView * tableView = [self.tableViewArray objectAtIndex:2];
+//
+//                [self.mainScrollView.mj_footer endRefreshing];
+//                [tableView reloadData];
+//
+//                tableView.height = (144*BiLiWidth+20*BiLiWidth)*sourceArray.count;
+//
+//                if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*2) {
+//
+//                    [self setMainScrollViewContentSize:tableView];
+//                }
+//
+//
+//
+//            }
+//
+//        }];
+//
+//
+//    }
+//    else if(index==3)
+//    {
+//        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+//        if ([NormalUse isValidString:self.field]) {
+//
+//            [dic setObject:self.field forKey:@"field"];
+//        }
+//        if ([NormalUse isValidString:self.order]) {
+//
+//            [dic setObject:self.order forKey:@"order"];
+//        }
+//        if ([NormalUse isValidString:self.message_type]) {
+//
+//            [dic setObject:self.message_type forKey:@"message_type"];
+//        }
+//
+//        NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
+//
+//        [dic setObject:[NSString stringWithFormat:@"%d",pageIndexNumber.intValue] forKey:@"page"];
+//
+//        [HTTPModel getYanCheBaoGaoList:dic
+//                              callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//
+//                NSNumber * pageIndexNumber = [self.pageIndexArray objectAtIndex:3];
+//                pageIndexNumber = [NSNumber numberWithInt:pageIndexNumber.intValue+1];
+//                [self.pageIndexArray replaceObjectAtIndex:3 withObject:pageIndexNumber];
+//
+//                NSArray * dataArray = [responseObject objectForKey:@"data"];
+//                NSMutableArray * sourceArray = [self.dataSourceArray objectAtIndex:3];
+//                for (NSDictionary * info in dataArray) {
+//
+//                    [sourceArray addObject:info];
+//                }
+//                [self.dataSourceArray replaceObjectAtIndex:3 withObject:sourceArray];
+//
+//                UITableView * tableView = [self.tableViewArray objectAtIndex:3];
+//
+//                [self.mainScrollView.mj_footer endRefreshing];
+//
+//                [tableView reloadData];
+//
+//
+//                float tableViewHeight  = 0;
+//                for (NSDictionary * info in sourceArray) {
+//
+//                    tableViewHeight = tableViewHeight+[CheYouPingJiaCell cellHegiht:info];
+//                }
+//
+//                tableView.height = tableViewHeight;
+//
+//                if (self.contentScrollView.contentOffset.x==WIDTH_PingMu*3) {
+//
+//                    [self setMainScrollViewContentSize:tableView];
+//                }
+//
+//
+//            }
+//
+//        }];
+//
+//    }
 
 }
 -(void)setMainScrollViewContentSize:(UITableView *)tableView
@@ -1760,6 +2127,20 @@
         return cell;
 
     }
+    else if(tableView.tag==2)
+    {
+        NSString *tableIdentifier = [NSString stringWithFormat:@"HomeNvShenCell"] ;
+        HomeNvShenCell *cell = [tableView dequeueReusableCellWithIdentifier:tableIdentifier];
+        if (cell == nil)
+        {
+            cell = [[HomeNvShenCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        NSMutableArray * sourcerray;
+        sourcerray = [self.dataSourceArray objectAtIndex:2];
+        [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row]];
+        return cell;
+    }
     else
     {
         NSString *tableIdentifier = [NSString stringWithFormat:@"HomeListCellCell"] ;
@@ -1783,13 +2164,13 @@
 
 
         }
-        else if (tableView.tag==2)
-        {
-            sourcerray = [self.dataSourceArray objectAtIndex:2];
-            [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row] cellType:YanZhengBangDan];
-
-
-        }
+//        else if (tableView.tag==2)
+//        {
+//            sourcerray = [self.dataSourceArray objectAtIndex:2];
+//            [cell contentViewSetData:[sourcerray objectAtIndex:indexPath.row] cellType:YanZhengBangDan];
+//
+//
+//        }
         return cell;
 
     }
@@ -1819,59 +2200,87 @@
 
         }
         NSDictionary * info = [sourcerray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"id"];
-        if ([idNumber isKindOfClass:[NSNumber class]]) {
+        if (tableView.tag==2) {
             
-            vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            NSNumber * girlId = [info objectForKey:@"id"];
+            SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
+            vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
+            vc.type = @"3";
+            [self.navigationController pushViewController:vc animated:YES];
 
         }
-        [self.navigationController pushViewController:vc animated:YES];
+        else
+        {
+            TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+            NSNumber * idNumber = [info objectForKey:@"id"];
+            if ([idNumber isKindOfClass:[NSNumber class]]) {
+                
+                vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
 
     }
 }
 #pragma mark UIButtonClick
 
--(void)tiJianShaiXuanButtonClick
+-(void)tiJianuanButtonClick
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    if ((int)(self.contentScrollView.contentOffset.x/WIDTH_PingMu)==2) {
         
-        self.shaiXuanView.top  =0;
-        self.shaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
-    }];
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.nvShenShaiXuanView.top  =0;
+            self.nvShenShaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        }];
+
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.shaiXuanView.top  =0;
+            self.shaiXuanView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        }];
+
+    }
     
 }
 -(void)faTieOrRenZhengButtonClick
 {
-    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
-    NSString * defaultsKey = [UserRole stringByAppendingString:token];
-    NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
-    NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
-    
-    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
-        
-        if (auth_nomal.intValue==0) {//未认证
-            
-            [UIView animateWithDuration:0.5 animations:^{
-                
-                self.chaXiaoErFaTieRenZhengView1.top = 0;
-            }];
-            
-        }
-        else if (auth_nomal.intValue==1)//已认证
-        {
-            [self faTieButtonClick];
-        }
-        else if (auth_nomal.intValue==2)//审核中
-        {
-            [UIView animateWithDuration:0.5 animations:^{
-                
-                self.chaXiaoErFaTieRenZhengView1.top = 0;
-            }];
-            
-        }
-        
-    }
+    self.chaXiaoErFaTieRenZhengView1.top = 0;
+
+//    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+//    NSString * defaultsKey = [UserRole stringByAppendingString:token];
+//    NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+//    NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+//
+//    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+//
+//        if (auth_nomal.intValue==0) {//未认证
+//
+//            [UIView animateWithDuration:0.5 animations:^{
+//
+//                self.chaXiaoErFaTieRenZhengView1.top = 0;
+//            }];
+//
+//        }
+//        else if (auth_nomal.intValue==1)//已认证
+//        {
+//            [self faTieButtonClick];
+//        }
+//        else if (auth_nomal.intValue==2)//审核中
+//        {
+//            [UIView animateWithDuration:0.5 animations:^{
+//
+//                self.chaXiaoErFaTieRenZhengView1.top = 0;
+//            }];
+//
+//        }
+//
+//    }
     
 
 }
@@ -1903,8 +2312,8 @@
 {
     [self firstGetTieZiList];
     [self firstGetRedList];
-    [self firstGetYanZhengBangDanList];
-    [self firstGetYanCheBaoGaoList];
+//    [self firstGetYanZhengBangDanList];
+//    [self firstGetYanCheBaoGaoList];
 
 }
 -(void)tiYanBaoGaoButtonClick

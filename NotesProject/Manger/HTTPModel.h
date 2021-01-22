@@ -431,5 +431,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 //上传share_code appi/user/getPshareCode
 +(void)getShareCode:(NSDictionary *_Nullable)parameter
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
-
+//获取支付渠道链接appi/common/getPayType
++(void)getCommonPayType:(NSDictionary *_Nullable)parameter
+callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 @end
