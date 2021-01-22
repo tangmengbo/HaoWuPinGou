@@ -126,8 +126,8 @@
             filePath = "NotesProject/VC/HomeVC/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "631"
-            endingLineNumber = "631"
+            startingLineNumber = "649"
+            endingLineNumber = "649"
             landmarkName = "-faTieButtonClick"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "NotesProject/VC/HomeVC/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "554"
-            endingLineNumber = "554"
+            startingLineNumber = "572"
+            endingLineNumber = "572"
             landmarkName = "-chaXiaoErRenZheng:"
             landmarkType = "7">
          </BreakpointContent>

@@ -347,7 +347,7 @@
         faTieButton.button_imageView.image = [UIImage imageNamed:@"home_FaTie"];
         faTieButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, faTieButton.width, 14*BiLiWidth);
         faTieButton.button_lable.textAlignment = NSTextAlignmentCenter;
-        faTieButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        faTieButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         faTieButton.button_lable.textColor = RGBFormUIColor(0x343434);
         faTieButton.button_lable.adjustsFontSizeToFitWidth = YES;
         faTieButton.button_lable.text = @"发布信息";
@@ -372,7 +372,7 @@
         nvShenFaBuXinXiButton.button_imageView.image = [UIImage imageNamed:@"home_nvShenFaBu"];
         nvShenFaBuXinXiButton.button_lable.frame = CGRectMake(0, 70*BiLiWidth, faTieButton.width, 14*BiLiWidth);
         nvShenFaBuXinXiButton.button_lable.textAlignment = NSTextAlignmentCenter;
-        nvShenFaBuXinXiButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        nvShenFaBuXinXiButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         nvShenFaBuXinXiButton.button_lable.textColor = RGBFormUIColor(0x343434);
         nvShenFaBuXinXiButton.button_lable.adjustsFontSizeToFitWidth = YES;
         nvShenFaBuXinXiButton.button_lable.text = @"女神发帖";
@@ -509,7 +509,7 @@
         
         UIButton * renZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(faTieButton.left+faTieButton.width+11.5*BiLiWidth, faTieButton.top, 115*BiLiWidth, 40*BiLiWidth)];
         renZhengButton.tag = 0;
-        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
+        [renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng1:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:renZhengButton];
         
         //渐变设置
@@ -547,8 +547,7 @@
 
     }];
 }
-
--(void)chaXiaoErRenZheng:(UIButton *)button
+-(void)chaXiaoErRenZheng1:(UIButton *)button
 {
     self.chaXiaoErFaTieRenZhengView.hidden = YES;
     if ([@"0" isEqualToString:self.nvShenFaTieOrChaXiaoErFaTie]) {
@@ -566,62 +565,81 @@
 
     }
 
-//    if (button.tag==0) {
+}
+-(void)chaXiaoErRenZheng:(UIButton *)button
+{
+//    self.chaXiaoErFaTieRenZhengView.hidden = YES;
+//    if ([@"0" isEqualToString:self.nvShenFaTieOrChaXiaoErFaTie]) {
 //
-//        [UIView animateWithDuration:0.5 animations:^{
+//        JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+//        vc.renZhengType = @"1";
+//        [self.navigationController pushViewController:vc animated:YES];
 //
-//            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-//        }];
-//
-//        [UIView animateWithDuration:0.25 animations:^{
-//
-//            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-//
-//        } completion:^(BOOL finished) {
-//
-//            self.chaXiaoErFaTieRenZhengView.hidden = YES;
-//
-//        }];
-//
-//        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
-//        NSString * defaultsKey = [UserRole stringByAppendingString:token];
-//        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
-//        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
-//
-//        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
-//
-//            if (auth_nomal.intValue==0) {
-//
-//                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
-//                vc.renZhengType = @"1";
-//                [self.navigationController pushViewController:vc animated:YES];
-//
-//            }
-//            else if (auth_nomal.intValue==2)
-//            {
-//                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
-//                vc.alsoShowBackButton = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//
-//            }
-//        }
 //    }
 //    else
 //    {
-//        [UIView animateWithDuration:0.5 animations:^{
-//
-//            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-//        }];
-//
-//
-//        self.chaXiaoErRenZhengTipView.hidden = NO;
-//        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-//        [UIView animateWithDuration:0.5 animations:^{
-//
-//            self.chaXiaoErRenZhengTipView.transform = CGAffineTransformIdentity;
-//        }];
+//        NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+//        vc.renZhengType = @"1";
+//        [self.navigationController pushViewController:vc animated:YES];
 //
 //    }
+
+    if (button.tag==0) {
+
+        [UIView animateWithDuration:0.5 animations:^{
+
+            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+        }];
+
+        [UIView animateWithDuration:0.25 animations:^{
+
+            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+
+        } completion:^(BOOL finished) {
+
+            self.chaXiaoErFaTieRenZhengView.hidden = YES;
+
+        }];
+
+        NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
+        NSString * defaultsKey = [UserRole stringByAppendingString:token];
+        NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
+        NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
+
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+
+            if (auth_nomal.intValue==0) {
+
+                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+                vc.renZhengType = @"1";
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }
+            else if (auth_nomal.intValue==2)
+            {
+                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+                vc.alsoShowBackButton = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }
+        }
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+
+            self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+        }];
+
+
+        self.chaXiaoErRenZhengTipView.hidden = NO;
+        self.chaXiaoErRenZhengTipView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+        [UIView animateWithDuration:0.5 animations:^{
+
+            self.chaXiaoErRenZhengTipView.transform = CGAffineTransformIdentity;
+        }];
+
+    }
 //
     
 }
