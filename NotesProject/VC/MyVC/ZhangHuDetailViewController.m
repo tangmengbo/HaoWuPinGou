@@ -34,7 +34,6 @@
 
 @property(nonatomic,strong)NSString * orderId;
 
-@property(nonatomic,strong)NSString * pay_url;
 
 @end
 
@@ -64,17 +63,6 @@
     
     [self yinCangTabbar];
     
-    [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            if ([NormalUse isValidArray:responseObject]) {
-                
-                NSDictionary * info = [responseObject objectAtIndex:0];
-                self.pay_url = [info objectForKey:@"pay_url"];
-
-            }
-        }
-    }];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yanZhengOrder) name:@"YanZhengDingDanNotification" object:nil];
     
@@ -459,7 +447,7 @@
             NSNumber * coin = [info objectForKey:@"coin"];
             NSString *url;
             
-            url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,self.pay_url];
+            url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"pay_url"]];
             url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
 
 //            if ([@"1" isEqualToString:[payTypeInfo objectForKey:@"pay_channel"]]) {

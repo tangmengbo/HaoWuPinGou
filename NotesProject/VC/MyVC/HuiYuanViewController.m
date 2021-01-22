@@ -57,7 +57,6 @@
 
 @property(nonatomic,strong)NSString * yuEStr;//当前余额
 
-@property(nonatomic,strong)NSString * buy_url;
 
 @end
 
@@ -191,7 +190,7 @@
             self.orderId = responseObject;
             NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
             NSString *url;
-            url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,self.buy_url];
+            url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"buy_url"]];
             url = [url stringByAppendingString:[NSString stringWithFormat:@"?vip_type=%@&orderId=%@&logintoken=%@&pay_code=%@",self.vip_type,self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_code"]]];
 
 //            if ([@"1" isEqualToString:[payTypeInfo objectForKey:@"pay_channel"]]) {
@@ -591,17 +590,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            if ([NormalUse isValidArray:responseObject]) {
-                
-                NSDictionary * info = [responseObject objectAtIndex:0];
-                self.buy_url = [info objectForKey:@"buy_url"];
-
-            }
-        }
-    }];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yanZhengOrder) name:@"YanZhengDingDanNotification" object:nil];
     
