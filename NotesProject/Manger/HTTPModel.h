@@ -433,5 +433,7 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 //获取支付渠道链接appi/common/getPayType
 +(void)getCommonPayType:(NSDictionary *_Nullable)parameter
-callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
++(void)getDataByUrl:(NSDictionary *_Nullable)parameter
+           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 @end

@@ -326,8 +326,6 @@
         maskLayer.frame = kuangImageView.bounds;
         maskLayer.path = maskPath.CGPath;
         kuangImageView.layer.mask = maskLayer;
-
-        
         
         self.renZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(16*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
         self.renZhengButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
@@ -341,6 +339,14 @@
         self.renZhengButton.tag = 1;
         [self.renZhengButton addTarget:self action:@selector(chaXiaoErRenZheng:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:self.renZhengButton];
+        
+        self.chaXiaErYiRenZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(self.renZhengButton.left, self.renZhengButton.top+self.renZhengButton.height+5, self.renZhengButton.width, 12*BiLiWidth)];
+        self.chaXiaErYiRenZhengLable.textAlignment = NSTextAlignmentCenter;
+        self.chaXiaErYiRenZhengLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.chaXiaErYiRenZhengLable.textColor = RGBFormUIColor(0xFF0876);
+        self.chaXiaErYiRenZhengLable.adjustsFontSizeToFitWidth = YES;
+        [kuangImageView addSubview:self.chaXiaErYiRenZhengLable];
+
         
         Lable_ImageButton * faTieButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(100*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
         faTieButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
@@ -366,6 +372,14 @@
         self.nvShenRenZhengButton.button_lable.text = @"女神认证";
         [self.nvShenRenZhengButton addTarget:self action:@selector(nvShenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:self.nvShenRenZhengButton];
+        
+        self.nvShenRenZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nvShenRenZhengButton.left, self.renZhengButton.top+self.renZhengButton.height+5, self.nvShenRenZhengButton.width, 12*BiLiWidth)];
+        self.nvShenRenZhengLable.textAlignment = NSTextAlignmentCenter;
+        self.nvShenRenZhengLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.nvShenRenZhengLable.textColor = RGBFormUIColor(0xFF0876);
+        self.nvShenRenZhengLable.adjustsFontSizeToFitWidth = YES;
+        [kuangImageView addSubview:self.nvShenRenZhengLable];
+
         
         Lable_ImageButton * nvShenFaBuXinXiButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(275*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
         nvShenFaBuXinXiButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
@@ -890,6 +904,7 @@
     self.navigationController.navigationBarHidden = YES;
 
     
+    self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
     //获取当前用户角色
     if ([NormalUse isValidString:[NormalUse defaultsGetObjectKey:LoginToken]]) {
         
@@ -929,38 +944,40 @@
                 NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
                 if (auth_nomal.intValue==1) {
                     
-                    self.renZhengButton.button_lable.text = @"已认证";
                     self.renZhengButton.enabled = NO;
+                    self.chaXiaErYiRenZhengLable.text = @"(已认证)";
                 }
                 else if (auth_nomal.intValue==2)
                 {
-                    self.renZhengButton.button_lable.text = @"审核中";
+
                     self.renZhengButton.enabled = NO;
+                    self.chaXiaErYiRenZhengLable.text = @"(审核中)";
 
                 }
                 else
                 {
-                    self.renZhengButton.button_lable.text = @"滴滴约认证";
                     self.renZhengButton.enabled = YES;
-
+                    self.chaXiaErYiRenZhengLable.text = @"";
                 }
+
                 
                 NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
                 if (auth_goddess.intValue==1) {
                     
-                    self.nvShenRenZhengButton.button_lable.text = @"已认证";
                     self.nvShenRenZhengButton.enabled = NO;
+                    self.nvShenRenZhengLable.text = @"(已认证)";
+
                 }
                 else if (auth_goddess.intValue==2)
                 {
-                    self.nvShenRenZhengButton.button_lable.text = @"审核中";
                     self.nvShenRenZhengButton.enabled = NO;
+                    self.nvShenRenZhengLable.text = @"(审核中)";
 
                 }
                 else
                 {
-                    self.nvShenRenZhengButton.button_lable.text = @"女神认证";
                     self.nvShenRenZhengButton.enabled = YES;
+                    self.nvShenRenZhengLable.text = @"";
 
                 }
 
@@ -1056,11 +1073,32 @@
     }];
 
 }
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
-//    [self.view addSubview:view];
-//}
+-(void)viewDidAppear:(BOOL)animated
+{
+//    for (int i=0; i<9; i++) {
+//        
+//        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(40*i, 50, 30, 30)];
+//        [self.view addSubview:imageView];
+//        
+//        NSString * imageUrl = [NSString stringWithFormat:@"https://xcypzp.com/upload/202101201455/110000/32821/test%d.jpg",i];
+//        // 创建URL对象
+//        NSURL *url = [NSURL URLWithString:imageUrl];
+//        // 创建request对象
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//        // 发送异步请求
+//    //    [NSURLSession]
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//            // 如果请求到数据
+//            if (data) {
+//                NSString *receiveStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//                receiveStr = [receiveStr stringByReplacingOccurrencesOfString:@"data:image/jpg;base64," withString:@""];
+//                NSData * showData = [[NSData alloc]initWithBase64EncodedString:receiveStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                imageView.image = [UIImage imageWithData:showData];
+//            }
+//        }];
+//
+//    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

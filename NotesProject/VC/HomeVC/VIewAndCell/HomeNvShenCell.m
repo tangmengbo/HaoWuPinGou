@@ -95,13 +95,27 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
+    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
+    
+//    NSString * imageUrl = [NSString stringWithFormat:@"https://xcypzp.com/upload/202101201455/110000/32821/test%d.jpg",index];
+//    // 创建URL对象
+//    NSURL *url = [NSURL URLWithString:imageUrl];
+//    // 创建request对象
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    // 发送异步请求
+////    [NSURLSession]
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        // 如果请求到数据
+//        if (data) {
+//            NSString *receiveStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//            receiveStr = [receiveStr stringByReplacingOccurrencesOfString:@"data:image/jpg;base64," withString:@""];
+//            NSData * showData = [[NSData alloc]initWithBase64EncodedString:receiveStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//            self.headerImageView.image = [UIImage imageWithData:showData];
+//        }
+//    }];
 
-    self.titleLable.text = @"女神";//[info objectForKey:@"title"] ;
-    
-        
-    //self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];
-    
+    self.titleLable.text = [info objectForKey:@"title"] ;
     NSNumber * min_price = [info objectForKey:@"min_price"];
     NSNumber * max_price = [info objectForKey:@"max_price"];
     self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d~%d",min_price.intValue,max_price.intValue];
@@ -138,10 +152,8 @@
         }
         
     }
-    
-    
-    
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

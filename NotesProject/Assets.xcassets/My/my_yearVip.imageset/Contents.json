@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "my_yearVip.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -10,6 +9,7 @@
       "scale" : "2x"
     },
     {
+      "filename" : "my_yearVip@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

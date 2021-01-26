@@ -24,8 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)HomeShaiXuanView * shaiXuanView;//筛选条件view
 @property(nonatomic,strong)HomeNvShenShaiXuanView * nvShenShaiXuanView;//筛选女神列表
 
+@property(nonatomic,strong)Lable_ImageButton * nvShenRenZhengButton ;
 @property(nonatomic,strong)Lable_ImageButton * renZhengButton;
-@property(nonatomic,strong)Lable_ImageButton * nvShenRenZhengButton;
+@property(nonatomic,strong)UILabel * chaXiaErYiRenZhengLable;//茶小二已认证提示lable
+@property(nonatomic,strong)UILabel * nvShenRenZhengLable;//女神已认证提示lable
+
 
 @property(nonatomic,strong)UIView * sanDaJiaSeFaTieRenZhengView;
 
