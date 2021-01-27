@@ -210,14 +210,14 @@
 
     
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+2*BiLiWidth, 16*BiLiWidth, 14.5*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top, 20*BiLiWidth, 20*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
-    
+
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
     //2终身会员 1年会员 3蛟龙炮神 0非会员
     if ([auth_vip isKindOfClass:[NSNumber class]]) {
         if (auth_vip.intValue==1) {
-            
+
             vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
 
         }
@@ -231,7 +231,7 @@
             vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
 
         }
-        
+
     }
     else
     {

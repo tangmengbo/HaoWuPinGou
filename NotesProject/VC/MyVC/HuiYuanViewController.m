@@ -424,7 +424,7 @@
 
     if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"由于支付通道的限制，目前无法通过在线支付开通此会员，您可以通过支付%@金币(兑换比例1:1)开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
             [self kaiTongHuiYuan];
@@ -542,7 +542,7 @@
     //如果支付通道最大金额小于要开通的会员金额
     if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"由于支付通道的限制，目前无法通过在线支付开通此会员，您可以通过支付%@金币(兑换比例1:1)开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
             [self kaiTongHuiYuan];
@@ -767,40 +767,73 @@
 }
 -(void)setYongJiuVipItem
 {
-    Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
-    [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
-    button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
-    button1.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
-    button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
-    button1.button_lable.textAlignment = NSTextAlignmentCenter;
-    button1.button_lable.textColor = RGBFormUIColor(0x333333);
-    button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    button1.button_lable.text = @"特权一";
-    button1.button_lable1.frame = CGRectMake((button1.width-90*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height, 90*BiLiWidth, 50*BiLiWidth);
-    button1.button_lable1.textAlignment = NSTextAlignmentCenter;
-    button1.button_lable1.textColor = RGBFormUIColor(0x999999);
-    button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    button1.button_lable1.numberOfLines = 3;
-    button1.button_lable1.text = @"发布基础信息";
-    [self.itemScrollView addSubview:button1];
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"除经纪人信息外每日免费解锁999次",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每日发布信息50次",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布定制服务",@"message",@"vip_dingZhi",@"imageName", nil];
 
-    Lable_ImageButton * button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+25.5*BiLiWidth, button1.top, button1.width, button1.height)];
-    [button2 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
-    button2.button_imageView.frame = button1.button_imageView.frame;
-    button2.button_imageView.image = [UIImage imageNamed:@"vip_jieSuo"];
-    button2.button_lable.frame = button1.button_lable.frame;
-    button2.button_lable.textAlignment = NSTextAlignmentCenter;
-    button2.button_lable.textColor = RGBFormUIColor(0x333333);
-    button2.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
-    button2.button_lable.text = @"特权二";
-    button2.button_lable1.frame = button1.button_lable1.frame;
-    button2.button_lable1.textAlignment = NSTextAlignmentCenter;
-    button2.button_lable1.textColor = RGBFormUIColor(0x999999);
-    button2.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    button2.button_lable1.text = @"除经纪人信息外的所有信息每天免费解锁999次";//@"基础信息免费解锁";
-    button2.button_lable1.adjustsFontSizeToFitWidth = YES;
-    button2.button_lable1.numberOfLines = 3;
-    [self.itemScrollView addSubview:button2];
+    [array addObject:info1];
+    [array addObject:info2];
+    [array addObject:info3];
+    
+    for (int i=0; i<array.count; i++) {
+        
+        NSDictionary * info = [array objectAtIndex:i];
+        Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+119.5*BiLiWidth*(i%3), 145*BiLiWidth*(i/3), 105*BiLiWidth, 130*BiLiWidth)];
+        [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+        button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
+        button1.button_imageView.image = [UIImage imageNamed:[info objectForKey:@"imageName"]];
+        button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
+        button1.button_lable.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable.textColor = RGBFormUIColor(0x333333);
+        button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+        button1.button_lable.text = [info objectForKey:@"title"];
+        button1.button_lable1.frame = CGRectMake((button1.width-71*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height+9*BiLiWidth, 71*BiLiWidth, 30*BiLiWidth);
+        button1.button_lable1.textAlignment = NSTextAlignmentCenter;
+        button1.button_lable1.textColor = RGBFormUIColor(0x999999);
+        button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        button1.button_lable1.numberOfLines = 2;
+        button1.button_lable1.text = [info objectForKey:@"message"];
+        button1.button_lable1.adjustsFontSizeToFitWidth = YES;
+        [self.itemScrollView addSubview:button1];
+
+    }
+
+
+//    Lable_ImageButton * button1 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu*2+69.5*BiLiWidth, 0, 105*BiLiWidth, 130*BiLiWidth)];
+//    [button1 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+//    button1.button_imageView.frame = CGRectMake((button1.width-31*BiLiWidth)/2, 21.5*BiLiWidth, 31*BiLiWidth, 31*BiLiWidth);
+//    button1.button_imageView.image = [UIImage imageNamed:@"vip_jieSuo"];
+//    button1.button_lable.frame = CGRectMake(0, button1.button_imageView.top+button1.button_imageView.height+16*BiLiWidth, button1.width, 13*BiLiWidth);
+//    button1.button_lable.textAlignment = NSTextAlignmentCenter;
+//    button1.button_lable.textColor = RGBFormUIColor(0x333333);
+//    button1.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+//    button1.button_lable.text = @"特权一";
+//    button1.button_lable1.frame = CGRectMake((button1.width-90*BiLiWidth)/2, button1.button_lable.top+button1.button_lable.height, 90*BiLiWidth, 50*BiLiWidth);
+//    button1.button_lable1.textAlignment = NSTextAlignmentCenter;
+//    button1.button_lable1.textColor = RGBFormUIColor(0x999999);
+//    button1.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    button1.button_lable1.numberOfLines = 3;
+//    button1.button_lable1.text = @"除经纪人信息外每日免费解锁999次";
+//    [self.itemScrollView addSubview:button1];
+//
+//    Lable_ImageButton * button2 = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+25.5*BiLiWidth, button1.top, button1.width, button1.height)];
+//    [button2 setBackgroundImage:[UIImage imageNamed:@"vip_itemBG"] forState:UIControlStateNormal];
+//    button2.button_imageView.frame = button1.button_imageView.frame;
+//    button2.button_imageView.image = [UIImage imageNamed:@"vip_faBu"];
+//    button2.button_lable.frame = button1.button_lable.frame;
+//    button2.button_lable.textAlignment = NSTextAlignmentCenter;
+//    button2.button_lable.textColor = RGBFormUIColor(0x333333);
+//    button2.button_lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:13*BiLiWidth];
+//    button2.button_lable.text = @"特权二";
+//    button2.button_lable1.frame = button1.button_lable1.frame;
+//    button2.button_lable1.textAlignment = NSTextAlignmentCenter;
+//    button2.button_lable1.textColor = RGBFormUIColor(0x999999);
+//    button2.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    button2.button_lable1.text = @"每日发布信息50次";//@"基础信息免费解锁";
+//    button2.button_lable1.adjustsFontSizeToFitWidth = YES;
+//    button2.button_lable1.numberOfLines = 3;
+//    [self.itemScrollView addSubview:button2];
 
     
 }
@@ -852,14 +885,17 @@
     NSMutableArray * array = [[NSMutableArray alloc] init];
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
    // NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每天免费发布信息100次，无限解锁信息，联系经纪人需30金币",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布基础信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"无限次解锁信息，联系经纪人需30金币",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"每日发布信息100次",@"message",@"vip_faBu",@"imageName", nil];
     NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"免费发布定制服务",@"message",@"vip_dingZhi",@"imageName", nil];
+
     
     [array addObject:info1];
     [array addObject:info2];
     [array addObject:info3];
     [array addObject:info4];
+    [array addObject:info5];
     for (int i=0; i<array.count; i++) {
         
         NSDictionary * info = [array objectAtIndex:i];
@@ -946,23 +982,23 @@
     
     if(self.auth_vip.intValue==0)
     {
-
-        self.kaiTongHuiYuanQueRenView.hidden = NO;
-        
-        if ([@"vip_year" isEqualToString:self.vip_type]) {
-            
-            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通年卡";
-
-        }
-        else if ([@"vip_forever" isEqualToString:self.vip_type])
-        {
-            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通永久卡";
-
-        }
-        else
-        {
-            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通蛟龙炮神卡";
-        }
+        [self queRenViewSureButtonClick];
+//        self.kaiTongHuiYuanQueRenView.hidden = NO;
+//
+//        if ([@"vip_year" isEqualToString:self.vip_type]) {
+//
+//            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通年卡";
+//
+//        }
+//        else if ([@"vip_forever" isEqualToString:self.vip_type])
+//        {
+//            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通永久卡";
+//
+//        }
+//        else
+//        {
+//            self.kaiTongHuiYuanQueRenViewTipLable.text = @"是否确定开通蛟龙炮神卡";
+//        }
 
     }
     else

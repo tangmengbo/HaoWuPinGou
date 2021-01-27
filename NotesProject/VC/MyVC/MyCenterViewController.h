@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * nickLable;
 @property(nonatomic,strong)UILabel * messageLable;
+@property(nonatomic,strong)UIImageView * vipImageView;
 
 @property(nonatomic,strong)UIView * redPointView;
 

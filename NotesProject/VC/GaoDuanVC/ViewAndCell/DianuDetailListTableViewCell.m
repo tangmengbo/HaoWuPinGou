@@ -40,7 +40,7 @@
         self.cityLable1.textColor = RGBFormUIColor(0x333333);
         [self.contentView1 addSubview:self.cityLable1];
         
-        self.zuanShiImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.cityLable1.top, 16*BiLiWidth, 14*BiLiWidth)];
+        self.zuanShiImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.cityLable1.top, 20*BiLiWidth, 20*BiLiWidth)];
         self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_black"];
         [self.contentView1 addSubview:self.zuanShiImageView1];
         
@@ -81,7 +81,7 @@
         self.cityLable2.textColor = RGBFormUIColor(0x333333);
         [self.contentView2 addSubview:self.cityLable2];
         
-        self.zuanShiImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.cityLable1.top, 16*BiLiWidth, 14*BiLiWidth)];
+        self.zuanShiImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.cityLable1.top, 20*BiLiWidth, 20*BiLiWidth)];
         self.zuanShiImageView2.image = [UIImage imageNamed:@"vip_black"];
         [self.contentView2 addSubview:self.zuanShiImageView2];
         

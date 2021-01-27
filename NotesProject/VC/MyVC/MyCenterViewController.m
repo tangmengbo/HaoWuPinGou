@@ -231,6 +231,7 @@
                 if (auth_vip.intValue==0) {
                     
                     self.messageLable.text = @"非VIP暂无免费解锁次数";
+                    
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_weiKaiTong"] forState:UIControlStateNormal];
 
@@ -239,6 +240,11 @@
                 else if(auth_vip.intValue==1)
                 {
                     self.messageLable.text = [NSString stringWithFormat:@"%@到期",[self.userInfo objectForKey:@"vip_expiration_date"]];//@"年卡";
+                    
+                    CGSize size = [NormalUse setSize:self.messageLable.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+                    self.messageLable.width = size.width;
+                    self.vipImageView.left = self.messageLable.width+self.messageLable.left+3*BiLiWidth;
+                    self.vipImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yearVip"] forState:UIControlStateNormal];
 
@@ -252,6 +258,12 @@
                 else if (auth_vip.intValue==2)
                 {
                     self.messageLable.text = @"永久卡";
+                    
+                    CGSize size = [NormalUse setSize:self.messageLable.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+                    self.messageLable.width = size.width;
+                    self.vipImageView.left = self.messageLable.width+self.messageLable.left+3*BiLiWidth;
+                    self.vipImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_yongJiuVip_new"] forState:UIControlStateNormal];
                     
@@ -260,11 +272,21 @@
 
                     self.huiYuanTitleLable.text = @"";//@"会员到期时间";
                     self.huiYuanDaoQiLable.text = @"";//[self.userInfo objectForKey:@"vip_expiration_date"];
+                    
+                    self.mianFeiJieSuoButton.button_lable.hidden = YES;
+                    self.mianFeiJieSuoButton.button_imageView.hidden = NO;
+
 
                 }
                 else if (auth_vip.intValue==3)
                 {
                     self.messageLable.text = @"永久卡";
+                    
+                    CGSize size = [NormalUse setSize:self.messageLable.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+                    self.messageLable.width = size.width;
+                    self.vipImageView.left = self.messageLable.width+self.messageLable.left+3*BiLiWidth;
+                    self.vipImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
 
                     [self.huiYuanButton setBackgroundImage:[UIImage imageNamed:@"my_jiaolongVip"] forState:UIControlStateNormal];
                     
@@ -336,11 +358,14 @@
     self.nickLable.text = [NormalUse getCurrentUserName];
     
     
-    self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+6.5*BiLiWidth, 150*BiLiWidth, 12*BiLiWidth)];
+    self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+6.5*BiLiWidth, 150*BiLiWidth, 20*BiLiWidth)];
     self.messageLable.textColor = RGBFormUIColor(0x999999);
-    self.messageLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.messageLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     self.messageLable.text = @"非VIP暂无免费解锁次数";
     [self.mainScrollView addSubview:self.messageLable];
+    
+    self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top, 20*BiLiWidth, 20*BiLiWidth)];
+    [self.mainScrollView addSubview:self.vipImageView];
 
     
     UIButton * xiaoXiButton = [[UIButton alloc] initWithFrame:CGRectMake(277*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 19*BiLiWidth, 22*BiLiWidth)];

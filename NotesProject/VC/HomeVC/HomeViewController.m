@@ -1131,9 +1131,19 @@
     
      
     NSString * haveto_update_app = [NormalUse getJinBiStr:@"haveto_update_app"];//0 不需要更新 1 普通更新 2 强制更新
-    if ([@"1" isEqualToString:haveto_update_app] ||[@"2" isEqualToString:haveto_update_app]) {
+    NSString * ipa_version = [NormalUse getJinBiStr:@"ipa_version"];
+    NSString * now_version = [NSString stringWithFormat:@"V%@",[[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"]];
+    if (![now_version isEqualToString:ipa_version]) {
         
-        self.uploadTipView.hidden = NO;
+        if ([@"1" isEqualToString:haveto_update_app] ||[@"2" isEqualToString:haveto_update_app]) {
+            
+            self.uploadTipView.hidden = NO;
+        }
+        else
+        {
+            [self getGongGaiMessage];
+        }
+
     }
     else
     {

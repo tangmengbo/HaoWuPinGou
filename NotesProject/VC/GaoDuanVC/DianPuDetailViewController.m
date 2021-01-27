@@ -426,7 +426,7 @@
         titleLable.adjustsFontSizeToFitWidth = YES;
         [headerView addSubview:titleLable];
         
-        UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-13.5*BiLiWidth)/2, 11.5*BiLiWidth, 13.5*BiLiWidth)];
+        UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth)];
         [headerView addSubview:vipImageView];
         
 

@@ -14,9 +14,9 @@
             filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "637"
-            endingLineNumber = "637"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "666"
+            endingLineNumber = "666"
+            landmarkName = "-tiJiaoButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -30,25 +30,9 @@
             filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "614"
-            endingLineNumber = "614"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9D24F19F-2DA3-4FAC-BB9F-2154F402ED40"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
+            landmarkName = "-tiJiaoButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -113,6 +97,22 @@
             startingLineNumber = "445"
             endingLineNumber = "445"
             landmarkName = "-chongZhiButtonClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "14AD6C44-3589-4DBC-81FD-4F115307CA15"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "-oneDatePickerValueChanged:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

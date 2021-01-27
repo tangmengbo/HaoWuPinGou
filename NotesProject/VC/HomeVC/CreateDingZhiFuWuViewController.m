@@ -187,7 +187,7 @@
     self.beginTimeButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
     [self.beginTimeButton setTitle:@"开始时间" forState:UIControlStateNormal];
     self.beginTimeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.beginTimeButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
+    [self.beginTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     [self.beginTimeButton addTarget:self action:@selector(beginTimeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.whiteContentView addSubview:self.beginTimeButton];
     
@@ -205,15 +205,30 @@
     self.endTimeButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
     [self.endTimeButton setTitle:@"结束时间" forState:UIControlStateNormal];
     self.endTimeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.endTimeButton setTitleColor:RGBFormUIColor(0xDEDEDE) forState:UIControlStateNormal];
+    [self.endTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
     [self.endTimeButton addTarget:self action:@selector(endTimeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.whiteContentView addSubview:self.endTimeButton];
+    
+
     
     self.endWeekLable = [[UILabel alloc] initWithFrame:CGRectMake(self.endTimeButton.left+self.endTimeButton.width+5*BiLiWidth, self.beginTimeButton.top, 20*BiLiWidth, self.beginTimeButton.height)];
     self.endWeekLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
     self.endWeekLable.textColor = RGBFormUIColor(0x9A9A9A);
     self.endWeekLable.adjustsFontSizeToFitWidth = YES;
     [self.whiteContentView addSubview:self.endWeekLable];
+    
+    
+    NSDate * date = [NSDate date]; // 获取被选中的时间
+    NSDateFormatter *selectDateFormatter = [[NSDateFormatter alloc] init];
+    selectDateFormatter.dateFormat = @"MM月dd日";
+    NSString * selectData = [selectDateFormatter stringFromDate:date];
+    [self.beginTimeButton setTitle:selectData forState:UIControlStateNormal];
+    [self.endTimeButton setTitle:selectData forState:UIControlStateNormal];
+    self.beginDate = date;
+    self.endDate = date;
+    self.beginWeekLable.text = [NormalUse weekdayStringWithDate:date];
+    self.endWeekLable.text = [NormalUse weekdayStringWithDate:date];
+
     
     UIView * lineView2 = [[UIView alloc] initWithFrame:CGRectMake(25*BiLiWidth, lineView1.top+lineView1.height+37.5*BiLiWidth, 273.5*BiLiWidth, 1)];
     lineView2.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -434,44 +449,43 @@
         self.endDate = select;
     }
 
-    if([self.beginDate isKindOfClass:[NSDate class]] && [self.endDate isKindOfClass:[NSDate class]])
-    {
-    
-        //laterDate 返回较晚的时间
-        if ([[self.beginDate laterDate:self.endDate] isEqualToDate:self.beginDate]) {
-            
-            if (beiginOrEndTimeSelect==0) {
-             
-                self.beginDate = nil;
-            }
-            else
-            {
-                self.endDate = nil;
-            }
-
-            [NormalUse showToastView:@"结束时间不能早于开始时间" view:self.view];
-        }
-        else
-        {
-            if (beiginOrEndTimeSelect==0) {
-             
-                [self.beginTimeButton setTitle:selectData forState:UIControlStateNormal];
-                [self.beginTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-                self.beginWeekLable.text = [NormalUse weekdayStringWithDate:select];
-            }
-            else
-            {
-                [self.endTimeButton setTitle:selectData forState:UIControlStateNormal];
-                [self.endTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
-                self.endWeekLable.text = [NormalUse weekdayStringWithDate:select];
-
-            }
-
-        }
-
-    }
-    else
-    {
+//    if([self.beginDate isKindOfClass:[NSDate class]] && [self.endDate isKindOfClass:[NSDate class]])
+//    {
+//
+//            if ([[self.beginDate laterDate:self.endDate] isEqualToDate:self.beginDate]) {
+//
+//                if (beiginOrEndTimeSelect==0) {
+//
+//                    self.beginDate = nil;
+//                }
+//                else
+//                {
+//                    self.endDate = nil;
+//                }
+//
+//                [NormalUse showToastView:@"结束时间不能早于开始时间" view:self.view];
+//            }
+//        else
+//        {
+//            if (beiginOrEndTimeSelect==0) {
+//
+//                [self.beginTimeButton setTitle:selectData forState:UIControlStateNormal];
+//                [self.beginTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+//                self.beginWeekLable.text = [NormalUse weekdayStringWithDate:select];
+//            }
+//            else
+//            {
+//                [self.endTimeButton setTitle:selectData forState:UIControlStateNormal];
+//                [self.endTimeButton setTitleColor:RGBFormUIColor(0x343434) forState:UIControlStateNormal];
+//                self.endWeekLable.text = [NormalUse weekdayStringWithDate:select];
+//
+//            }
+//
+//        }
+//
+//    }
+//    else
+//    {
         if (beiginOrEndTimeSelect==0) {
          
             [self.beginTimeButton setTitle:selectData forState:UIControlStateNormal];
@@ -486,7 +500,7 @@
 
         }
 
-    }
+//    }
 
     
     
@@ -564,6 +578,20 @@
          return;
 
     }
+    
+    NSDateFormatter *selectDateFormatter1 = [[NSDateFormatter alloc] init];
+    selectDateFormatter1.dateFormat = @"yyyy-MM-dd";
+    NSString * beginStr1 = [selectDateFormatter1 stringFromDate:self.beginDate];
+    NSString * endStr1 = [selectDateFormatter1 stringFromDate:self.endDate];
+    if (![beginStr1 isEqualToString:endStr1]) {
+        
+        if ([[self.beginDate laterDate:self.endDate] isEqualToDate:self.beginDate]) {
+            
+            [NormalUse showToastView:@"结束时间不能早于开始时间" view:self.view];
+            return;
+        }
+    }
+
     if(![NormalUse isValidString:self.beginPriceTF.text])
     {
         [NormalUse showToastView:@"请设置最低价格" view:self.view];
@@ -574,21 +602,22 @@
         [NormalUse showToastView:@"请设置最高价格" view:self.view];
          return;
     }
+    
     NSString * beginPrice = self.beginPriceTF.text;
     NSString * endPrice = self.endPriceTF.text;
-    
+
     if(endPrice.intValue<beginPrice.intValue)
     {
         [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
          return;
     }
     if (![NormalUse isValidString:self.leiXingStr]) {
-        
+
         [NormalUse showToastView:@"请选择小姐类型" view:self.view];
          return;
     }
     if (![NormalUse isValidString:self.xiangMuStr]) {
-        
+
         [NormalUse showToastView:@"请选择服务项目" view:self.view];
          return;
     }
@@ -599,9 +628,9 @@
          return;
 
     }
-    
+
     if (![NormalUse isValidString:self.describleTextView.text]) {
-        
+
         [NormalUse showToastView:@"请填写描述类容" view:self.view];
          return;
     }
