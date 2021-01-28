@@ -12,6 +12,8 @@
 #import "TuiGuangZhuanQianViewController.h"
 #import "JinBiMingXiViewController.h"
 #import "TiXianViewController.h"
+#import "ChatListViewController.h"
+#import "InputMobileViewController.h"
 
 
 @interface MyCenterViewController ()
@@ -142,14 +144,27 @@
             if (official_msgcnt.intValue+active_msgcnt.intValue+review_msgcnt.intValue==0) {
                 
                 self.redPointView.hidden = YES;
+                self.chaKanMessageButtonRedPointView.hidden = YES;
             }
             else
             {
                 self.redPointView.hidden = NO;
+                self.chaKanMessageButtonRedPointView.hidden = NO;
+
             }
-            NSLog(@"%@",responseObject);
         }
     }];
+    
+    int unReadMesNumber = [[RCIMClient sharedRCIMClient] getUnreadCount:@[@(ConversationType_PRIVATE)]];
+    if (unReadMesNumber<=0) {
+
+        self.chatOnlineButtonRedPointView.hidden = YES;
+    }
+    else
+    {
+        self.chatOnlineButtonRedPointView.hidden = NO;
+    }
+
     
     [self xianShiTabBar];
     
@@ -166,10 +181,14 @@
             self.myJieSuoButton.top = self.jingJiRenButton.top+self.jingJiRenButton.height;
             self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
-            self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.chatOnlineButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.chaKanMessageButton.top = self.chatOnlineButton.top+self.chatOnlineButton.height;
+            self.tuiGuangButton.top = self.chaKanMessageButton.top+self.chaKanMessageButton.height;
             self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
-            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
-            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
+            self.bangDingShouJiButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+            self.qieHuanZhangHao.top = self.bangDingShouJiButton.top+self.bangDingShouJiButton.height+20*BiLiWidth;
+//            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+//            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
         }
         else
         {
@@ -177,16 +196,27 @@
             self.myJieSuoButton.top = self.jingJiRenButton.top;
             self.myFaBuButton.top = self.myJieSuoButton.top+self.myJieSuoButton.height;
             self.myKeFuButton.top = self.myFaBuButton.top+self.myFaBuButton.height;
-            self.tuiGuangButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.chatOnlineButton.top = self.myKeFuButton.top+self.myKeFuButton.height;
+            self.chaKanMessageButton.top = self.chatOnlineButton.top+self.chatOnlineButton.height;
+            self.tuiGuangButton.top = self.chaKanMessageButton.top+self.chaKanMessageButton.height;
             self.tianXieYaoQingMaButton.top = self.tuiGuangButton.top+self.tuiGuangButton.height;
-            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
-            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
+            self.bangDingShouJiButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+            self.qieHuanZhangHao.top = self.bangDingShouJiButton.top+self.bangDingShouJiButton.height+20*BiLiWidth;
+
+
+//            self.tiXianButton.top = self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height;
+//            self.jinBiMingXiButton.top = self.tiXianButton.top+self.tiXianButton.height;
 
         }
 
     }
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.jinBiMingXiButton.top+self.jinBiMingXiButton.height+40*BiLiWidth)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.qieHuanZhangHao.top+self.qieHuanZhangHao.height+20*BiLiWidth)];
 
+    [self getUserInfo];
+
+}
+-(void)getUserInfo
+{
     [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
@@ -301,6 +331,25 @@
                 }
                 
             }
+            
+            if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
+
+                self.mobileButton.button_lable.text = [self.userInfo objectForKey:@"mobile"];
+                self.mobileButton.button_lable1.text = @"解绑";
+                self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x00AEFF);
+                self.mobileButton.button_imageView.hidden = YES;
+            }
+            else
+            {
+                self.mobileButton.button_lable.text = @"";
+                self.mobileButton.button_lable1.text = @"";
+                self.mobileButton.button_imageView.hidden = NO;
+                self.mobileButton.button_lable1.left = self.mobileButton.button_lable1.left-50*BiLiWidth-18*BiLiWidth;
+                self.mobileButton.button_lable1.width = self.mobileButton.button_lable1.width+50*BiLiWidth;
+                self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x343434);
+
+            }
+
 
             if([NormalUse isValidString:[self.userInfo objectForKey:@"from_share_code"]])
             {
@@ -312,7 +361,6 @@
 
         }
     }];
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -368,19 +416,19 @@
     [self.mainScrollView addSubview:self.vipImageView];
 
     
-    UIButton * xiaoXiButton = [[UIButton alloc] initWithFrame:CGRectMake(277*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 19*BiLiWidth, 22*BiLiWidth)];
-    [xiaoXiButton setImage:[UIImage imageNamed:@"my_xiaoXi"] forState:UIControlStateNormal];
-    [xiaoXiButton addTarget:self action:@selector(xiaoXiButonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.mainScrollView addSubview:xiaoXiButton];
+//    UIButton * xiaoXiButton = [[UIButton alloc] initWithFrame:CGRectMake(277*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 19*BiLiWidth, 22*BiLiWidth)];
+//    [xiaoXiButton setImage:[UIImage imageNamed:@"my_xiaoXi"] forState:UIControlStateNormal];
+//    [xiaoXiButton addTarget:self action:@selector(xiaoXiButonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.mainScrollView addSubview:xiaoXiButton];
+//    
+//    self.redPointView = [[UIView alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width-4*BiLiWidth, xiaoXiButton.top-4*BiLiWidth, 8*BiLiWidth, 8*BiLiWidth)];
+//    self.redPointView.backgroundColor = [UIColor redColor];
+//    self.redPointView.layer.cornerRadius = 4*BiLiWidth;
+//    self.redPointView.layer.masksToBounds = YES;
+//    [self.mainScrollView addSubview:self.redPointView];
+//    self.redPointView.hidden = YES;
     
-    self.redPointView = [[UIView alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width-4*BiLiWidth, xiaoXiButton.top-4*BiLiWidth, 8*BiLiWidth, 8*BiLiWidth)];
-    self.redPointView.backgroundColor = [UIColor redColor];
-    self.redPointView.layer.cornerRadius = 4*BiLiWidth;
-    self.redPointView.layer.masksToBounds = YES;
-    [self.mainScrollView addSubview:self.redPointView];
-    self.redPointView.hidden = YES;
-    
-    UIButton * sheZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(xiaoXiButton.left+xiaoXiButton.width+27*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 20*BiLiWidth, 22*BiLiWidth)];
+    UIButton * sheZhiButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-30*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 20*BiLiWidth, 22*BiLiWidth)];
     [sheZhiButton setImage:[UIImage imageNamed:@"my_setting"] forState:UIControlStateNormal];
     [sheZhiButton addTarget:self action:@selector(sheZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:sheZhiButton];
@@ -531,8 +579,49 @@
     self.myKeFuButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
     [self.mainScrollView addSubview:self.myKeFuButton];
 
+    self.chatOnlineButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myKeFuButton.top+self.myKeFuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.chatOnlineButton addTarget:self action:@selector(chatOnLineButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.chatOnlineButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.chatOnlineButton.button_imageView.image = [UIImage imageNamed:@"my_chatOnline"];
+    self.chatOnlineButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.chatOnlineButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.chatOnlineButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.chatOnlineButton.button_lable.text = @"在线聊天";
+    self.chatOnlineButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.chatOnlineButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.chatOnlineButton];
     
-    self.tuiGuangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.myKeFuButton.top+self.myKeFuButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    self.chaKanMessageButtonRedPointView = [[UIView alloc] initWithFrame:CGRectMake(112*BiLiWidth, 15*BiLiWidth, 8*BiLiWidth, 8*BiLiWidth)];
+    self.chaKanMessageButtonRedPointView.backgroundColor = [UIColor redColor];
+    self.chaKanMessageButtonRedPointView.layer.cornerRadius = 4*BiLiWidth;
+    self.chaKanMessageButtonRedPointView.layer.masksToBounds = YES;
+    [self.chatOnlineButton addSubview:self.chaKanMessageButtonRedPointView];
+    self.chaKanMessageButtonRedPointView.hidden = YES;
+
+
+    self.chaKanMessageButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.chatOnlineButton.top+self.chatOnlineButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    [self.chaKanMessageButton addTarget:self action:@selector(xiaoXiButonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.chaKanMessageButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.chaKanMessageButton.button_imageView.image = [UIImage imageNamed:@"my_chaKanXiaoXi"];
+    self.chaKanMessageButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.chaKanMessageButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.chaKanMessageButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.chaKanMessageButton.button_lable.text = @"查看消息";
+    self.chaKanMessageButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.chaKanMessageButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.mainScrollView addSubview:self.chaKanMessageButton];
+    
+    self.chaKanMessageButtonRedPointView = [[UIView alloc] initWithFrame:CGRectMake(112*BiLiWidth, 15*BiLiWidth, 8*BiLiWidth, 8*BiLiWidth)];
+    self.chaKanMessageButtonRedPointView.backgroundColor = [UIColor redColor];
+    self.chaKanMessageButtonRedPointView.layer.cornerRadius = 4*BiLiWidth;
+    self.chaKanMessageButtonRedPointView.layer.masksToBounds = YES;
+    [self.chaKanMessageButton addSubview:self.chaKanMessageButtonRedPointView];
+    self.chaKanMessageButtonRedPointView.hidden = YES;
+
+
+    
+    
+    self.tuiGuangButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.chaKanMessageButton.top+self.chaKanMessageButton.height, WIDTH_PingMu, 50*BiLiWidth)];
     [self.tuiGuangButton addTarget:self action:@selector(tuiGuangButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.tuiGuangButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
     self.tuiGuangButton.button_imageView.image = [UIImage imageNamed:@"my_tuiGuang"];
@@ -560,7 +649,54 @@
     self.tianXieYaoQingMaButton.button_imageView1.frame = CGRectMake(self.myJieSuoButton.width-9*BiLiWidth-12*BiLiWidth, (self.myJieSuoButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
     self.tianXieYaoQingMaButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
     [self.mainScrollView addSubview:self.tianXieYaoQingMaButton];
+    
+    self.bangDingShouJiButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height, WIDTH_PingMu, 50*BiLiWidth)];
+    self.bangDingShouJiButton.backgroundColor = [UIColor whiteColor];
+    self.bangDingShouJiButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
+    self.bangDingShouJiButton.button_imageView.image = [UIImage imageNamed:@"my_bangDingTel"];
+    self.bangDingShouJiButton.button_lable.frame = CGRectMake(self.myJieSuoButton.button_imageView.left+self.myJieSuoButton.button_imageView.width+20.5*BiLiWidth, 0, 200*BiLiWidth, self.myJieSuoButton.height);
+    self.bangDingShouJiButton.button_lable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    self.bangDingShouJiButton.button_lable.textColor = RGBFormUIColor(0x333333);
+    self.bangDingShouJiButton.button_lable.text = @"绑定手机号";
+    [self.mainScrollView addSubview:self.bangDingShouJiButton];
+        
+    self.mobileButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-163*BiLiWidth, 0, 150*BiLiWidth, self.bangDingShouJiButton.height)];
+    [self.mobileButton addTarget:self action:@selector(mobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.mobileButton.button_lable.frame = CGRectMake(0, 0, 100*BiLiWidth, self.mobileButton.height);
+    self.mobileButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.mobileButton.button_lable.textColor = RGBFormUIColor(0x343434);
+    self.mobileButton.button_lable.textAlignment = NSTextAlignmentRight;
+    self.mobileButton.button_lable1.frame = CGRectMake(100*BiLiWidth, 0, 50*BiLiWidth, self.mobileButton.height);
+    self.mobileButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x00AEFF);
+    self.mobileButton.button_lable1.textAlignment = NSTextAlignmentRight;
+    self.mobileButton.button_imageView.frame = CGRectMake(self.mobileButton.width-9*BiLiWidth, (self.mobileButton.height-16*BiLiWidth)/2, 9*BiLiWidth, 16*BiLiWidth);
+    self.mobileButton.button_imageView.image = [UIImage imageNamed:@"my_left_jiaoTou"];
+    [self.bangDingShouJiButton addSubview:self.mobileButton];
+    
+    self.qieHuanZhangHao = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-280*BiLiWidth)/2, self.bangDingShouJiButton.top+self.bangDingShouJiButton.height+20*BiLiWidth, 280*BiLiWidth, 40*BiLiWidth)];
+    [self.qieHuanZhangHao addTarget:self action:@selector(qieHuanZhangHaoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollView addSubview:self.qieHuanZhangHao];
+    //渐变设置
+    UIColor *colorOne = RGBFormUIColor(0xFF6B6C);
+    UIColor *colorTwo = RGBFormUIColor(0xFF0A76);
+    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+    gradientLayer1.frame = self.qieHuanZhangHao.bounds;
+    gradientLayer1.cornerRadius = 20*BiLiWidth;
+    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    gradientLayer1.startPoint = CGPointMake(0, 0);
+    gradientLayer1.endPoint = CGPointMake(0, 1);
+    gradientLayer1.locations = @[@0,@1];
+    [self.qieHuanZhangHao.layer addSublayer:gradientLayer1];
+    
+    UILabel * qieHuanZhangHaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.qieHuanZhangHao.width, self.qieHuanZhangHao.height)];
+    qieHuanZhangHaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+    qieHuanZhangHaoLable.textAlignment = NSTextAlignmentCenter;
+    qieHuanZhangHaoLable.textColor = [UIColor whiteColor];
+    qieHuanZhangHaoLable.text = @"切换账号";
+    [self.qieHuanZhangHao addSubview:qieHuanZhangHaoLable];
 
+    
 //    self.tiXianButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height, WIDTH_PingMu, 50*BiLiWidth)];
 //    [self.tiXianButton addTarget:self action:@selector(tiXianButtonClick) forControlEvents:UIControlEventTouchUpInside];
 //    self.tiXianButton.button_imageView.frame = CGRectMake(21*BiLiWidth, (self.myJieSuoButton.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth);
@@ -595,7 +731,7 @@
 
 
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.tianXieYaoQingMaButton.top+self.tianXieYaoQingMaButton.height+40*BiLiWidth)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.qieHuanZhangHao.top+self.qieHuanZhangHao.height+20*BiLiWidth)];
     
 }
 #pragma mark--UIButton
@@ -664,6 +800,14 @@
     [self.navigationController pushViewController:vc animated:YES];
     
 }
+-(void)chatOnLineButtonClick
+{
+    NSArray *displayConversationTypeArray = @[@(ConversationType_PRIVATE)];
+    ChatListViewController * chatListVC = [[ChatListViewController alloc] initWithDisplayConversationTypes:displayConversationTypeArray collectionConversationType:nil];
+//    ChatListViewController * chatListVC = [[ChatListViewController alloc] init];
+    [self.navigationController pushViewController:chatListVC animated:YES];
+    [self yinCangTabbar];
+}
 -(void)tuiGuangButtonClick
 {
     TuiGuangZhuanQianViewController * vc = [[TuiGuangZhuanQianViewController alloc] init];
@@ -671,6 +815,36 @@
     vc.qrcode_url = [self.userInfo objectForKey:@"qrcode_url"];
     vc.kaoBei_content = [self.userInfo objectForKey:@"copy_content"];
     [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)mobileButtonClick
+{
+    if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
+        
+        [HTTPModel jieBangMobile:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                [self getUserInfo];
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+        }];
+    }
+    else
+    {
+        InputMobileViewController * vc = [[InputMobileViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+}
+-(void)qieHuanZhangHaoButtonClick
+{
+    InputMobileViewController * vc = [[InputMobileViewController alloc] init];
+    vc.bangDingOrQieHuan = @"2";
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 -(void)tianXieYaoQingMaButtonClick
 {

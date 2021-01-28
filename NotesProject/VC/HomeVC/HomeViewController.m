@@ -1290,7 +1290,7 @@
     
     self.listButtonArray = [NSMutableArray array];
 //    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"验证榜单",@"验车报告", nil];
-    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"认证女神",nil];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"最新发布",@"红榜推荐",@"认证女神",nil];
 
     float originx = 20*BiLiWidth;
     CGSize size;

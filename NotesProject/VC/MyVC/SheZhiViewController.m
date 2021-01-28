@@ -65,54 +65,55 @@
 {
     [self.mainScrollView removeAllSubviews];
     
-    UIButton * mobileButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 15*BiLiWidth, WIDTH_PingMu, 53*BiLiWidth)];
-    mobileButton.backgroundColor = [UIColor whiteColor];
-    [self.mainScrollView addSubview:mobileButton];
-    
-    UILabel * mobileLable = [[UILabel alloc] initWithFrame:CGRectMake(16*BiLiWidth,0, 100*BiLiWidth, 53*BiLiWidth)];
-    mobileLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
-    mobileLable.textColor = RGBFormUIColor(0x343434);
-    mobileLable.text = @"手机号";
-    [mobileButton addSubview:mobileLable];
+//    UIButton * mobileButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 15*BiLiWidth, WIDTH_PingMu, 53*BiLiWidth)];
+//    mobileButton.backgroundColor = [UIColor whiteColor];
+//    [self.mainScrollView addSubview:mobileButton];
+//
+//    UILabel * mobileLable = [[UILabel alloc] initWithFrame:CGRectMake(16*BiLiWidth,0, 100*BiLiWidth, 53*BiLiWidth)];
+//    mobileLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//    mobileLable.textColor = RGBFormUIColor(0x343434);
+//    mobileLable.text = @"手机号";
+//    [mobileButton addSubview:mobileLable];
+//
+//
+//    self.mobileButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-170*BiLiWidth, 0, 150*BiLiWidth, mobileButton.height)];
+//    [self.mobileButton addTarget:self action:@selector(mobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    self.mobileButton.button_lable.frame = CGRectMake(0, 0, 100*BiLiWidth, self.mobileButton.height);
+//    self.mobileButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.mobileButton.button_lable.textColor = RGBFormUIColor(0x343434);
+//    self.mobileButton.button_lable.textAlignment = NSTextAlignmentRight;
+//    self.mobileButton.button_lable1.frame = CGRectMake(100*BiLiWidth, 0, 50*BiLiWidth, self.mobileButton.height);
+//    self.mobileButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x00AEFF);
+//    self.mobileButton.button_lable1.textAlignment = NSTextAlignmentRight;
+//    self.mobileButton.button_imageView.frame = CGRectMake(self.mobileButton.width-18*BiLiWidth, (self.mobileButton.height-18*BiLiWidth)/2, 18*BiLiWidth, 18*BiLiWidth);
+//    self.mobileButton.button_imageView.image = [UIImage imageNamed:@"btn_back_nr_n"];
+//    [mobileButton addSubview:self.mobileButton];
+//
+//    if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
+//
+//        self.mobileButton.button_lable.text = [self.userInfo objectForKey:@"mobile"];
+//        self.mobileButton.button_lable1.text = @"解绑";
+//        self.mobileButton.button_imageView.hidden = YES;
+//    }
+//    else
+//    {
+//        self.mobileButton.button_lable1.left = self.mobileButton.button_lable1.left-50*BiLiWidth-18*BiLiWidth;
+//        self.mobileButton.button_lable1.width = self.mobileButton.button_lable1.width+50*BiLiWidth;
+//        self.mobileButton.button_lable1.text = @"绑定手机号码";
+//        self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x343434);
+//
+//    }
+
 
     
-    self.mobileButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-170*BiLiWidth, 0, 150*BiLiWidth, mobileButton.height)];
-    [self.mobileButton addTarget:self action:@selector(mobileButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    self.mobileButton.button_lable.frame = CGRectMake(0, 0, 100*BiLiWidth, self.mobileButton.height);
-    self.mobileButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.mobileButton.button_lable.textColor = RGBFormUIColor(0x343434);
-    self.mobileButton.button_lable.textAlignment = NSTextAlignmentRight;
-    self.mobileButton.button_lable1.frame = CGRectMake(100*BiLiWidth, 0, 50*BiLiWidth, self.mobileButton.height);
-    self.mobileButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x00AEFF);
-    self.mobileButton.button_lable1.textAlignment = NSTextAlignmentRight;
-    self.mobileButton.button_imageView.frame = CGRectMake(self.mobileButton.width-18*BiLiWidth, (self.mobileButton.height-18*BiLiWidth)/2, 18*BiLiWidth, 18*BiLiWidth);
-    self.mobileButton.button_imageView.image = [UIImage imageNamed:@"btn_back_nr_n"];
-    [mobileButton addSubview:self.mobileButton];
-    
-    if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
-
-        self.mobileButton.button_lable.text = [self.userInfo objectForKey:@"mobile"];
-        self.mobileButton.button_lable1.text = @"解绑";
-        self.mobileButton.button_imageView.hidden = YES;
-    }
-    else
-    {
-        self.mobileButton.button_lable1.left = self.mobileButton.button_lable1.left-50*BiLiWidth-18*BiLiWidth;
-        self.mobileButton.button_lable1.width = self.mobileButton.button_lable1.width+50*BiLiWidth;
-        self.mobileButton.button_lable1.text = @"绑定手机号码";
-        self.mobileButton.button_lable1.textColor = RGBFormUIColor(0x343434);
-
-    }
-
+//    UIView * zhaoHuiMiMaLineView = [[UIView alloc] initWithFrame:CGRectMake(0, mobileButton.height-1, WIDTH_PingMu, 1)];
+//    zhaoHuiMiMaLineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
+//    [mobileButton addSubview:zhaoHuiMiMaLineView];
 
     
-    UIView * zhaoHuiMiMaLineView = [[UIView alloc] initWithFrame:CGRectMake(0, mobileButton.height-1, WIDTH_PingMu, 1)];
-    zhaoHuiMiMaLineView.backgroundColor = RGBFormUIColor(0xEEEEEE);
-    [mobileButton addSubview:zhaoHuiMiMaLineView];
-
-    
-    UIButton * shouShiButton = [[UIButton alloc] initWithFrame:CGRectMake(0, mobileButton.top+mobileButton.height, WIDTH_PingMu, 53*BiLiWidth)];
+//    UIButton * shouShiButton = [[UIButton alloc] initWithFrame:CGRectMake(0, mobileButton.top+mobileButton.height, WIDTH_PingMu, 53*BiLiWidth)];
+    UIButton * shouShiButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 15*BiLiWidth, WIDTH_PingMu, 53*BiLiWidth)];
     [shouShiButton addTarget:self action:@selector(shouShiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     shouShiButton.backgroundColor = [UIColor whiteColor];
     [self.mainScrollView addSubview:shouShiButton];

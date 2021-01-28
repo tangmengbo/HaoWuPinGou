@@ -30,10 +30,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)Lable_ImageButton  * myJieSuoButton;
 @property(nonatomic,strong)Lable_ImageButton  * myFaBuButton;
 @property(nonatomic,strong)Lable_ImageButton  * myKeFuButton;
+@property(nonatomic,strong)Lable_ImageButton  * chatOnlineButton;
+@property(nonatomic,strong)Lable_ImageButton  * chaKanMessageButton;
 @property(nonatomic,strong)Lable_ImageButton  * tuiGuangButton;
 @property(nonatomic,strong)Lable_ImageButton  * tianXieYaoQingMaButton;
 @property(nonatomic,strong)Lable_ImageButton  * tiXianButton;
-@property(nonatomic,strong)Lable_ImageButton  * jinBiMingXiButton;
+@property(nonatomic,strong)Lable_ImageButton  * bangDingShouJiButton;
+@property(nonatomic,strong)Lable_ImageButton  * mobileButton;
+@property(nonatomic,strong)UIButton * qieHuanZhangHao;
+//@property(nonatomic,strong)Lable_ImageButton  * jinBiMingXiButton;
+
+@property(nonatomic,strong)UIView * chatOnlineButtonRedPointView;
+@property(nonatomic,strong)UIView * chaKanMessageButtonRedPointView;
 
 @property(nonatomic,strong)UIButton * kaiJiangButton;
 
