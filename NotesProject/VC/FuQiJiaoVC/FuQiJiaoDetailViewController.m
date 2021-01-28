@@ -200,7 +200,7 @@
     nickLable.text = nickStr;
     [self.messageContentView addSubview:nickLable];
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-20*BiLiWidth)/2, 20*BiLiWidth, 20*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-30*BiLiWidth)/2, 30*BiLiWidth, 30*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];

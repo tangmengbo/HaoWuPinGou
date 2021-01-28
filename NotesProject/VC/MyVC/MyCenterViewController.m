@@ -406,13 +406,13 @@
     self.nickLable.text = [NormalUse getCurrentUserName];
     
     
-    self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+6.5*BiLiWidth, 150*BiLiWidth, 20*BiLiWidth)];
+    self.messageLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nickLable.left, self.nickLable.top+self.nickLable.height+1.5*BiLiWidth, 150*BiLiWidth, 30*BiLiWidth)];
     self.messageLable.textColor = RGBFormUIColor(0x999999);
     self.messageLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     self.messageLable.text = @"非VIP暂无免费解锁次数";
     [self.mainScrollView addSubview:self.messageLable];
     
-    self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top, 20*BiLiWidth, 20*BiLiWidth)];
+    self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top, 30*BiLiWidth, 30*BiLiWidth)];
     [self.mainScrollView addSubview:self.vipImageView];
 
     

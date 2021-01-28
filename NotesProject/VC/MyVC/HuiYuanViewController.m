@@ -49,7 +49,7 @@
 @property(nonatomic,strong)NSArray * products;
 @property(nonatomic,strong)NSArray * payTypeList;
 @property(nonatomic,strong)NSMutableArray * payTypeButtonArray;
-@property(nonatomic,strong)UIView *zhiFuView;
+@property(nonatomic,strong)UIView * zhiFuView;
 @property(nonatomic,strong)NSString * orderId;
 @property(nonatomic,strong)NSString * huiYuanCoinsStr;
 
@@ -445,6 +445,24 @@
     {
         if([NormalUse isValidArray:self.payTypeList])
         {
+            for (Lable_ImageButton * button in self.payTypeButtonArray) {
+                
+                NSDictionary * info = [self.payTypeList objectAtIndex:button.tag];
+                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                if (self.huiYuanCoinsStr.intValue<=max_valueNumber.intValue) {
+                    button.enabled = YES;
+                    button.button_imageView1.hidden = NO;
+                    button.alpha = 1;
+                }
+                else
+                {
+                    button.enabled = NO;
+                    button.button_imageView1.hidden = YES;
+                    button.alpha = 0.5;
+
+                }
+
+            }
             self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
             [UIView animateWithDuration:0.25 animations:^{
                 
@@ -563,6 +581,26 @@
     {
         if([NormalUse isValidArray:self.payTypeList])
         {
+            for (Lable_ImageButton * button in self.payTypeButtonArray) {
+                
+                NSDictionary * info = [self.payTypeList objectAtIndex:button.tag];
+                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                if (self.huiYuanCoinsStr.intValue<=max_valueNumber.intValue) {
+                    button.enabled = YES;
+                    button.button_imageView1.hidden = NO;
+                    button.alpha = 1;
+
+                }
+                else
+                {
+                    button.enabled = NO;
+                    button.button_imageView1.hidden = YES;
+                    button.alpha = 0.5;
+
+                }
+
+            }
+
             self.zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
             [UIView animateWithDuration:0.25 animations:^{
                 
@@ -752,11 +790,18 @@
             self.products = [responseObject objectForKey:@"products"];
             self.payTypeList = [responseObject objectForKey:@"pay_type"];
             self.zhiFuView.alpha = 1;
-            if ([NormalUse isValidArray:self.payTypeList]) {
-                NSDictionary * info = [self.payTypeList objectAtIndex:0];
-                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
-                self.max_value = [NSString stringWithFormat:@"%d",max_valueNumber.intValue];
-            }
+//            if ([NormalUse isValidArray:self.payTypeList]) {
+//                NSDictionary * info = [self.payTypeList objectAtIndex:0];
+//                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                self.max_value = @"0";
+                for (NSDictionary * info in self.payTypeList) {
+                    
+                    NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                    if (self.max_value.intValue<max_valueNumber.intValue) {
+                        self.max_value = [NSString stringWithFormat:@"%d",max_valueNumber.intValue];
+                    }
+                }
+//            }
         }
         else
         {

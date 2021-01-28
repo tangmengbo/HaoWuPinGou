@@ -192,7 +192,7 @@
     [self.mainScrollView addSubview:self.messageContentView];
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
-    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 11*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
+    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 5*BiLiWidth, 200*BiLiWidth, 30*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     nickLable.textColor = RGBFormUIColor(0x343434);
     nickLable.text = nickStr;
@@ -210,7 +210,7 @@
 
     
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top, 20*BiLiWidth, 20*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top, 30*BiLiWidth, 30*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];

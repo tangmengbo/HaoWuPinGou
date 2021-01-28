@@ -640,7 +640,7 @@
     NSString * beginStr = [selectDateFormatter stringFromDate:self.beginDate];
     NSString * endStr = [selectDateFormatter stringFromDate:self.endDate];
 
-    if(self.auth_vip.intValue==3)
+    if(self.auth_vip.intValue!=0)
     {
         [self xianShiLoadingView:@"提交中..." view:self.view];
         NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];

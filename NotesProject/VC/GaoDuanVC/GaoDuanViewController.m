@@ -389,7 +389,7 @@
 }
 -(void)shaiXuanButtonClick
 {
-    if (self.contentScrollView.contentOffset.x/WIDTH_PingMu==3) {
+    if (self.contentScrollView.contentOffset.x/WIDTH_PingMu==2) {
         
         ForeignCityListViewController * vc = [[ForeignCityListViewController alloc] init];
         vc.delegate = self;
