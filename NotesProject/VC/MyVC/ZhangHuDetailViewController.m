@@ -205,7 +205,7 @@
         if (status==1) {
             
             self.products = [responseObject objectForKey:@"products"];
-            self.payTypeList = [responseObject objectForKey:@"pay_type"];
+//            self.payTypeList = [responseObject objectForKey:@"pay_type"];
             [self initChongZhiItemView];
         }
         else
@@ -213,6 +213,23 @@
             //[NormalUse showToastView:msg view:self.view];
             [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
         }
+    }];
+    
+    [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.payTypeList = responseObject;//[responseObject objectForKey:@"pay_type"];
+            if(![NormalUse isValidArray:self.payTypeList])
+            {
+                [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+            }
+        }
+        else
+        {
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+        }
+
     }];
     
 }

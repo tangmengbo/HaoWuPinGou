@@ -782,7 +782,7 @@
         }
     }];
 
-
+/*
     [HTTPModel getZFJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
@@ -808,6 +808,37 @@
             //[NormalUse showToastView:msg view:self.view];
             [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
         }
+    }];
+ */
+    [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.payTypeList = responseObject;//[responseObject objectForKey:@"pay_type"];
+            if(![NormalUse isValidArray:self.payTypeList])
+            {
+                [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+            }
+            else
+            {
+                self.zhiFuView.alpha = 1;
+                self.max_value = @"0";
+                for (NSDictionary * info in self.payTypeList) {
+                    
+                    NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                    if (self.max_value.intValue<max_valueNumber.intValue) {
+                        self.max_value = [NSString stringWithFormat:@"%d",max_valueNumber.intValue];
+                    }
+                }
+
+            }
+
+        }
+        else
+        {
+            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+        }
+
     }];
 }
 -(void)setYongJiuVipItem
