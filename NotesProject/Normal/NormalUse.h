@@ -81,6 +81,7 @@
 +(NSString*)uuid;
 
 +(UILabel * )showToastView:(NSString *)message view:(UIView *)view;
++(void)showNewToastView:(NSString *)message view:(UIView *)view;
 
 + (NSString *)intervalSinceNow: (NSDate *) theDate;
 //获取设备型号

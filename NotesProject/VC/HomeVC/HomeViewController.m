@@ -1075,6 +1075,7 @@
 }
 -(void)viewDidAppear:(BOOL)animated
 {
+    
 //    for (int i=0; i<9; i++) {
 //        
 //        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(40*i, 50, 30, 30)];

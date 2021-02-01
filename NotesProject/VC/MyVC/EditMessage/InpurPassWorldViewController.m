@@ -101,16 +101,17 @@
             [NormalUse showToastView:@"更换成功" view:self.view];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                
-                NSArray *temArray = self.navigationController.viewControllers;
-                
-                for(UIViewController *temVC in temArray)
-                {
-                    if ([temVC isKindOfClass:[SheZhiViewController class]])
-                    {
-                        [self.navigationController popToViewController:temVC animated:YES];
-                    }
-                }
-
+                [self.navigationController popToRootViewControllerAnimated:YES];
+//                NSArray *temArray = self.navigationController.viewControllers;
+//
+//                for(UIViewController *temVC in temArray)
+//                {
+//                    if ([temVC isKindOfClass:[SheZhiViewController class]])
+//                    {
+//                        [self.navigationController popToViewController:temVC animated:YES];
+//                    }
+//                }
+//
                 
             });
 

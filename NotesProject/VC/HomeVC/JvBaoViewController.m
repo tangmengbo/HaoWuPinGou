@@ -381,11 +381,11 @@
                     if (status==1) {
                         
                         [self.navigationController popViewControllerAnimated:YES];
-                        [NormalUse showToastView:@"投诉成功" view:[NormalUse getCurrentVC].view];
+                        [NormalUse showNewToastView:@"投诉成功" view:[NormalUse getCurrentVC].view];
                     }
                     else
                     {
-                        [NormalUse showToastView:msg view:self.view];
+                        [NormalUse showNewToastView:msg view:self.view];
                     }
                 }];
             }

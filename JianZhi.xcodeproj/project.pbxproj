@@ -827,9 +827,9 @@
 		5F26510924FE45BD00171684 /* VideoRecord */ = {
 			isa = PBXGroup;
 			children = (
+				5F26510C24FE45BD00171684 /* NSString+Hash.h */,
 				5F26510A24FE45BD00171684 /* NSString+Hash.m */,
 				5F26510B24FE45BD00171684 /* RAFileManager.h */,
-				5F26510C24FE45BD00171684 /* NSString+Hash.h */,
 				5F26510D24FE45BD00171684 /* RAFileManager.m */,
 			);
 			path = VideoRecord;

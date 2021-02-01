@@ -1197,12 +1197,12 @@
                     if (status==1) {
                         
                         [self.navigationController popViewControllerAnimated:YES];
-                        [NormalUse showToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
+                        [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
                     }
                     else
                     {
                         
-                        [NormalUse showToastView:msg view:self.view];
+                        [NormalUse showNewToastView:msg view:self.view];
                     }
                 }];
             }

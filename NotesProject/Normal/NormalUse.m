@@ -497,7 +497,7 @@
 
 #pragma mark - time
 
-+(UILabel * )showToastView:(NSString *)message view:(UIView *)view;
++(UILabel * )showToastView:(NSString *)message view:(UIView *)view
 {
     
     UIView * bottomAlphaView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -576,7 +576,32 @@
     
     return tipLable;
 }
++(void)showNewToastView:(NSString *)message view:(UIView *)view
+{
+    
+    UIImageView  * bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-260)/2, (HEIGHT_PingMu-60)/2, 260, 60)];
+    bottomImageView.image = [UIImage imageNamed:@"toast_bottom"];
+    [view addSubview:bottomImageView];
+    
+    
+    UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bottomImageView.width-20, bottomImageView.height)];
+    tipLable.textColor = [UIColor whiteColor];
+    tipLable.font = [UIFont systemFontOfSize:15];
+    tipLable.numberOfLines = 3;
+    tipLable.textAlignment = NSTextAlignmentCenter;
+    tipLable.text = message;
+    [bottomImageView addSubview:tipLable];
+    
 
+    [UIView animateWithDuration:3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+
+        bottomImageView.alpha = 0;
+
+    } completion:^(BOOL finished) {
+
+        [bottomImageView removeFromSuperview];
+    }];
+}
 //发布时间与当前时间的间隔
 + (NSString *)intervalSinceNow: (NSDate *) theDate
 {

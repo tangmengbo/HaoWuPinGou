@@ -58,7 +58,7 @@
     
     [self.autoLabel removeFromSuperview];
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
-    self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
     [self.mainScrollView addSubview:self.autoLabel];
@@ -129,7 +129,7 @@
     }];
 
     
-    JYCarousel *scrollLunBo = [[JYCarousel alloc] initWithFrame:CGRectMake(0, 0,WIDTH_PingMu,WIDTH_PingMu) configBlock:^JYConfiguration *(JYConfiguration *carouselConfig) {
+    JYCarousel *scrollLunBo = [[JYCarousel alloc] initWithFrame:CGRectMake(0, 30,WIDTH_PingMu,WIDTH_PingMu) configBlock:^JYConfiguration *(JYConfiguration *carouselConfig) {
         carouselConfig.pageContollType = MiddlePageControl;
         carouselConfig.pageTintColor = [UIColor whiteColor];
         carouselConfig.currentPageTintColor = [UIColor lightGrayColor];
@@ -182,7 +182,7 @@
     [self.autoLabel removeFromSuperview];
     
     self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
-    self.autoLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
     [self.mainScrollView addSubview:self.autoLabel];
@@ -210,7 +210,7 @@
 
     
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top, 30*BiLiWidth, 30*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-30*BiLiWidth)/2, 30*BiLiWidth, 30*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];

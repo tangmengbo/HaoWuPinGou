@@ -820,17 +820,30 @@
 {
     if ([NormalUse isValidString:[self.userInfo objectForKey:@"mobile"]]) {
         
-        [HTTPModel jieBangMobile:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                [self getUserInfo];
-            }
-            else
-            {
-                [NormalUse showToastView:msg view:self.view];
-            }
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"是否确定解除绑定此手机号" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
         }];
+        UIAlertAction* sureAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [HTTPModel jieBangMobile:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                
+                if (status==1) {
+                    
+                    [self getUserInfo];
+                }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+                }
+            }];
+
+        }];
+
+        [alert addAction:cancleAction];
+        [alert addAction:sureAction];
+        [self presentViewController:alert animated:YES completion:nil];
+
     }
     else
     {
