@@ -428,6 +428,8 @@
         NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
         if (auth_nomal.intValue==1)
         {
+            self.nvShenFaTieOrChaXiaoErFaTie = @"0";
+
             [self faTieButtonClick];
         }
         else

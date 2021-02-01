@@ -412,11 +412,16 @@
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pickRootViewTap)];
     [self.pickRootView addGestureRecognizer:tapGesture];
     
-    self.datePickView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, HEIGHT_PingMu-162, WIDTH_PingMu, 162)];
+    self.datePickView = [[UIDatePicker alloc] init];
     self.datePickView.datePickerMode=UIDatePickerModeDate;
+    if (@available(iOS 14.0, *))
+    {
+        self.datePickView.preferredDatePickerStyle = UIDatePickerStyleWheels;
+    }
+    //设置frame要放在设置model和style后边否则不生效
+    self.datePickView.frame = CGRectMake(0, HEIGHT_PingMu-162, WIDTH_PingMu, 162);
     [self.pickRootView addSubview:self.datePickView];
     self.datePickView.maximumDate = [NSDate date];
-    
     NSDate * currentDate = [NSDate date];
      [self.datePickView setDate:currentDate animated:YES];//设置滚动到的时间
         

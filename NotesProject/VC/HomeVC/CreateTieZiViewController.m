@@ -1219,18 +1219,24 @@
         if (status==1) {
             
             [self.photoPathArray addObject:[responseObject objectForKey:@"filename"]];
+            self->uploadImageIndex = self->uploadImageIndex+1;
+            if (self->uploadImageIndex<self.photoArray.count) {
+                
+                [self uploadImage];
 
-        }
-        self->uploadImageIndex = self->uploadImageIndex+1;
-        if (self->uploadImageIndex<self.photoArray.count) {
-            
-            [self uploadImage];
+            }
+            else
+            {
+                self->uploadImageIndex = 0;
+                [self getImagePathId];
+            }
+
 
         }
         else
         {
-            self->uploadImageIndex = 0;
-            [self getImagePathId];
+            [self yinCangLoadingView];
+            [NormalUse showToastView:msg view:self.view];
         }
         
     }];
