@@ -99,10 +99,28 @@
 }
 -(void)rightClick
 {
-    JvBaoViewController * vc = [[JvBaoViewController alloc] init];
-    vc.post_id = self.girl_id;
-    vc.role = @"2";
-    [self.navigationController pushViewController:vc animated:YES];
+    NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+    if([is_unlock isKindOfClass:[NSNumber class]])
+    {
+        if (is_unlock.intValue==1) {
+
+            JvBaoViewController * vc = [[JvBaoViewController alloc] init];
+            vc.post_id = self.girl_id;
+            vc.role = @"2";
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+        else
+        {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"解锁资源后才可以投诉该帖~" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                }];
+            [alert addAction:cancleAction];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+        }
+    }
+
 }
 
 -(void)initTopMessageView
