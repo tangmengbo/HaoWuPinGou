@@ -41,7 +41,7 @@
     
     [self initTopStepView];
     
-    [HTTPModel faTieAlsoFree:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel faTieAlsoFree:[[NSDictionary alloc]initWithObjectsAndKeys:@"couple",@"is_role", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             

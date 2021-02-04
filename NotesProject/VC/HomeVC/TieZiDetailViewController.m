@@ -46,9 +46,10 @@
 -(void)rightClick
 {
     NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+    
     if([is_unlock isKindOfClass:[NSNumber class]])
     {
-        if (is_unlock.intValue==1) {
+        if (is_unlock.intValue==1 || alsoUnlockSuccess) {
 
             JvBaoViewController * vc = [[JvBaoViewController alloc] init];
             vc.post_id = self.post_id;
@@ -536,6 +537,7 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
+            self->alsoUnlockSuccess = YES;
             NSDictionary * contactInfo = responseObject;
             
             if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])

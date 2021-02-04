@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SanDaJiaoSeDetailViewController : MainBaseViewController
+{
+    BOOL alsoUnlockSuccess;
+}
+
 
 @property(nonatomic,strong)NSString * type;//3女神 4外围 5全球陪玩
 

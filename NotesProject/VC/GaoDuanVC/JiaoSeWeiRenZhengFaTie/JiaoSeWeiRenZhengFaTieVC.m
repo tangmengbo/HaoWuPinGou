@@ -38,8 +38,8 @@
     [self.mainScrollView addGestureRecognizer:tap];
     
     [self initTopStepView];
-    
-    [HTTPModel faTieAlsoFree:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+
+    [HTTPModel faTieAlsoFree:[[NSDictionary alloc]initWithObjectsAndKeys:@"throle",@"is_role", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             

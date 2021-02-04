@@ -46,6 +46,7 @@
         
         [dic setObject:@"1" forKey:@"is_agent"];
     }
+    [dic setObject:@"normal" forKey:@"is_role"];
     [HTTPModel faTieAlsoFree:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {

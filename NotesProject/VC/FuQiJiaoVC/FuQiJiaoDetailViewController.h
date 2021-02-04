@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FuQiJiaoDetailViewController : MainBaseViewController
+{
+    BOOL alsoUnlockSuccess;
+}
+
 
 @property(nonatomic,strong)NSString * couple_id;
 
