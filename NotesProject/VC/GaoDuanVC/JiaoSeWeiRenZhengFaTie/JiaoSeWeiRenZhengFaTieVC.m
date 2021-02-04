@@ -38,8 +38,22 @@
     [self.mainScrollView addGestureRecognizer:tap];
     
     [self initTopStepView];
+    
+    NSDictionary * dic;//renZhengType;//1女神 2外围女 3全球空降
+    if ([@"1" isEqualToString:self.renZhengType]) {
+        
+        dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"role_goddess",@"is_role", nil];
+    }
+    else if ([@"2" isEqualToString:self.renZhengType])
+    {
+        dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"role_peripheral",@"is_role", nil];
+    }
+    else
+    {
+        dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"role_global",@"is_role", nil];
+    }
 
-    [HTTPModel faTieAlsoFree:[[NSDictionary alloc]initWithObjectsAndKeys:@"throle",@"is_role", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel faTieAlsoFree:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
             
