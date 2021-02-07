@@ -416,7 +416,7 @@
         [headerView addSubview:chengJiaoLable];
         
         NSNumber * deal_num = [self.dianPuInfo objectForKey:@"deal_num"];
-        if ([post_num isKindOfClass:[NSNumber class]]) {
+        if ([deal_num isKindOfClass:[NSNumber class]]) {
             
             NSString * chengJiaoStr = [NSString stringWithFormat:@"成交 %d",deal_num.intValue];
             NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:chengJiaoStr];

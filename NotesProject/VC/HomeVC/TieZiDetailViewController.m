@@ -74,12 +74,16 @@
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
     
-    [self.autoLabel removeFromSuperview];
-    self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
-    self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
-    self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
-    self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
-    [self.mainScrollView addSubview:self.autoLabel];
+    if (self.is_active.intValue!=1) {
+
+        [self.autoLabel removeFromSuperview];
+        self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
+        self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+        self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
+        self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
+        [self.mainScrollView addSubview:self.autoLabel];
+
+    }
 
 
 }
@@ -96,6 +100,19 @@
         if (status==1) {
             
             self.tieZiInfo = responseObject;
+            
+            self.is_active = [self.tieZiInfo objectForKey:@"is_active"];
+            if (![self.is_active isKindOfClass:[NSNumber class]]) {
+                
+                self.is_active = [NSNumber numberWithInt:0];
+            }
+            if (self.is_active.intValue==1) {
+                self.rightButton.hidden = YES;
+            }
+            else
+            {
+                self.rightButton.hidden = NO;
+            }
             [self initTopMessageView];
         }
         else
@@ -146,8 +163,17 @@
         
     }];
 
+    float topHeight;
+    if (self.is_active.intValue==1) {
+       
+        topHeight = 0;
+    }
+    else
+    {
+        topHeight = 30;
+    }
     
-    JYCarousel *scrollLunBo = [[JYCarousel alloc] initWithFrame:CGRectMake(0, 30,WIDTH_PingMu,WIDTH_PingMu) configBlock:^JYConfiguration *(JYConfiguration *carouselConfig) {
+    JYCarousel *scrollLunBo = [[JYCarousel alloc] initWithFrame:CGRectMake(0, topHeight,WIDTH_PingMu,WIDTH_PingMu) configBlock:^JYConfiguration *(JYConfiguration *carouselConfig) {
         carouselConfig.pageContollType = MiddlePageControl;
         carouselConfig.pageTintColor = [UIColor whiteColor];
         carouselConfig.currentPageTintColor = [UIColor lightGrayColor];
@@ -197,13 +223,16 @@
 
     [scrollLunBo startCarouselWithArray:self.images];
 
-    [self.autoLabel removeFromSuperview];
-    
-    self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
-    self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
-    self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
-    self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
-    [self.mainScrollView addSubview:self.autoLabel];
+    if (self.is_active.intValue!=1) {
+        
+        [self.autoLabel removeFromSuperview];
+        self.autoLabel = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 30)];
+        self.autoLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+        self.autoLabel.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
+        self.autoLabel.textColor = RGBFormUIColor(0xFF0101);//默认白色
+        [self.mainScrollView addSubview:self.autoLabel];
+
+    }
     
     self.messageContentView  = [[UIView alloc] initWithFrame:CGRectMake(0, scrollLunBo.height-60*BiLiWidth, WIDTH_PingMu, 325*BiLiWidth-21*BiLiWidth-40*BiLiWidth)];
     self.messageContentView.backgroundColor = [UIColor whiteColor];
@@ -216,6 +245,10 @@
     nickLable.text = nickStr;
     nickLable.numberOfLines = 0;
     [self.messageContentView addSubview:nickLable];
+    if (self.is_active.intValue==1) {
+        
+        nickLable.textColor = RGBFormUIColor(0xFF0101);
+    }
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:nickStr];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -257,9 +290,12 @@
         vImageView.width = 0;
     }
     
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+2*BiLiWidth, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
-//    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, vImageView.top+5*BiLiWidth, 20*BiLiWidth*269/66, 20*BiLiWidth)];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
+
+    if (self.is_active.intValue==1) {
+        guanFangRenZhengImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+    }
     
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
     if ([auth_nomal isKindOfClass:[NSNumber class]]) {
@@ -443,6 +479,13 @@
     self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
     self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_post_coin]];
+    if(self.is_active.intValue==1)
+    {
+        NSString * unlock_active_post_coin = [NormalUse getJinBiStr:@"unlock_active_post_coin"];
+
+        self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_active_post_coin]];
+
+    }
     [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.messageContentView addSubview:self.jieSuoButton];
     
@@ -488,22 +531,46 @@
         }
     }
     
-    self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
-    self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
-    self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
-    self.tipLable.textColor = RGBFormUIColor(0xFF0101);
-    self.tipLable.adjustsFontSizeToFitWidth = YES;
-    self.tipLable.numberOfLines = 2;
-    [self.messageContentView addSubview:self.tipLable];
-    
-    self.messageContentView.height = self.tipLable.top+self.tipLable.height+10*BiLiWidth;
-    
-    //某个角圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.messageContentView.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.messageContentView.layer.mask = maskLayer;
+    if(self.is_active.intValue==1)
+    {
+        self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
+//        self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
+//        self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+//        self.tipLable.textColor = RGBFormUIColor(0xFF0101);
+//        self.tipLable.adjustsFontSizeToFitWidth = YES;
+//        self.tipLable.numberOfLines = 2;
+        [self.messageContentView addSubview:self.tipLable];
+        
+        self.messageContentView.height = self.tipLable.top+10*BiLiWidth;
+        
+        //某个角圆角
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.messageContentView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.messageContentView.layer.mask = maskLayer;
+
+    }
+    else
+    {
+        self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
+        self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
+        self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        self.tipLable.textColor = RGBFormUIColor(0xFF0101);
+        self.tipLable.adjustsFontSizeToFitWidth = YES;
+        self.tipLable.numberOfLines = 2;
+        [self.messageContentView addSubview:self.tipLable];
+        
+        self.messageContentView.height = self.tipLable.top+self.tipLable.height+10*BiLiWidth;
+        
+        //某个角圆角
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.messageContentView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.messageContentView.layer.mask = maskLayer;
+
+    }
 
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
     
@@ -530,7 +597,16 @@
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
     
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    [info setObject:@"2" forKey:@"type_id"];
+    if (self.is_active.intValue==1) {
+        
+        [info setObject:@"8" forKey:@"type_id"];
+
+    }
+    else
+    {
+        [info setObject:@"2" forKey:@"type_id"];
+
+    }
     [info setObject:self.post_id forKey:@"related_id"];
     [HTTPModel unlockMobile:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         

@@ -205,8 +205,23 @@
         if (status==1) {
             
             self.products = [responseObject objectForKey:@"products"];
-//            self.payTypeList = [responseObject objectForKey:@"pay_type"];
-            [self initChongZhiItemView];
+            [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                
+                if (status==1) {
+                    
+                    self.payTypeList = responseObject;//[responseObject objectForKey:@"pay_type"];
+                    if(![NormalUse isValidArray:self.payTypeList])
+                    {
+                        [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+                    }
+                }
+                else
+                {
+                    [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+                }
+                [self initChongZhiItemView];
+            }];
+
         }
         else
         {
@@ -215,22 +230,6 @@
         }
     }];
     
-    [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            self.payTypeList = responseObject;//[responseObject objectForKey:@"pay_type"];
-            if(![NormalUse isValidArray:self.payTypeList])
-            {
-                [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
-            }
-        }
-        else
-        {
-            [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
-        }
-
-    }];
     
 }
 -(void)initChongZhiItemView
@@ -467,17 +466,6 @@
             url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"pay_url"]];
             url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
 
-//            if ([@"1" isEqualToString:[payTypeInfo objectForKey:@"pay_channel"]]) {
-//
-//             url   =  [NSString stringWithFormat:@"%@/appi/mlpay/ddyOrdering",HTTP_REQUESTURL];
-//                           url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
-//            }
-//            else
-//            {
-//                url   =  [NSString stringWithFormat:@"%@/appi/mlpay/dd2Ordering",HTTP_REQUESTURL];
-//                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
-//            }
-           
             
             NSURL *cleanURL = [NSURL URLWithString:url];
             [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {

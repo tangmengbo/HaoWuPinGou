@@ -52,6 +52,11 @@
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
         
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView.hidden = YES;
+        
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 4*BiLiWidth, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 17*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
@@ -95,6 +100,7 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info cellType:(CellType)cellType
 {
+    
     if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
         //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
@@ -193,6 +199,24 @@
         
     }
     
+    NSNumber * is_active = [info objectForKey:@"is_active"];
+    if ([is_active isKindOfClass:[NSNumber class]]) {
+        
+        if (is_active.intValue==1) {
+            
+            self.guanFangImageView.hidden = NO;
+            self.faBuTimeLable.hidden = YES;
+            self.titleLable.textColor = RGBFormUIColor(0xFF0101);
+        }
+        else
+        {
+            self.guanFangImageView.hidden = YES;
+            self.faBuTimeLable.hidden = NO;
+            self.titleLable.textColor = RGBFormUIColor(0x333333);
+
+        }
+    }
+
     
     
 }

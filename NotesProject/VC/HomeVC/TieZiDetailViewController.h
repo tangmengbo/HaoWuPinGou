@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * lianXieFangShiStr;//联系方式
 
+@property(nonatomic,strong)NSNumber * is_active;//是否官方发帖
+
+
 
 @end
 

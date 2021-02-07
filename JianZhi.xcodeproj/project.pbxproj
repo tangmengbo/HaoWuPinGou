@@ -1853,7 +1853,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = JianZhi;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1896,7 +1896,7 @@
 					"$(PROJECT_DIR)/NotesProject/Library/RongCloud/IMLib",
 					"$(PROJECT_DIR)/NotesProject/Library/Meiqia-SDK-files/MQChatViewController/Vendors/MLAudioRecorder/amr_en_de/lib",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hwpg.cn;
 				PRODUCT_NAME = JianZhi;
 				PROVISIONING_PROFILE_SPECIFIER = "";
