@@ -757,6 +757,15 @@
     }
 
     [self.jiBenXinXiContentView addSubview:ageLable];
+    
+    if (self.is_active.intValue==1) {
+        
+        shuLiangImageView.hidden = YES;
+        shuLiangLableLable.hidden = YES;
+        ageImageView.frame = shuLiangImageView.frame;
+        ageLable.frame = shuLiangLableLable.frame;
+    }
+
 
     //项目
     UIImageView * xiangMuImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, ageImageView.top+ageImageView.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
