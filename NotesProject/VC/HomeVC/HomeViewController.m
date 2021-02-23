@@ -301,7 +301,7 @@
         [_nvShenShaiXuanView setPaiXuSelect:^(NSString * _Nonnull field) {
             
             wself.nvShenField = field;
-            [wself firstGetNvShenList];
+            [wself firstGetHuiYuanZhuanQuList];
             
         }];
     }
@@ -369,8 +369,8 @@
         self.nvShenRenZhengButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         self.nvShenRenZhengButton.button_lable.textColor = RGBFormUIColor(0x343434);
         self.nvShenRenZhengButton.button_lable.adjustsFontSizeToFitWidth = YES;
-        self.nvShenRenZhengButton.button_lable.text = @"女神认证";
-        [self.nvShenRenZhengButton addTarget:self action:@selector(nvShenRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        self.nvShenRenZhengButton.button_lable.text = @"会员专区认证";
+        [self.nvShenRenZhengButton addTarget:self action:@selector(huiYuanRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:self.nvShenRenZhengButton];
         
         self.nvShenRenZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(self.nvShenRenZhengButton.left, self.renZhengButton.top+self.renZhengButton.height+5, self.nvShenRenZhengButton.width, 12*BiLiWidth)];
@@ -389,7 +389,7 @@
         nvShenFaBuXinXiButton.button_lable.font = [UIFont systemFontOfSize:12*BiLiWidth];
         nvShenFaBuXinXiButton.button_lable.textColor = RGBFormUIColor(0x343434);
         nvShenFaBuXinXiButton.button_lable.adjustsFontSizeToFitWidth = YES;
-        nvShenFaBuXinXiButton.button_lable.text = @"女神发帖";
+        nvShenFaBuXinXiButton.button_lable.text = @"会员专区发帖";
         nvShenFaBuXinXiButton.tag = 1;
         [nvShenFaBuXinXiButton addTarget:self action:@selector(faTieButtonClick1:) forControlEvents:UIControlEventTouchUpInside];
         [kuangImageView addSubview:nvShenFaBuXinXiButton];
@@ -417,6 +417,7 @@
         self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
     }];
 }
+
 -(void)faTieButtonClick1:(UIButton *)button
 {
     NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
@@ -448,29 +449,71 @@
     }
     else
     {
-        NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
-        if (auth_goddess.intValue==1) {
+        if (self.auth_vip.intValue!=3&&self.auth_vip_cetf.intValue!=1) {
             
-            JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
-            vc.renZhengType = @"1";
-            vc.renZhengStatus = 1;
-            [self.navigationController pushViewController:vc animated:YES];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"只有完成会员认证或成为蛟龙炮神会员才可以发布会员专区的帖子哦，认证通过后帖子会得到官方的认证标示" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction * huiyuan = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+                vc.renZhengType = @"3";
+                [self.navigationController pushViewController:vc animated:YES];
 
+            }];
+            UIAlertAction* kaiTongPaoShen = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                vc.info = self.userInfo;
+                vc.vipListInfo = self.vipListInfo;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }];
+            if(self.auth_vip.intValue==0)
+            {
+                [alert addAction:kaiTongPaoShen];
+            }
+            else
+            {
+                [alert addAction:huiyuan];
+                [alert addAction:kaiTongPaoShen];
+            }
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            
         }
         else
         {
-            self.nvShenFaTieOrChaXiaoErFaTie = @"1";
-
-            self.chaXiaoErFaTieRenZhengView.hidden = NO;
-            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
-            [UIView animateWithDuration:0.5 animations:^{
-                
-                self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
-            }];
+            CreateTieZiViewController * vc = [[CreateTieZiViewController alloc] init];
+            vc.from_flg = @"2";
+            [self.navigationController pushViewController:vc animated:YES];
+            self.chaXiaoErFaTieRenZhengView.hidden = YES;
 
         }
-
     }
+//    else
+//    {
+//        NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+//        if (auth_goddess.intValue==1) {
+//
+//            JiaoSeWeiRenZhengFaTieVC * vc = [[JiaoSeWeiRenZhengFaTieVC alloc] init];
+//            vc.renZhengType = @"1";
+//            vc.renZhengStatus = 1;
+//            [self.navigationController pushViewController:vc animated:YES];
+//
+//        }
+//        else
+//        {
+//            self.nvShenFaTieOrChaXiaoErFaTie = @"1";
+//
+//            self.chaXiaoErFaTieRenZhengView.hidden = NO;
+//            self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformMakeScale(0.001, 0.001);
+//            [UIView animateWithDuration:0.5 animations:^{
+//
+//                self.chaXiaoErFaTieRenZhengView.transform = CGAffineTransformIdentity;
+//            }];
+//
+//        }
+//
+//    }
     
 
     [UIView animateWithDuration:0.5 animations:^{
@@ -480,6 +523,7 @@
 
     
 }
+
 -(UIView *)chaXiaoErFaTieRenZhengView
 {
     if (!_chaXiaoErFaTieRenZhengView) {
@@ -872,22 +916,48 @@
     }
     return _sanDaJiaSeFaTieRenZhengView;
 }
--(void)nvShenRenZhengButtonClick
+-(void)huiYuanRenZhengButtonClick
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
-    }];
+    
+    self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
 
-    self.sanDaJiaSeFaTieRenZhengView.hidden = NO;
+    if(self.auth_vip.intValue==0)
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您当前未开通任何会员，开通会员后才可以进行会员专区认证" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                vc.info = self.userInfo;
+                vc.vipListInfo = self.vipListInfo;
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }];
+        [alert addAction:cancleAction];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"3";
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+//    [UIView animateWithDuration:0.5 animations:^{
+//
+//        self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+//    }];
+//
+//    self.sanDaJiaSeFaTieRenZhengView.hidden = NO;
 
 }
 -(void)nvShenRenZheng
 {
-    self.sanDaJiaSeFaTieRenZhengView.hidden = YES;
-    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
-    vc.renZhengType =@"1";
-    [self.navigationController pushViewController:vc animated:YES];
+    
+//    self.sanDaJiaSeFaTieRenZhengView.hidden = YES;
+//    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+//    vc.renZhengType =@"1";
+//    [self.navigationController pushViewController:vc animated:YES];
 
 }
 -(void)quXiaoNvShenRenZheng
@@ -920,6 +990,7 @@
                 //auth_goddess":1,//女神认证：有
                 //auth_global":0,//全球陪玩:无
                 //auth_peripheral":0//外围认证：无
+                //auth_vip_cetf 会员是否已认证（只有会员身份才能认证该身份）
                 
                 NSDictionary * info = responseObject;
 
@@ -963,14 +1034,22 @@
                 }
 
                 
-                NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
-                if (auth_goddess.intValue==1) {
+                
+                self.auth_vip_cetf = [userRoleDic objectForKey:@"auth_vip_cetf"];
+                self.auth_vip = [NormalUse defaultsGetObjectKey:@"UserAlsoVip"];
+                //蛟龙炮神自动完成会员认证
+                if (self.auth_vip_cetf.intValue==1||self.auth_vip.intValue==3) {
                     
                     self.nvShenRenZhengButton.enabled = NO;
                     self.nvShenRenZhengLable.text = @"(已认证)";
+                    if (self.auth_vip.intValue==3) {
+                        
+                        self.nvShenRenZhengLable.text = @"(蛟龙炮神免认证)";
+
+                    }
 
                 }
-                else if (auth_goddess.intValue==2)
+                else if (self.auth_vip_cetf.intValue==2)
                 {
                     self.nvShenRenZhengButton.enabled = NO;
                     self.nvShenRenZhengLable.text = @"(审核中)";
@@ -1105,7 +1184,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [HTTPModel huiYuanMiaoShuXinXi:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if (status==1) {
+            
+            self.vipListInfo =  responseObject;
+        }
+    }];
+    [HTTPModel getUserInfo:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+       
+        if (status==1) {
+            self.userInfo = responseObject;
+            self.auth_vip = [self.userInfo objectForKey:@"auth_vip"];
+
+        }
+    }];
+
         
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewLsit) name:@"cityChangeReloadMessageNotification" object:nil];
 
@@ -1293,7 +1387,7 @@
     
     self.listButtonArray = [NSMutableArray array];
 //    NSArray * array = [[NSArray alloc] initWithObjects:@"最新上传",@"红榜推荐",@"验证榜单",@"验车报告", nil];
-    NSArray * array = [[NSArray alloc] initWithObjects:@"最新发布",@"红榜推荐",@"认证女神",nil];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"最新发布",@"红榜推荐",@"会员专区",nil];
 
     float originx = 20*BiLiWidth;
     CGSize size;
@@ -1390,7 +1484,7 @@
     }
     [self firstGetTieZiList];
     [self firstGetRedList];
-    [self firstGetNvShenList];
+    [self firstGetHuiYuanZhuanQuList];
 //    [self firstGetYanZhengBangDanList];
 //    [self firstGetYanCheBaoGaoList];
     
@@ -1525,7 +1619,7 @@
     }];
 
 }
--(void)firstGetNvShenList
+-(void)firstGetHuiYuanZhuanQuList
 {
     NSNumber * pageIndexNumber = [NSNumber numberWithInt:1];
     [self.pageIndexArray replaceObjectAtIndex:2 withObject:pageIndexNumber];
@@ -1537,8 +1631,8 @@
         [dic setObject:[NormalUse getobjectForKey:self.nvShenField] forKey:@"field"];
     }
 
-
-    [HTTPModel getSanDaGirlList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    
+    [HTTPModel getVipZhuanQuList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         
         if (status==1) {
@@ -1730,7 +1824,7 @@
     }
     else if(index==2)
     {
-        [self firstGetNvShenList];
+        [self firstGetHuiYuanZhuanQuList];
        // [self firstGetYanZhengBangDanList];
     }
     else if(index==3)
@@ -1874,7 +1968,7 @@
             [dic setObject:[NormalUse getobjectForKey:self.nvShenField] forKey:@"field"];
         }
 
-        [HTTPModel getSanDaGirlList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        [HTTPModel getVipZhuanQuList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             
             if (status==1) {
@@ -1902,9 +1996,6 @@
                     
                     [self setMainScrollViewContentSize:tableView];
                 }
-                
-                
-                
             }
             else
             {
@@ -2204,6 +2295,7 @@
         {
             cell = [[HomeNvShenCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableIdentifier];
         }
+        cell.cellType = VipRenZhengFaTie;
         cell.backgroundColor = [UIColor clearColor];
         NSMutableArray * sourcerray;
         sourcerray = [self.dataSourceArray objectAtIndex:2];
@@ -2271,12 +2363,31 @@
         NSDictionary * info = [sourcerray objectAtIndex:indexPath.row];
         if (tableView.tag==2) {
             
-            NSNumber * girlId = [info objectForKey:@"id"];
-            SanDaJiaoSeDetailViewController * vc = [[SanDaJiaoSeDetailViewController alloc] init];
-            vc.girl_id = [NSString stringWithFormat:@"%d",girlId.intValue];
-            vc.type = @"3";
-            [self.navigationController pushViewController:vc animated:YES];
+            if(self.auth_vip.intValue==0)
+            {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                        vc.info = self.userInfo;
+                        vc.vipListInfo = self.vipListInfo;
+                        [self.navigationController pushViewController:vc animated:YES];
 
+                    }];
+                [alert addAction:cancleAction];
+                [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+            }
+            else
+            {
+                VipRenZhengTieZeDetailVC * vc = [[VipRenZhengTieZeDetailVC alloc] init];
+                NSNumber * idNumber = [info objectForKey:@"id"];
+                if ([idNumber isKindOfClass:[NSNumber class]]) {
+                    vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+                }
+                [self.navigationController pushViewController:vc animated:YES];
+
+            }
         }
         else
         {
@@ -2285,7 +2396,6 @@
             if ([idNumber isKindOfClass:[NSNumber class]]) {
                 
                 vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-
             }
             [self.navigationController pushViewController:vc animated:YES];
 

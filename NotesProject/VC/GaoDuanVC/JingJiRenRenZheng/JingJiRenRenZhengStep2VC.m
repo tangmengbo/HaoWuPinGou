@@ -113,10 +113,16 @@
         
         jinBiStr = [NSString stringWithFormat:@"%@ 金币",[NormalUse getJinBiStr:@"normal_auth_coin"]];
     }
-    else
+    else if([@"2" isEqualToString:type])
     {
         jinBiStr = [NSString stringWithFormat:@"%@ 金币",[NormalUse getJinBiStr:@"agent_auth_coin"]];
 
+    }
+    else
+    {
+        jinBiStr = [NSString stringWithFormat:@"%@ 金币",[NormalUse getJinBiStr:@"normal_vip_coin"]];
+
+        NSLog(@"认证会员所需金币");
     }
     
      
@@ -206,31 +212,70 @@
 {
     
     [self xianShiLoadingView:@"提交中..." view:self.view];
-    [HTTPModel jingJiRenRenZheng:self.info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-        
-        if (status==1) {
-            
-            JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
+    NSString * type = [self.info objectForKey:@"type"];
 
-        }
-        else
-        {
-            [self yinCangLoadingView];
-            if(status==11402)
-            {
-                ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
-                [view initData];
-                [self.view addSubview:view];
+    if([@"3" isEqualToString:type])
+    {
+        //会员认证
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
+        [dic removeObjectForKey:@"type"];
+        [HTTPModel vipRenRenZheng:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
 
             }
             else
             {
-                [NormalUse showToastView:msg view:self.view];
+                [self yinCangLoadingView];
+                if(status==11402)
+                {
+                    ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+                    [view initData];
+                    [self.view addSubview:view];
+
+                }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+
+                }
+            }
+        }];
+        
+    }
+    else
+    {
+        //经纪人 茶小二认证
+        [HTTPModel jingJiRenRenZheng:self.info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
 
             }
-        }
-    }];
+            else
+            {
+                [self yinCangLoadingView];
+                if(status==11402)
+                {
+                    ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+                    [view initData];
+                    [self.view addSubview:view];
+
+                }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+
+                }
+            }
+        }];
+
+    }
 }
 
 @end

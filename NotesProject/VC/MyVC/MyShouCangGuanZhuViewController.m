@@ -486,7 +486,6 @@
             vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
             [self.navigationController pushViewController:vc animated:YES];
             
-            
         }
         else if(type_id.intValue==2)
         {
@@ -523,10 +522,15 @@
             [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
             
         }
-        
-        
-        
-        
+        else if (type_id.intValue==6)
+        {
+            VipRenZhengTieZeDetailVC * vc = [[VipRenZhengTieZeDetailVC alloc] init];
+            NSNumber * idNumber = [info objectForKey:@"post_id"];
+            if ([idNumber isKindOfClass:[NSNumber class]]) {
+                vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
     else if (tableView.tag==1)
     {

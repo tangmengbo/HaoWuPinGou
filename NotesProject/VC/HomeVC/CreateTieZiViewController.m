@@ -42,11 +42,18 @@
     [self initTopStepView];
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    if ([@"1" isEqualToString:self.from_flg]) {
+    if ([@"2" isEqualToString:self.from_flg]) {
         
-        [dic setObject:@"1" forKey:@"is_agent"];
+        [dic setObject:@"role_cvip" forKey:@"is_role"];
     }
-    [dic setObject:@"normal" forKey:@"is_role"];
+    else
+    {
+        if ([@"1" isEqualToString:self.from_flg]) {
+            [dic setObject:@"1" forKey:@"is_agent"];
+        }
+        [dic setObject:@"normal" forKey:@"is_role"];
+    }
+    
     [HTTPModel faTieAlsoFree:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -875,7 +882,7 @@
     
     
     
-
+/*
     BOOL alsoKouFei = NO;//是否需要扣费
     if ([@"1" isEqualToString:self.from_flg]) {
         
@@ -890,7 +897,7 @@
             alsoKouFei = YES;
         }
     }
-    else
+    else if([@"0" isEqualToString:self.from_flg])
     {
         NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];
         NSString * defaultsKey = [UserRole stringByAppendingString:token];
@@ -909,6 +916,11 @@
         }
         
     }
+    else
+    {
+        
+    }
+ */
     
     //if (!alsoKouFei)
     if (self.is_free.intValue==1) {
@@ -1293,20 +1305,40 @@
                 [dicInfo setObject:[NormalUse getobjectForKey:self.videoShouZhenPathId] forKey:@"v_first_frames"];
                 [dicInfo setObject:self.imagePathId forKey:@"images"];
                 [dicInfo setObject:self.xiangQingTextView.text forKey:@"decription"];
-                [dicInfo setObject:self.from_flg forKey:@"from_flg"];
-                
-                [HTTPModel faBuTieZi:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-                   
-                    if (status==1) {
-                        
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
-                    }
-                    else
-                    {
-                        [NormalUse showNewToastView:msg view:self.view];
-                    }
-                }];
+                if ([@"2" isEqualToString:self.from_flg]) {
+                                        
+                    [HTTPModel vipRenZhengFaTie:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                       
+                        if (status==1) {
+                            
+                            [self.navigationController popViewControllerAnimated:YES];
+                            [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
+                        }
+                        else
+                        {
+                            [NormalUse showNewToastView:msg view:self.view];
+                        }
+                    }];
+
+                }
+                else
+                {
+                    [dicInfo setObject:self.from_flg forKey:@"from_flg"];
+                    
+                    [HTTPModel faBuTieZi:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                       
+                        if (status==1) {
+                            
+                            [self.navigationController popViewControllerAnimated:YES];
+                            [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
+                        }
+                        else
+                        {
+                            [NormalUse showNewToastView:msg view:self.view];
+                        }
+                    }];
+
+                }
             }
 
         }];

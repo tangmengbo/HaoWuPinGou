@@ -77,6 +77,7 @@
         self.fuWuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.fuWuLable.textColor = RGBFormUIColor(0x999999);
         [self.contentView addSubview:self.fuWuLable];
+        
 
         self.pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.fuWuLable.top+self.fuWuLable.height+10*BiLiWidth, 51*BiLiWidth, 11*BiLiWidth)];
         self.pingFenLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
@@ -84,6 +85,7 @@
         self.pingFenLable.text = @"综合评分: ";
         [self.contentView addSubview:self.pingFenLable];
         
+
         self.pingFenStarView = [[UIView alloc] initWithFrame:CGRectMake(self.pingFenLable.left+self.pingFenLable.width+3.5*BiLiWidth, self.pingFenLable.top-1*BiLiWidth, 72*BiLiWidth, 12*BiLiWidth)];
         [self.contentView addSubview:self.pingFenStarView];
 
@@ -207,12 +209,24 @@
             self.guanFangImageView.hidden = NO;
             self.faBuTimeLable.hidden = YES;
             self.titleLable.textColor = RGBFormUIColor(0xFF0101);
+            self.leiXingLable.textColor = RGBFormUIColor(0xFF0101);
+            self.diQuLable.textColor = RGBFormUIColor(0xFF0101);
+            self.fuWuLable.textColor = RGBFormUIColor(0xFF0101);
+            self.pingFenLable.textColor = RGBFormUIColor(0xFF0101);
+            self.xiaoFeiLable.textColor = RGBFormUIColor(0xFF0101);
+
         }
         else
         {
             self.guanFangImageView.hidden = YES;
             self.faBuTimeLable.hidden = NO;
             self.titleLable.textColor = RGBFormUIColor(0x333333);
+            self.leiXingLable.textColor = RGBFormUIColor(0x999999);
+            self.diQuLable.textColor = RGBFormUIColor(0x999999);
+            self.fuWuLable.textColor = RGBFormUIColor(0x999999);
+            self.pingFenLable.textColor = RGBFormUIColor(0x999999);
+            self.xiaoFeiLable.textColor = RGBFormUIColor(0x999999);
+
 
         }
     }

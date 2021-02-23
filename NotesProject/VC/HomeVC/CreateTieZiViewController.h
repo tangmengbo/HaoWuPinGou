@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     int maxVideoSelected;
     int uploadVideoIndex;
 }
-//1：经纪人发布到店铺的帖子 0默认普通帖子
+//1：经纪人发布到店铺的帖子 0默认普通帖子 2认证会员发帖
 @property(nonatomic,strong)NSString * from_flg;
 
 @property(nonatomic,strong)UIButton * xinXiButton;

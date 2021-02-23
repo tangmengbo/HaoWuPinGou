@@ -37,13 +37,21 @@
     NSString * defaultsKey = [UserRole stringByAppendingString:token];
     NSDictionary * userRoleDic = [NormalUse defaultsGetObjectKey:defaultsKey];
     NSNumber * auth_nomal = [userRoleDic objectForKey:@"auth_nomal"];
-    if (auth_nomal.intValue!=1) {
+    
+    if ([@"2" isEqualToString:self.from_flg]) {
         
-        tipLable.text = @"您当前是未认证用户，发布帖子需要支付相应费用";
+        self.publish_post_coin = [NormalUse getJinBiStr:@"post_vip_coin"];
 
     }
-    
-    self.publish_post_coin = [NormalUse getJinBiStr:@"publish_post_coin"];
+    else
+    {
+        self.publish_post_coin = [NormalUse getJinBiStr:@"publish_post_coin"];
+        if (auth_nomal.intValue!=1) {
+            
+            tipLable.text = @"您当前是未认证用户，发布帖子需要支付相应费用";
+
+        }
+    }
     
     UILabel * jinBiLable = [[UILabel alloc] initWithFrame:CGRectMake(0, tipLable.top+tipLable.height+54*BiLiWidth, WIDTH_PingMu, 21*BiLiWidth)];
     jinBiLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
@@ -113,26 +121,28 @@
     [nextButton addSubview:self.tiJiaoLable];
 
     
-    if (auth_nomal.intValue!=1) {
+    if (![@"2" isEqualToString:self.from_flg]) {
         
-        UILabel * tipsLable = [[UILabel alloc] initWithFrame:CGRectMake(50*BiLiWidth, nextButton.top+nextButton.height+15*BiLiWidth, WIDTH_PingMu-50*BiLiWidth*2, 30*BiLiWidth)];
-        tipsLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        tipsLable.textColor = RGBFormUIColor(0xFF002A);
-        tipsLable.numberOfLines = 2;
-        tipsLable.userInteractionEnabled = YES;
-        [self.view addSubview:tipsLable];
-        
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quRenZheng)];
-        [tipsLable addGestureRecognizer:tap];
+        if (auth_nomal.intValue!=1) {
+            
+            UILabel * tipsLable = [[UILabel alloc] initWithFrame:CGRectMake(50*BiLiWidth, nextButton.top+nextButton.height+15*BiLiWidth, WIDTH_PingMu-50*BiLiWidth*2, 30*BiLiWidth)];
+            tipsLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+            tipsLable.textColor = RGBFormUIColor(0xFF002A);
+            tipsLable.numberOfLines = 2;
+            tipsLable.userInteractionEnabled = YES;
+            [self.view addSubview:tipsLable];
+            
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quRenZheng)];
+            [tipsLable addGestureRecognizer:tap];
 
-        
-        NSMutableAttributedString * str1 = [[NSMutableAttributedString alloc] initWithString:@"*注：未认证用户发布帖子不会显示【官方认证】标识，若您想获得标识请先进行认证。去认证"];
-        [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(str1.length-3, 3)];
-        tipsLable.attributedText = str1;
+            
+            NSMutableAttributedString * str1 = [[NSMutableAttributedString alloc] initWithString:@"*注：未认证用户发布帖子不会显示【官方认证】标识，若您想获得标识请先进行认证。去认证"];
+            [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(str1.length-3, 3)];
+            tipsLable.attributedText = str1;
+
+        }
 
     }
-
-
 
 }
 -(void)nextButtonClick
@@ -504,20 +514,41 @@
                 [dicInfo setObject:[NormalUse getobjectForKey:self.videoShouZhenPathId] forKey:@"v_first_frames"];
                 [dicInfo setObject:self.imagePathId forKey:@"images"];
                 [dicInfo setObject:self.decription forKey:@"decription"];
-                [dicInfo setObject:self.from_flg forKey:@"from_flg"];
                 
-                [HTTPModel faBuTieZi:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-                   
-                    if (status==1) {
+                if ([@"2" isEqualToString:self.from_flg]) {
+                                        
+                    [HTTPModel vipRenZhengFaTie:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                         
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                        [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
-                    }
-                    else
-                    {
-                        [NormalUse showNewToastView:msg view:self.view];
-                    }
-                }];
+                        if (status==1) {
+                            
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                            [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
+                        }
+                        else
+                        {
+                            [NormalUse showNewToastView:msg view:self.view];
+                        }
+                    }];
+
+                }
+                else
+                {
+                    [dicInfo setObject:self.from_flg forKey:@"from_flg"];
+                    
+                    [HTTPModel faBuTieZi:dicInfo callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+                       
+                        if (status==1) {
+                            
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                            [NormalUse showNewToastView:@"信息已提交，等待管理员审核" view:[NormalUse getCurrentVC].view];
+                        }
+                        else
+                        {
+                            [NormalUse showNewToastView:msg view:self.view];
+                        }
+                    }];
+
+                }
             }
 
         }];

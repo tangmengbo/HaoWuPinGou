@@ -463,8 +463,8 @@
     [self.topNavView addSubview:citySelectButton];
 
     self.listButtonArray = [NSMutableArray array];
-//    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
-    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"外围空降",@"全球陪玩", nil];
+    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"认证女神",@"外围空降",@"全球陪玩", nil];
+//    NSArray * array = [[NSArray alloc] initWithObjects:@"经纪人",@"外围空降",@"全球陪玩", nil];
     float originx = 20*BiLiWidth;
     CGSize size;
     for (int i=0; i<array.count; i++) {
@@ -530,16 +530,16 @@
     self.mainTableView.mj_footer = mjFooter;
 
     
-//    nvShenListVC = [[NvShenListViewController alloc] init];
-//    nvShenListVC.view.frame = CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, self.contentScrollView.height);
-//    [self.contentScrollView addSubview:nvShenListVC.view];
+    nvShenListVC = [[NvShenListViewController alloc] init];
+    nvShenListVC.view.frame = CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, self.contentScrollView.height);
+    [self.contentScrollView addSubview:nvShenListVC.view];
     
     waiWeiVC = [[WaiWeiListViewController alloc] init];
-    waiWeiVC.view.frame = CGRectMake(WIDTH_PingMu, 0, WIDTH_PingMu, self.contentScrollView.height);
+    waiWeiVC.view.frame = CGRectMake(WIDTH_PingMu*2, 0, WIDTH_PingMu, self.contentScrollView.height);
     [self.contentScrollView addSubview:waiWeiVC.view];
 
     peiWanVC = [[PeiWanListViewController alloc] init];
-    peiWanVC.view.frame = CGRectMake(WIDTH_PingMu*2, 0, WIDTH_PingMu, self.contentScrollView.height);
+    peiWanVC.view.frame = CGRectMake(WIDTH_PingMu*3, 0, WIDTH_PingMu, self.contentScrollView.height);
     [self.contentScrollView addSubview:peiWanVC.view];
 
 
@@ -1042,13 +1042,13 @@
     
     
     
-//    UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
-//    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
-//    [button2 addTarget:self action:@selector(nvShenRenZhengButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [fenLeiScrollView addSubview:button2];
+    UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(nvShenRenZhengButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [fenLeiScrollView addSubview:button2];
     
     
-    UIButton * button3 = [[UIButton alloc] initWithFrame:CGRectMake(button1.left+button1.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
+    UIButton * button3 = [[UIButton alloc] initWithFrame:CGRectMake(button2.left+button2.width+5.5*BiLiWidth, 0, 147*BiLiWidth, 57*BiLiWidth)];
     [button3 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_waiWei"] forState:UIControlStateNormal];
     [button3 addTarget:self action:@selector(kongJiangButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [fenLeiScrollView addSubview:button3];
@@ -1098,27 +1098,27 @@
                 }
             }
             
-//            NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
-//            
-//            if([auth_goddess isKindOfClass:[NSNumber class]])
-//            {
-//                button2.tag = auth_goddess.intValue;
-//                if (auth_goddess.intValue==1) {
-//                    
-//                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nvShenYiRenZheng"] forState:UIControlStateNormal];
-//
-//                }
-//                else if (auth_goddess.intValue==2)
-//                {
-//                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
-//
-//                }
-//                else
-//                {
-//                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
-//
-//                }
-//            }
+            NSNumber * auth_goddess = [userRoleDic objectForKey:@"auth_goddess"];
+            
+            if([auth_goddess isKindOfClass:[NSNumber class]])
+            {
+                button2.tag = auth_goddess.intValue;
+                if (auth_goddess.intValue==1) {
+                    
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nvShenYiRenZheng"] forState:UIControlStateNormal];
+
+                }
+                else if (auth_goddess.intValue==2)
+                {
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
+
+                }
+                else
+                {
+                    [button2 setBackgroundImage:[UIImage imageNamed:@"gaoDuan_nuShenRenZheng"] forState:UIControlStateNormal];
+
+                }
+            }
             
             NSNumber * auth_peripheral = [userRoleDic objectForKey:@"auth_peripheral"];
             if([auth_peripheral isKindOfClass:[NSNumber class]])

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UIButton * faBuYanZhengButton;
+@property(nonatomic,strong)UIImageView * guanFangImageView;
 @property(nonatomic,strong)UILabel * titleLable;
 @property(nonatomic,strong)UILabel * faBuTimeLable;
 @property(nonatomic,strong)UILabel * leiXingLable;

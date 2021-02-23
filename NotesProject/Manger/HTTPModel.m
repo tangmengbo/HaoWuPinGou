@@ -1887,7 +1887,44 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
         callback(-1, nil, NET_ERROR_MSG);
     }];
 }
+//会员认证
++(void)vipRenRenZheng:(NSDictionary *_Nullable)parameter
+             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url = [NSString stringWithFormat:@"%@/appi/vipzone/auth_role",HTTP_REQUESTURL];;
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
 
+}
 //三大认证申请接口
 +(void)sanDaRenZheng:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
@@ -2000,6 +2037,42 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
            callback(-1, nil, NET_ERROR_MSG);
        }];
 
+}
++(void)vipRenZhengFaTie:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/vipzone/post",HTTP_REQUESTURL];
+    
+    [HTTPModel POST:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSString * jsonStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@",jsonStr);
+        
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(-1, nil, NET_ERROR_MSG);
+    }];
 }
 //发布帖子
 +(void)faBuTieZi:(NSDictionary *_Nullable)parameter
@@ -2356,7 +2429,41 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
     }];
 
 }
+//vipzone/index 获取会员专区列表
++(void)getVipZhuanQuList:(NSDictionary *_Nullable)parameter
+               callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback
+{
+    NSString *url =  [NSString stringWithFormat:@"%@/appi/vipzone/index",HTTP_REQUESTURL];
+    
+    [HTTPModel GET:url parameters:parameter progress:^(NSProgress * progress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSNumber * code = [dict objectForKey:@"code"];
+        if (code.intValue==1) {
+            
+            if ([dict valueForKey:@"data"]) {
+                
+                callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
+            }
+            
+        }
+        else
+        {
+            callback(code.intValue, nil, [dict objectForKey:@"info"]);
+            
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        callback(error.code, nil, error.domain);
+        
+    }];
 
+}
 //女神/外围/全球列表
 +(void)getSanDaGirlList:(NSDictionary *_Nullable)parameter
                callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback

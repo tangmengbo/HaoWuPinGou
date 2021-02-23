@@ -38,6 +38,12 @@
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
         
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-16*269/66*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView.hidden = YES;
+
+        
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, 190*BiLiWidth, 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
         self.titleLable.textColor = RGBFormUIColor(0x333333);
@@ -86,7 +92,6 @@
 {
     if ([[info objectForKey:@"images"] isKindOfClass:[NSString class]]) {
         
-//        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]]];
         [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
     }
@@ -95,13 +100,22 @@
         NSArray * images = [info objectForKey:@"images"];
         if ([NormalUse isValidArray:images]) {
             
-//            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
     }
     
-    
+    NSNumber * post_type = [info objectForKey:@"post_type"];//2会员贴 1 普通贴
+    if (post_type.intValue==2) {
+        
+        self.guanFangImageView.hidden = NO;
+    }
+    else
+    {
+        self.guanFangImageView.hidden = YES;
+
+    }
+
         
     CGSize size = [NormalUse setSize:[info objectForKey:@"friendly_date"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
     self.faBuTimeLable.left = self.headerImageView.width-size.width-5*BiLiWidth;

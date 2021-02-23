@@ -31,6 +31,12 @@
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
         [self.contentView addSubview:self.headerImageView];
         
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView.hidden = YES;
+
+        
         self.faBuYanZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-14*BiLiWidth, self.headerImageView.top, 72*BiLiWidth, 24*BiLiWidth)];
         self.faBuYanZhengButton.layer.cornerRadius = 12*BiLiWidth;
         self.faBuYanZhengButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
@@ -105,6 +111,16 @@
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
+    }
+    NSNumber * post_type = [info objectForKey:@"post_type"];//2会员贴 1 普通贴
+    if (post_type.intValue==2) {
+        
+        self.guanFangImageView.hidden = NO;
+    }
+    else
+    {
+        self.guanFangImageView.hidden = YES;
+
     }
     
     NSNumber * is_report = [info objectForKey:@"is_report"];

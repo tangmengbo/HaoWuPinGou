@@ -1028,11 +1028,26 @@
     else if (tableView.tag==1)
     {
         NSDictionary * info = [self.tieZiArray objectAtIndex:indexPath.row];
-        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-        NSNumber * idNumber = [info objectForKey:@"id"];
-        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
-        vc.avatarUrl = [info objectForKey:@"images"];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSNumber * post_type = [info objectForKey:@"post_type"];//2会员贴 1 普通贴
+        if (post_type.intValue==2) {
+
+            VipRenZhengTieZeDetailVC * vc = [[VipRenZhengTieZeDetailVC alloc] init];
+            NSNumber * idNumber = [info objectForKey:@"id"];
+            if ([idNumber isKindOfClass:[NSNumber class]]) {
+                vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+        else
+        {
+            TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+            NSNumber * idNumber = [info objectForKey:@"id"];
+            vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            vc.avatarUrl = [info objectForKey:@"images"];
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
 
     }
     else if (tableView.tag==2)

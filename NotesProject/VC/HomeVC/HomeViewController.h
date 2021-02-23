@@ -10,6 +10,7 @@
 #import "HomeShaiXuanView.h"
 #import "HomeNvShenCell.h"
 #import "HomeNvShenShaiXuanView.h"
+#import "VipRenZhengTieZeDetailVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIView * sanDaJiaSeFaTieRenZhengView;
 
 @property(nonatomic,strong)NSString * nvShenFaTieOrChaXiaoErFaTie;//0 茶小二发帖 1 女神发帖
+
+@property(nonatomic,strong)NSNumber * auth_vip_cetf;
+@property(nonatomic,strong)NSNumber * auth_vip;
+@property(nonatomic,strong)NSDictionary * vipListInfo;
+@property(nonatomic,strong)NSDictionary * userInfo;
 
 @end
 

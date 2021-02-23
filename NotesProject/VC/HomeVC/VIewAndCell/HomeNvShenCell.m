@@ -44,6 +44,12 @@
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
         [self.contentView addSubview:self.headerImageView];
         
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView.hidden = YES;
+
+        
         self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
         self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.faBuTimeLable.textColor = RGBFormUIColor(0xF6BC61);
@@ -95,7 +101,18 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
-    self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+    if (self.cellType==VipRenZhengFaTie) {
+        
+        self.guanFangImageView.hidden = NO;
+        self.faBuTimeLable.hidden = YES;
+        
+    }
+    else
+    {
+        self.faBuTimeLable.hidden = NO;
+        self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+
+    }
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[info objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
     
 //    NSString * imageUrl = [NSString stringWithFormat:@"https://xcypzp.com/upload/202101201455/110000/32821/test%d.jpg",index];

@@ -21,6 +21,8 @@ typedef enum {
     YanZhengBangDan,
     
     HeiDianBaoGuang,
+    
+    VipRenZhengFaTie,
 
 } CellType;
 

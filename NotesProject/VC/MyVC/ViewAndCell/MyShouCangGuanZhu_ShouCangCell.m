@@ -31,11 +31,6 @@
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
         [self.contentView addSubview:self.headerImageView];
         
-//        self.faBuYanZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-14*BiLiWidth, self.headerImageView.top, 72*BiLiWidth, 24*BiLiWidth)];
-//        self.faBuYanZhengButton.layer.cornerRadius = 12*BiLiWidth;
-//        self.faBuYanZhengButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
-//        [self.faBuYanZhengButton addTarget:self action:@selector(faBuYanZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
-//        [self addSubview:self.faBuYanZhengButton];
         
         self.faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 65*BiLiWidth, 16*BiLiWidth)];
         self.faBuTimeLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
@@ -44,6 +39,20 @@
         self.faBuTimeLable.textAlignment = NSTextAlignmentCenter;
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
+
+        
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-16*269/66*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
+        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView.hidden = YES;
+
+        
+//        self.faBuYanZhengButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-14*BiLiWidth, self.headerImageView.top, 72*BiLiWidth, 24*BiLiWidth)];
+//        self.faBuYanZhengButton.layer.cornerRadius = 12*BiLiWidth;
+//        self.faBuYanZhengButton.titleLabel.font = [UIFont systemFontOfSize:11*BiLiWidth];
+//        [self.faBuYanZhengButton addTarget:self action:@selector(faBuYanZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:self.faBuYanZhengButton];
+        
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 0, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 15*BiLiWidth)];
         self.titleLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
@@ -127,7 +136,16 @@
 -(void)contentViewSetData:(NSDictionary *)info alsoDelete:(BOOL)alsoDelete
 {
     self.info = info;
-    
+    NSNumber * type_id = [info objectForKey:@"type_id"];//6会员贴 1 普通贴
+    if(type_id.intValue==6)
+    {
+        
+        self.guanFangImageView.hidden = NO;
+    }
+    else
+    {
+        self.guanFangImageView.hidden = YES;
+    }
     if (alsoDelete) {
         
         self.alsoDeleteButton.hidden = NO;

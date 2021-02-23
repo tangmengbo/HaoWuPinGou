@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign)BOOL  alsoYanZheng;
 @property(nonatomic,strong)UIImageView * headerImageView;
+@property(nonatomic,strong)UIImageView * guanFangImageView;
+
 @property(nonatomic,strong)UILabel * titleLable;
 
 @property(nonatomic,strong)UIImageView * statusImageView;
