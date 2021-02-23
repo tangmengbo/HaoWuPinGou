@@ -130,7 +130,10 @@
     }
     [self.view addSubview:self.mainScrollView];
     
-    
+    UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+    [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
+    [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:chatButton];
     
 }
 -(void)initTopMessageView
@@ -292,18 +295,15 @@
     
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, vImageView.top+5*BiLiWidth, 20*BiLiWidth*269/66, 20*BiLiWidth)];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
-
-//    if (self.is_active.intValue==1) {
-        guanFangRenZhengImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
-//    }
     
+    //是否经过官方认证
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
     if ([auth_nomal isKindOfClass:[NSNumber class]]) {
         
         if (auth_nomal.intValue==1) {
             
             guanFangRenZhengImageView.width = 56*BiLiWidth;
-            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
+            guanFangRenZhengImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
 
 
         }
@@ -341,47 +341,80 @@
         }
     }
 
-    UIView * guangTangTipView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
-    guangTangTipView.backgroundColor = [UIColor greenColor];
+    UIImageView * guangTangTipView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
     [self.messageContentView addSubview:guangTangTipView];
+    
+    //是否经过官方认证
+    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+        
+        if (auth_nomal.intValue==1) {
+            guangTangTipView.frame = CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 321*BiLiWidth*230/965);
+            guangTangTipView.image = [UIImage imageNamed:@"huiYuanTie_tip"];
+
+        }
+        else
+        {
+            guangTangTipView.frame = CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 111*BiLiWidth);
+            guangTangTipView.image = [UIImage imageNamed:@"vipTieZi_weiRenZheng"];
+        }
+    }
 
     
-    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, guangTangTipView.top+guangTangTipView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
-    [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
+    UIImageView * jieSuoTipImageView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, guangTangTipView.top+guangTangTipView.height+19*BiLiWidth, 321*BiLiWidth, 68*BiLiWidth)];
+    jieSuoTipImageView.image = [UIImage imageNamed:@"vipTieZi_jieSuoBG"];
+    [self.messageContentView addSubview:jieSuoTipImageView];
     
-    self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
-    self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    self.jieSuoButton.button_lable.numberOfLines =2;
-    self.jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFE1B0);
-    self.jieSuoButton.button_lable.text = [NSString stringWithFormat:@"预付%@金币可以抵扣嫖资",[NormalUse getJinBiStr:@"unlock_vpost_coin"]];
-    self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
-    self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
-    self.jieSuoButton.button_lable1.text = @"会员专享预约";
-    [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, guangTangTipView.top+guangTangTipView.height+19*BiLiWidth, 321*BiLiWidth, 68*BiLiWidth)];
+    self.jieSuoButton.backgroundColor = [UIColor clearColor];
     [self.messageContentView addSubview:self.jieSuoButton];
     
+    
+
+    NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+    UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height)];
+    jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
+    jieSuoTipLable1.numberOfLines =2;
+    jieSuoTipLable1.textColor = RGBFormUIColor(0xFFFFFF);
+    [self.jieSuoButton addSubview:jieSuoTipLable1];
+    
+    NSString * str = [NSString stringWithFormat:@"预付%@金币可以抵扣嫖资",unlock_vpost_coin];
+    NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+    NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+    [text1 addAttribute:NSForegroundColorAttributeName
+                  value:RGBFormUIColor(0xFFFC02)
+                  range:NSMakeRange(2, unlock_vpost_coin.length)];
+    jieSuoTipLable1.attributedText = text1;
+
+    
+    UIButton * jieSuoTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
+    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"liJiJieSuo"] forState:UIControlStateNormal];
+    [jieSuoTipButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [jieSuoTipButton setTitle:@"会员专享预约" forState:UIControlStateNormal];
+    [jieSuoTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    jieSuoTipButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    [self.jieSuoButton addSubview:jieSuoTipButton];
 
     NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
     if([is_unlock isKindOfClass:[NSNumber class]])
     {
         if (is_unlock.intValue==1) {
 
-            [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-            self.jieSuoButton.button_lable.text = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",[NormalUse getJinBiStr:@"unlock_vpost_coin"]];
-            self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+            [self.jieSuoButton removeAllSubviews];
             
-            self.jieSuoButton.button_lable1.frame = CGRectMake(self.jieSuoButton.width-100*BiLiWidth, 15*BiLiWidth, 80*BiLiWidth, self.jieSuoButton.height-30*BiLiWidth);
-            self.jieSuoButton.button_lable1.backgroundColor = RGBFormUIColor(0xFF0876);
-            self.jieSuoButton.button_lable1.textColor = [UIColor whiteColor];
-            self.jieSuoButton.button_lable1.text = @"立即聊天";
-            self.jieSuoButton.button_lable1.layer.cornerRadius = 5*BiLiWidth;
-            self.jieSuoButton.button_lable1.layer.masksToBounds = YES;
-            self.jieSuoButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+            UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height)];
+            jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:20*BiLiWidth];
+            jieSuoTipLable1.numberOfLines =2;
+            jieSuoTipLable1.textColor = [UIColor whiteColor];
+            [self.jieSuoButton addSubview:jieSuoTipLable1];
             
-
+            NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",unlock_vpost_coin];
+            NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+            NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+            [text1 addAttribute:NSForegroundColorAttributeName
+                          value:RGBFormUIColor(0xFFFC02)
+                          range:NSMakeRange(4, unlock_vpost_coin.length)];
+            jieSuoTipLable1.attributedText = text1;
+            
         }
     }
     
@@ -469,20 +502,26 @@
                 };
             }
             
-            [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-            self.jieSuoButton.button_lable.text = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",[NormalUse getJinBiStr:@"unlock_vpost_coin"]];
-            self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
+            [self.jieSuoButton removeAllSubviews];
             
-            self.jieSuoButton.button_lable1.frame = CGRectMake(self.jieSuoButton.width-100*BiLiWidth, 15*BiLiWidth, 80*BiLiWidth, self.jieSuoButton.height-30*BiLiWidth);
-            self.jieSuoButton.button_lable1.backgroundColor = RGBFormUIColor(0xFF0876);
-            self.jieSuoButton.button_lable1.textColor = [UIColor whiteColor];
-            self.jieSuoButton.button_lable1.text = @"立即聊天";
-            self.jieSuoButton.button_lable1.layer.cornerRadius = 5*BiLiWidth;
-            self.jieSuoButton.button_lable1.layer.masksToBounds = YES;
-            self.jieSuoButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+            UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height)];
+            jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
+            jieSuoTipLable1.numberOfLines =2;
+            jieSuoTipLable1.textColor = [UIColor whiteColor];
+            [self.jieSuoButton addSubview:jieSuoTipLable1];
+            
+            NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+            NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",unlock_vpost_coin];
+            NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+            NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+            [text1 addAttribute:NSForegroundColorAttributeName
+                          value:RGBFormUIColor(0xFFFC02)
+                          range:NSMakeRange(4, unlock_vpost_coin.length)];
+            jieSuoTipLable1.attributedText = text1;
 
+            //            [text1 addAttribute:NSFontAttributeName
+            //                          value:[UIFont systemFontOfSize:12*BiLiWidth]
+            //                          range:NSMakeRange(0, 4)];
 
 //             [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
 //            [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -635,6 +674,69 @@
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
     
+    UILabel * zongHePingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, xiangMuLable.bottom+10*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
+    zongHePingFenLable.textColor = RGBFormUIColor(0x343434);
+    zongHePingFenLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
+    zongHePingFenLable.text = @"综合评分";
+    [self.jiBenXinXiContentView addSubview:zongHePingFenLable];
+    
+    UIImageView * yanZhiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, zongHePingFenLable.top+zongHePingFenLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+    yanZhiImageView.image = [UIImage imageNamed:@"vipTie_yanZhi"];
+    [self.jiBenXinXiContentView addSubview:yanZhiImageView];
+    
+    UILabel * yanZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, yanZhiImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+    yanZhiLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    yanZhiLable.textColor = RGBFormUIColor(0x666666);
+    yanZhiLable.text = @"颜值";
+    yanZhiLable.adjustsFontSizeToFitWidth = YES;
+    [self.jiBenXinXiContentView addSubview:yanZhiLable];
+    
+    UIImageView * jiShuImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, yanZhiLable.top+yanZhiLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+    jiShuImageView.image = [UIImage imageNamed:@"vipTie_jiShu"];
+    [self.jiBenXinXiContentView addSubview:jiShuImageView];
+    
+    UILabel * jiShuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, jiShuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+    jiShuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    jiShuLable.textColor = RGBFormUIColor(0x666666);
+    jiShuLable.text = @"技术";
+    jiShuLable.adjustsFontSizeToFitWidth = YES;
+    [self.jiBenXinXiContentView addSubview:jiShuLable];
+
+    
+    UIImageView * huanJingImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiShuLable.top+jiShuLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+    huanJingImageView.image = [UIImage imageNamed:@"vipTie_huanJing"];
+    [self.jiBenXinXiContentView addSubview:huanJingImageView];
+    
+    UILabel * huanJingLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, huanJingImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+    huanJingLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    huanJingLable.textColor = RGBFormUIColor(0x666666);
+    huanJingLable.text = @"环境";
+    huanJingLable.adjustsFontSizeToFitWidth = YES;
+    [self.jiBenXinXiContentView addSubview:huanJingLable];
+    
+    UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(0, zongHePingFenLable.bottom+27*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
+    pingFenLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:33*BiLiWidth];
+    pingFenLable.textColor = RGBFormUIColor(0xFFA217);
+    pingFenLable.textAlignment = NSTextAlignmentCenter;
+    pingFenLable.adjustsFontSizeToFitWidth = YES;
+    NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
+    if ([complex_score isKindOfClass:[NSNumber class]]) {
+        
+        pingFenLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
+
+    }
+    [self.jiBenXinXiContentView addSubview:pingFenLable];
+
+    UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, pingFenLable.bottom+12*BiLiWidth, WIDTH_PingMu, 14*BiLiWidth)];
+    pingFenTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+    pingFenTipLable.textColor = RGBFormUIColor(0x666666);
+    pingFenTipLable.textAlignment = NSTextAlignmentCenter;
+    pingFenTipLable.adjustsFontSizeToFitWidth = YES;
+    pingFenTipLable.text = @"综合评分（满分5分）";
+    [self.jiBenXinXiContentView addSubview:pingFenTipLable];
+    
+    
+/*
     UIView * pingFenView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, xiangMuLable.top+xiangMuLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
     pingFenView.layer.cornerRadius = 5*BiLiWidth;
     pingFenView.layer.masksToBounds = NO;
@@ -759,8 +861,8 @@
         
     }
 
-
-    self.jiBenXinXiContentView.height = pingFenView.top+pingFenView.height+20*BiLiWidth;
+*/
+    self.jiBenXinXiContentView.height = huanJingLable.bottom+20*BiLiWidth;
     
     [self initXiangQingJieShaoView:self.jiBenXinXiContentView.top+self.jiBenXinXiContentView.height];
 

@@ -139,8 +139,18 @@
     NSNumber * type_id = [info objectForKey:@"type_id"];//6会员贴 1 普通贴
     if(type_id.intValue==6)
     {
+        NSNumber * auth_nomal = [info objectForKey:@"auth_nomal"];
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+            
+            if (auth_nomal.intValue==1) {
+                self.guanFangImageView.hidden = NO;
+            }
+            else
+            {
+                self.guanFangImageView.hidden = YES;
+            }
+        }
         
-        self.guanFangImageView.hidden = NO;
     }
     else
     {

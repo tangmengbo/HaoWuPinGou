@@ -115,7 +115,19 @@
     NSNumber * post_type = [info objectForKey:@"post_type"];//2会员贴 1 普通贴
     if (post_type.intValue==2) {
         
-        self.guanFangImageView.hidden = NO;
+        NSNumber * auth_nomal = [info objectForKey:@"auth_nomal"];
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+            
+            if (auth_nomal.intValue==1) {
+                self.guanFangImageView.hidden = NO;
+                
+            }
+            else
+            {
+                self.guanFangImageView.hidden = YES;
+                
+            }
+        }
     }
     else
     {

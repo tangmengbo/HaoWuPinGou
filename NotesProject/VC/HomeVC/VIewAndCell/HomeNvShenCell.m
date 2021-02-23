@@ -101,10 +101,24 @@
 }
 -(void)contentViewSetData:(NSDictionary *)info
 {
+    
     if (self.cellType==VipRenZhengFaTie) {
         
-        self.guanFangImageView.hidden = NO;
-        self.faBuTimeLable.hidden = YES;
+        
+        NSNumber * auth_nomal = [info objectForKey:@"auth_nomal"];
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+            
+            if (auth_nomal.intValue==1) {
+                self.guanFangImageView.hidden = NO;
+                self.faBuTimeLable.hidden = YES;
+            }
+            else
+            {
+                self.faBuTimeLable.hidden = NO;
+                self.faBuTimeLable.text = [info objectForKey:@"create_at"];
+            }
+        }
+
         
     }
     else
