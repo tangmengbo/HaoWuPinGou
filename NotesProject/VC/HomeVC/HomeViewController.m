@@ -2498,6 +2498,8 @@
 -(void)tiYanBaoGaoButtonClick
 {
     TiYanBaoGaoViewController * vc = [[TiYanBaoGaoViewController alloc] init];
+    vc.userInfo = self.userInfo;
+    vc.vipListInfo = self.vipListInfo;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)fangLeiButtonClick

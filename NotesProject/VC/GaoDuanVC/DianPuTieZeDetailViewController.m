@@ -1,20 +1,20 @@
 //
-//  VipRenZhengTieZeDetailVC.m
+//  DianPuTieZeDetailViewController.m
 //  JianZhi
 //
-//  Created by tang bo on 2021/2/23.
+//  Created by tang bo on 2021/2/24.
 //  Copyright © 2021 Meng. All rights reserved.
 //
 
-#import "VipRenZhengTieZeDetailVC.h"
+#import "DianPuTieZeDetailViewController.h"
 #import "VipTieZiJieSuoSuccseeTipView.h"
 
-@interface VipRenZhengTieZeDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface DianPuTieZeDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     NSInteger sliderIndex;
 }
 
-@property(nonatomic,strong)NSDictionary * tieZiInfo;
+@property(nonatomic,strong)NSMutableDictionary * tieZiInfo;
 
 @property(nonatomic,strong)NSMutableArray * images;
 
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation VipRenZhengTieZeDetailVC
+@implementation DianPuTieZeDetailViewController
 
 -(UIImageView *)noMessageTipButotn
 {
@@ -46,34 +46,29 @@
 
 -(void)rightClick
 {
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"帖子介绍" message:[NormalUse getJinBiStr:@"vip_post_tips"] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        }];
-    [alert addAction:cancleAction];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
 
-//    NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
-//    
-//    if([is_unlock isKindOfClass:[NSNumber class]])
-//    {
-//        if (is_unlock.intValue==1 || alsoUnlockSuccess) {
-//
-//            JvBaoViewController * vc = [[JvBaoViewController alloc] init];
-//            vc.post_id = self.post_id;
-//            vc.role = @"1";
-//            [self.navigationController pushViewController:vc animated:YES];
-//
-//        }
-//        else
-//        {
-//            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"解锁资源后才可以投诉该帖~" preferredStyle:UIAlertControllerStyleAlert];
-//                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                }];
-//            [alert addAction:cancleAction];
-//            [self.navigationController presentViewController:alert animated:YES completion:nil];
-//
-//        }
-//    }
+    NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+
+    if([is_unlock isKindOfClass:[NSNumber class]])
+    {
+        if (is_unlock.intValue==1 || alsoUnlockSuccess) {
+
+            JvBaoViewController * vc = [[JvBaoViewController alloc] init];
+            vc.post_id = self.post_id;
+            vc.role = @"1";
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+        else
+        {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"预约后才可以投诉该帖~" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                }];
+            [alert addAction:cancleAction];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+        }
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -106,7 +101,13 @@
         
         if (status==1) {
             
-            self.tieZiInfo = responseObject;
+            self.tieZiInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
+            
+            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+            [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
+            [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:chatButton];
+
             
             self.is_active = [self.tieZiInfo objectForKey:@"is_active"];
             if (![self.is_active isKindOfClass:[NSNumber class]]) {
@@ -129,7 +130,7 @@
     }];
     self.rightButton.left = WIDTH_PingMu-40-15;
     [self.rightButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
-    [self.rightButton setTitle:@"帖子介绍" forState:UIControlStateNormal];
+    [self.rightButton setTitle:@"投诉" forState:UIControlStateNormal];
     self.rightButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.topTitleLale.text = @"详情";
     
@@ -138,14 +139,6 @@
         self.mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     [self.view addSubview:self.mainScrollView];
-    
-    UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
-    [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
-    [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:chatButton];
-    
-
-
     
 }
 -(void)initTopMessageView
@@ -488,24 +481,66 @@
 }
 -(void)chatButtonClick
 {
-    if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
-    {
-        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-        NSLog(@"%@",ryInfo);
-        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+    
+    NSNumber * agent_is_unlock = [self.tieZiInfo objectForKey:@"agent_is_unlock"];
+    if ([agent_is_unlock isKindOfClass:[NSNumber class]]&&agent_is_unlock.intValue==1) {
+        
+        if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+        {
+            NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+            NSLog(@"%@",ryInfo);
+            if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+                
+                RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                                   ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+                [self.navigationController pushViewController:chatVC animated:YES];
+                
+            }
             
-            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                               ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-            [self.navigationController pushViewController:chatVC animated:YES];
-
         }
-
+        else
+        {
+            [NormalUse showToastView:@"该帖子不支持在线聊天" view:self.view];
+        }
     }
     else
     {
-        [NormalUse showToastView:@"该帖子不支持在线聊天" view:self.view];
+        NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+        if (is_unlock.intValue==1) {
+            
+            if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+            {
+                NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+                NSLog(@"%@",ryInfo);
+                if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+                    
+                    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+                    [self.navigationController pushViewController:chatVC animated:YES];
+                    
+                }
+                
+            }
+            else
+            {
+                [NormalUse showToastView:@"该帖子不支持在线聊天" view:self.view];
+            }
+            
+        }
+        else
+        {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"先预约才能在线聊天" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [alert addAction:cancleAction];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            
+        }
     }
-
+    
+    
+    
 }
 -(void)jieSuoButtonClick
 {
@@ -519,6 +554,9 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
+            NSNumber * is_unlock = [NSNumber numberWithInt:1];
+            [self.tieZiInfo setObject:is_unlock forKey:@"is_unlock"];
+
             self->alsoUnlockSuccess = YES;
             if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
             {

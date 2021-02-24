@@ -11,9 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface EditUserMessageViewController : MainBaseViewController
+@interface EditUserMessageViewController : MainBaseViewController<CityListViewControllerDelegate>
 
 @property(nonatomic,strong)NSDictionary * userInfo;
+@property(nonatomic,strong)NSDictionary * cityInfo;
 
 @end
 

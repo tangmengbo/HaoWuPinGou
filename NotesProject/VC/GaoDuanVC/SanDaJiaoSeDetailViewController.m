@@ -14,7 +14,7 @@
 
 }
 
-@property(nonatomic,strong)NSDictionary * tieZiInfo;
+@property(nonatomic,strong)NSMutableDictionary * tieZiInfo;
 
 @property(nonatomic,strong)NSMutableArray * images;
 
@@ -78,8 +78,14 @@
         
         if (status==1) {
             
-            self.tieZiInfo = responseObject;
+            self.tieZiInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             [self initTopMessageView];
+            
+            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+            [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
+            [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:chatButton];
+
         }
         else
         {
@@ -214,12 +220,7 @@
     self.messageContentView.backgroundColor = [UIColor whiteColor];
     self.messageContentView.userInteractionEnabled = YES;
     [self.mainScrollView addSubview:self.messageContentView];
-    //某个角圆角
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.messageContentView.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.messageContentView.layer.mask = maskLayer;
+    
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
     CGSize size = [NormalUse setSize:nickStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
@@ -250,6 +251,12 @@
             vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
 
         }
+        else if (auth_vip.intValue==0)
+        {
+            vImageView.left = nickLable.left+nickLable.width;
+            vImageView.width = 0;
+
+        }
 
     }
     else
@@ -258,7 +265,7 @@
         vImageView.width = 0;
     }
     
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-13.5*BiLiWidth)/2, 13.5*BiLiWidth*126/39, 13.5*BiLiWidth)];
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, nickLable.top+(nickLable.height-20*BiLiWidth)/2, 20*269/66*BiLiWidth, 20*BiLiWidth)];
 //    guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangWeiRenZheng"];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
@@ -267,8 +274,8 @@
         
         if (auth_nomal.intValue==1) {
             
-            guanFangRenZhengImageView.width = 56*BiLiWidth;
-            guanFangRenZhengImageView.image = [UIImage imageNamed:@"guanFangRenZheng"];
+            guanFangRenZhengImageView.width = 20*171/42*BiLiWidth;
+            guanFangRenZhengImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
 
 
         }
@@ -306,129 +313,32 @@
     }
 
 
-    UIView * pingFenView = [[UIView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
-    pingFenView.layer.cornerRadius = 5*BiLiWidth;
-    pingFenView.layer.masksToBounds = NO;
-    pingFenView.backgroundColor = [UIColor whiteColor];
-    [self.messageContentView addSubview:pingFenView];
-    pingFenView.layer.shadowOpacity = 0.2f;
-    pingFenView.layer.shadowColor = [UIColor blackColor].CGColor;
-    pingFenView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
+    UIImageView * guangTangTipView = [[UIImageView alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 95*BiLiWidth)];
+    [self.messageContentView addSubview:guangTangTipView];
     
-    UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(53.5*BiLiWidth, 25.5*BiLiWidth, 50*BiLiWidth, 33*BiLiWidth)];
-    pingFenLable.font = [UIFont systemFontOfSize:33*BiLiWidth];
-    pingFenLable.textColor = RGBFormUIColor(0xFFA218);
-    pingFenLable.adjustsFontSizeToFitWidth = YES;
-    NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
-    if ([complex_score isKindOfClass:[NSNumber class]]) {
+    //是否经过官方认证
+    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
         
-        pingFenLable.text = [NSString stringWithFormat:@"%.1f",complex_score.floatValue];
-
-    }
-    [pingFenView addSubview:pingFenLable];
-    
-    UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(pingFenLable.left, 63.5*BiLiWidth, pingFenLable.width, 11*BiLiWidth)];
-    pingFenTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    pingFenTipLable.textColor = RGBFormUIColor(0x9A9A9A);
-    pingFenTipLable.text = @"综合评分";
-    pingFenLable.textAlignment = NSTextAlignmentCenter;
-    [pingFenView addSubview:pingFenTipLable];
-    
-    UILabel * yanZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(160*BiLiWidth, 15*BiLiWidth,24*BiLiWidth, 12*BiLiWidth)];
-    yanZhiLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    yanZhiLable.textColor = RGBFormUIColor(0x9A9A9A);
-    yanZhiLable.text = @"颜值";
-    yanZhiLable.textAlignment = NSTextAlignmentCenter;
-    [pingFenView addSubview:yanZhiLable];
-
-    NSNumber * face_value = [self.tieZiInfo objectForKey:@"face_value"];
-    
-    for (int i=0; i<5; i++) {
-        
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(yanZhiLable.left+yanZhiLable.width+19*BiLiWidth+20*BiLiWidth*i, yanZhiLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        [pingFenView addSubview:imageView];
-        
-        if ([face_value isKindOfClass:[NSNumber class]]) {
-            
-            if (i<face_value.intValue) {
-                
-                imageView.image = [UIImage imageNamed:@"star_yellow"];
-
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"star_hui"];
-
-            }
+        if (auth_nomal.intValue==1) {
+            guangTangTipView.frame = CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 321*BiLiWidth*230/965);
+            guangTangTipView.image = [UIImage imageNamed:@"huiYuanTie_tip"];
 
         }
-        
-    }
-    
-    UILabel * jiShuLable = [[UILabel alloc] initWithFrame:CGRectMake(160*BiLiWidth, yanZhiLable.top+yanZhiLable.height+15*BiLiWidth,24*BiLiWidth, 12*BiLiWidth)];
-    jiShuLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    jiShuLable.textColor = RGBFormUIColor(0x9A9A9A);
-    jiShuLable.text = @"技术";
-    jiShuLable.textAlignment = NSTextAlignmentCenter;
-    [pingFenView addSubview:jiShuLable];
-
-    NSNumber * skill_value = [self.tieZiInfo objectForKey:@"skill_value"];
-
-    for (int i=0; i<5; i++) {
-        
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(jiShuLable.left+jiShuLable.width+19*BiLiWidth+20*BiLiWidth*i, jiShuLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        [pingFenView addSubview:imageView];
-        
-        if ([skill_value isKindOfClass:[NSNumber class]]) {
-            
-            if (i<skill_value.intValue) {
-                
-                imageView.image = [UIImage imageNamed:@"star_yellow"];
-
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"star_hui"];
-
-            }
-
+        else
+        {
+            guangTangTipView.frame = CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 111*BiLiWidth);
+            guangTangTipView.image = [UIImage imageNamed:@"vipTieZi_weiRenZheng"];
         }
-
-        
     }
+    else
+    {
+        guangTangTipView.frame = CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, cityLable.top+cityLable.height+16.5*BiLiWidth, 321*BiLiWidth, 111*BiLiWidth);
+        guangTangTipView.image = [UIImage imageNamed:@"vipTieZi_weiRenZheng"];
+
+    }
+
 
     
-    UILabel * huanJingLable = [[UILabel alloc] initWithFrame:CGRectMake(160*BiLiWidth, jiShuLable.top+jiShuLable.height+15*BiLiWidth,24*BiLiWidth, 12*BiLiWidth)];
-    huanJingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    huanJingLable.textColor = RGBFormUIColor(0x9A9A9A);
-    huanJingLable.text = @"环境";
-    huanJingLable.textAlignment = NSTextAlignmentCenter;
-    [pingFenView addSubview:huanJingLable];
-
-    NSNumber * ambience_value = [self.tieZiInfo objectForKey:@"ambience_value"];
-
-    for (int i=0; i<5; i++) {
-        
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(huanJingLable.left+huanJingLable.width+19*BiLiWidth+20*BiLiWidth*i, huanJingLable.top, 12*BiLiWidth, 12*BiLiWidth)];
-        [pingFenView addSubview:imageView];
-        
-        if ([ambience_value isKindOfClass:[NSNumber class]]) {
-            
-            if (i<ambience_value.intValue) {
-                
-                imageView.image = [UIImage imageNamed:@"star_yellow"];
-
-            }
-            else
-            {
-                imageView.image = [UIImage imageNamed:@"star_hui"];
-
-            }
-
-        }
-
-        
-    }
 
     NSString * unlock_mobile_coin;
 
@@ -447,7 +357,7 @@
 
     }
 
-    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, pingFenView.top+pingFenView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
+    self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, guangTangTipView.top+guangTangTipView.height+19*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
     [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
     self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
     self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
@@ -505,8 +415,6 @@
     }
 
     
-    
-    
     self.tipLable = [[UILabel alloc] initWithFrame:CGRectMake(5*BiLiWidth, self.jieSuoButton.top+self.jieSuoButton.height+5*BiLiWidth, WIDTH_PingMu-10*BiLiWidth, 25*BiLiWidth)];
     self.tipLable.text = [self.tieZiInfo objectForKey:@"post_warning_tips"];
     self.tipLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
@@ -514,21 +422,66 @@
     self.tipLable.numberOfLines = 2;
     [self.messageContentView addSubview:self.tipLable];
     
+    self.messageContentView.height = self.tipLable.bottom+10*BiLiWidth;
+    //某个角圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.messageContentView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.messageContentView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.messageContentView.layer.mask = maskLayer;
+
+    
    [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
 
 }
 -(void)chatButtonClick
 {
+    NSNumber * from = [self.tieZiInfo objectForKey:@"from"];
     
-    if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+    if (from.intValue==2) {
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"此帖不支持在线聊天" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+        [alert addAction:cancleAction];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
     {
-        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+        NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+
+        if (is_unlock.intValue==1) {
             
-            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                               ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
-            [self.navigationController pushViewController:chatVC animated:YES];
+            if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+            {
+                NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+                NSLog(@"%@",ryInfo);
+                if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+                    
+                    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                                       ConversationType_PRIVATE targetId:[self.tieZiInfo objectForKey:@"ryuser_id"]];
+                    [self.navigationController pushViewController:chatVC animated:YES];
+
+                }
+
+            }
+            else
+            {
+                [NormalUse showToastView:@"该帖子不支持在线聊天" view:self.view];
+            }
+
+        }
+        else
+        {
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"先解锁才能在线聊天" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+            [alert addAction:cancleAction];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
 
         }
 
@@ -550,6 +503,10 @@
             
             self->alsoUnlockSuccess = YES;
             NSDictionary * contactInfo = responseObject;
+            
+            NSNumber * is_unlock = [NSNumber numberWithInt:1];
+            [self.tieZiInfo setObject:is_unlock forKey:@"is_unlock"];
+
             
              [self.jieSuoButton removeTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.jieSuoButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -690,8 +647,70 @@
     xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
 
-    self.jiBenXinXiContentView.height = xiangMuLable.top+xiangMuLable.height+20*BiLiWidth;
-    
+    UILabel * zongHePingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, xiangMuLable.bottom+10*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];
+        zongHePingFenLable.textColor = RGBFormUIColor(0x343434);
+        zongHePingFenLable.font = [UIFont systemFontOfSize:16*BiLiWidth];
+        zongHePingFenLable.text = @"综合评分";
+        [self.jiBenXinXiContentView addSubview:zongHePingFenLable];
+        
+        UIImageView * yanZhiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, zongHePingFenLable.top+zongHePingFenLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+        yanZhiImageView.image = [UIImage imageNamed:@"vipTie_yanZhi"];
+        [self.jiBenXinXiContentView addSubview:yanZhiImageView];
+        
+        UILabel * yanZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, yanZhiImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+        yanZhiLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        yanZhiLable.textColor = RGBFormUIColor(0x666666);
+        yanZhiLable.text = @"颜值";
+        yanZhiLable.adjustsFontSizeToFitWidth = YES;
+        [self.jiBenXinXiContentView addSubview:yanZhiLable];
+        
+        UIImageView * jiShuImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, yanZhiLable.top+yanZhiLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+        jiShuImageView.image = [UIImage imageNamed:@"vipTie_jiShu"];
+        [self.jiBenXinXiContentView addSubview:jiShuImageView];
+        
+        UILabel * jiShuLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, jiShuImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+        jiShuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        jiShuLable.textColor = RGBFormUIColor(0x666666);
+        jiShuLable.text = @"技术";
+        jiShuLable.adjustsFontSizeToFitWidth = YES;
+        [self.jiBenXinXiContentView addSubview:jiShuLable];
+
+        
+        UIImageView * huanJingImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, jiShuLable.top+jiShuLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+        huanJingImageView.image = [UIImage imageNamed:@"vipTie_huanJing"];
+        [self.jiBenXinXiContentView addSubview:huanJingImageView];
+        
+        UILabel * huanJingLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, huanJingImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+        huanJingLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        huanJingLable.textColor = RGBFormUIColor(0x666666);
+        huanJingLable.text = @"环境";
+        huanJingLable.adjustsFontSizeToFitWidth = YES;
+        [self.jiBenXinXiContentView addSubview:huanJingLable];
+        
+        UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(0, zongHePingFenLable.bottom+18*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
+        pingFenLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:33*BiLiWidth];
+        pingFenLable.textColor = RGBFormUIColor(0xFFA217);
+        pingFenLable.textAlignment = NSTextAlignmentCenter;
+        pingFenLable.adjustsFontSizeToFitWidth = YES;
+        NSNumber * complex_score= [self.tieZiInfo objectForKey:@"complex_score"];
+        if ([complex_score isKindOfClass:[NSNumber class]]) {
+            
+            pingFenLable.text = [NSString stringWithFormat:@"%d",complex_score.intValue];
+
+        }
+        [self.jiBenXinXiContentView addSubview:pingFenLable];
+
+        UILabel * pingFenTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, pingFenLable.bottom+12*BiLiWidth, WIDTH_PingMu, 14*BiLiWidth)];
+        pingFenTipLable.font = [UIFont systemFontOfSize:14*BiLiWidth];
+        pingFenTipLable.textColor = RGBFormUIColor(0x666666);
+        pingFenTipLable.textAlignment = NSTextAlignmentCenter;
+        pingFenTipLable.adjustsFontSizeToFitWidth = YES;
+        pingFenTipLable.text = @"综合评分（满分5分）";
+        [self.jiBenXinXiContentView addSubview:pingFenTipLable];
+
+
+        self.jiBenXinXiContentView.height = huanJingLable.bottom+20*BiLiWidth;
+
     
     [self initXiangQingJieShaoView:self.jiBenXinXiContentView.top+self.jiBenXinXiContentView.height];
 

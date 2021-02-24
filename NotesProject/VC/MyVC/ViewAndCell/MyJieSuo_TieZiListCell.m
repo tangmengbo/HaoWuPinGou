@@ -31,7 +31,7 @@
         self.headerImageView.layer.cornerRadius = 5*BiLiWidth;
         [self.contentView addSubview:self.headerImageView];
         
-        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-65*BiLiWidth, 0, 16*269/66*BiLiWidth, 16*BiLiWidth)];
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-6*171/42*BiLiWidth, 0, 16*171/42*BiLiWidth, 16*BiLiWidth)];
         self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
         [self.headerImageView addSubview:self.guanFangImageView];
         self.guanFangImageView.hidden = YES;

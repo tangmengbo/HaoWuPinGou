@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSDictionary * info;
 
+@property(nonatomic,strong)NSDictionary * userInfo;
+@property(nonatomic,strong)NSDictionary * vipListInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

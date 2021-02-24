@@ -146,6 +146,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TiYanBaoGaoDetailViewController * vc = [[TiYanBaoGaoDetailViewController alloc] init];
+    vc.userInfo = self.userInfo;
+    vc.vipListInfo = self.vipListInfo;
     vc.info = [self.sourceArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }

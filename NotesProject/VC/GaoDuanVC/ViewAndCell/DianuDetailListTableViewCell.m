@@ -7,6 +7,7 @@
 //
 
 #import "DianuDetailListTableViewCell.h"
+#import "DianPuTieZeDetailViewController.h"
 
 @implementation DianuDetailListTableViewCell
 
@@ -201,17 +202,34 @@
 }
 -(void)pushTuTieZiDetail1
 {
-    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-    NSNumber * post_id = [self.info1 objectForKey:@"id"];
-    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+//    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+//    NSNumber * post_id = [self.info1 objectForKey:@"id"];
+//    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+//    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+    
+    DianPuTieZeDetailViewController * vc = [[DianPuTieZeDetailViewController alloc] init];
+    NSNumber * idNumber = [self.info1 objectForKey:@"id"];
+    if ([idNumber isKindOfClass:[NSNumber class]]) {
+        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    }
     [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
+    
 }
 -(void)pushTuTieZiDetail2
 {
-    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-    NSNumber * post_id = [self.info2 objectForKey:@"id"];
-    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+//    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+//    NSNumber * post_id = [self.info2 objectForKey:@"id"];
+//    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+//    [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+    
+    DianPuTieZeDetailViewController * vc = [[DianPuTieZeDetailViewController alloc] init];
+    NSNumber * idNumber = [self.info2 objectForKey:@"id"];
+    if ([idNumber isKindOfClass:[NSNumber class]]) {
+        vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+    }
     [[NormalUse getCurrentVC].navigationController pushViewController:vc animated:YES];
+
 
 }
 

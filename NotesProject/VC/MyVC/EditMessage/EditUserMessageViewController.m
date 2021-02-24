@@ -138,7 +138,12 @@
     self.cityButton.titleLabel.font = [UIFont systemFontOfSize:15*BiLiWidth];
     NSDictionary * cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
     [self.cityButton setTitle:[cityInfo objectForKey:@"cityName"] forState:UIControlStateNormal];
+    if ([NormalUse isValidString:[self.userInfo objectForKey:@"city_name"]]) {
+        [self.cityButton setTitle:[NormalUse getobjectForKey:[self.userInfo objectForKey:@"city_name"]] forState:UIControlStateNormal];
+    }
+    [self.cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cityButton];
+
     
     UIView * cityLineView = [[UIView alloc] initWithFrame:CGRectMake(0, cityLable.top+cityLable.height, WIDTH_PingMu, 1)];
     cityLineView.backgroundColor = RGBFormUIColor(0xF7F7F7);
@@ -187,6 +192,7 @@
 
     
 }
+
 -(void)viewTap
 {
     [self.nickTF resignFirstResponder];
@@ -322,6 +328,12 @@
         
         [dic setObject:headerImageID forKey:@"avatar"];
     }
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        
+        NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+        [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
+
+    }
     [HTTPModel editUserInfo:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         [self yinCangLoadingView];
@@ -371,4 +383,18 @@
     self.mobileButton.enabled = NO;
     self.editMobileButton.hidden = NO;
 }
+-(void)cityButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    [self.cityButton setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+
+}
+
 @end

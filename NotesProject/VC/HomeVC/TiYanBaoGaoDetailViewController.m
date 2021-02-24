@@ -312,10 +312,44 @@
 
 -(void)chaKanButtonClick
 {
-    TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
-    NSNumber * post_id = [self.info objectForKey:@"post_id"];
-    vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSNumber * type_id = [self.info objectForKey:@"type_id"];
+    if (type_id.intValue==5) {
+        
+        NSNumber *  auth_vip = [NormalUse defaultsGetObjectKey:@"UserAlsoVip"];
+        if (auth_vip.intValue==0) {
+            
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                    vc.info = self.userInfo;
+                    vc.vipListInfo = self.vipListInfo;
+                    [self.navigationController pushViewController:vc animated:YES];
+
+                }];
+            [alert addAction:cancleAction];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
+        }
+        else
+        {
+            VipRenZhengTieZeDetailVC * vc = [[VipRenZhengTieZeDetailVC alloc] init];
+            NSNumber * idNumber = [self.info objectForKey:@"post_id"];
+            if ([idNumber isKindOfClass:[NSNumber class]]) {
+                vc.post_id = [NSString stringWithFormat:@"%d",idNumber.intValue];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }
+    }
+    else
+    {
+        TieZiDetailViewController * vc = [[TieZiDetailViewController alloc] init];
+        NSNumber * post_id = [self.info objectForKey:@"post_id"];
+        vc.post_id = [NSString stringWithFormat:@"%d",post_id.intValue];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+
 }
 #pragma mark NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {

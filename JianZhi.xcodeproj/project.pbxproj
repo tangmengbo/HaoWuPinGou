@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2820EDBB25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820EDBA25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m */; };
+		2820EDBE25E641E20004B1BD /* DianPuTieZeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820EDBD25E641E20004B1BD /* DianPuTieZeDetailViewController.m */; };
 		284E201A25B98A34006713D0 /* HomeNvShenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284E201925B98A34006713D0 /* HomeNvShenCell.m */; };
 		28C9BB0925E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9BB0825E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m */; };
 		28CF376F25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */; };
@@ -217,6 +219,10 @@
 		04715AC323963D2A009CD914 /* KKlive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KKlive.entitlements; sourceTree = "<group>"; };
 		10AF6F451413B0C5EC4B83CB /* Pods-NewChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewChat.release.xcconfig"; path = "Target Support Files/Pods-NewChat/Pods-NewChat.release.xcconfig"; sourceTree = "<group>"; };
 		1ACB60475A30615544A412C1 /* Pods-NotesProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotesProject.debug.xcconfig"; path = "Target Support Files/Pods-NotesProject/Pods-NotesProject.debug.xcconfig"; sourceTree = "<group>"; };
+		2820EDB925E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VipTieZiJieSuoSuccseeTipView.h; sourceTree = "<group>"; };
+		2820EDBA25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VipTieZiJieSuoSuccseeTipView.m; sourceTree = "<group>"; };
+		2820EDBC25E641E10004B1BD /* DianPuTieZeDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianPuTieZeDetailViewController.h; sourceTree = "<group>"; };
+		2820EDBD25E641E20004B1BD /* DianPuTieZeDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianPuTieZeDetailViewController.m; sourceTree = "<group>"; };
 		284E201825B98A34006713D0 /* HomeNvShenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenCell.h; sourceTree = "<group>"; };
 		284E201925B98A34006713D0 /* HomeNvShenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNvShenCell.m; sourceTree = "<group>"; };
 		28C9BB0725E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VipRenZhengTieZeDetailVC.h; sourceTree = "<group>"; };
@@ -689,6 +695,8 @@
 				5F22EBC324ECF371002DCF61 /* GaoDuanViewController.m */,
 				5F26511024FE57D600171684 /* DianPuDetailViewController.h */,
 				5F26511124FE57D600171684 /* DianPuDetailViewController.m */,
+				2820EDBC25E641E10004B1BD /* DianPuTieZeDetailViewController.h */,
+				2820EDBD25E641E20004B1BD /* DianPuTieZeDetailViewController.m */,
 				5F24D2462500946900476CFA /* NvShenListViewController.h */,
 				5F24D2472500946900476CFA /* NvShenListViewController.m */,
 				5F24D24C25009B0E00476CFA /* WaiWeiListViewController.h */,
@@ -972,6 +980,8 @@
 				5FC165842519C5DA00FA99D2 /* AutoScrollLabel.m */,
 				5F9D95FF25404E9E002599B6 /* JieSuoSuccessTipView.h */,
 				5F9D960025404E9E002599B6 /* JieSuoSuccessTipView.m */,
+				2820EDB925E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.h */,
+				2820EDBA25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1592,6 +1602,7 @@
 				5FD8504B25087766009286CE /* FuQiJiaoRenZhengStep3VC.m in Sources */,
 				5F91C46A24E6895200E835AB /* HTTPModel.m in Sources */,
 				5F2650DD24FC8C9A00171684 /* JYConfiguration.m in Sources */,
+				2820EDBB25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m in Sources */,
 				5FE3EC062355A3E400C77F4D /* UIImage+LLGif.m in Sources */,
 				5FE3EC1B2355A3E400C77F4D /* TZGifPhotoPreviewController.m in Sources */,
 				5F9FE4CB25202AB6001359CB /* JingJiRenBianJiListCell.m in Sources */,
@@ -1631,6 +1642,7 @@
 				5F6858CA250B476B007BDA9E /* MyJieSuoListViewController.m in Sources */,
 				5F9FE4D125207B54001359CB /* InputCheckNumberViewController.m in Sources */,
 				5FE3EC042355A3E400C77F4D /* UIImageView+LLMediaExt.m in Sources */,
+				2820EDBE25E641E20004B1BD /* DianPuTieZeDetailViewController.m in Sources */,
 				5FE3EC182355A3E400C77F4D /* TZPhotoPickerController.m in Sources */,
 				5F22EBCA24ECF39E002DCF61 /* XiaoXiViewController.m in Sources */,
 				5F6673542510BD05000C6810 /* MyShouCangGuanZhu_ShouCangCell.m in Sources */,

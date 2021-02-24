@@ -160,12 +160,18 @@
 
 -(void)initTopMessageView
 {
+
     self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(25*BiLiWidth, 24*BiLiWidth, 200*BiLiWidth, 19*BiLiWidth)];
     self.cityLable.font = [UIFont systemFontOfSize:19*BiLiWidth];
     self.cityLable.textColor = RGBFormUIColor(0x343434);
     self.cityInfo = [NormalUse defaultsGetObjectKey:CurrentCity];
     self.cityLable.text = [self.cityInfo objectForKey:@"cityName"];
+    self.cityLable.userInteractionEnabled = YES;
     [self.whiteContentView addSubview:self.cityLable];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cityButtonClick)];
+    [self.cityLable addGestureRecognizer:tap];
+    
     
     Lable_ImageButton * cityButton  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(259.5*BiLiWidth, 19.5*BiLiWidth, 35*BiLiWidth, 27*BiLiWidth)];
     cityButton.button_imageView.frame = CGRectMake((cityButton.width-14*BiLiWidth)/2, 0, 14*BiLiWidth, 14*BiLiWidth);
@@ -176,7 +182,7 @@
     cityButton.button_lable.textColor = RGBFormUIColor(0x1396DC);
     cityButton.button_lable.text = @"当前位置";
     cityButton.button_lable.adjustsFontSizeToFitWidth = YES;
-    [cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.whiteContentView addSubview:cityButton];
     
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(25*BiLiWidth, 56*BiLiWidth, 273.5*BiLiWidth, 1)];
@@ -391,6 +397,7 @@
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, tiJiaoButton.top+tiJiaoButton.height+20*BiLiWidth)];
     [self initPickView];
 }
+
 -(void)cityButtonClick
 {
     CityListViewController * vc = [[CityListViewController alloc] init];
