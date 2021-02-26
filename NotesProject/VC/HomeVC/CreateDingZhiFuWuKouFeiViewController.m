@@ -115,8 +115,10 @@
         [dic setObject:self.city_code forKey:@"city_code"];
         [dic setObject:self.start_date forKey:@"start_date"];
         [dic setObject:self.end_date forKey:@"end_date"];
-        [dic setObject:self.min_price forKey:@"min_price"];
-        [dic setObject:self.max_price forKey:@"max_price"];
+        
+        [dic setObject:self.nprice_label forKey:@"nprice_label"];
+//        [dic setObject:self.min_price forKey:@"min_price"];
+//        [dic setObject:self.max_price forKey:@"max_price"];
         [dic setObject:self.love_type forKey:@"love_type"];
         [dic setObject:self.service_type forKey:@"service_type"];
         [dic setObject:[NormalUse getobjectForKey:self.mobie] forKey:@"mobie"];

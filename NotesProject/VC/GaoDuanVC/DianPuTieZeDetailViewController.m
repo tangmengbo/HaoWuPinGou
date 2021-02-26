@@ -47,11 +47,11 @@
 -(void)rightClick
 {
 
-    NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
+    NSNumber * is_interview = [self.tieZiInfo objectForKey:@"is_interview"];
 
-    if([is_unlock isKindOfClass:[NSNumber class]])
+    if([is_interview isKindOfClass:[NSNumber class]])
     {
-        if (is_unlock.intValue==1 || alsoUnlockSuccess) {
+        if (is_interview.intValue==1 || alsoUnlockSuccess) {
 
             JvBaoViewController * vc = [[JvBaoViewController alloc] init];
             vc.post_id = self.post_id;
@@ -411,10 +411,10 @@
     jieSuoTipButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
     [self.jieSuoButton addSubview:jieSuoTipButton];
 
-    NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
-    if([is_unlock isKindOfClass:[NSNumber class]])
+    NSNumber * is_interview = [self.tieZiInfo objectForKey:@"is_interview"];
+    if([is_interview isKindOfClass:[NSNumber class]])
     {
-        if (is_unlock.intValue==1) {
+        if (is_interview.intValue==1) {
 
             [self.jieSuoButton removeAllSubviews];
             
@@ -505,8 +505,8 @@
     }
     else
     {
-        NSNumber * is_unlock = [self.tieZiInfo objectForKey:@"is_unlock"];
-        if (is_unlock.intValue==1) {
+        NSNumber * is_interview = [self.tieZiInfo objectForKey:@"is_interview"];
+        if (is_interview.intValue==1) {
             
             if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
             {
@@ -544,11 +544,52 @@
 }
 -(void)jieSuoButtonClick
 {
-    [NormalUse showMessageLoadView:@"解锁中..." vc:self];
+    [NormalUse showMessageLoadView:@"预约中..." vc:self];
     
     NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    [info setObject:@"9" forKey:@"type_id"];
+    [info setObject:@"1" forKey:@"type_id"];
     [info setObject:self.post_id forKey:@"related_id"];
+    [HTTPModel yuYueTieZi:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [NormalUse removeMessageLoadingView:self];
+        if (status==1) {
+            NSNumber * is_interview = [NSNumber numberWithInt:1];
+            [self.tieZiInfo setObject:is_interview forKey:@"is_interview"];
+            self->alsoUnlockSuccess = YES;
+            if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+            {
+                VipTieZiJieSuoSuccseeTipView * view = [[VipTieZiJieSuoSuccseeTipView alloc] initWithFrame:CGRectZero];
+                [self.view addSubview:view];
+                view.toConnect = ^{
+                    
+                    [self chatButtonClick];
+                };
+            }
+            
+            [self.jieSuoButton removeAllSubviews];
+            
+            UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height)];
+            jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
+            jieSuoTipLable1.numberOfLines =2;
+            jieSuoTipLable1.textColor = [UIColor whiteColor];
+            [self.jieSuoButton addSubview:jieSuoTipLable1];
+            
+            NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+            NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",unlock_vpost_coin];
+            NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+            NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+            [text1 addAttribute:NSForegroundColorAttributeName
+                          value:RGBFormUIColor(0xFFFC02)
+                          range:NSMakeRange(4, unlock_vpost_coin.length)];
+            jieSuoTipLable1.attributedText = text1;
+        }
+        else
+        {
+            [NormalUse showToastView:msg view:self.view];
+            
+        }
+    }];
+    /*
     [HTTPModel unlockMobile:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         [NormalUse removeMessageLoadingView:self];
@@ -646,7 +687,7 @@
         }
         
     }];
-    
+    */
 }
 
 -(void)longPressAction:(UILongPressGestureRecognizer *)tap
@@ -683,7 +724,9 @@
     UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, jiaGeImageView.top, 200*BiLiWidth, 12*BiLiWidth)];
     jiaGeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     jiaGeLable.textColor = RGBFormUIColor(0x666666);
-    jiaGeLable.text = [NSString stringWithFormat:@"价格：%@-%@",[self.tieZiInfo objectForKey:@"min_price"],[self.tieZiInfo objectForKey:@"max_price"]];
+//    jiaGeLable.text = [NSString stringWithFormat:@"价格：%@-%@",[self.tieZiInfo objectForKey:@"min_price"],[self.tieZiInfo objectForKey:@"max_price"]];
+    jiaGeLable.text = [NSString stringWithFormat:@"价格：%@",[NormalUse getobjectForKey:[self.tieZiInfo objectForKey:@"nprice_label"]]];
+
     [self.jiBenXinXiContentView addSubview:jiaGeLable];
     
     //数量
@@ -737,7 +780,7 @@
     xiangMuLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     xiangMuLable.textColor = RGBFormUIColor(0x666666);
     xiangMuLable.text = [NSString stringWithFormat:@"项目：%@",[self.tieZiInfo objectForKey:@"service_type"]];
-    xiangMuLable.adjustsFontSizeToFitWidth = YES;
+//    xiangMuLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:xiangMuLable];
     
     UILabel * zongHePingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, xiangMuLable.bottom+10*BiLiWidth, 70*BiLiWidth, 16*BiLiWidth)];

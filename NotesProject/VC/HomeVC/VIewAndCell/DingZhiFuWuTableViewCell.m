@@ -105,7 +105,8 @@
     
     self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     self.faBuTimeLable.text = [info objectForKey:@"create_at"];
-    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+//    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+    self.priceLable.text = [NSString stringWithFormat:@"消费情况: %@",[NormalUse getobjectForKey:[info objectForKey:@"nprice_label"]]];
     
     self.dingZhiNeiRongLable.width = self.neiRongView.width-26*BiLiWidth;
     

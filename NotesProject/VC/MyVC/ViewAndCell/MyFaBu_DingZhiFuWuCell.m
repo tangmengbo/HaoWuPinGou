@@ -85,7 +85,8 @@
 -(void)contentViewSetData:(NSDictionary *)info
 {
     
-    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+//    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+    self.priceLable.text = [NSString stringWithFormat:@"%@",[NormalUse getobjectForKey:[info objectForKey:@"nprice_label"]]];
 
     self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     

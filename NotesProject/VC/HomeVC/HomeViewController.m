@@ -1400,7 +1400,10 @@
         [button setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
         [button setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
-
+        if(i==2)
+        {
+            [button setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
+        }
         button.tag = i;
         [button addTarget:self action:@selector(listTopButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.itemButtonContentView addSubview:button];
@@ -2135,36 +2138,56 @@
 #pragma mark -- 分类buttonclick
 -(void)listTopButtonClick:(UIButton *)selectButton
 {
-    [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
-    UITableView * tableView = [self.tableViewArray objectAtIndex:selectButton.tag];
-    [self setMainScrollViewContentSize:tableView];
-    
-    
-    for (int i=0; i<self.listButtonArray.count; i++) {
+    BOOL alsoShowAlert= NO;
+    if (selectButton.tag==2&&self.auth_vip.intValue==0) {
         
-        UIButton * button = [self.listButtonArray objectAtIndex:i];
-        if (button.tag==selectButton.tag) {
-            
-            [UIView animateWithDuration:0.5 animations:^{
+        alsoShowAlert = YES;
+    }
+    if (alsoShowAlert) {
+        
+        UIButton * button = [self.listButtonArray objectAtIndex:1];
+        [button sendActionsForControlEvents:UIControlEventTouchUpInside];
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
-                button.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                vc.info = self.userInfo;
+                vc.vipListInfo = self.vipListInfo;
+                [self.navigationController pushViewController:vc animated:YES];
 
-                self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
             }];
+        [alert addAction:cancleAction];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
 
+    }
+    else
+    {
+        [self.contentScrollView setContentOffset:CGPointMake(selectButton.tag*WIDTH_PingMu, 0) animated:YES];
+        UITableView * tableView = [self.tableViewArray objectAtIndex:selectButton.tag];
+        [self setMainScrollViewContentSize:tableView];
+        
+        for (int i=0; i<self.listButtonArray.count; i++) {
             
-        }
-        else
-        {
-            button.transform = CGAffineTransformIdentity;
+            UIButton * button = [self.listButtonArray objectAtIndex:i];
+            if (button.tag==selectButton.tag) {
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    
+                    button.transform = CGAffineTransformMakeScale(1.3, 1.3);
 
+                    self.sliderView.left = button.left+(button.width-self.sliderView.width)/2;
+                }];
+            }
+            else
+            {
+                button.transform = CGAffineTransformIdentity;
+
+            }
         }
-        
-        
-        
+
     }
     
-
 }
 #pragma mark---scrollviewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

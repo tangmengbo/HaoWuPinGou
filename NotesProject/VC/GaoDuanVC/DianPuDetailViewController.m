@@ -25,6 +25,8 @@
 @property(nonatomic,strong)NSString * order;//desc或者 asc
 @property(nonatomic,strong)UIView * jieSuoTipView;
 
+@property(nonatomic,strong)NSDictionary * cityInfo;//店铺信息
+
 @end
 
 @implementation DianPuDetailViewController
@@ -162,8 +164,10 @@
     }];
     
     
-    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
+//    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
     
+    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"1000以下",@"1000-10000",@"10000以上", nil];
+
     self.shaiXuanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.pingFenButton.top+self.pingFenButton.height+10*BiLiWidth, WIDTH_PingMu, 0)];
     self.shaiXuanView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.shaiXuanView];
@@ -473,7 +477,7 @@
         pingFenButton.button_lable1.frame = CGRectMake(pingFenButton.button_lable.left+pingFenButton.button_lable.width+5*BiLiWidth, 0, 200*BiLiWidth, 13*BiLiWidth);
         pingFenButton.button_lable1.font = [UIFont systemFontOfSize:11*BiLiWidth];
         pingFenButton.button_lable1.textColor = RGBFormUIColor(0x999999);
-        pingFenButton.button_lable1.text = [NSString stringWithFormat:@"· %@",[NormalUse getobjectForKey:[self.dianPuInfo objectForKey:@"city_name"]]];
+//        pingFenButton.button_lable1.text = [NSString stringWithFormat:@"· %@",[NormalUse getobjectForKey:[self.dianPuInfo objectForKey:@"city_name"]]];
         [headerView addSubview:pingFenButton];
         
         UIView * guanZhuBottomView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-84*BiLiWidth, titleLable.top, 72*BiLiWidth, 24*BiLiWidth)];
@@ -675,7 +679,18 @@
         [self.pingFenButton addTarget:self action:@selector(pingFenButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.pingFenButton];
         
+        self.cityButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-100*BiLiWidth, self.pingFenButton.top, 90*BiLiWidth, 12*BiLiWidth)];
+        [self.cityButton setTitle:@"全部" forState:UIControlStateNormal];
+        [self.cityButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
+        self.cityButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        self.cityButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [self.cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:self.cityButton];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            
+            [self.cityButton setTitle:[self.cityInfo objectForKey:@"cityName"] forState:UIControlStateNormal];
 
+        }
     }
 
     
@@ -683,6 +698,19 @@
     return headerView;
     
 }
+-(void)cityButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    vc.alsoFromHome = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    [self.cityButton setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+}
+
 -(void)closeShaiXuanTipView
 {
     self.shaiXuanView.hidden = YES;
@@ -694,6 +722,7 @@
     self.shaiXuanLeiXingStr = [self.paiXuSourceArray objectAtIndex:button.tag];
     
     CGSize  size = [NormalUse setSize:self.shaiXuanLeiXingStr withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    self.pingFenButton.button_lable.text = self.shaiXuanLeiXingStr;
     self.pingFenButton.button_lable.frame = CGRectMake(0, 0, size.width, self.pingFenButton.height);
     self.pingFenButton.button_imageView.frame = CGRectMake(self.pingFenButton.button_lable.width+self.pingFenButton.button_lable.left+5*BiLiWidth, (self.pingFenButton.height-5.5*BiLiWidth)/2, 10*BiLiWidth, 5.5*BiLiWidth);
 
@@ -721,18 +750,33 @@
         self.order = @"asc";
 
     }
-    else if ([@"价格从高到低" isEqualToString:self.shaiXuanLeiXingStr])
+    else if ([@"1000以下" isEqualToString:self.shaiXuanLeiXingStr])
     {
-        self.field = @"max_price";
-        self.order = @"desc";
+        self.field = @"minp";
 
     }
-    else if ([@"价格从低到高" isEqualToString:self.shaiXuanLeiXingStr])
+    else if ([@"1000~10000" isEqualToString:self.shaiXuanLeiXingStr])
     {
-        self.field = @"min_price";
-        self.order = @"asc";
+        self.field = @"midp";
 
     }
+    else if ([@"10000以上" isEqualToString:self.shaiXuanLeiXingStr])
+    {
+        self.field = @"maxp";
+
+    }
+//    else if ([@"价格从高到低" isEqualToString:self.shaiXuanLeiXingStr])
+//    {
+//        self.field = @"max_price";
+//        self.order = @"desc";
+//
+//    }
+//    else if ([@"价格从低到高" isEqualToString:self.shaiXuanLeiXingStr])
+//    {
+//        self.field = @"min_price";
+//        self.order = @"asc";
+//
+//    }
     [self loadNewLsit];
 
 }

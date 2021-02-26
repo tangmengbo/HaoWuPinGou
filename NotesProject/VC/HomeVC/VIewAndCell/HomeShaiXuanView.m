@@ -94,8 +94,9 @@
     [shaiXuanButton addTarget:self action:@selector(shaiXuanButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:shaiXuanButton];
     
-    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
-    
+//    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"价格从高到低",@"价格从低到高", nil];
+    self.paiXuSourceArray = [[NSArray alloc] initWithObjects:@"最新",@"最热",@"评分从高到低",@"评分从低到高",@"1000以下",@"1000-10000",@"10000以上", nil];
+
 
     float originx = 15*BiLiWidth;
     float originy = titleLable1.top+titleLable1.height+18.5*BiLiWidth;
@@ -199,18 +200,33 @@
         self.order = @"asc";
 
     }
-    else if ([@"价格从高到低" isEqualToString:str])
+    else if ([@"1000以下" isEqualToString:str])
     {
-        self.field = @"max_price";
-        self.order = @"desc";
+        self.field = @"minp";
 
     }
-    else if ([@"价格从低到高" isEqualToString:str])
+    else if ([@"1000~10000" isEqualToString:str])
     {
-        self.field = @"min_price";
-        self.order = @"asc";
+        self.field = @"midp";
 
     }
+    else if ([@"10000以上" isEqualToString:str])
+    {
+        self.field = @"maxp";
+
+    }
+//    else if ([@"价格从高到低" isEqualToString:str])
+//    {
+//        self.field = @"max_price";
+//        self.order = @"desc";
+//
+//    }
+//    else if ([@"价格从低到高" isEqualToString:str])
+//    {
+//        self.field = @"min_price";
+//        self.order = @"asc";
+//
+//    }
 
     for (UIButton * button in self.paiButtonXuArray) {
         

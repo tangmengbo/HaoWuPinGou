@@ -112,7 +112,7 @@
     }
     self.titleLable.text = [info objectForKey:@"user_name"];
     self.starLable.text = [NormalUse getobjectForKey:[info objectForKey:@"complex_score"]];
-    self.cityLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
+//    self.cityLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     
     
     [self.contentScrollView removeAllSubviews];
@@ -153,7 +153,8 @@
         priceLable.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
         priceLable.textAlignment = NSTextAlignmentCenter;
         priceLable.textColor = [UIColor whiteColor];
-        priceLable.text = [NSString stringWithFormat:@"¥%@-¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+//        priceLable.text = [NSString stringWithFormat:@"¥%@-¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
+        priceLable.text = [NSString stringWithFormat:@"%@",[NormalUse getobjectForKey:[info objectForKey:@"nprice_label"]]];
         [imageView addSubview:priceLable];
         [self.contentScrollView setContentSize:CGSizeMake(imageView.left+imageView.width+12*BiLiWidth, self.contentScrollView.height)];
 

@@ -118,12 +118,14 @@
         
         self.ageLable1.text = [NSString stringWithFormat:@"%d岁",age.intValue];
     }
-    NSNumber * min_price = [info1 objectForKey:@"min_price"];
-    NSNumber * max_price = [info1 objectForKey:@"max_price"];
-    if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
-        
-        self.messageLable1.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
-    }
+//    NSNumber * min_price = [info1 objectForKey:@"min_price"];
+//    NSNumber * max_price = [info1 objectForKey:@"max_price"];
+//    if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
+//
+//        self.messageLable1.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
+//    }
+    self.messageLable1.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info1 objectForKey:@"nprice_label"]]];
+
     
     if ([NormalUse isValidDictionary:info2]) {
         
@@ -152,12 +154,14 @@
             
             self.ageLable2.text = [NSString stringWithFormat:@"%d岁",age.intValue];
         }
-        NSNumber * min_price = [info2 objectForKey:@"min_price"];
-        NSNumber * max_price = [info2 objectForKey:@"max_price"];
-        if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
-            
-            self.messageLable2.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
-        }
+//        NSNumber * min_price = [info2 objectForKey:@"min_price"];
+//        NSNumber * max_price = [info2 objectForKey:@"max_price"];
+//        if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
+//
+//            self.messageLable2.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
+//        }
+        self.messageLable2.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info2 objectForKey:@"nprice_label"]]];
+
 
     }
     else

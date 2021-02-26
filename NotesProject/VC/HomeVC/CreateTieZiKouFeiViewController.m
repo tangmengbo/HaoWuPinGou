@@ -501,8 +501,11 @@
                 [dicInfo setObject:self.address_detail forKey:@"address_detail"];
                 [dicInfo setObject:self.age forKey:@"age"];
                 [dicInfo setObject:self.nums forKey:@"nums"];
-                [dicInfo setObject:self.min_price forKey:@"min_price"];
-                [dicInfo setObject:self.max_price forKey:@"max_price"];
+                
+                [dicInfo setObject:self.nprice_label forKey:@"nprice_label"];
+//                [dicInfo setObject:self.min_price forKey:@"min_price"];
+//                [dicInfo setObject:self.max_price forKey:@"max_price"];
+                
                 [dicInfo setObject:self.service_type forKey:@"service_type"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.mobile] forKey:@"mobile"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.qq] forKey:@"qq"];

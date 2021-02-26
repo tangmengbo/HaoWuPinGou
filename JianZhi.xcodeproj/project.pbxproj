@@ -10,6 +10,7 @@
 		2820EDBB25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820EDBA25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m */; };
 		2820EDBE25E641E20004B1BD /* DianPuTieZeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820EDBD25E641E20004B1BD /* DianPuTieZeDetailViewController.m */; };
 		284E201A25B98A34006713D0 /* HomeNvShenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284E201925B98A34006713D0 /* HomeNvShenCell.m */; };
+		28543E0125E8B069001F25F8 /* ZDYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28543E0025E8B069001F25F8 /* ZDYAlertView.m */; };
 		28C9BB0925E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9BB0825E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m */; };
 		28CF376F25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */; };
 		5F084FA125185DE000F2D64C /* MyXiaoXi_GuanFangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA025185DE000F2D64C /* MyXiaoXi_GuanFangCell.m */; };
@@ -225,6 +226,8 @@
 		2820EDBD25E641E20004B1BD /* DianPuTieZeDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianPuTieZeDetailViewController.m; sourceTree = "<group>"; };
 		284E201825B98A34006713D0 /* HomeNvShenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenCell.h; sourceTree = "<group>"; };
 		284E201925B98A34006713D0 /* HomeNvShenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNvShenCell.m; sourceTree = "<group>"; };
+		28543DFF25E8B069001F25F8 /* ZDYAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZDYAlertView.h; sourceTree = "<group>"; };
+		28543E0025E8B069001F25F8 /* ZDYAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZDYAlertView.m; sourceTree = "<group>"; };
 		28C9BB0725E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VipRenZhengTieZeDetailVC.h; sourceTree = "<group>"; };
 		28C9BB0825E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VipRenZhengTieZeDetailVC.m; sourceTree = "<group>"; };
 		28CF376D25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenShaiXuanView.h; sourceTree = "<group>"; };
@@ -982,6 +985,8 @@
 				5F9D960025404E9E002599B6 /* JieSuoSuccessTipView.m */,
 				2820EDB925E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.h */,
 				2820EDBA25E627FF0004B1BD /* VipTieZiJieSuoSuccseeTipView.m */,
+				28543DFF25E8B069001F25F8 /* ZDYAlertView.h */,
+				28543E0025E8B069001F25F8 /* ZDYAlertView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1568,6 +1573,7 @@
 				5F45D55225300AD2007F207C /* MyJieSuo_sanDaJiaoSeCell.m in Sources */,
 				5F22EBCD24ECF3A8002DCF61 /* MyCenterViewController.m in Sources */,
 				5F084FB02518A19800F2D64C /* ChongZhiMingXiCell.m in Sources */,
+				28543E0125E8B069001F25F8 /* ZDYAlertView.m in Sources */,
 				5F26510224FE3F7600171684 /* NvShenRenZhengStep2VC.m in Sources */,
 				5FE3EC0D2355A3E400C77F4D /* LLImagePickerCell.m in Sources */,
 				5F26510F24FE45BD00171684 /* RAFileManager.m in Sources */,

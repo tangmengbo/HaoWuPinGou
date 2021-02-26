@@ -190,7 +190,9 @@
     NSNumber * age = [info1 objectForKey:@"age"];
     self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
     
-    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@~%@",[info1 objectForKey:@"min_price"],[info1 objectForKey:@"max_price"]];
+//    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@~%@",[info1 objectForKey:@"min_price"],[info1 objectForKey:@"max_price"]];
+    self.priceLable1.text = [NSString stringWithFormat:@"%@",[NormalUse getobjectForKey:[info1 objectForKey:@"nprice_label"]]];
+
     
     if ([NormalUse isValidDictionary:info2]) {
         
@@ -217,7 +219,9 @@
         NSNumber * age = [info2 objectForKey:@"age"];
         self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
         
-        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@~%@",[info2 objectForKey:@"min_price"],[info2 objectForKey:@"max_price"]];
+//        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@~%@",[info2 objectForKey:@"min_price"],[info2 objectForKey:@"max_price"]];
+        self.priceLable2.text = [NSString stringWithFormat:@"%@",[NormalUse getobjectForKey:[info2 objectForKey:@"nprice_label"]]];
+
 
     }
     else

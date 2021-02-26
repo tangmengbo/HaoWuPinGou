@@ -87,11 +87,13 @@
     priceLable.textColor = RGBFormUIColor(0xFFA217);
     [self.mainScrollView addSubview:priceLable];
     
-    if ([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"min_price"]] && [NormalUse isValidString:[self.dingZhiInfo objectForKey:@"max_price"]]) {
-        
-        priceLable.text = [NSString stringWithFormat:@"¥ %@~%@",[self.dingZhiInfo objectForKey:@"min_price"],[self.dingZhiInfo objectForKey:@"max_price"]];
+//    if ([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"min_price"]] && [NormalUse isValidString:[self.dingZhiInfo objectForKey:@"max_price"]]) {
+//
+//        priceLable.text = [NSString stringWithFormat:@"¥ %@~%@",[self.dingZhiInfo objectForKey:@"min_price"],[self.dingZhiInfo objectForKey:@"max_price"]];
+//
+//    }
+    priceLable.text = [NSString stringWithFormat:@"价格: %@",[NormalUse getobjectForKey:[self.dingZhiInfo objectForKey:@"nprice_label"]]];
 
-    }
     
     UILabel * describleLable = [[UILabel alloc] initWithFrame:CGRectMake(priceLable.left, priceLable.top+priceLable.height+19*BiLiWidth, WIDTH_PingMu-priceLable.left*2, 0)];
     describleLable.font = [UIFont systemFontOfSize:14*BiLiWidth];

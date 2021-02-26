@@ -14,8 +14,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "678"
-            endingLineNumber = "678"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
             landmarkName = "-tiJiaoButtonClick"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "655"
-            endingLineNumber = "655"
+            startingLineNumber = "670"
+            endingLineNumber = "670"
             landmarkName = "-tiJiaoButtonClick"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateDingZhiFuWuViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "-oneDatePickerValueChanged:"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1261"
-            endingLineNumber = "1261"
+            startingLineNumber = "1276"
+            endingLineNumber = "1276"
             landmarkName = "-getImagePathId"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "887"
-            endingLineNumber = "887"
+            startingLineNumber = "900"
+            endingLineNumber = "900"
             landmarkName = "-nextButtonClick"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1219"
-            endingLineNumber = "1219"
+            startingLineNumber = "1234"
+            endingLineNumber = "1234"
             landmarkName = "-uploadImage"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1232"
-            endingLineNumber = "1232"
+            startingLineNumber = "1247"
+            endingLineNumber = "1247"
             landmarkName = "-uploadImage"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1229"
-            endingLineNumber = "1229"
+            startingLineNumber = "1244"
+            endingLineNumber = "1244"
             landmarkName = "-uploadImage"
             landmarkType = "7">
          </BreakpointContent>
@@ -254,8 +254,8 @@
             filePath = "NotesProject/VC/HomeVC/CreateTieZiKouFeiViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "521"
+            endingLineNumber = "521"
             landmarkName = "-getImagePathId"
             landmarkType = "7">
          </BreakpointContent>
@@ -279,16 +279,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "353C4C69-E53B-4407-99F5-E1ACAB2C4E25"
+            uuid = "CA61382E-19E5-41D9-A7E8-1278EAE00A54"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NotesProject/VC/HomeVC/TieZiDetailViewController.m"
+            filePath = "NotesProject/VC/HomeVC/VIewAndCell/HomeShaiXuanView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "567"
-            endingLineNumber = "567"
-            landmarkName = "-jieSuoButtonClick"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "-shaiXuanButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -243,27 +243,36 @@
     UILabel * jiaGeLable = [[UILabel alloc] initWithFrame:CGRectMake(lineView1.left, lineView2.top+lineView2.height, 50*BiLiWidth, 39.5*BiLiWidth)];
     jiaGeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     jiaGeLable.textColor = RGBFormUIColor(0x343434);
-    jiaGeLable.text = @"价格区间";
+//    jiaGeLable.text = @"价格区间";
+    jiaGeLable.text = @"服务价格";
     [self.whiteContentView addSubview:jiaGeLable];
     
-    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(jiaGeLable.left+jiaGeLable.width+16*BiLiWidth, lineView2.top+lineView2.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lineView2.top+lineView2.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.beginPriceTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    self.beginPriceTF.placeholder = @"最低价格";
+    self.beginPriceTF.placeholder = @"服务价格";
     self.beginPriceTF.textColor  = RGBFormUIColor(0x343434);
-    self.beginPriceTF.keyboardType = UIKeyboardTypeNumberPad;
+    self.beginPriceTF.textAlignment = NSTextAlignmentRight;
     [self.whiteContentView addSubview:self.beginPriceTF];
 
-    UIView * priceLineView = [[UIView alloc] initWithFrame:CGRectMake(self.beginPriceTF.left+self.beginPriceTF.width+14*BiLiWidth, (self.beginPriceTF.height-1)/2+self.beginPriceTF.top,7*BiLiWidth, 1)];
-    priceLineView.backgroundColor = RGBFormUIColor(0x343434);
-    [self.whiteContentView addSubview:priceLineView];
-
-
-    self.endPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(priceLineView.left+priceLineView.width+14*BiLiWidth, lineView2.top+lineView2.height, 58*BiLiWidth, 39.5*BiLiWidth)];
-    self.endPriceTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
-    self.endPriceTF.placeholder = @"最高价格";
-    self.endPriceTF.textColor  = RGBFormUIColor(0x343434);
-    self.endPriceTF.keyboardType = UIKeyboardTypeNumberPad;
-    [self.whiteContentView addSubview:self.endPriceTF];
+    
+//    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(jiaGeLable.left+jiaGeLable.width+16*BiLiWidth, lineView2.top+lineView2.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+//    self.beginPriceTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
+//    self.beginPriceTF.placeholder = @"最低价格";
+//    self.beginPriceTF.textColor  = RGBFormUIColor(0x343434);
+//    self.beginPriceTF.keyboardType = UIKeyboardTypeNumberPad;
+//    [self.whiteContentView addSubview:self.beginPriceTF];
+//
+//    UIView * priceLineView = [[UIView alloc] initWithFrame:CGRectMake(self.beginPriceTF.left+self.beginPriceTF.width+14*BiLiWidth, (self.beginPriceTF.height-1)/2+self.beginPriceTF.top,7*BiLiWidth, 1)];
+//    priceLineView.backgroundColor = RGBFormUIColor(0x343434);
+//    [self.whiteContentView addSubview:priceLineView];
+//
+//
+//    self.endPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(priceLineView.left+priceLineView.width+14*BiLiWidth, lineView2.top+lineView2.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+//    self.endPriceTF.font = [UIFont systemFontOfSize:13*BiLiWidth];
+//    self.endPriceTF.placeholder = @"最高价格";
+//    self.endPriceTF.textColor  = RGBFormUIColor(0x343434);
+//    self.endPriceTF.keyboardType = UIKeyboardTypeNumberPad;
+//    [self.whiteContentView addSubview:self.endPriceTF];
 
     UIView * lineView3 = [[UIView alloc] initWithFrame:CGRectMake(25*BiLiWidth, lineView2.top+lineView2.height+39.5*BiLiWidth, 273.5*BiLiWidth, 1)];
     lineView3.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -606,23 +615,29 @@
 
     if(![NormalUse isValidString:self.beginPriceTF.text])
     {
-        [NormalUse showToastView:@"请设置最低价格" view:self.view];
+        [NormalUse showToastView:@"请设置服务价格" view:self.view];
          return;
     }
-    if(![NormalUse isValidString:self.endPriceTF.text])
-    {
-        [NormalUse showToastView:@"请设置最高价格" view:self.view];
-         return;
-    }
-    
-    NSString * beginPrice = self.beginPriceTF.text;
-    NSString * endPrice = self.endPriceTF.text;
 
-    if(endPrice.intValue<beginPrice.intValue)
-    {
-        [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
-         return;
-    }
+//    if(![NormalUse isValidString:self.beginPriceTF.text])
+//    {
+//        [NormalUse showToastView:@"请设置最低价格" view:self.view];
+//         return;
+//    }
+//    if(![NormalUse isValidString:self.endPriceTF.text])
+//    {
+//        [NormalUse showToastView:@"请设置最高价格" view:self.view];
+//         return;
+//    }
+//
+//    NSString * beginPrice = self.beginPriceTF.text;
+//    NSString * endPrice = self.endPriceTF.text;
+//
+//    if(endPrice.intValue<beginPrice.intValue)
+//    {
+//        [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
+//         return;
+//    }
     if (![NormalUse isValidString:self.leiXingStr]) {
 
         [NormalUse showToastView:@"请选择小姐类型" view:self.view];
@@ -661,8 +676,10 @@
         [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
         [dic setObject:beginStr forKey:@"start_date"];
         [dic setObject:endStr forKey:@"end_date"];
-        [dic setObject:self.beginPriceTF.text forKey:@"min_price"];
-        [dic setObject:self.endPriceTF.text forKey:@"max_price"];
+        
+        [dic setObject:self.beginPriceTF.text forKey:@"nprice_label"];
+//        [dic setObject:self.beginPriceTF.text forKey:@"min_price"];
+//        [dic setObject:self.endPriceTF.text forKey:@"max_price"];
         [dic setObject:self.leiXingStr forKey:@"love_type"];
         [dic setObject:self.xiangMuStr forKey:@"service_type"];
         [dic setObject:[NormalUse getobjectForKey:self.telTF.text] forKey:@"mobie"];
@@ -709,8 +726,9 @@
         vc.city_code = [NSString stringWithFormat:@"%d",cityCode.intValue];
         vc.start_date = beginStr;
         vc.end_date = endStr;
-        vc.min_price = self.beginPriceTF.text;
-        vc.max_price = self.endPriceTF.text;
+        vc.nprice_label = self.beginPriceTF.text;
+//        vc.min_price = self.beginPriceTF.text;
+//        vc.max_price = self.endPriceTF.text;
         vc.love_type = self.leiXingStr;
         vc.service_type = self.xiangMuStr;
         vc.mobie = self.telTF.text;

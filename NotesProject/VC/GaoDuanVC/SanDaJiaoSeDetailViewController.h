@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIScrollView * bottomContentScollView;
 
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
+@property(nonatomic,strong)Lable_ImageButton * yuYueButton;
 
 @property(nonatomic,strong)NSString * lianXieFangShiStr;
 

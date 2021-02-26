@@ -18,9 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * end_date;
 
-@property(nonatomic,strong)NSString * min_price;
+@property(nonatomic,strong)NSString *nprice_label;
 
-@property(nonatomic,strong)NSString * max_price;
+//@property(nonatomic,strong)NSString * min_price;
+//
+//@property(nonatomic,strong)NSString * max_price;
 
 @property(nonatomic,strong)NSString * love_type;
 

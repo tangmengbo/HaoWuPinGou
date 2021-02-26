@@ -37,8 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * address_detail;
 @property(nonatomic,strong)NSString * age;
 @property(nonatomic,strong)NSString * nums;
-@property(nonatomic,strong)NSString * min_price;
-@property(nonatomic,strong)NSString * max_price;
+//@property(nonatomic,strong)NSString * min_price;
+//@property(nonatomic,strong)NSString * max_price;
+@property(nonatomic,strong)NSString * nprice_label;
 @property(nonatomic,strong)NSString * service_type;
 @property(nonatomic,strong)NSString * mobile;
 @property(nonatomic,strong)NSString * qq;

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DianPuDetailViewController : MainBaseViewController
+@interface DianPuDetailViewController : MainBaseViewController<CityListViewControllerDelegate>
 
 @property(nonatomic,strong)NSString * dianPuId;
 
@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property(nonatomic,strong)Lable_ImageButton * pingFenButton;
+
+@property(nonatomic,strong)UIButton * cityButton;
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;
 

@@ -206,25 +206,33 @@
     fuWuJiaGeLable.text = @"服务价格";
     [self.mainScrollView addSubview:fuWuJiaGeLable];
     
-    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(200*BiLiWidth, lineView3.top+lineView3.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(WIDTH_PingMu-113.5*BiLiWidth, lineView3.top+lineView3.height, 100*BiLiWidth, 39.5*BiLiWidth)];
     self.beginPriceTF.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.beginPriceTF.placeholder = @"最低价格";
+    self.beginPriceTF.placeholder = @"服务价格";
     self.beginPriceTF.textColor  = RGBFormUIColor(0x343434);
-    self.beginPriceTF.keyboardType = UIKeyboardTypeNumberPad;
     self.beginPriceTF.textAlignment = NSTextAlignmentRight;
     [self.mainScrollView addSubview:self.beginPriceTF];
 
-    UIView * priceLineView = [[UIView alloc] initWithFrame:CGRectMake(self.beginPriceTF.left+self.beginPriceTF.width+14*BiLiWidth, (self.beginPriceTF.height-1)/2+self.beginPriceTF.top,7*BiLiWidth, 1)];
-    priceLineView.backgroundColor = RGBFormUIColor(0x343434);
-    [self.mainScrollView addSubview:priceLineView];
-
-
-    self.endPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(priceLineView.left+priceLineView.width+14*BiLiWidth, lineView3.top+lineView3.height, 58*BiLiWidth, 39.5*BiLiWidth)];
-    self.endPriceTF.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    self.endPriceTF.placeholder = @"最高价格";
-    self.endPriceTF.textColor  = RGBFormUIColor(0x343434);
-    self.endPriceTF.keyboardType = UIKeyboardTypeNumberPad;
-    [self.mainScrollView addSubview:self.endPriceTF];
+    
+//    self.beginPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(200*BiLiWidth, lineView3.top+lineView3.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+//    self.beginPriceTF.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.beginPriceTF.placeholder = @"最低价格";
+//    self.beginPriceTF.textColor  = RGBFormUIColor(0x343434);
+//    self.beginPriceTF.keyboardType = UIKeyboardTypeNumberPad;
+//    self.beginPriceTF.textAlignment = NSTextAlignmentRight;
+//    [self.mainScrollView addSubview:self.beginPriceTF];
+//
+//    UIView * priceLineView = [[UIView alloc] initWithFrame:CGRectMake(self.beginPriceTF.left+self.beginPriceTF.width+14*BiLiWidth, (self.beginPriceTF.height-1)/2+self.beginPriceTF.top,7*BiLiWidth, 1)];
+//    priceLineView.backgroundColor = RGBFormUIColor(0x343434);
+//    [self.mainScrollView addSubview:priceLineView];
+//
+//
+//    self.endPriceTF = [[UITextField alloc] initWithFrame:CGRectMake(priceLineView.left+priceLineView.width+14*BiLiWidth, lineView3.top+lineView3.height, 58*BiLiWidth, 39.5*BiLiWidth)];
+//    self.endPriceTF.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    self.endPriceTF.placeholder = @"最高价格";
+//    self.endPriceTF.textColor  = RGBFormUIColor(0x343434);
+//    self.endPriceTF.keyboardType = UIKeyboardTypeNumberPad;
+//    [self.mainScrollView addSubview:self.endPriceTF];
 
     UIView * lineView4 = [[UIView alloc] initWithFrame:CGRectMake(77.5*BiLiWidth, fuWuJiaGeLable.top+fuWuJiaGeLable.height, 270*BiLiWidth, 1)];
     lineView4.backgroundColor = RGBFormUIColor(0xEEEEEE);
@@ -787,22 +795,28 @@
     }
     if(![NormalUse isValidString:self.beginPriceTF.text])
     {
-        [NormalUse showToastView:@"请设置最低价格" view:self.view];
+        [NormalUse showToastView:@"请设置服务价格" view:self.view];
          return;
     }
-    if(![NormalUse isValidString:self.endPriceTF.text])
-    {
-        [NormalUse showToastView:@"请设置最高价格" view:self.view];
-         return;
-    }
-    NSString * beginPrice = self.beginPriceTF.text;
-    NSString * endPrice = self.endPriceTF.text;
-    
-    if(endPrice.intValue<beginPrice.intValue)
-    {
-        [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
-         return;
-    }
+
+//    if(![NormalUse isValidString:self.beginPriceTF.text])
+//    {
+//        [NormalUse showToastView:@"请设置最低价格" view:self.view];
+//         return;
+//    }
+//    if(![NormalUse isValidString:self.endPriceTF.text])
+//    {
+//        [NormalUse showToastView:@"请设置最高价格" view:self.view];
+//         return;
+//    }
+//    NSString * beginPrice = self.beginPriceTF.text;
+//    NSString * endPrice = self.endPriceTF.text;
+//
+//    if(endPrice.intValue<beginPrice.intValue)
+//    {
+//        [NormalUse showToastView:@"最高价格不能小于最低价格" view:self.view];
+//         return;
+//    }
     
 
     if(![NormalUse isValidString:self.fuWuXiangMuButton.titleLabel.text]||[@"选择服务项目>" isEqualToString:self.fuWuXiangMuButton.titleLabel.text])
@@ -1187,8 +1201,10 @@
                 NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
                 [dicInfo setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
                 [dicInfo setObject:self.ageTF.text forKey:@"age"];
-                [dicInfo setObject:self.beginPriceTF.text forKey:@"min_price"];
-                [dicInfo setObject:self.endPriceTF.text forKey:@"max_price"];
+                
+                [dicInfo setObject:self.beginPriceTF.text forKey:@"nprice_label"];
+//                [dicInfo setObject:self.beginPriceTF.text forKey:@"min_price"];
+//                [dicInfo setObject:self.endPriceTF.text forKey:@"max_price"];
                 [dicInfo setObject:self.fuWuXiangMuButton.titleLabel.text forKey:@"service_type"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.telTF.text] forKey:@"mobile"];
                 [dicInfo setObject:[NormalUse getobjectForKey:self.qqTF.text] forKey:@"qq"];
