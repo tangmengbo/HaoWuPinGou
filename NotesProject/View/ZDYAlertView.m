@@ -23,18 +23,23 @@
         contentView.layer.masksToBounds = YES;
         [self addSubview:contentView];
         
-        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, contentView.width, 40*BiLiWidth)];
-        titleLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
-        titleLable.textColor = RGBFormUIColor(0x333333);
-        titleLable.textAlignment = NSTextAlignmentCenter;
-        titleLable.text = @"温馨提示";
-        [contentView addSubview:titleLable];
-        if ([NormalUse isValidString:title]) {
-            
-            titleLable.text = title;
-        }
+//        UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, contentView.width, 40*BiLiWidth)];
+//        titleLable.font = [UIFont systemFontOfSize:18*BiLiWidth];
+//        titleLable.textColor = RGBFormUIColor(0x333333);
+//        titleLable.textAlignment = NSTextAlignmentCenter;
+//        titleLable.text = @"温馨提示";
+//        [contentView addSubview:titleLable];
+//        if ([NormalUse isValidString:title]) {
+//            
+//            titleLable.text = title;
+//        }
+        UIImageView * topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, contentView.width, contentView.width*240/944)];
+        topImageView.image = [UIImage imageNamed:@"ZDYAlertTop"];
+        [contentView addSubview:topImageView];
         
-        UILabel * messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, titleLable.bottom+10*BiLiWidth, contentView.width-30*BiLiWidth, 0)];
+
+        
+        UILabel * messageLable1 = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, topImageView.bottom+30*BiLiWidth, contentView.width-30*BiLiWidth, 0)];
         messageLable1.textAlignment = NSTextAlignmentCenter;
         messageLable1.textColor = RGBFormUIColor(0x666666);
         messageLable1.numberOfLines = 0;
@@ -155,8 +160,18 @@
         contentView.height = originY+60*BiLiWidth;
         contentView.top = (HEIGHT_PingMu-contentView.height)/2;
         
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(contentView.right-33*BiLiWidth/2, contentView.top-33*BiLiWidth/2, 33*BiLiWidth, 33*BiLiWidth)];
+        [closeButton setImage:[UIImage imageNamed:@"zhangHu_closeKuang"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(quXiaoClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:closeButton];
+
+        
     }
     return self;
+}
+-(void)quXiaoClick
+{
+    [self removeFromSuperview];
 }
 -(void)button1Touch
 {

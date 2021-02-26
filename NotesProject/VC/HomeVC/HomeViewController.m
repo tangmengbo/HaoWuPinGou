@@ -451,34 +451,44 @@
     {
         if (self.auth_vip.intValue!=3&&self.auth_vip_cetf.intValue!=1) {
             
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"只有完成会员认证或成为蛟龙炮神会员才可以发布会员专区的帖子哦，认证通过后帖子会得到官方的认证标示" preferredStyle:UIAlertControllerStyleAlert];
             
-            UIAlertAction * huiyuan = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
-                vc.renZhengType = @"3";
-                [self.navigationController pushViewController:vc animated:YES];
-
-            }];
-            UIAlertAction* kaiTongPaoShen = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
-                vc.info = self.userInfo;
-                vc.vipListInfo = self.vipListInfo;
-                [self.navigationController pushViewController:vc animated:YES];
-                
-            }];
             if(self.auth_vip.intValue==0)
             {
-                [alert addAction:kaiTongPaoShen];
+                ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"只有完成会员认证或成为蛟龙炮神会员才可以发布会员专区的帖子哦，认证通过后帖子会得到官方的认证标示" message2:@"" button1Title:@"开通会员" button2Title:@""];
+                alertView.button1Click = ^{
+                    
+                    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                    vc.info = self.userInfo;
+                    vc.vipListInfo = self.vipListInfo;
+                    [self.navigationController pushViewController:vc animated:YES];
+
+                };
+                alertView.button2Click = ^{
+                    
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:alertView];
             }
             else
             {
-                [alert addAction:huiyuan];
-                [alert addAction:kaiTongPaoShen];
+                ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"只有完成会员认证或成为蛟龙炮神会员才可以发布会员专区的帖子哦，认证通过后帖子会得到官方的认证标示" message2:@"" button1Title:@"去认证" button2Title:@"开通会员"];
+                alertView.button1Click = ^{
+                    
+                    JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+                    vc.renZhengType = @"3";
+                    [self.navigationController pushViewController:vc animated:YES];
+
+                };
+                alertView.button2Click = ^{
+                  
+                    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                    vc.info = self.userInfo;
+                    vc.vipListInfo = self.vipListInfo;
+                    [self.navigationController pushViewController:vc animated:YES];
+
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:alertView];
             }
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
-            
+
         }
         else
         {
@@ -923,17 +933,19 @@
 
     if(self.auth_vip.intValue==0)
     {
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您当前未开通任何会员，开通会员后才可以进行会员专区认证" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
-                vc.info = self.userInfo;
-                vc.vipListInfo = self.vipListInfo;
-                [self.navigationController pushViewController:vc animated:YES];
+        ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"您当前未开通任何会员，开通会员后才可以进行会员专区认证" message2:@"" button1Title:@"开通会员" button2Title:@""];
+        alertView.button1Click = ^{
+            
+            HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+            vc.info = self.userInfo;
+            vc.vipListInfo = self.vipListInfo;
+            [self.navigationController pushViewController:vc animated:YES];
 
-            }];
-        [alert addAction:cancleAction];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
+        };
+        alertView.button2Click = ^{
+          
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
     }
     else
@@ -2148,17 +2160,19 @@
         UIButton * button = [self.listButtonArray objectAtIndex:1];
         [button sendActionsForControlEvents:UIControlEventTouchUpInside];
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
-                vc.info = self.userInfo;
-                vc.vipListInfo = self.vipListInfo;
-                [self.navigationController pushViewController:vc animated:YES];
+        ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" message2:@"" button1Title:@"开通会员" button2Title:@""];
+        alertView.button1Click = ^{
+            
+            HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+            vc.info = self.userInfo;
+            vc.vipListInfo = self.vipListInfo;
+            [self.navigationController pushViewController:vc animated:YES];
 
-            }];
-        [alert addAction:cancleAction];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
+        };
+        alertView.button2Click = ^{
+          
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
     }
     else
@@ -2388,17 +2402,19 @@
             
             if(self.auth_vip.intValue==0)
             {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                        
-                        HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
-                        vc.info = self.userInfo;
-                        vc.vipListInfo = self.vipListInfo;
-                        [self.navigationController pushViewController:vc animated:YES];
+                ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" message2:@"" button1Title:@"开通会员" button2Title:@""];
+                alertView.button1Click = ^{
+                    
+                    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                    vc.info = self.userInfo;
+                    vc.vipListInfo = self.vipListInfo;
+                    [self.navigationController pushViewController:vc animated:YES];
 
-                    }];
-                [alert addAction:cancleAction];
-                [self.navigationController presentViewController:alert animated:YES completion:nil];
+                };
+                alertView.button2Click = ^{
+                  
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
             }
             else

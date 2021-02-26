@@ -231,6 +231,15 @@
     [dic setObject:self.order forKey:@"order"];
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+        if (cityCode.intValue!=-1001) {
+
+            NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+            [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+
+        }
+    }
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -709,6 +718,7 @@
 {
     self.cityInfo = info;
     [self.cityButton setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+    [self loadNewLsit];
 }
 
 -(void)closeShaiXuanTipView

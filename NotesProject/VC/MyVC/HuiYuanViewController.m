@@ -424,21 +424,35 @@
 
     if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self kaiTongHuiYuan];
-        }];
         
-        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+        ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message2:@"" button1Title:@"立即开通" button2Title:@"购买金币"];
+        alertView.button1Click = ^{
+            [self kaiTongHuiYuan];
+
+        };
+        alertView.button2Click = ^{
             ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
-        }];
+
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
         
-        [alert addAction:cancleAction];
-        [alert addAction:addBalckAction];
-        [self presentViewController:alert animated:YES completion:nil];
+//        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//            [self kaiTongHuiYuan];
+//        }];
+//
+//        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//            ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }];
+//
+//        [alert addAction:cancleAction];
+//        [alert addAction:addBalckAction];
+//        [self presentViewController:alert animated:YES completion:nil];
 
     }
     else
@@ -560,21 +574,37 @@
     //如果支付通道最大金额小于要开通的会员金额
     if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self kaiTongHuiYuan];
-        }];
         
-        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+        ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message2:@"" button1Title:@"立即开通" button2Title:@"购买金币"];
+        alertView.button1Click = ^{
+            [self kaiTongHuiYuan];
+
+        };
+        alertView.button2Click = ^{
             ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
-        }];
+
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
         
-        [alert addAction:cancleAction];
-        [alert addAction:addBalckAction];
-        [self presentViewController:alert animated:YES completion:nil];
+//        UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message:nil preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"立即开通" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//            [self kaiTongHuiYuan];
+//        }];
+//
+//        UIAlertAction* addBalckAction = [UIAlertAction actionWithTitle:@"购买金币" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//            ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }];
+//
+//        [alert addAction:cancleAction];
+//        [alert addAction:addBalckAction];
+//        [self presentViewController:alert animated:YES completion:nil];
+        
+        
 
     }
     else
@@ -844,9 +874,9 @@
 -(void)setYongJiuVipItem
 {
     NSMutableArray * array = [[NSMutableArray alloc] init];
-    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"除经纪人信息外每日免费解锁999次",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每日发布信息50次",@"message",@"vip_faBu",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布定制服务",@"message",@"vip_dingZhi",@"imageName", nil];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"除经纪人信息外每日免费解锁999次",@"message",@"vip_zuanShi_1",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每日发布信息50次",@"message",@"vip_zuanShi_2",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布定制服务",@"message",@"vip_zuanShi_3",@"imageName", nil];
 
     [array addObject:info1];
     [array addObject:info2];
@@ -959,12 +989,12 @@
 -(void)setWangZheVipItem
 {
     NSMutableArray * array = [[NSMutableArray alloc] init];
-    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_wangZhe_1",@"imageName", nil];
    // NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"无限次解锁信息，联系经纪人需30金币",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"每日发布信息100次",@"message",@"vip_faBu",@"imageName", nil];
-    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
-    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"免费发布定制服务",@"message",@"vip_dingZhi",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"无限次解锁信息，联系经纪人需30金币",@"message",@"vip_wangZhe_2",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"每日发布信息100次",@"message",@"vip_wangZhe_3",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_wangZhe_4",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"免费发布定制服务",@"message",@"vip_wangZhe_5",@"imageName", nil];
 
     
     [array addObject:info1];

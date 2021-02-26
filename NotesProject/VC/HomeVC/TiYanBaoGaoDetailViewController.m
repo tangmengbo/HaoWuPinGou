@@ -317,18 +317,21 @@
         
         NSNumber *  auth_vip = [NormalUse defaultsGetObjectKey:@"UserAlsoVip"];
         if (auth_vip.intValue==0) {
-            
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"开通会员" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
-                    vc.info = self.userInfo;
-                    vc.vipListInfo = self.vipListInfo;
-                    [self.navigationController pushViewController:vc animated:YES];
+                        
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"开通会员后才可以预约会员专区的妹子,平台担保交易,信息绝对真实有效,任何问题平台包赔,让你约到心仪的妹子" message2:@"" button1Title:@"开通会员" button2Title:@""];
+            alertView.button1Click = ^{
+                
+                HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
+                vc.info = self.userInfo;
+                vc.vipListInfo = self.vipListInfo;
+                [self.navigationController pushViewController:vc animated:YES];
 
-                }];
-            [alert addAction:cancleAction];
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            };
+            alertView.button2Click = ^{
+              
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
         }
         else
         {

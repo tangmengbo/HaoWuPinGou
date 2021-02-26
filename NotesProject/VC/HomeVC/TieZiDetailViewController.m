@@ -59,11 +59,15 @@
         }
         else
         {
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"解锁资源后才可以投诉该帖~" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                }];
-            [alert addAction:cancleAction];
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"解锁资源后才可以投诉该帖~" message2:@"" button1Title:@"知道了" button2Title:@""];
+            alertView.button1Click = ^{
+            };
+            alertView.button2Click = ^{
+              
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
 
         }
     }
@@ -532,12 +536,15 @@
         }
         else
         {
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"先解锁才能在线聊天" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* cancleAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-            [alert addAction:cancleAction];
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"先解锁才能在线聊天" message2:@"" button1Title:@"确定" button2Title:@""];
+            alertView.button1Click = ^{
+                
+            };
+            alertView.button2Click = ^{
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
         }
 
