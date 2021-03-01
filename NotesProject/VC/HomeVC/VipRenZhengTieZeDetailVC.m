@@ -235,7 +235,7 @@
     [self.mainScrollView addSubview:self.messageContentView];
 
     NSString * nickStr = [self.tieZiInfo objectForKey:@"title"];
-    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 5*BiLiWidth, 200*BiLiWidth, 30*BiLiWidth)];
+    UILabel * nickLable = [[UILabel alloc] initWithFrame:CGRectMake(12.5*BiLiWidth, 5*BiLiWidth, 250*BiLiWidth, 30*BiLiWidth)];
     nickLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
     nickLable.textColor = RGBFormUIColor(0x343434);
     nickLable.text = nickStr;
@@ -257,59 +257,65 @@
 
     
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-25*BiLiWidth)/2, 25*BiLiWidth*170/60, 25*BiLiWidth)];
-    [self.messageContentView addSubview:vImageView];
-
-    NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
-    //2终身会员 1年会员 3蛟龙炮神 0非会员
-    if ([auth_vip isKindOfClass:[NSNumber class]]) {
-        if (auth_vip.intValue==1) {
-
-            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
-
-        }
-        else if (auth_vip.intValue==2)
-        {
-            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
-
-        }
-        else if (auth_vip.intValue==3)
-        {
-            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
-
-        }
-        else if (auth_vip.intValue==0)
-        {
-            vImageView.left = nickLable.left+nickLable.width;
-            vImageView.width = 0;
-
-        }
-
-    }
-    else
-    {
-        vImageView.left = nickLable.left+nickLable.width;
-        vImageView.width = 0;
-    }
-    
-    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(vImageView.left+vImageView.width+7.5*BiLiWidth, vImageView.top+5*BiLiWidth, 20*BiLiWidth*269/66, 20*BiLiWidth)];
+    float originY = nickLable.bottom;
+    float originX = nickLable.left;
+    UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.bottom+7.5*BiLiWidth, 20*269/66*BiLiWidth, 20*BiLiWidth)];
     [self.messageContentView addSubview:guanFangRenZhengImageView];
     
-    //是否经过官方认证
     NSNumber * auth_nomal = [self.tieZiInfo objectForKey:@"auth_nomal"];
     if ([auth_nomal isKindOfClass:[NSNumber class]]) {
         
         if (auth_nomal.intValue==1) {
             
-            guanFangRenZhengImageView.width = 20*BiLiWidth*171/42;
+            guanFangRenZhengImageView.width = 20*171/42*BiLiWidth;
             guanFangRenZhengImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
-
-
+            
+            originY = guanFangRenZhengImageView.bottom;
+            originX = guanFangRenZhengImageView.right+5*BiLiWidth;
         }
-
+        else
+        {
+            originY = nickLable.bottom;
+        }
+        
+    }
+    else
+    {
+        originY = nickLable.bottom;
     }
     
-    UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.top+nickLable.height+10*BiLiWidth, WIDTH_PingMu-nickLable.left-50*BiLiWidth, 11*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(originX, nickLable.bottom+5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
+    [self.messageContentView addSubview:vImageView];
+    
+    NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
+    //2终身会员 1年会员 3蛟龙炮神 0非会员
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
+        
+        originY = vImageView.bottom;
+        if (auth_vip.intValue==1) {
+            
+            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+            
+        }
+        else if (auth_vip.intValue==2)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+            
+        }
+        else if (auth_vip.intValue==3)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+            
+        }
+        else if (auth_vip.intValue==0)
+        {
+            
+        }
+        
+    }
+    
+    
+    UILabel * cityLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.left, originY+10*BiLiWidth, WIDTH_PingMu-nickLable.left-50*BiLiWidth, 11*BiLiWidth)];
     cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
     cityLable.textColor = RGBFormUIColor(0xFF0101);
     cityLable.adjustsFontSizeToFitWidth = YES;
@@ -394,7 +400,8 @@
     UIButton * jieSuoTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
     [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
     [jieSuoTipButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [jieSuoTipButton setTitle:@"会员专享预约" forState:UIControlStateNormal];
+    [jieSuoTipButton setTitle:@"会员专享\n立即预约" forState:UIControlStateNormal];
+    jieSuoTipButton.titleLabel.numberOfLines = 2;
     [jieSuoTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     jieSuoTipButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
     [self.jieSuoButton addSubview:jieSuoTipButton];
@@ -729,11 +736,11 @@
     zongHePingFenLable.text = @"综合评分";
     [self.jiBenXinXiContentView addSubview:zongHePingFenLable];
     
-    UIImageView * yanZhiImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, zongHePingFenLable.top+zongHePingFenLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
-    yanZhiImageView.image = [UIImage imageNamed:@"vipTie_yanZhi"];
-    [self.jiBenXinXiContentView addSubview:yanZhiImageView];
+    UIImageView * ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(11.5*BiLiWidth, zongHePingFenLable.top+zongHePingFenLable.height+14*BiLiWidth, 12*BiLiWidth, 12*BiLiWidth)];
+    ImageView.image = [UIImage imageNamed:@"vipTie_yanZhi"];
+    [self.jiBenXinXiContentView addSubview:ImageView];
     
-    UILabel * yanZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, yanZhiImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
+    UILabel * yanZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(30*BiLiWidth, ImageView.top, 300*BiLiWidth, 12*BiLiWidth)];
     yanZhiLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     yanZhiLable.textColor = RGBFormUIColor(0x666666);
     yanZhiLable.text = @"颜值";
@@ -762,6 +769,15 @@
     huanJingLable.text = @"环境";
     huanJingLable.adjustsFontSizeToFitWidth = YES;
     [self.jiBenXinXiContentView addSubview:huanJingLable];
+    
+    
+    NSNumber * face_value = [self.tieZiInfo objectForKey:@"face_value"];
+    yanZhiLable.text = [NSString stringWithFormat:@"颜值:%d",face_value.intValue];
+    NSNumber * skill_value = [self.tieZiInfo objectForKey:@"skill_value"];
+    jiShuLable.text = [NSString stringWithFormat:@"技术:%d",skill_value.intValue];
+    NSNumber * ambience_value = [self.tieZiInfo objectForKey:@"ambience_value"];
+    huanJingLable.text = [NSString stringWithFormat:@"环境:%d",ambience_value.intValue];
+
     
     UILabel * pingFenLable = [[UILabel alloc] initWithFrame:CGRectMake(0, zongHePingFenLable.bottom+18*BiLiWidth, WIDTH_PingMu, 33*BiLiWidth)];
     pingFenLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:33*BiLiWidth];
@@ -885,6 +901,7 @@
     huanJingLable.textAlignment = NSTextAlignmentCenter;
     [pingFenView addSubview:huanJingLable];
 
+ 
     NSNumber * ambience_value = [self.tieZiInfo objectForKey:@"ambience_value"];
 
     for (int i=0; i<5; i++) {

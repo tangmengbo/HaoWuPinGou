@@ -434,7 +434,7 @@
     [self.mainScrollView addSubview:sheZhiButton];
     
     
-    self.mianFeiJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, WIDTH_PingMu/3, 40*BiLiWidth)];
     self.mianFeiJieSuoButton.button_imageView.frame = CGRectMake((self.mianFeiJieSuoButton.width-26*BiLiWidth)/2, 0, 26*BiLiWidth, 13.5*BiLiWidth);
     self.mianFeiJieSuoButton.button_imageView.image = [UIImage imageNamed:@"my_vipWuXian"];
     self.mianFeiJieSuoButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
@@ -445,10 +445,10 @@
     self.mianFeiJieSuoButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.mianFeiJieSuoButton.button_lable1.textColor = RGBFormUIColor(0x9A9A9A);
     self.mianFeiJieSuoButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.mianFeiJieSuoButton.button_lable1.text = @"免费解锁";
+    self.mianFeiJieSuoButton.button_lable1.text = @"每日免费解锁";
     [self.mainScrollView addSubview:self.mianFeiJieSuoButton];
     
-    self.mianFeiFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-50*BiLiWidth)/2, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.mianFeiFaBuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, WIDTH_PingMu/3, 40*BiLiWidth)];
     self.mianFeiFaBuButton.button_imageView.frame = CGRectMake((self.mianFeiJieSuoButton.width-26*BiLiWidth)/2, 0, 26*BiLiWidth, 13.5*BiLiWidth);
     self.mianFeiFaBuButton.button_imageView.image = [UIImage imageNamed:@"my_vipWuXian"];
     self.mianFeiFaBuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
@@ -459,10 +459,10 @@
     self.mianFeiFaBuButton.button_lable1.font = [UIFont systemFontOfSize:12*BiLiWidth];
     self.mianFeiFaBuButton.button_lable1.textColor = RGBFormUIColor(0x9A9A9A);
     self.mianFeiFaBuButton.button_lable1.textAlignment = NSTextAlignmentCenter;
-    self.mianFeiFaBuButton.button_lable1.text = @"免费发布";
+    self.mianFeiFaBuButton.button_lable1.text = @"每日免费发布";
     [self.mainScrollView addSubview:self.mianFeiFaBuButton];
 
-    self.shouCangGuanZhuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-50*BiLiWidth-36.5*BiLiWidth, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, 50*BiLiWidth, 40*BiLiWidth)];
+    self.shouCangGuanZhuButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu/3*2, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, WIDTH_PingMu/3, 40*BiLiWidth)];
     [self.shouCangGuanZhuButton addTarget:self action:@selector(shouCangGuanZhuButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.shouCangGuanZhuButton.button_lable.frame = CGRectMake(0, 0, self.mianFeiJieSuoButton.width, 17*BiLiWidth);
     self.shouCangGuanZhuButton.button_lable.font = [UIFont systemFontOfSize:17*BiLiWidth];

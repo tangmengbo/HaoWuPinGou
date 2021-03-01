@@ -81,7 +81,7 @@
 
         self.messageLable2 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.cityLable1.top+self.cityLable1.height+7.5*BiLiWidth, 150*BiLiWidth, 11*BiLiWidth)];
         self.messageLable2.font = [UIFont systemFontOfSize:11*BiLiWidth];
-        self.messageLable2.textColor = RGBFormUIColor(0x999999);
+        self.messageLable2.textColor = RGBFormUIColor(0x333333);
         [self.contentView2 addSubview:self.messageLable2];
         
         self.button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView1.width, self.contentView1.height)];
@@ -124,7 +124,7 @@
 //
 //        self.messageLable1.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
 //    }
-    self.messageLable1.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info1 objectForKey:@"nprice_label"]]];
+    self.messageLable1.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info1 objectForKey:@"trade_money"]]];
 
     
     if ([NormalUse isValidDictionary:info2]) {
@@ -160,7 +160,7 @@
 //
 //            self.messageLable2.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
 //        }
-        self.messageLable2.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info2 objectForKey:@"nprice_label"]]];
+        self.messageLable2.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info2 objectForKey:@"trade_money"]]];
 
 
     }
