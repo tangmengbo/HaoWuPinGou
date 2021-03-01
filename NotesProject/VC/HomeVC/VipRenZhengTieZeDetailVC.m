@@ -257,7 +257,7 @@
 
     
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-30*BiLiWidth)/2, 30*BiLiWidth, 30*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-25*BiLiWidth)/2, 25*BiLiWidth*170/60, 25*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
@@ -392,7 +392,7 @@
 
     
     UIButton * jieSuoTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
-    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"liJiJieSuo"] forState:UIControlStateNormal];
+    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
     [jieSuoTipButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [jieSuoTipButton setTitle:@"会员专享预约" forState:UIControlStateNormal];
     [jieSuoTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

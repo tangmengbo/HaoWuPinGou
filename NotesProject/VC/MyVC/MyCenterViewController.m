@@ -412,7 +412,7 @@
     self.messageLable.text = @"非VIP暂无免费解锁次数";
     [self.mainScrollView addSubview:self.messageLable];
     
-    self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top, 30*BiLiWidth, 30*BiLiWidth)];
+    self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top+2.5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
     [self.mainScrollView addSubview:self.vipImageView];
 
     

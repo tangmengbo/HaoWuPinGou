@@ -679,7 +679,7 @@
         self.mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
 
-    
+
     UIImageView * topBgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, WIDTH_PingMu*645/1125)];
     topBgImageView.image = [UIImage imageNamed:@"vip_topBG"];
     [self.mainScrollView addSubview:topBgImageView];
@@ -780,7 +780,7 @@
     self.kaiTongJinBiLable.textColor = [UIColor whiteColor];
     [self.kaiTongButton addSubview:self.kaiTongJinBiLable];
     
-    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+30*BiLiWidth)];
+    [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.kaiTongButton.top+self.kaiTongButton.height+170*BiLiWidth)];
     
     if(self.auth_vip.intValue==3)
     {
@@ -877,10 +877,12 @@
     NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"除经纪人信息外每日免费解锁999次",@"message",@"vip_zuanShi_1",@"imageName", nil];
     NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每日发布信息50次",@"message",@"vip_zuanShi_2",@"imageName", nil];
     NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布定制服务",@"message",@"vip_zuanShi_3",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"可进入会员专区",@"message",@"vip_zuanShi_3",@"imageName", nil];
 
     [array addObject:info1];
     [array addObject:info2];
     [array addObject:info3];
+    [array addObject:info4];
     
     for (int i=0; i<array.count; i++) {
         
@@ -946,12 +948,14 @@
 -(void)setJiaoLongVipItem
 {
     NSMutableArray * array = [[NSMutableArray alloc] init];
-    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息无限制免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"免费发布所有信息",@"message",@"vip_faBu",@"imageName", nil];
-    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"定制服务免费发布",@"message",@"vip_dingZhi",@"imageName", nil];
-    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"svip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
-    NSDictionary * info6 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权六",@"title",@"官方特别定制服务",@"message",@"vip_guanFangDingZhi",@"imageName", nil];
+   // NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_liHe",@"imageName", nil];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"所有信息无限制免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"免费发布所有信息",@"message",@"vip_faBu",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"定制服务免费发布",@"message",@"vip_dingZhi",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"svip_ticket_nums_day"]],@"message",@"vip_teQuan",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"官方特别定制服务",@"message",@"vip_paoShen_6",@"imageName", nil];
+    NSDictionary * info6 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权六",@"title",@"可以进入会员专区",@"message",@"vip_guanFangDingZhi",@"imageName", nil];
+    NSDictionary * info7 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权七",@"title",@"无限制发布会 员专区信息",@"message",@"vip_paoShen_7",@"imageName", nil];
 
     
     [array addObject:info1];
@@ -960,6 +964,7 @@
     [array addObject:info4];
     [array addObject:info5];
     [array addObject:info6];
+    [array addObject:info7];
     
     for (int i=0; i<array.count; i++) {
         
@@ -989,12 +994,11 @@
 -(void)setWangZheVipItem
 {
     NSMutableArray * array = [[NSMutableArray alloc] init];
-    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"金币礼包",@"message",@"vip_wangZhe_1",@"imageName", nil];
-   // NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"所有信息免费解锁",@"message",@"vip_jieSuo",@"imageName", nil];
-    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"无限次解锁信息，联系经纪人需30金币",@"message",@"vip_wangZhe_2",@"imageName", nil];
-    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",@"每日发布信息100次",@"message",@"vip_wangZhe_3",@"imageName", nil];
-    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_wangZhe_4",@"imageName", nil];
-    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"免费发布定制服务",@"message",@"vip_wangZhe_5",@"imageName", nil];
+    NSDictionary * info1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权一",@"title",@"无限次解锁信息，联系经纪人需30金币",@"message",@"vip_wangZhe_2",@"imageName", nil];
+    NSDictionary * info2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权二",@"title",@"每日发布信息100次",@"message",@"vip_wangZhe_3",@"imageName", nil];
+    NSDictionary * info3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权三",@"title",[NSString stringWithFormat:@"每日领取%@组金币兑奖号码",[NormalUse getJinBiStr:@"vip_ticket_nums_day"]],@"message",@"vip_wangZhe_4",@"imageName", nil];
+    NSDictionary * info4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权四",@"title",@"免费发布定制服务",@"message",@"vip_wangZhe_5",@"imageName", nil];
+    NSDictionary * info5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"特权五",@"title",@"可以进入会员特区",@"message",@"vip_wangZhe_6",@"imageName", nil];
 
     
     [array addObject:info1];

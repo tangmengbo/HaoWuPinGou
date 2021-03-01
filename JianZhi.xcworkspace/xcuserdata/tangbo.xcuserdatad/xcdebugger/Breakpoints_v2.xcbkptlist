@@ -94,8 +94,8 @@
             filePath = "NotesProject/VC/MyVC/HuiYuanViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1112"
-            endingLineNumber = "1112"
+            startingLineNumber = "1116"
+            endingLineNumber = "1116"
             landmarkName = "-tiJiaoButtonClick"
             landmarkType = "7">
          </BreakpointContent>

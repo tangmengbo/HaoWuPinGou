@@ -11,4 +11,8 @@
 @property(nonatomic,strong)RCMessageContent * messageContent;
 @property(nonatomic,strong)RCMessage * mediaMessage;//发送图片时需要
 
+@property(nonatomic,strong)UILabel * titleStr;
+@property(nonatomic,strong)NSNumber * auth_vip;
+
+
 @end

@@ -343,7 +343,7 @@
         titleLable.text  = [self.dianPuInfo objectForKey:@"name"];
         [headerView addSubview:titleLable];
         
-        UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-30*BiLiWidth)/2, 30*BiLiWidth, 30*BiLiWidth)];
+        UIImageView * vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.left+titleLable.width+10*BiLiWidth, titleLable.top+(titleLable.height-25*BiLiWidth)/2, 25*BiLiWidth*170/60, 25*BiLiWidth)];
         [headerView addSubview:vipImageView];
         
 
@@ -511,19 +511,22 @@
         
         NSString * unlock_agent_coin = [NormalUse getJinBiStr:@"unlock_agent_coin"];
 
-        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 57*BiLiWidth)];
-        [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"jieSuo_bottomIMageView"] forState:UIControlStateNormal];
+        self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, jiaoYiBaoZhengImageView.top+jiaoYiBaoZhengImageView.height+16*BiLiWidth, 321*BiLiWidth, 68*BiLiWidth)];
+        [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_jieSuoBottom"] forState:UIControlStateNormal];
         self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
-        self.jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFE1B0);
-        self.jieSuoButton.button_lable.text = @"查看所有联系方式";
-        self.jieSuoButton.button_lable1.frame = CGRectMake(227*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
+        self.jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
+        self.jieSuoButton.button_lable.text = @"查看地址联系方式";
+        self.jieSuoButton.button_imageView.frame = CGRectMake(214*BiLiWidth, 11*BiLiWidth, 105*BiLiWidth, 46*BiLiWidth);
+        self.jieSuoButton.button_imageView.image = [UIImage imageNamed:@"sanJiaoSe_jieSuo"];
+        self.jieSuoButton.button_lable1.frame = CGRectMake(214*BiLiWidth, 0, 105*BiLiWidth, self.jieSuoButton.height);
         self.jieSuoButton.button_lable1.font = [UIFont systemFontOfSize:13*BiLiWidth];
-        self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFE1B0);
+        self.jieSuoButton.button_lable1.textAlignment = NSTextAlignmentCenter;
+        self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFFFFF);
         self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_agent_coin]];
         [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:self.jieSuoButton];
-        
+
         NSNumber * is_unlock = [self.dianPuInfo objectForKey:@"is_unlock"];
         if([is_unlock isKindOfClass:[NSNumber class]])
         {
@@ -563,7 +566,7 @@
                 self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
                 self.jieSuoButton.button_lable.text = lianXieFangShiStr;
                 self.jieSuoButton.button_lable1.text = @"";
-                
+                self.jieSuoButton.button_imageView.hidden = YES;
                 
             }
             else
@@ -664,8 +667,7 @@
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
             self.jieSuoButton.button_lable.text = lianXieFangShiStr;
             self.jieSuoButton.button_lable1.text = @"";
-
-
+            self.jieSuoButton.button_imageView.hidden = YES;
             [NormalUse showToastView:@"解锁成功" view:self.view];
         }
         else

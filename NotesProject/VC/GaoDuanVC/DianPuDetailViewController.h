@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)Lable_ImageButton * pingFenButton;
 
+@property(nonatomic,strong)UIImageView * locationImageView;
 @property(nonatomic,strong)UIButton * cityButton;
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;

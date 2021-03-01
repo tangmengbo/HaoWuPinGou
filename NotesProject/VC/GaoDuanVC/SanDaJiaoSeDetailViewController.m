@@ -83,7 +83,7 @@
             [self initTopMessageView];
             
             UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
-            [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
+            [chatButton setBackgroundImage:[UIImage imageNamed:@"tieZi_chat_blue"] forState:UIControlStateNormal];
             [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:chatButton];
 
@@ -130,10 +130,8 @@
             };
             [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
-
         }
     }
-
 }
 
 -(void)initTopMessageView
@@ -237,7 +235,7 @@
     nickLable.text = nickStr;
     [self.messageContentView addSubview:nickLable];
     
-    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-30*BiLiWidth)/2, 30*BiLiWidth, 30*BiLiWidth)];
+    UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left+nickLable.width+4.5*BiLiWidth, nickLable.top+(nickLable.height-25*BiLiWidth)/2, 25*BiLiWidth*170/60, 25*BiLiWidth)];
     [self.messageContentView addSubview:vImageView];
 
     NSNumber * auth_vip = [self.tieZiInfo objectForKey:@"auth_vip"];
@@ -373,7 +371,6 @@
     self.jieSuoButton.button_lable1.textColor = RGBFormUIColor(0xFFFFFF);
     self.jieSuoButton.button_lable1.text = [NSString stringWithFormat:@"%@金币解锁",[NormalUse getobjectForKey:unlock_mobile_coin]];
     [self.jieSuoButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-
     [self.messageContentView addSubview:self.jieSuoButton];
     
 //    unlock_rpost_coin 仨角色预约金
@@ -453,7 +450,7 @@
         UIButton * yueYueTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
         [yueYueTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
         [yueYueTipButton addTarget:self action:@selector(yuYueButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [yueYueTipButton setTitle:@"会员专享预约" forState:UIControlStateNormal];
+        [yueYueTipButton setTitle:@"立即预约" forState:UIControlStateNormal];
         [yueYueTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         yueYueTipButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         [self.yuYueButton addSubview:yueYueTipButton];
