@@ -12,6 +12,7 @@
 		284E201A25B98A34006713D0 /* HomeNvShenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284E201925B98A34006713D0 /* HomeNvShenCell.m */; };
 		28543E0125E8B069001F25F8 /* ZDYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28543E0025E8B069001F25F8 /* ZDYAlertView.m */; };
 		28C9BB0925E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9BB0825E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m */; };
+		28CB626025EE1337008293AB /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB625F25EE1337008293AB /* UICKeyChainStore.m */; };
 		28CF376F25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */; };
 		5F084FA125185DE000F2D64C /* MyXiaoXi_GuanFangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA025185DE000F2D64C /* MyXiaoXi_GuanFangCell.m */; };
 		5F084FA4251876D000F2D64C /* MyXiaoXi_ShenHeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F084FA3251876D000F2D64C /* MyXiaoXi_ShenHeCell.m */; };
@@ -230,6 +231,8 @@
 		28543E0025E8B069001F25F8 /* ZDYAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZDYAlertView.m; sourceTree = "<group>"; };
 		28C9BB0725E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VipRenZhengTieZeDetailVC.h; sourceTree = "<group>"; };
 		28C9BB0825E4A6FC00BE4871 /* VipRenZhengTieZeDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VipRenZhengTieZeDetailVC.m; sourceTree = "<group>"; };
+		28CB625E25EE1337008293AB /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICKeyChainStore.h; sourceTree = "<group>"; };
+		28CB625F25EE1337008293AB /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICKeyChainStore.m; sourceTree = "<group>"; };
 		28CF376D25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNvShenShaiXuanView.h; sourceTree = "<group>"; };
 		28CF376E25BA5CEA007CD2A4 /* HomeNvShenShaiXuanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNvShenShaiXuanView.m; sourceTree = "<group>"; };
 		3EAA70B96634DEB9F58F4FF5 /* Pods-JianZhi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JianZhi.release.xcconfig"; path = "Target Support Files/Pods-JianZhi/Pods-JianZhi.release.xcconfig"; sourceTree = "<group>"; };
@@ -1197,6 +1200,8 @@
 				5F26510924FE45BD00171684 /* VideoRecord */,
 				5FC7AD8B24D0080000EEEC66 /* SimulateIDFA.h */,
 				5FC7AD8A24D0080000EEEC66 /* SimulateIDFA.m */,
+				28CB625E25EE1337008293AB /* UICKeyChainStore.h */,
+				28CB625F25EE1337008293AB /* UICKeyChainStore.m */,
 				5F565DEB254410E300C823C2 /* Reachability.h */,
 				5F565DEA254410E300C823C2 /* Reachability.m */,
 			);
@@ -1623,6 +1628,7 @@
 				5F34DCE324EF769500DE15A1 /* HeiDianBaoGuangViewController.m in Sources */,
 				5F0B382E24F6439E00FC935A /* GouMaiJiLuListViewController.m in Sources */,
 				5F45D55825303079007F207C /* ChatListViewController.m in Sources */,
+				28CB626025EE1337008293AB /* UICKeyChainStore.m in Sources */,
 				5F7EF462251062AF0052B948 /* MyJieSuo_JingJiReCell.m in Sources */,
 				5F9D95CA253FCD39002599B6 /* JiaoSeWeiRenZhengFaTieKouFeiVC.m in Sources */,
 				5FD8504825087759009286CE /* FuQiJiaoRenZhengStep2VC.m in Sources */,

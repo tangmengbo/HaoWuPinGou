@@ -13,7 +13,9 @@
 #import <AdSupport/ASIdentifierManager.h>
 #import "Reachability.h"
 #import <CFNetwork/CFNetwork.h>
-
+#import <AppTrackingTransparency/AppTrackingTransparency.h>
+#import <AdSupport/ASIdentifierManager.h>
+#import "UICKeyChainStore.h"
 
 @implementation NormalUse
 
@@ -1626,17 +1628,56 @@
 +(NSString *)getSheBeiBianMa
 {
     NSString * sheBeiBianMa;
-    if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
-        
-        sheBeiBianMa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    
+    UICKeyChainStore *keychainStore = [UICKeyChainStore keyChainStore];
+    sheBeiBianMa = [keychainStore stringForKey:@"SheBeiMaKeyChainDefaults"];
+
+    if([NormalUse isValidString:sheBeiBianMa])
+    {
+        return sheBeiBianMa;
     }
     else
     {
-        sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
+        if ([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
+            
+            sheBeiBianMa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        }
+        else
+        {
+            sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
+        }
+        [keychainStore setString:sheBeiBianMa forKey:@"SheBeiMaKeyChainDefaults"];
+        return sheBeiBianMa;
 
     }
-    NSLog(@"%@",sheBeiBianMa);
-    return sheBeiBianMa;
+//    if (@available(iOS 14, *)) {
+//         //iOS14及以上版本需要先请求权限
+//        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+//            // 获取到权限后，依然使用老方法获取idfa
+//            if (status == ATTrackingManagerAuthorizationStatusAuthorized) {
+//                NSString *   sheBeiBianMa = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
+//            } else {
+//                NSString *   sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
+//            }
+//
+//        }];
+//        sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
+//    }
+//    else
+//    {
+//        if ([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
+//
+//            sheBeiBianMa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+//        }
+//        else
+//        {
+//            sheBeiBianMa = [SimulateIDFA createSimulateIDFA];
+//        }
+
+//    }
+
+//    NSLog(@"%@",sheBeiBianMa);
+//    return sheBeiBianMa;
 }
 +(void)defaultsSetObject:(id)value forKey:(NSString *)key
 {

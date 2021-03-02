@@ -223,6 +223,87 @@
     nickLable.text = nickStr;
     [self.messageContentView addSubview:nickLable];
     
+    
+    //添加在线标识和和动画
+    if ([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]]) {
+        
+        UILabel * onLineLable = [[UILabel alloc] initWithFrame:CGRectMake(nickLable.right+5*BiLiWidth, nickLable.top, 50*BiLiWidth, 20*BiLiWidth)];
+        onLineLable.textColor = [UIColor whiteColor];
+        onLineLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        onLineLable.layer.cornerRadius = 10*BiLiWidth;
+        onLineLable.layer.masksToBounds = YES;
+        onLineLable.textAlignment = NSTextAlignmentCenter;
+        [self.messageContentView addSubview:onLineLable];
+        onLineLable.hidden = YES;
+
+        [HTTPModel getUserOnLineStatus:@{@"ryuser_id":[self.tieZiInfo objectForKey:@"ryuser_id"]} callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-35*BiLiWidth, 0, 1, 30)];
+                [self.mainScrollView addSubview:lineView];
+                
+                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
+                onLineAnimationLable.textColor = [UIColor whiteColor];
+                onLineAnimationLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:8*BiLiWidth];
+                onLineAnimationLable.layer.cornerRadius = 5*BiLiWidth;
+                onLineAnimationLable.layer.masksToBounds = YES;
+                onLineAnimationLable.textAlignment = NSTextAlignmentCenter;
+                onLineAnimationLable.numberOfLines = 2;
+                [self.mainScrollView addSubview:onLineAnimationLable];
+
+                if ([@"1" isEqualToString:[NormalUse getobjectForKey:[responseObject objectForKey:@"status"]]]) {
+                    
+                    onLineLable.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineLable.text = @"我在线哦";
+                     
+                    lineView.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineAnimationLable.text = @"我在线哦\n快来私我";
+
+                }
+                else
+                {
+                    onLineLable.backgroundColor = RGBFormUIColor(0x8F97A2);
+                    onLineLable.text = @"暂时离线";
+
+                    lineView.backgroundColor = RGBFormUIColor(0x8F97A2);;
+                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0x8F97A2);
+                    onLineAnimationLable.text = @"暂时离线\n哥哥可留言";
+
+                }
+                
+                [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    
+                    lineView.height = 90;
+                    onLineAnimationLable.top = 90;
+
+                    
+                } completion:^(BOOL finished) {
+                    
+
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                       
+                        onLineLable.hidden = NO;
+
+                        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                            
+                            lineView.height = 30;
+                            onLineAnimationLable.top = 30;
+
+                        } completion:^(BOOL finished) {
+                            
+                        }];
+
+
+                    });
+
+                }];
+                
+            }
+        }];
+    }
+    
     float originY = nickLable.bottom;
     float originX = nickLable.left;
     UIImageView * guanFangRenZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(nickLable.left, nickLable.bottom+7.5*BiLiWidth, 20*269/66*BiLiWidth, 20*BiLiWidth)];

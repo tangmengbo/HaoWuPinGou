@@ -36,6 +36,11 @@
 #import "UIImage+GIF.h"
 #import "UIImageView+WebCache.h"
 
+//广告权限
+#import <AppTrackingTransparency/AppTrackingTransparency.h>
+#import <AdSupport/ASIdentifierManager.h>
+
+
 
 #import "MJRefresh.h"
 

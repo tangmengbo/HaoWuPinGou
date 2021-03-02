@@ -145,6 +145,18 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
 //    [self registerAPNs];
     
+    //启动app让用户授权设备id信息
+//    if (@available(iOS 14, *)) {
+//        // iOS14及以上版本需要先请求权限
+//        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+//            //允许授权
+//            if (status == ATTrackingManagerAuthorizationStatusAuthorized) {
+//            }
+//            else {//未允许授权
+//            }
+//        }];
+//    }
+
     [self xiancheng];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;//设置状态栏文字颜色
     
