@@ -52,9 +52,9 @@
         self.faBuTimeLable.adjustsFontSizeToFitWidth = YES;
         [self.headerImageView addSubview:self.faBuTimeLable];
         
-        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.width-16*171/42*BiLiWidth, 0, 16*171/42*BiLiWidth, 16*BiLiWidth)];
-        self.guanFangImageView.image = [UIImage imageNamed:@"home_guanFangTip"];
-        [self.headerImageView addSubview:self.guanFangImageView];
+        self.guanFangImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentMessageView.width-50*BiLiWidth, self.contentMessageView.height-50*BiLiWidth, 46*BiLiWidth, 46*BiLiWidth)];
+        self.guanFangImageView.image = [UIImage imageNamed:@"home_guangFangRenZheng"];
+        [self.contentMessageView addSubview:self.guanFangImageView];
         self.guanFangImageView.hidden = YES;
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth, 4*BiLiWidth, WIDTH_PingMu-(self.headerImageView.width+self.headerImageView.left+13.5*BiLiWidth+10*BiLiWidth), 17*BiLiWidth)];
@@ -121,7 +121,23 @@
         }
     }
     
-    
+    NSNumber * auth_nomal = [info objectForKey:@"auth_nomal"];
+    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+        
+        if (auth_nomal.intValue==1) {
+
+            self.guanFangImageView.hidden = NO;
+        }
+        else
+        {
+            self.guanFangImageView.hidden = YES;
+        }
+    }
+    else
+    {
+        self.guanFangImageView.hidden = YES;
+    }
+
     if (cellType!=YanZhengBangDan) {
         
         CGSize size = [NormalUse setSize:[info objectForKey:@"create_at"] withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:10*BiLiWidth];
@@ -206,7 +222,6 @@
         
         if (is_active.intValue==1) {
             
-            self.guanFangImageView.hidden = NO;
             self.faBuTimeLable.hidden = YES;
             self.titleLable.textColor = RGBFormUIColor(0xFF0101);
             self.leiXingLable.textColor = RGBFormUIColor(0xFF0101);
@@ -218,7 +233,6 @@
         }
         else
         {
-            self.guanFangImageView.hidden = YES;
             self.faBuTimeLable.hidden = NO;
             self.titleLable.textColor = RGBFormUIColor(0x333333);
             self.leiXingLable.textColor = RGBFormUIColor(0x999999);

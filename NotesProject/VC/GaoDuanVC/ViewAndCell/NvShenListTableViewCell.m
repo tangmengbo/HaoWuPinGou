@@ -34,6 +34,12 @@
         self.headerImageView1.clipsToBounds = YES;
         [self.contentView1 addSubview:self.headerImageView1];
         
+        self.guanFangImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView1.width-90*BiLiWidth, 0, 90*BiLiWidth, 22*BiLiWidth)];
+        self.guanFangImageView1.image = [UIImage imageNamed:@"jiaoSe_guanFangRenZheng"];
+        [self.headerImageView1 addSubview:self.guanFangImageView1];
+        self.guanFangImageView1.hidden = YES;
+
+        
         self.cityLable1 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView1.top+self.headerImageView1.height+10*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
         self.cityLable1.font = [UIFont systemFontOfSize:14*BiLiWidth];
         self.cityLable1.textColor = RGBFormUIColor(0x333333);
@@ -66,6 +72,12 @@
         self.headerImageView2.autoresizingMask = UIViewAutoresizingNone;
         self.headerImageView2.clipsToBounds = YES;
         [self.contentView2 addSubview:self.headerImageView2];
+        
+        self.guanFangImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView2.width-90*BiLiWidth, 0, 90*BiLiWidth, 22*BiLiWidth)];
+        self.guanFangImageView2.image = [UIImage imageNamed:@"jiaoSe_guanFangRenZheng"];
+        [self.headerImageView2 addSubview:self.guanFangImageView2];
+        self.guanFangImageView2.hidden = YES;
+
         
         self.cityLable2 = [[UILabel alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.headerImageView1.top+self.headerImageView1.height+10*BiLiWidth, 100*BiLiWidth, 14*BiLiWidth)];
         self.cityLable2.font = [UIFont systemFontOfSize:14*BiLiWidth];
@@ -111,6 +123,24 @@
 
         }
     }
+    
+    NSNumber * auth_nomal = [info1 objectForKey:@"auth_nomal"];
+    if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+        
+        if (auth_nomal.intValue==1) {
+
+            self.guanFangImageView1.hidden = NO;
+        }
+        else
+        {
+            self.guanFangImageView1.hidden = YES;
+        }
+    }
+    else
+    {
+        self.guanFangImageView1.hidden = YES;
+    }
+
 
     self.cityLable1.text = [info1 objectForKey:@"city_name"];
     NSNumber * age = [info1 objectForKey:@"age"];
@@ -118,12 +148,6 @@
         
         self.ageLable1.text = [NSString stringWithFormat:@"%d岁",age.intValue];
     }
-//    NSNumber * min_price = [info1 objectForKey:@"min_price"];
-//    NSNumber * max_price = [info1 objectForKey:@"max_price"];
-//    if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
-//
-//        self.messageLable1.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
-//    }
     self.messageLable1.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info1 objectForKey:@"trade_money"]]];
 
     
@@ -134,7 +158,6 @@
 
         if ([[info2 objectForKey:@"images"] isKindOfClass:[NSString class]]) {
             
-           // [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
             [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
@@ -143,23 +166,34 @@
             NSArray * images = [info2 objectForKey:@"images"];
             if ([NormalUse isValidArray:images]) {
                 
-               // [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
                 [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
             }
         }
+        
+        NSNumber * auth_nomal = [info2 objectForKey:@"auth_nomal"];
+        if ([auth_nomal isKindOfClass:[NSNumber class]]) {
+            
+            if (auth_nomal.intValue==1) {
+
+                self.guanFangImageView2.hidden = NO;
+            }
+            else
+            {
+                self.guanFangImageView2.hidden = YES;
+            }
+        }
+        else
+        {
+            self.guanFangImageView2.hidden = YES;
+        }
+
         self.cityLable2.text = [info2 objectForKey:@"city_name"];
         NSNumber * age = [info2 objectForKey:@"age"];
         if ([age isKindOfClass:[NSNumber class]]) {
             
             self.ageLable2.text = [NSString stringWithFormat:@"%d岁",age.intValue];
         }
-//        NSNumber * min_price = [info2 objectForKey:@"min_price"];
-//        NSNumber * max_price = [info2 objectForKey:@"max_price"];
-//        if ([min_price isKindOfClass:[NSNumber class]]&&[max_price isKindOfClass:[NSNumber class]]) {
-//
-//            self.messageLable2.text = [NSString stringWithFormat:@"价格 %d-%d",min_price.intValue,max_price.intValue];
-//        }
         self.messageLable2.text = [NSString stringWithFormat:@"价格 %@",[NormalUse getobjectForKey:[info2 objectForKey:@"trade_money"]]];
 
 

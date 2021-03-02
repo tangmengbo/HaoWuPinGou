@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * contentView1;
 @property(nonatomic,strong)UIImageView * headerImageView1;
+@property(nonatomic,strong)UIImageView * guanFangImageView1;
 @property(nonatomic,strong)UILabel * cityLable1;
 @property(nonatomic,strong)UILabel * ageLable1;
 @property(nonatomic,strong)UILabel * messageLable1;
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIView * contentView2;
 @property(nonatomic,strong)UIImageView * headerImageView2;
+@property(nonatomic,strong)UIImageView * guanFangImageView2;
 @property(nonatomic,strong)UILabel * cityLable2;
 @property(nonatomic,strong)UILabel * ageLable2;
 @property(nonatomic,strong)UILabel * messageLable2;
