@@ -477,7 +477,7 @@
 
     
     UIButton * jieSuoTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
-    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
+    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"vipTieZi_yuYue"] forState:UIControlStateNormal];
     [jieSuoTipButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [jieSuoTipButton setTitle:@"会员专享\n立即预约" forState:UIControlStateNormal];
     jieSuoTipButton.titleLabel.numberOfLines = 2;

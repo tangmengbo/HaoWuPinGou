@@ -53,10 +53,20 @@
     {
         if (is_interview.intValue==1 || alsoUnlockSuccess) {
 
-            JvBaoViewController * vc = [[JvBaoViewController alloc] init];
-            vc.post_id = self.post_id;
-            vc.role = @"1";
-            [self.navigationController pushViewController:vc animated:YES];
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"多次投诉无效,请上传有效截图,否则不予返还金币" message2:@"" button1Title:@"确定" button2Title:@"取消"];
+            alertView.button1Click = ^{
+                
+                JvBaoViewController * vc = [[JvBaoViewController alloc] init];
+                vc.post_id = self.post_id;
+                vc.role = @"1";
+                [self.navigationController pushViewController:vc animated:YES];
+
+            };
+            alertView.button2Click = ^{
+              
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
         }
         else
@@ -482,7 +492,7 @@
 
     
     UIButton * jieSuoTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
-    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
+    [jieSuoTipButton setBackgroundImage:[UIImage imageNamed:@"vipTieZi_yuYue"] forState:UIControlStateNormal];
     [jieSuoTipButton addTarget:self action:@selector(jieSuoButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [jieSuoTipButton setTitle:@"立即预约" forState:UIControlStateNormal];
     [jieSuoTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

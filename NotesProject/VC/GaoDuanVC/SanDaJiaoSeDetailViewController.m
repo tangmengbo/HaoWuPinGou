@@ -112,10 +112,20 @@
     {
         if (is_unlock.intValue==1 ||is_interview.intValue==1 || alsoUnlockSuccess) {
 
-            JvBaoViewController * vc = [[JvBaoViewController alloc] init];
-            vc.post_id = self.girl_id;
-            vc.role = @"2";
-            [self.navigationController pushViewController:vc animated:YES];
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"多次投诉无效,请上传有效截图,否则不予返还金币" message2:@"" button1Title:@"确定" button2Title:@"取消"];
+            alertView.button1Click = ^{
+                
+                JvBaoViewController * vc = [[JvBaoViewController alloc] init];
+                vc.post_id = self.girl_id;
+                vc.role = @"2";
+                [self.navigationController pushViewController:vc animated:YES];
+
+            };
+            alertView.button2Click = ^{
+              
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
         }
         else
@@ -529,7 +539,7 @@
         [yueYueTipButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_yuYue"] forState:UIControlStateNormal];
         [yueYueTipButton addTarget:self action:@selector(yuYueButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [yueYueTipButton setTitle:@"立即预约" forState:UIControlStateNormal];
-        [yueYueTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [yueYueTipButton setTitleColor:RGBFormUIColor(0xEE5500) forState:UIControlStateNormal];
         yueYueTipButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         [self.yuYueButton addSubview:yueYueTipButton];
 

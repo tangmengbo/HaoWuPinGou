@@ -150,7 +150,7 @@
 //    NSNumber * min_price = [info objectForKey:@"min_price"];
 //    NSNumber * max_price = [info objectForKey:@"max_price"];
 //    self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %d~%d",min_price.intValue,max_price.intValue];
-    self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %@",[NormalUse getobjectForKey:[info objectForKey:@"nprice_label"]]];
+    self.xiaoFeiLable.text = [NSString stringWithFormat:@"消费情况: %@",[NormalUse getobjectForKey:[info objectForKey:@"trade_money"]]];
 
     self.diQuLable.text = [NSString stringWithFormat:@"所在地区: %@",[info objectForKey:@"city_name"]];
     self.fuWuLable.text = [NSString stringWithFormat:@"服务项目: %@",[info objectForKey:@"service_type"]];

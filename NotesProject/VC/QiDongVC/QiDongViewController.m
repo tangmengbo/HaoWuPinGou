@@ -183,14 +183,10 @@
         [self.view addSubview:self.daojiShiButton];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRecord) userInfo:nil repeats:YES];
-        
-        
     }
     else
     {
-        
         [self timeFinish];
-        
     }
     
 }
