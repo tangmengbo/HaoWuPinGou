@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSNumber * is_active;//是否官方发帖
 
 
+@property(nonatomic,strong)UIImageView * shakeImageView;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

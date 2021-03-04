@@ -66,7 +66,47 @@
     [self.mainScrollView addSubview:titleLable];
     
     titleLable.text = [userinfo objectForKey:@"nickname"];
-    
+    CGSize titleSize = [NormalUse setSize:titleLable.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+    if (titleSize.width>150*BiLiWidth) {
+        
+        titleLable.width = 150*BiLiWidth;
+    }
+    else
+    {
+        titleLable.width = titleSize.width;
+
+    }
+
+    NSNumber * auth_vip = [self.dingZhiInfo objectForKey:@"auth_vip"];
+    //2终身会员 1年会员 3蛟龙炮神 0非会员
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
+        
+        UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(titleLable.right, titleLable.top-5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
+        [self.mainScrollView addSubview:vImageView];
+
+        if (auth_vip.intValue==1) {
+
+            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+        }
+        else if (auth_vip.intValue==2)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+        }
+        else if (auth_vip.intValue==3)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+        }
+        else if (auth_vip.intValue==0)
+        {
+            vImageView.image = nil;
+
+        }
+
+    }
+
     UILabel * weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-115*BiLiWidth, titleLable.top, 100*BiLiWidth, titleLable.height)];
     weiZhiLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     weiZhiLable.textColor = RGBFormUIColor(0x999999);
@@ -75,12 +115,13 @@
     
     weiZhiLable.text = [NormalUse getobjectForKey:[self.dingZhiInfo objectForKey:@"city_name"]];
     
-    UILabel * faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+10*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * faBuTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(titleLable.left, titleLable.top+titleLable.height+10*BiLiWidth, 130*BiLiWidth, 12*BiLiWidth)];
     faBuTimeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     faBuTimeLable.textColor = RGBFormUIColor(0x999999);
     [self.mainScrollView addSubview:faBuTimeLable];
-    
     faBuTimeLable.text = [self.dingZhiInfo objectForKey:@"create_at"];
+    
+
     
     UILabel * priceLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+25*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
     priceLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
@@ -264,6 +305,7 @@
 
         }
     }
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.jieSuoButton.bottom+20*BiLiWidth)];
 }
 -(void)chatButtonClick
 {

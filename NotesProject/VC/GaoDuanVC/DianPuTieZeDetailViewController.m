@@ -116,10 +116,17 @@
             
             self.tieZiInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             
-            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-62*BiLiWidth, HEIGHT_PingMu-68*BiLiWidth-243*BiLiWidth, 62*BiLiWidth, 68*BiLiWidth)];
             [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
             [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:chatButton];
+            
+
+            self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-127*BiLiWidth, chatButton.bottom+4*BiLiWidth, 127*BiLiWidth, 64*BiLiWidth)];
+            self.shakeImageView.image = [UIImage imageNamed:@"chatTipKuang"];
+            [self.view addSubview:self.shakeImageView];
+            [NormalUse shakeAnimationForView:self.shakeImageView];
+
 
             
             self.is_active = [self.tieZiInfo objectForKey:@"is_active"];
@@ -566,10 +573,15 @@
 
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
     
+    UIImageView * touSuShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-137*BiLiWidth, self.topNavView.bottom-4*BiLiWidth, 137*BiLiWidth, 64*BiLiWidth)];
+    touSuShakeImageView.image = [UIImage imageNamed:@"touSuTipKuang"];
+    [self.view addSubview:touSuShakeImageView];
+    [NormalUse shakeAnimationForView:touSuShakeImageView];
+
 }
 -(void)chatButtonClick
 {
-    
+    [self.shakeImageView removeFromSuperview];
     NSNumber * agent_is_unlock = [self.tieZiInfo objectForKey:@"agent_is_unlock"];
     if ([agent_is_unlock isKindOfClass:[NSNumber class]]&&agent_is_unlock.intValue==1) {
         

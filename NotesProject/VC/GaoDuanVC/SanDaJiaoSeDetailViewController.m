@@ -82,10 +82,16 @@
             self.tieZiInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             [self initTopMessageView];
             
-            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-62*BiLiWidth, HEIGHT_PingMu-65*BiLiWidth-243*BiLiWidth, 62*BiLiWidth, 68*BiLiWidth)];
             [chatButton setBackgroundImage:[UIImage imageNamed:@"tieZi_chat_blue"] forState:UIControlStateNormal];
             [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:chatButton];
+            
+            self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-143*BiLiWidth, chatButton.bottom+4*BiLiWidth, 133*BiLiWidth, 64*BiLiWidth)];
+            self.shakeImageView.image = [UIImage imageNamed:@"chatTipKuang"];
+            [self.view addSubview:self.shakeImageView];
+            [NormalUse shakeAnimationForView:self.shakeImageView];
+
 
         }
         else
@@ -451,6 +457,12 @@
     self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
     self.jieSuoButton.button_lable.text = @"查看地址联系方式";
+    self.jieSuoButton.button_lable.numberOfLines = 2;
+    if ([auth_nomal isKindOfClass:[NSNumber class]]&&auth_nomal.intValue==1)
+    {
+        self.jieSuoButton.button_lable.text = @"查看地址联系方式\n请先私聊后预付哦";
+
+    }
     self.jieSuoButton.button_imageView.frame = CGRectMake(214*BiLiWidth, 11*BiLiWidth, 105*BiLiWidth, 46*BiLiWidth);
     self.jieSuoButton.button_imageView.image = [UIImage imageNamed:@"sanJiaoSe_jieSuo"];
     self.jieSuoButton.button_lable1.frame = CGRectMake(214*BiLiWidth, 0, 105*BiLiWidth, self.jieSuoButton.height);
@@ -500,8 +512,8 @@
             self.jieSuoButton.button_lable.adjustsFontSizeToFitWidth = YES;
             self.jieSuoButton.button_lable.left = 10*BiLiWidth;
             self.jieSuoButton.button_lable.width = self.jieSuoButton.width-20*BiLiWidth;
-            self.self.jieSuoButton.button_lable.text = lianXieFangShiStr;
-            self.self.jieSuoButton.button_lable1.text = @"";
+            self.jieSuoButton.button_lable.text = lianXieFangShiStr;
+            self.jieSuoButton.button_lable1.text = @"";
 
 
         }
@@ -592,10 +604,16 @@
     
    [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
+    UIImageView * touSuShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-137*BiLiWidth, self.topNavView.bottom-4*BiLiWidth, 137*BiLiWidth, 64*BiLiWidth)];
+    touSuShakeImageView.image = [UIImage imageNamed:@"touSuTipKuang"];
+    [self.view addSubview:touSuShakeImageView];
+    [NormalUse shakeAnimationForView:touSuShakeImageView];
+
 
 }
 -(void)chatButtonClick
 {
+    [self.shakeImageView removeFromSuperview];
     NSNumber * from = [self.tieZiInfo objectForKey:@"from"];
     
     if (from.intValue==2) {

@@ -564,6 +564,11 @@
 
     [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
+    UIImageView * touSuShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-137*BiLiWidth, self.topNavView.bottom-4*BiLiWidth, 137*BiLiWidth, 64*BiLiWidth)];
+    touSuShakeImageView.image = [UIImage imageNamed:@"touSuTipKuang"];
+    [self.view addSubview:touSuShakeImageView];
+    [NormalUse shakeAnimationForView:touSuShakeImageView];
+
 }
 -(void)chatButtonClick
 {

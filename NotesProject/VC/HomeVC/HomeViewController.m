@@ -1503,12 +1503,16 @@
 //    [self firstGetYanZhengBangDanList];
 //    [self firstGetYanCheBaoGaoList];
     
-    UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-60*BiLiWidth-BottomHeight_PingMu, 50*BiLiWidth, 50*BiLiWidth)];
+    UIButton * faTieButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-80*BiLiWidth, HEIGHT_PingMu-70*BiLiWidth-BottomHeight_PingMu-84*BiLiWidth, 70*BiLiWidth, 70*BiLiWidth)];
     [faTieButton setBackgroundImage:[UIImage imageNamed:@"home_faBurenZheng"] forState:UIControlStateNormal];
     faTieButton.layer.cornerRadius = 25*BiLiWidth;
     [faTieButton addTarget:self action:@selector(faTieOrRenZhengButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:faTieButton];
     
+    self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-143*BiLiWidth, faTieButton.bottom+4*BiLiWidth, 133*BiLiWidth, 64*BiLiWidth)];
+    self.shakeImageView.image = [UIImage imageNamed:@"home_renZhengFabuTipKuang"];
+    [self.view addSubview:self.shakeImageView];
+    [NormalUse shakeAnimationForView:self.shakeImageView];
 }
 -(void)firstGetTieZiList
 {
@@ -2468,6 +2472,7 @@
 }
 -(void)faTieOrRenZhengButtonClick
 {
+    [self.shakeImageView removeFromSuperview];
     self.chaXiaoErFaTieRenZhengView1.top = 0;
 
 //    NSString * token = [NormalUse defaultsGetObjectKey:LoginToken];

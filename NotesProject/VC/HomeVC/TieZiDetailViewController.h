@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIView * messageContentView;
 
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
+@property(nonatomic,strong)Lable_ImageButton * yuYueButton;
+
 @property(nonatomic,strong)UILabel * tipLable;
 
 @property(nonatomic,strong)UIButton * jiBenXinXiButton;
@@ -51,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSNumber * is_active;//是否官方发帖
 
+@property(nonatomic,strong)UIImageView * shakeImageView;
 
 
 @end

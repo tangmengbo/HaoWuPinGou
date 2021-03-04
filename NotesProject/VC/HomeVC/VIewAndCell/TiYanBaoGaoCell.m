@@ -44,6 +44,10 @@
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self.contentView addSubview:self.titleLable];
         
+        self.vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLable.left-5*BiLiWidth, self.titleLable.bottom+8.5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
+        [self.contentView addSubview:self.vImageView];
+
+        
         self.leiXingLable = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLable.left, self.titleLable.top+self.titleLable.height+27*BiLiWidth+15*BiLiWidth, self.titleLable.width, 11*BiLiWidth)];
         self.leiXingLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
         self.leiXingLable.textColor = RGBFormUIColor(0x999999);
@@ -115,6 +119,32 @@
         
     }
     self.titleLable.text =[info objectForKey:@"nickname"] ;
+    
+    NSNumber * auth_vip = [info objectForKey:@"auth_vip"];
+    //2终身会员 1年会员 3蛟龙炮神 0非会员
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
+        if (auth_vip.intValue==1) {
+            
+            self.vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+            
+        }
+        else if (auth_vip.intValue==2)
+        {
+            self.vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+            
+        }
+        else if (auth_vip.intValue==3)
+        {
+            self.vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+            
+        }
+        else if (auth_vip.intValue==0)
+        {
+            self.vImageView.image = nil;
+            
+        }
+        
+    }
     
     
     self.leiXingLable.text = [NSString stringWithFormat:@"类型: %@",[info objectForKey:@"message_type"]];

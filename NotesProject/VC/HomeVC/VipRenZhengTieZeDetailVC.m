@@ -120,11 +120,16 @@
     }
     [self.view addSubview:self.mainScrollView];
     
-    UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, HEIGHT_PingMu-55*BiLiWidth-243*BiLiWidth, 55*BiLiWidth*184/204, 55*BiLiWidth)];
+    UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-62*BiLiWidth, HEIGHT_PingMu-68*BiLiWidth-243*BiLiWidth, 62*BiLiWidth, 68*BiLiWidth)];
     [chatButton setBackgroundImage:[UIImage imageNamed:@"vipRenZhengTieZi_chat"] forState:UIControlStateNormal];
     [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chatButton];
     
+    
+    self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-127*BiLiWidth, chatButton.bottom+4*BiLiWidth, 127*BiLiWidth, 64*BiLiWidth)];
+    self.shakeImageView.image = [UIImage imageNamed:@"chatTipKuang"];
+    [self.view addSubview:self.shakeImageView];
+    [NormalUse shakeAnimationForView:self.shakeImageView];
 
 
     
@@ -555,6 +560,7 @@
 }
 -(void)chatButtonClick
 {
+    [self.shakeImageView removeFromSuperview];
     if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
     {
         NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];

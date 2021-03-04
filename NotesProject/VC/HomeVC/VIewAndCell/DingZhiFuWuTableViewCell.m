@@ -36,10 +36,6 @@
         self.contentMessageView.layer.shadowOffset = CGSizeMake(0, 3);//CGSizeZero; //设置偏移量为0,四周都有阴影
 
         //shz
-
-        
-        
-        
         self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(21.5*BiLiWidth, 13.5*BiLiWidth, 38*BiLiWidth, 38*BiLiWidth)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
@@ -52,6 +48,10 @@
         self.titleLable.textColor = RGBFormUIColor(0x333333);
         [self.contentMessageView addSubview:self.titleLable];
         
+        self.vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLable.right, self.titleLable.top-5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
+        [self.contentMessageView addSubview:self.vImageView];
+
+
         self.weiZhiLable = [[UILabel alloc] initWithFrame:CGRectMake(self.contentMessageView.width-115*BiLiWidth, self.titleLable.top, 100*BiLiWidth, self.titleLable.height)];
         self.weiZhiLable.textAlignment = NSTextAlignmentRight;
         self.weiZhiLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
@@ -100,14 +100,49 @@
         [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[userinfo objectForKey:@"avatar"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         self.titleLable.text = [userinfo objectForKey:@"nickname"];
+        CGSize size = [NormalUse setSize:self.titleLable.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:15*BiLiWidth];
+        if (size.width>130*BiLiWidth) {
+            self.titleLable.width = 130*BiLiWidth;
+        }
+        else
+        {
+            self.titleLable.width = size.width;
+        }
+        self.vImageView.left = self.titleLable.right;
+        
+        NSNumber * auth_vip = [info objectForKey:@"auth_vip"];
+        //2终身会员 1年会员 3蛟龙炮神 0非会员
+        if ([auth_vip isKindOfClass:[NSNumber class]]) {
+            
+            
+            if (auth_vip.intValue==1) {
 
+                self.vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+            }
+            else if (auth_vip.intValue==2)
+            {
+                self.vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+            }
+            else if (auth_vip.intValue==3)
+            {
+                self.vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+            }
+            else if (auth_vip.intValue==0)
+            {
+                self.vImageView.image = nil;
+
+            }
+
+        }
     }
     
     self.weiZhiLable.text = [NormalUse getobjectForKey:[info objectForKey:@"city_name"]];
     self.faBuTimeLable.text = [info objectForKey:@"create_at"];
 //    self.priceLable.text = [NSString stringWithFormat:@"¥%@~¥%@",[info objectForKey:@"min_price"],[info objectForKey:@"max_price"]];
     self.priceLable.text = [NSString stringWithFormat:@"消费情况: %@",[NormalUse getobjectForKey:[info objectForKey:@"nprice_label"]]];
-    
     self.dingZhiNeiRongLable.width = self.neiRongView.width-26*BiLiWidth;
     
     NSString * neiRongStr = [info objectForKey:@"love_type"];

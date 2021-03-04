@@ -69,11 +69,42 @@
     nickLable.text = [self.info objectForKey:@"nickname"];
     [self.mainScrollView addSubview:nickLable];
     
-    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, nickLable.top+nickLable.height+9.5*BiLiWidth, 200*BiLiWidth, 12*BiLiWidth)];
+    UILabel * timeLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left+headerImageView.width+13.5*BiLiWidth, nickLable.top+nickLable.height+9.5*BiLiWidth, 80*BiLiWidth, 12*BiLiWidth)];
     timeLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     timeLable.textColor = RGBFormUIColor(0x9A9A9A);
     timeLable.text = [self.info objectForKey:@"experience_date"];//[NSString stringWithFormat:@"%@",[self.info objectForKey:@"friendly_date"]];
     [self.mainScrollView addSubview:timeLable];
+    
+    NSNumber * auth_vip = [self.info objectForKey:@"auth_vip"];
+    //2终身会员 1年会员 3蛟龙炮神 0非会员
+    if ([auth_vip isKindOfClass:[NSNumber class]]) {
+        
+        UIImageView * vImageView = [[UIImageView alloc] initWithFrame:CGRectMake(timeLable.right, timeLable.top-6.5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
+        [self.mainScrollView addSubview:vImageView];
+
+        if (auth_vip.intValue==1) {
+
+            vImageView.image = [UIImage imageNamed:@"vip_zuanShi"];
+
+        }
+        else if (auth_vip.intValue==2)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_wangZhe"];
+
+        }
+        else if (auth_vip.intValue==3)
+        {
+            vImageView.image = [UIImage imageNamed:@"vip_paoShen"];
+
+        }
+        else if (auth_vip.intValue==0)
+        {
+            vImageView.image = nil;
+
+        }
+
+    }
+
     
     UILabel * meiZiNameLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+12.5*BiLiWidth, 200*BiLiWidth, 39.5*BiLiWidth)];
     meiZiNameLable.font = [UIFont systemFontOfSize:13*BiLiWidth];

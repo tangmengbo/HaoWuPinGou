@@ -34,7 +34,7 @@
         self.headerImageView1.clipsToBounds = YES;
         [self.contentView1 addSubview:self.headerImageView1];
         
-        self.guanFangImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView1.width-90*BiLiWidth, 0, 90*BiLiWidth, 22*BiLiWidth)];
+        self.guanFangImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView1.width-65*BiLiWidth, 0, 65*BiLiWidth, 17*BiLiWidth)];
         self.guanFangImageView1.image = [UIImage imageNamed:@"jiaoSe_guanFangRenZheng"];
         [self.headerImageView1 addSubview:self.guanFangImageView1];
         self.guanFangImageView1.hidden = YES;
@@ -73,7 +73,7 @@
         self.headerImageView2.clipsToBounds = YES;
         [self.contentView2 addSubview:self.headerImageView2];
         
-        self.guanFangImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView2.width-90*BiLiWidth, 0, 90*BiLiWidth, 22*BiLiWidth)];
+        self.guanFangImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView2.width-65*BiLiWidth, 0, 65*BiLiWidth, 17*BiLiWidth)];
         self.guanFangImageView2.image = [UIImage imageNamed:@"jiaoSe_guanFangRenZheng"];
         [self.headerImageView2 addSubview:self.guanFangImageView2];
         self.guanFangImageView2.hidden = YES;

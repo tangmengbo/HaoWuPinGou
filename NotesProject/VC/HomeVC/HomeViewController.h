@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSDictionary * vipListInfo;
 @property(nonatomic,strong)NSDictionary * userInfo;
 
+@property(nonatomic,strong)UIImageView * shakeImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END

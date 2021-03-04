@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIView * contentMessageView;
 
 @property(nonatomic,strong)UIImageView * headerImageView;
+@property(nonatomic,strong)UIImageView * vImageView;
 @property(nonatomic,strong)UILabel * titleLable;
 @property(nonatomic,strong)UILabel * weiZhiLable;
 @property(nonatomic,strong)UILabel * faBuTimeLable;
@@ -27,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)contentViewSetData:(NSDictionary *)info;
 
 +(float)cellHegiht:(NSDictionary *)info;
+
+
 
 
 @end

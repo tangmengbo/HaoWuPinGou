@@ -51,6 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * lianXieFangShiStr;
 
+@property(nonatomic,strong)UIImageView * shakeImageView;
+
+
 
 @end
 

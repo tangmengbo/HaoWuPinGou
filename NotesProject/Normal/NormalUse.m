@@ -672,11 +672,11 @@
             
             if(testString!=nil && ![testString isKindOfClass:[NSNull class]])
             {
-            if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]) {
-                
-                return @"webp";
-                
-            }
+                if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]) {
+                    
+                    return @"webp";
+                    
+                }
             }
             
             return nil;
@@ -698,9 +698,9 @@
     
     // 移动的两个终点位置
     
-    CGPoint x = CGPointMake(position.x + 15, position.y);
+    CGPoint x = CGPointMake(position.x, position.y+1);
     
-    CGPoint y = CGPointMake(position.x - 15, position.y);
+    CGPoint y = CGPointMake(position.x, position.y-1);
     
     // 设置动画
     
@@ -728,7 +728,7 @@
     
     // 设置次数
     
-    [animation setRepeatCount:5];
+    [animation setRepeatCount:INT_MAX];
     
     // 添加上动画
     
