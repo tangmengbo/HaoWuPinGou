@@ -12,6 +12,7 @@
 @interface DianPuTieZeDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     NSInteger sliderIndex;
+    int payTypeIndex;
 }
 
 @property(nonatomic,strong)NSMutableDictionary * tieZiInfo;
@@ -22,9 +23,194 @@
 
 @property(nonatomic,strong)AutoScrollLabel * autoLabel;
 
+@property(nonatomic,strong)NSArray * payTypeList;
+@property(nonatomic,strong)UIView * zhiFuView;
+@property(nonatomic,strong)NSMutableArray * payTypeButtonArray;
+@property(nonatomic,strong)NSString * orderId;
+
+
 @end
 
 @implementation DianPuTieZeDetailViewController
+
+
+-(UIView *)zhiFuView
+{
+    if (!_zhiFuView) {
+
+        _zhiFuView= [[UIView alloc] initWithFrame:CGRectMake(0,0, WIDTH_PingMu, HEIGHT_PingMu)];
+        _zhiFuView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        [self.view addSubview:_zhiFuView];
+        
+        UIView * whiteContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0)];
+        whiteContentView.backgroundColor = [UIColor whiteColor];
+        [_zhiFuView addSubview:whiteContentView];
+
+        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 15*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
+        tipLable.text = @"选择支付方式";
+        tipLable.textColor = RGBFormUIColor(0xFFA218);
+        tipLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
+        [whiteContentView addSubview:tipLable];
+
+        UIButton * closeButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-28*BiLiWidth, 13*BiLiWidth, 14.5*BiLiWidth, 14.5*BiLiWidth)];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"dianPu_tip_close"] forState:UIControlStateNormal];
+        [closeButton addTarget:self action:@selector(closeZhiFuView) forControlEvents:UIControlEventTouchUpInside];
+        [whiteContentView addSubview:closeButton];
+        
+        float originY = tipLable.top+tipLable.height+10*BiLiWidth;
+        self.payTypeButtonArray = [NSMutableArray array];
+        for(int i=0;i<self.payTypeList.count;i++)
+        {
+            NSDictionary * info = [self.payTypeList objectAtIndex:i];
+            
+            Lable_ImageButton * button  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
+            [button addTarget:self action:@selector(payTypeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            button.button_imageView.frame = CGRectMake(19*BiLiWidth, 0, 21*BiLiWidth, 21*BiLiWidth);
+            button.button_lable.frame = CGRectMake(button.button_imageView.left+button.button_imageView.width+6.5*BiLiWidth, 0, 200*BiLiWidth, 21*BiLiWidth);
+            button.button_lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+            button.button_lable.textColor = RGBFormUIColor(0x343434);
+            button.button_imageView1.frame = CGRectMake(WIDTH_PingMu-14.5*BiLiWidth-28.5*BiLiWidth, (button.height-14.5*BiLiWidth)/2, 14.5*BiLiWidth, 14.5*BiLiWidth);
+            button.button_imageView1.layer.cornerRadius = 15.4*BiLiWidth/2;
+            button.button_imageView1.layer.masksToBounds = YES;
+            button.button_imageView1.layer.borderWidth = 1;
+            button.button_imageView1.layer.borderColor = [RGBFormUIColor(0x343434) CGColor];
+            button.tag = i;
+            [whiteContentView addSubview:button];
+            
+            if ([@"微信支付" isEqualToString:[info objectForKey:@"pay_name"]]) {
+                
+                button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
+                button.button_lable.text = [info objectForKey:@"pay_name"];
+            }else
+            {
+                button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
+                button.button_lable.text = [info objectForKey:@"pay_name"];
+
+            }
+            
+            [self.payTypeButtonArray addObject:button];
+            originY = originY+40*BiLiWidth;
+        }
+        
+        UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-280*BiLiWidth)/2, originY, 280*BiLiWidth, 40*BiLiWidth)];
+//        chongZhiButton.layer.cornerRadius = 45*BiLiWidth/2;
+//        chongZhiButton.backgroundColor = RGBFormUIColor(0xFF6B6C);
+//        chongZhiButton.titleLabel.font = [UIFont systemFontOfSize:14*BiLiWidth];
+//        [chongZhiButton setTitle:@"立即支付" forState:UIControlStateNormal];
+//        [chongZhiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [chongZhiButton addTarget:self action:@selector(liJiZhiFuButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [whiteContentView addSubview:chongZhiButton];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6B6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0A76);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = chongZhiButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [chongZhiButton.layer addSublayer:gradientLayer1];
+        
+         UILabel *  chongZhiButtonTipLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, chongZhiButton.width, chongZhiButton.height)];
+        chongZhiButtonTipLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        chongZhiButtonTipLable.textAlignment = NSTextAlignmentCenter;
+        chongZhiButtonTipLable.textColor = [UIColor whiteColor];
+        chongZhiButtonTipLable.text = @"立即支付";
+        [chongZhiButton addSubview:chongZhiButtonTipLable];
+
+        whiteContentView.height = chongZhiButton.top+chongZhiButton.height+20*BiLiWidth;
+        whiteContentView.top = HEIGHT_PingMu-whiteContentView.height;
+        //某个角圆角
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_zhiFuView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8*BiLiWidth, 8*BiLiWidth)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = _zhiFuView.bounds;
+        maskLayer.path = maskPath.CGPath;
+        whiteContentView.layer.mask = maskLayer;
+
+    }
+    return _zhiFuView;
+}
+-(void)payTypeButtonClick:(Lable_ImageButton *)selectButton
+{
+    payTypeIndex = (int)selectButton.tag;
+    
+    for (Lable_ImageButton * button in self.payTypeButtonArray) {
+        
+        [button.button_imageView1 setImage:nil];
+        button.button_imageView1.layer.borderWidth = 1;
+    }
+    [selectButton.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
+    selectButton.button_imageView1.layer.borderWidth = 0;
+
+}
+-(void)liJiZhiFuButtonClick
+{
+    [self closeZhiFuView];
+    
+    if (payTypeIndex==-1) {
+        
+        [NormalUse showToastView:@"请选择支付方式" view:self.view];
+        return;
+    }
+        [self xianShiLoadingView:@"下单中..." view:self.view];
+        [HTTPModel getZFOrderId:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           
+            [self yinCangLoadingView];
+
+            if (status==1) {
+                
+                self.orderId = responseObject;
+                NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
+                NSString * coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+                NSString *url;
+                
+                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"pay_url"]];
+                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+                NSURL *cleanURL = [NSURL URLWithString:url];
+                [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
+                    
+                }];
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+            }
+        }];
+    
+}
+-(void)yanZhengOrder
+{
+    [self xianShiLoadingView:@"验证支付..." view:self.view];
+    [HTTPModel checkZFStatus:[[NSDictionary alloc]initWithObjectsAndKeys:self.orderId,@"orderId", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        [self yinCangLoadingView];
+        if (status==1) {
+            //0下单，1成功，2失败
+            NSNumber * pay_status = [responseObject objectForKey:@"pay_status"];
+            if (pay_status.intValue==0) {
+                
+                [NormalUse showToastView:@"订单正在处理中,请稍等" view:self.view];
+            }
+            else if (pay_status.intValue==1)
+            {
+                [NormalUse showToastView:@"订单支付成功" view:self.view];
+
+            }
+            else
+            {
+                [NormalUse showToastView:@"订单支付失败" view:self.view];
+
+            }
+        }
+    }];
+    
+}
+-(void)closeZhiFuView
+{
+    self.zhiFuView.hidden = YES;
+}
+
 
 -(UIImageView *)noMessageTipButotn
 {
@@ -122,7 +308,7 @@
             [self.view addSubview:chatButton];
             
 
-            self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-127*BiLiWidth, chatButton.bottom+4*BiLiWidth, 127*BiLiWidth, 64*BiLiWidth)];
+            self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-92*BiLiWidth, chatButton.bottom+4*BiLiWidth, 92*BiLiWidth, 44*BiLiWidth)];
             self.shakeImageView.image = [UIImage imageNamed:@"chatTipKuang"];
             [self.view addSubview:self.shakeImageView];
             [NormalUse shakeAnimationForView:self.shakeImageView];
@@ -160,6 +346,31 @@
     }
     [self.view addSubview:self.mainScrollView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yanZhengOrder) name:@"YanZhengDingDanNotification" object:nil];
+
+        payTypeIndex = -1;
+        
+        [HTTPModel getCommonPayType:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                self.payTypeList = responseObject;
+                if(![NormalUse isValidArray:self.payTypeList])
+                {
+                    // [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+                }
+                else
+                {
+                    self.zhiFuView.hidden = YES;
+                }
+                
+            }
+            else
+            {
+                //[NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];
+            }
+            
+        }];
 }
 -(void)initTopMessageView
 {
@@ -303,10 +514,10 @@
             
             if (status==1) {
                 
-                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-35*BiLiWidth, 0, 1, 30)];
+                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(35*BiLiWidth, 0, 1, 30)];
                 [self.mainScrollView addSubview:lineView];
                 
-                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
+                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
                 onLineAnimationLable.textColor = [UIColor whiteColor];
                 onLineAnimationLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:8*BiLiWidth];
                 onLineAnimationLable.layer.cornerRadius = 5*BiLiWidth;
@@ -648,51 +859,73 @@
 }
 -(void)jieSuoButtonClick
 {
-    [NormalUse showMessageLoadView:@"预约中..." vc:self];
     
-    NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
-    [info setObject:@"1" forKey:@"type_id"];
-    [info setObject:self.post_id forKey:@"related_id"];
-    [HTTPModel yuYueTieZi:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:[NSString stringWithFormat:@"您正在预付定金%@金币",[NormalUse getJinBiStr:@"unlock_vpost_coin"]] message2:@"" button1Title:@"取消" button2Title:@"确定"];
+    alertView.button1Click = ^{
         
-        [NormalUse removeMessageLoadingView:self];
-        if (status==1) {
-            NSNumber * is_interview = [NSNumber numberWithInt:1];
-            [self.tieZiInfo setObject:is_interview forKey:@"is_interview"];
-            self->alsoUnlockSuccess = YES;
-            if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
-            {
-                VipTieZiJieSuoSuccseeTipView * view = [[VipTieZiJieSuoSuccseeTipView alloc] initWithFrame:CGRectZero];
-                [self.view addSubview:view];
-                view.toConnect = ^{
-                    
-                    [self chatButtonClick];
-                };
+    };
+    alertView.button2Click = ^{
+        
+        [NormalUse showMessageLoadView:@"预约中..." vc:self];
+        
+        NSMutableDictionary * info = [[NSMutableDictionary alloc] init];
+        [info setObject:@"1" forKey:@"type_id"];
+        [info setObject:self.post_id forKey:@"related_id"];
+        [HTTPModel yuYueTieZi:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            [NormalUse removeMessageLoadingView:self];
+            if (status==1) {
+                NSNumber * is_interview = [NSNumber numberWithInt:1];
+                [self.tieZiInfo setObject:is_interview forKey:@"is_interview"];
+                self->alsoUnlockSuccess = YES;
+                if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+                {
+                    VipTieZiJieSuoSuccseeTipView * view = [[VipTieZiJieSuoSuccseeTipView alloc] initWithFrame:CGRectZero];
+                    [self.view addSubview:view];
+                    view.toConnect = ^{
+                        
+                        [self chatButtonClick];
+                    };
+                }
+                
+                [self.jieSuoButton removeAllSubviews];
+                
+                UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height)];
+                jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
+                jieSuoTipLable1.numberOfLines =2;
+                jieSuoTipLable1.textColor = [UIColor whiteColor];
+                [self.jieSuoButton addSubview:jieSuoTipLable1];
+                
+                NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+                NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",unlock_vpost_coin];
+                NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+                NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+                [text1 addAttribute:NSForegroundColorAttributeName
+                              value:RGBFormUIColor(0xFFFC02)
+                              range:NSMakeRange(4, unlock_vpost_coin.length)];
+                jieSuoTipLable1.attributedText = text1;
             }
-            
-            [self.jieSuoButton removeAllSubviews];
-            
-            UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.jieSuoButton.width-20*BiLiWidth, self.jieSuoButton.height)];
-            jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
-            jieSuoTipLable1.numberOfLines =2;
-            jieSuoTipLable1.textColor = [UIColor whiteColor];
-            [self.jieSuoButton addSubview:jieSuoTipLable1];
-            
-            NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
-            NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,会员专享特区",unlock_vpost_coin];
-            NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
-            NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
-            [text1 addAttribute:NSForegroundColorAttributeName
-                          value:RGBFormUIColor(0xFFFC02)
-                          range:NSMakeRange(4, unlock_vpost_coin.length)];
-            jieSuoTipLable1.attributedText = text1;
-        }
-        else
-        {
-            [NormalUse showToastView:msg view:self.view];
-            
-        }
-    }];
+            else if (status==11402)
+            {
+                if ([NormalUse isValidArray:self.payTypeList]) {
+                    
+                    self.zhiFuView.hidden = NO;
+                }
+                else
+                {
+                    [NormalUse showToastView:msg view:self.view];
+                }
+            }
+            else
+            {
+                [NormalUse showToastView:msg view:self.view];
+                
+            }
+        }];
+
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
     /*
     [HTTPModel unlockMobile:info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         

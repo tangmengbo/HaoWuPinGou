@@ -180,9 +180,9 @@
     cityButton.button_lable.font = [UIFont systemFontOfSize:9*BiLiWidth];
     cityButton.button_lable.textAlignment = NSTextAlignmentCenter;
     cityButton.button_lable.textColor = RGBFormUIColor(0x1396DC);
-    cityButton.button_lable.text = @"当前位置";
+    cityButton.button_lable.text = @"更改位置";
     cityButton.button_lable.adjustsFontSizeToFitWidth = YES;
-//    [cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.whiteContentView addSubview:cityButton];
     
     UIView * lineView1 = [[UIView alloc] initWithFrame:CGRectMake(25*BiLiWidth, 56*BiLiWidth, 273.5*BiLiWidth, 1)];

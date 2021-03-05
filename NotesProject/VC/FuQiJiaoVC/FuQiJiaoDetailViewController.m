@@ -250,10 +250,10 @@
             
             if (status==1) {
                 
-                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-35*BiLiWidth, 0, 1, 30)];
+                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(35*BiLiWidth, 0, 1, 30)];
                 [self.mainScrollView addSubview:lineView];
                 
-                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
+                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
                 onLineAnimationLable.textColor = [UIColor whiteColor];
                 onLineAnimationLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:8*BiLiWidth];
                 onLineAnimationLable.layer.cornerRadius = 5*BiLiWidth;

@@ -730,6 +730,8 @@
     
     [animation setRepeatCount:INT_MAX];
     
+    animation.removedOnCompletion = NO;
+    
     // 添加上动画
     
     [viewLayer addAnimation:animation forKey:nil];

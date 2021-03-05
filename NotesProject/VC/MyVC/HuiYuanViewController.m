@@ -1186,7 +1186,7 @@
                 self.nianKaTipLable.hidden = NO;
                 self.yongJiuTipLable.hidden = YES;
                 self.auth_vip = [NSNumber numberWithInt:1];
-                kaiTongHuiYuanQueRenViewTipLable.text = @"年卡会员开通成功";
+                kaiTongHuiYuanQueRenViewTipLable.text = @"永恒钻石年会员已为您开通";
                 
                 [NormalUse defaultsSetObject:[NSNumber numberWithInt:1] forKey:@"UserAlsoVip"];//本地存储会员身份
 
@@ -1196,7 +1196,7 @@
                 self.nianKaTipLable.hidden = YES;
                 self.yongJiuTipLable.hidden = NO;
                 self.auth_vip = [NSNumber numberWithInt:2];
-                kaiTongHuiYuanQueRenViewTipLable.text = @"永久卡会员开通成功";
+                kaiTongHuiYuanQueRenViewTipLable.text = @"最强王者永久会员已为您开通";
                 [NormalUse defaultsSetObject:[NSNumber numberWithInt:2] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }
@@ -1205,7 +1205,7 @@
                 self.nianKaTipLable.hidden = YES;
                 self.yongJiuTipLable.hidden = NO;
                 self.auth_vip = [NSNumber numberWithInt:3];
-                kaiTongHuiYuanQueRenViewTipLable.text = @"蛟龙炮神卡会员开通成功";
+                kaiTongHuiYuanQueRenViewTipLable.text = @"蛟龙跑神SVIP永久尊崇会员已为您开通";
                 [NormalUse defaultsSetObject:[NSNumber numberWithInt:3] forKey:@"UserAlsoVip"];//本地存储会员身份
 
             }

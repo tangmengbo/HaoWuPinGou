@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSDictionary * vipListInfo;
 
+@property(nonatomic,strong)UIImageView * headerShakeImageView;
+@property(nonatomic,strong)UIImageView * settingShakeImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,11 +10,13 @@
 
 @interface DingZhiFuWuDetailViewController ()
 
-@property(nonatomic,strong)NSDictionary * dingZhiInfo;
+@property(nonatomic,strong)NSMutableDictionary * dingZhiInfo;
 
 @property(nonatomic,strong)UIScrollView * mainScrollView;
 
 @property(nonatomic,strong)Lable_ImageButton * jieSuoButton;
+
+@property(nonatomic,strong)UIImageView * shakeImageView;
 
 
 @end
@@ -39,8 +41,19 @@
         
         if (status==1) {
             
-            self.dingZhiInfo = responseObject;
+            self.dingZhiInfo = [[NSMutableDictionary alloc] initWithDictionary:responseObject];
             [self initView];
+            
+            UIButton * chatButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-62*BiLiWidth, HEIGHT_PingMu-68*BiLiWidth-243*BiLiWidth, 62*BiLiWidth, 68*BiLiWidth)];
+            [chatButton setBackgroundImage:[UIImage imageNamed:@"tieZi_chat_blue"] forState:UIControlStateNormal];
+            [chatButton addTarget:self action:@selector(chatButtonClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:chatButton];
+
+            self.shakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-102*BiLiWidth, chatButton.bottom+4*BiLiWidth, 92*BiLiWidth, 44*BiLiWidth)];
+            self.shakeImageView.image = [UIImage imageNamed:@"chatTipKuang"];
+            [self.view addSubview:self.shakeImageView];
+            [NormalUse shakeAnimationForView:self.shakeImageView];
+
         }
         else
         {
@@ -122,6 +135,85 @@
     faBuTimeLable.text = [self.dingZhiInfo objectForKey:@"create_at"];
     
 
+    if ([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+        
+        UILabel * onLineLable = [[UILabel alloc] initWithFrame:CGRectMake(faBuTimeLable.right+5*BiLiWidth, faBuTimeLable.top-4*BiLiWidth, 50*BiLiWidth, 20*BiLiWidth)];
+        onLineLable.textColor = [UIColor whiteColor];
+        onLineLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
+        onLineLable.layer.cornerRadius = 10*BiLiWidth;
+        onLineLable.layer.masksToBounds = YES;
+        onLineLable.textAlignment = NSTextAlignmentCenter;
+        [self.mainScrollView addSubview:onLineLable];
+        onLineLable.hidden = YES;
+
+        [HTTPModel getUserOnLineStatus:@{@"ryuser_id":[self.dingZhiInfo objectForKey:@"ryuser_id"]} callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+            
+            if (status==1) {
+                
+                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-35*BiLiWidth, 0, 1, 30)];
+                [self.mainScrollView addSubview:lineView];
+                
+                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
+                onLineAnimationLable.textColor = [UIColor whiteColor];
+                onLineAnimationLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:8*BiLiWidth];
+                onLineAnimationLable.layer.cornerRadius = 5*BiLiWidth;
+                onLineAnimationLable.layer.masksToBounds = YES;
+                onLineAnimationLable.textAlignment = NSTextAlignmentCenter;
+                onLineAnimationLable.numberOfLines = 2;
+                [self.mainScrollView addSubview:onLineAnimationLable];
+
+                if ([@"1" isEqualToString:[NormalUse getobjectForKey:[responseObject objectForKey:@"status"]]]) {
+                    
+                    onLineLable.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineLable.text = @"我在线哦";
+                     
+                    lineView.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0xFF0101);
+                    onLineAnimationLable.text = @"我在线哦\n快来私我";
+
+                }
+                else
+                {
+                    onLineLable.backgroundColor = RGBFormUIColor(0x8F97A2);
+                    onLineLable.text = @"暂时离线";
+
+                    lineView.backgroundColor = RGBFormUIColor(0x8F97A2);;
+                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0x8F97A2);
+                    onLineAnimationLable.text = @"暂时离线\n哥哥可留言";
+
+                }
+                
+                [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    
+                    lineView.height = 90;
+                    onLineAnimationLable.top = 90;
+
+                    
+                } completion:^(BOOL finished) {
+                    
+
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                       
+                        onLineLable.hidden = NO;
+
+                        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                            
+                            lineView.height = 40;
+                            onLineAnimationLable.top = 40;
+
+                        } completion:^(BOOL finished) {
+                            
+                        }];
+
+
+                    });
+
+                }];
+                
+            }
+        }];
+    }
+    
     
     UILabel * priceLable = [[UILabel alloc] initWithFrame:CGRectMake(headerImageView.left, headerImageView.top+headerImageView.height+25*BiLiWidth, 200*BiLiWidth, 17*BiLiWidth)];
     priceLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
@@ -249,9 +341,10 @@
     self.jieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-321*BiLiWidth)/2, originy+24*BiLiWidth+25*BiLiWidth, 321*BiLiWidth, 68*BiLiWidth)];
     [self.jieSuoButton setBackgroundImage:[UIImage imageNamed:@"sanJiaoSe_jieSuoBottom"] forState:UIControlStateNormal];
     self.jieSuoButton.button_lable.frame = CGRectMake(19.5*BiLiWidth, 0, 150*BiLiWidth, self.jieSuoButton.height);
+    self.jieSuoButton.button_lable.numberOfLines = 2;
     self.jieSuoButton.button_lable.font = [UIFont systemFontOfSize:13*BiLiWidth];
     self.jieSuoButton.button_lable.textColor = RGBFormUIColor(0xFFFFFF);
-    self.jieSuoButton.button_lable.text = @"查看地址联系方式";
+    self.jieSuoButton.button_lable.text = @"查看地址联系方式\n解锁后即可私聊";
     self.jieSuoButton.button_imageView.frame = CGRectMake(214*BiLiWidth, 11*BiLiWidth, 105*BiLiWidth, 46*BiLiWidth);
     self.jieSuoButton.button_imageView.image = [UIImage imageNamed:@"sanJiaoSe_jieSuo"];
     self.jieSuoButton.button_lable1.frame = CGRectMake(214*BiLiWidth, 0, 105*BiLiWidth, self.jieSuoButton.height);
@@ -307,23 +400,82 @@
     }
     [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.jieSuoButton.bottom+20*BiLiWidth)];
 }
+//-(void)chatButtonClick
+//{
+//    if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])
+//    {
+//        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+//        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+//
+//            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+//                                               ConversationType_PRIVATE targetId:[self.dingZhiInfo objectForKey:@"ryuser_id"]];
+//            [self.navigationController pushViewController:chatVC animated:YES];
+//
+//        }
+//
+//
+//    }
+//}
 -(void)chatButtonClick
 {
-    if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])
-    {
-        NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
-        if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+    [self.shakeImageView removeFromSuperview];
+    
+//    NSNumber * from = [self.tieZiInfo objectForKey:@"from"];
+    
+    if (![NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+                
+        ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"此需求不支持在线聊天" message2:@"" button1Title:@"确定" button2Title:@""];
+        alertView.button1Click = ^{
             
-            RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
-                                               ConversationType_PRIVATE targetId:[self.dingZhiInfo objectForKey:@"ryuser_id"]];
-            [self.navigationController pushViewController:chatVC animated:YES];
+        };
+        alertView.button2Click = ^{
+            
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+
+    }
+    else
+    {
+        NSNumber * is_unlock = [self.dingZhiInfo objectForKey:@"is_unlock"];
+        
+        if (is_unlock.intValue==1) {
+            
+            if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])
+            {
+                NSDictionary * ryInfo = [NormalUse defaultsGetObjectKey:UserRongYunInfo];
+                NSLog(@"%@",ryInfo);
+                if (![[ryInfo objectForKey:@"userid"] isEqualToString:[self.dingZhiInfo objectForKey:@"ryuser_id"]]) {
+                    
+                    RongYChatViewController *chatVC = [[RongYChatViewController alloc] initWithConversationType:
+                                                       ConversationType_PRIVATE targetId:[self.dingZhiInfo objectForKey:@"ryuser_id"]];
+                    [self.navigationController pushViewController:chatVC animated:YES];
+
+                }
+
+            }
+            else
+            {
+                [NormalUse showToastView:@"此需求不支持在线聊天" view:self.view];
+            }
+
+        }
+        else
+        {
+            NSString * tipStr = @"解锁后才可以和需求发布者私聊哦";
+            ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:tipStr message2:@"" button1Title:@"确定" button2Title:@""];
+            alertView.button1Click = ^{
+                
+            };
+            alertView.button2Click = ^{
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
         }
 
-
     }
-}
 
+}
 -(void)jieSuoButtonClick
 {
     [NormalUse showMessageLoadView:@"解锁中..." vc:self];
@@ -336,6 +488,9 @@
         [NormalUse removeMessageLoadingView:self];
         if (status==1) {
             
+            NSNumber * is_unlock = [NSNumber numberWithInt:1];
+            [self.dingZhiInfo setObject:is_unlock forKey:@"is_unlock"];
+
             NSDictionary * contactInfo = responseObject;
             
             if([NormalUse isValidString:[self.dingZhiInfo objectForKey:@"ryuser_id"]])

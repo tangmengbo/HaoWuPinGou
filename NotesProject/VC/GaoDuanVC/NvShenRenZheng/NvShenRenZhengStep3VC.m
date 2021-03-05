@@ -546,7 +546,6 @@
             else
             {
                 [NormalUse showNewToastView:msg view:self.view];
-
             }
         }
         

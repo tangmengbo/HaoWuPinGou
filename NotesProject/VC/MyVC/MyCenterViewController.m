@@ -385,7 +385,7 @@
 }
 -(void)initContentView
 {
-    
+
     self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 61*BiLiWidth, 61*BiLiWidth)];
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImageView.autoresizingMask = UIViewAutoresizingNone;
@@ -395,10 +395,10 @@
     self.headerImageView.userInteractionEnabled = YES;
     [self.mainScrollView addSubview:self.headerImageView];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NormalUse getCurrentAvatarpath]] placeholderImage:[UIImage imageNamed:@"moRen_header"]];
-    
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editUserMessage)];
     [self.headerImageView addGestureRecognizer:tap];
     
+
     self.nickLable = [[UILabel alloc] initWithFrame:CGRectMake(self.headerImageView.left+self.headerImageView.width+14*BiLiWidth, TopHeight_PingMu+19*BiLiWidth, 150*BiLiWidth, 17*BiLiWidth)];
     self.nickLable.textColor = RGBFormUIColor(0x333333);
     self.nickLable.font = [UIFont systemFontOfSize:17*BiLiWidth];
@@ -433,6 +433,8 @@
     [sheZhiButton addTarget:self action:@selector(sheZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollView addSubview:sheZhiButton];
     
+    
+
     
     self.mianFeiJieSuoButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+24*BiLiWidth, WIDTH_PingMu/3, 40*BiLiWidth)];
     self.mianFeiJieSuoButton.button_imageView.frame = CGRectMake((self.mianFeiJieSuoButton.width-26*BiLiWidth)/2, 0, 26*BiLiWidth, 13.5*BiLiWidth);
@@ -729,14 +731,24 @@
 //    self.jinBiMingXiButton.button_imageView1.image = [UIImage imageNamed:@"my_left_jiaoTou"];
 //    [self.mainScrollView addSubview:self.jinBiMingXiButton];
 
-
-    
     [self.mainScrollView setContentSize:CGSizeMake(WIDTH_PingMu, self.qieHuanZhangHao.top+self.qieHuanZhangHao.height+20*BiLiWidth)];
+    
+    self.headerShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.headerImageView.left, self.headerImageView.bottom+4*BiLiWidth, 82*BiLiWidth, 44*BiLiWidth)];
+    self.headerShakeImageView.image = [UIImage imageNamed:@"headerTipKuang"];
+    [self.mainScrollView addSubview:self.headerShakeImageView];
+    [NormalUse shakeAnimationForView:self.headerShakeImageView];
+
+    self.settingShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-66*BiLiWidth, sheZhiButton.bottom+4*BiLiWidth, 66*BiLiWidth, 44*BiLiWidth)];
+    self.settingShakeImageView.image = [UIImage imageNamed:@"shouShiMiMaTipKuang"];
+    [self.mainScrollView addSubview:self.settingShakeImageView];
+    [NormalUse shakeAnimationForView:self.settingShakeImageView];
+
     
 }
 #pragma mark--UIButton
 -(void)editUserMessage
 {
+    [self.headerShakeImageView removeFromSuperview];
     EditUserMessageViewController * vc = [[EditUserMessageViewController alloc] init];
     vc.userInfo = self.userInfo;
     [self.navigationController pushViewController:vc animated:YES];
@@ -749,6 +761,8 @@
 }
 -(void)sheZhiButtonClick
 {
+    [self.settingShakeImageView removeFromSuperview];
+    
     SheZhiViewController * vc = [[SheZhiViewController alloc] init];
     vc.userInfo = self.userInfo;
     [self.navigationController pushViewController:vc animated:YES];
