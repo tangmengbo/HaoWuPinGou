@@ -12,7 +12,7 @@
 #import "MyFaBu_JiaoSeAndFuQiJiaoTieZiCell.h"
 #import "SanDaJiaoSeDetailViewController.h"
 
-@interface MyFaBuViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface MyFaBuViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,CityListViewControllerDelegate>
 {
     int xinXiPage;
     int nvShenTieZiPage;
@@ -56,11 +56,42 @@
 @property(nonatomic,strong)NSMutableArray * yanZhengArray;
 @property(nonatomic,strong)UITableView * yanZhengTableView;
 
+@property(nonatomic,strong)UIImageView * locationImageView;
+@property(nonatomic,strong)UIButton * cityButton;
+@property(nonatomic,strong)NSDictionary * cityInfo;
+
+
 
 @end
 
 @implementation MyFaBuViewController
 
+-(void)cityButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    vc.alsoFromHome = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    [self.cityButton setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+    CGSize  citySize = [NormalUse setSize:self.cityButton.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    
+    self.cityButton.width = citySize.width;
+    self.cityButton.left = self.topNavView.width-citySize.width-10*BiLiWidth;
+    self.locationImageView.left = self.cityButton.left-18*BiLiWidth;
+    
+    [self.xinXiTableView.mj_header beginRefreshing];
+    [self.nvShenTieZiTableView.mj_header beginRefreshing];
+    [self.waiWeiTieZiTableView.mj_header beginRefreshing];
+    [self.peiWanTieZiTableView.mj_header beginRefreshing];
+    [self.fuQiJiaoTieZiTableView.mj_header beginRefreshing];
+    [self.heiDianBaoGuangTableView.mj_header beginRefreshing];
+    [self.dingZhiFuWuTableView.mj_header beginRefreshing];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -77,6 +108,28 @@
 
     
     self.topTitleLale.text = @"我的发布";
+    
+    self.cityButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-100*BiLiWidth, (self.topNavView.height-12*BiLiWidth)/2, 90*BiLiWidth, 12*BiLiWidth)];
+    [self.cityButton setTitle:@"全部" forState:UIControlStateNormal];
+    [self.cityButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
+    self.cityButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+    [self.cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.topNavView addSubview:self.cityButton];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        
+        [self.cityButton setTitle:[self.cityInfo objectForKey:@"cityName"] forState:UIControlStateNormal];
+
+    }
+    CGSize  citySize = [NormalUse setSize:self.cityButton.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+    
+    self.cityButton.width = citySize.width;
+    self.cityButton.left = self.topNavView.width-citySize.width-10*BiLiWidth;
+    
+    self.locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.cityButton.left-18*BiLiWidth, self.cityButton.top-1*BiLiWidth, 11*BiLiWidth, 14*BiLiWidth)];
+    self.locationImageView.image = [UIImage imageNamed:@"home_location"];
+    [self.topNavView addSubview:self.locationImageView];
+
+    
     self.topButtonArray = [NSMutableArray array];
     NSArray * array = [[NSArray alloc] initWithObjects:@"信息",@"女神",@"外围空降",@"全球陪玩",@"夫妻交友",@"黑店曝光",@"定制服务",@"验证", nil];
     
@@ -199,10 +252,23 @@
     
     __weak typeof(self)wself = self;
     
+
+    
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->xinXiPage = 1;
-        [HTTPModel getMyXinXiList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->xinXiPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->xinXiPage] forKey:@"page"];
+        [HTTPModel getMyXinXiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.xinXiTableView.mj_header endRefreshing];
 
@@ -246,7 +312,17 @@
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         
-        [HTTPModel getMyXinXiList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->xinXiPage],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->xinXiPage] forKey:@"page"];
+
+        [HTTPModel getMyXinXiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -294,7 +370,18 @@
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->nvShenTieZiPage = 1;
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->nvShenTieZiPage],@"page",@"1",@"type_id",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->nvShenTieZiPage] forKey:@"page"];
+        [dic setObject:@"1" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.nvShenTieZiTableView.mj_header endRefreshing];
 
@@ -338,7 +425,18 @@
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->nvShenTieZiPage],@"page",@"1",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->nvShenTieZiPage] forKey:@"page"];
+        [dic setObject:@"1" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -387,7 +485,18 @@
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->waiWeiTieZiPage = 1;
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->waiWeiTieZiPage],@"page",@"2",@"type_id",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->waiWeiTieZiPage] forKey:@"page"];
+        [dic setObject:@"2" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.waiWeiTieZiTableView.mj_header endRefreshing];
 
@@ -431,7 +540,18 @@
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->waiWeiTieZiPage],@"page",@"2",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->waiWeiTieZiPage] forKey:@"page"];
+        [dic setObject:@"2" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -478,7 +598,18 @@
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->peiWanTieZiPage = 1;
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->peiWanTieZiPage],@"page",@"3",@"type_id",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->peiWanTieZiPage] forKey:@"page"];
+        [dic setObject:@"3" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.peiWanTieZiTableView.mj_header endRefreshing];
 
@@ -522,7 +653,18 @@
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         
-        [HTTPModel getJiaoSeFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->peiWanTieZiPage],@"page",@"3",@"type_id", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->peiWanTieZiPage] forKey:@"page"];
+        [dic setObject:@"3" forKey:@"type_id"];
+
+        [HTTPModel getJiaoSeFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -570,7 +712,18 @@
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->fuQiJiaoTieZiPage = 1;
-        [HTTPModel getFuQiJiaoFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->fuQiJiaoTieZiPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->fuQiJiaoTieZiPage] forKey:@"page"];
+
+        [HTTPModel getFuQiJiaoFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.fuQiJiaoTieZiTableView.mj_header endRefreshing];
 
@@ -614,7 +767,18 @@
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         
-        [HTTPModel getFuQiJiaoFaTieList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->fuQiJiaoTieZiPage],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->fuQiJiaoTieZiPage] forKey:@"page"];
+
+        
+        [HTTPModel getFuQiJiaoFaTieList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -663,7 +827,19 @@
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->heiDianBaoGuangPage = 1;
-        [HTTPModel getMyHeiDianBaoGuangList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->heiDianBaoGuangPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->heiDianBaoGuangPage] forKey:@"page"];
+
+        
+        [HTTPModel getMyHeiDianBaoGuangList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             [wself.heiDianBaoGuangTableView.mj_header endRefreshing];
 
@@ -705,6 +881,17 @@
     [self.heiDianBaoGuangTableView.mj_header beginRefreshing];
     
     MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+            if (cityCode.intValue!=-1001) {
+                NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+            }
+        }
+        [dic setObject:[NSString stringWithFormat:@"%d",self->heiDianBaoGuangPage] forKey:@"page"];
+
         
         [HTTPModel getMyHeiDianBaoGuangList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->heiDianBaoGuangPage],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
@@ -753,7 +940,18 @@
        MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
            
            self->dingZhiFuWuPage = 1;
-           [HTTPModel getMyDingZhiFuWuList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->dingZhiFuWuPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           
+           NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+           if ([NormalUse isValidDictionary:self.cityInfo]) {
+               NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+               if (cityCode.intValue!=-1001) {
+                   NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                   [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+               }
+           }
+           [dic setObject:[NSString stringWithFormat:@"%d",self->dingZhiFuWuPage] forKey:@"page"];
+
+           [HTTPModel getMyDingZhiFuWuList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
                [wself.dingZhiFuWuTableView.mj_header endRefreshing];
 
@@ -796,7 +994,17 @@
        
        MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
            
-           [HTTPModel getMyDingZhiFuWuList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->dingZhiFuWuPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+           if ([NormalUse isValidDictionary:self.cityInfo]) {
+               NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+               if (cityCode.intValue!=-1001) {
+                   NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                   [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+               }
+           }
+           [dic setObject:[NSString stringWithFormat:@"%d",self->dingZhiFuWuPage] forKey:@"page"];
+
+           [HTTPModel getMyDingZhiFuWuList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
                if (status==1) {
                    
@@ -844,7 +1052,18 @@
        MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
            
            self->yanZhengPage = 1;
-           [HTTPModel getMyYanZhengList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->yanZhengPage],@"page", nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           
+           NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+           if ([NormalUse isValidDictionary:self.cityInfo]) {
+               NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+               if (cityCode.intValue!=-1001) {
+                   NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                   [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+               }
+           }
+           [dic setObject:[NSString stringWithFormat:@"%d",self->yanZhengPage] forKey:@"page"];
+
+           [HTTPModel getMyYanZhengList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
                [wself.yanZhengTableView.mj_header endRefreshing];
 
@@ -886,7 +1105,17 @@
        
        MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
            
-           [HTTPModel getMyYanZhengList:[[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self->yanZhengPage],@"page",nil] callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+           NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+           if ([NormalUse isValidDictionary:self.cityInfo]) {
+               NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+               if (cityCode.intValue!=-1001) {
+                   NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+                   [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+               }
+           }
+           [dic setObject:[NSString stringWithFormat:@"%d",self->yanZhengPage] forKey:@"page"];
+
+           [HTTPModel getMyYanZhengList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
                
                if (status==1) {
                    self->yanZhengPage = 1;

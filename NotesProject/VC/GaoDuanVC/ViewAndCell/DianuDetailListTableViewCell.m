@@ -113,7 +113,6 @@
     if ([self.auth_vip isKindOfClass:[NSNumber class]]) {
         
         self.zuanShiImageView1.hidden  = NO;
-        self.zuanShiImageView2.hidden  = NO;
         if (self.auth_vip.intValue==1) {
             
             self.zuanShiImageView1.image = [UIImage imageNamed:@"vip_zuanShi"];
@@ -164,7 +163,11 @@
     self.messageLable1.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
     
 //    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@~%@",[info1 objectForKey:@"min_price"],[info1 objectForKey:@"max_price"]];
-    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info1 objectForKey:@"trade_money"]]];
+    self.priceLable1.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info1 objectForKey:@"nprice_label"]]];
+
+    if ([NormalUse isValidString:[info1 objectForKey:@"trade_money"]]) {
+        self.priceLable1.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info1 objectForKey:@"trade_money"]]];
+    }
     
     if ([NormalUse isValidDictionary:info2]) {
         
@@ -173,13 +176,11 @@
         if ([NormalUse isValidArray:[info2 objectForKey:@"images"]]) {
             
             NSArray * images = [info2 objectForKey:@"images"];
-           // [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]]];
             [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[images objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
         else if ([NormalUse isValidString:[info2 objectForKey:@"images"]])
         {
-            //[self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]]];
             [self.headerImageView2 sd_setImageWithURL:[NSURL URLWithString:[info2 objectForKey:@"images"]] placeholderImage:[UIImage imageNamed:@"header_kong"]];
 
         }
@@ -194,7 +195,11 @@
         self.messageLable2.text = [NSString stringWithFormat:@"年龄：%d",age.intValue];
         
 //        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@~%@",[info2 objectForKey:@"min_price"],[info2 objectForKey:@"max_price"]];
-        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info2 objectForKey:@"trade_money"]]];
+        self.priceLable2.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info2 objectForKey:@"nprice_label"]]];
+
+        if ([NormalUse isValidString:[info2 objectForKey:@"trade_money"]]) {
+            self.priceLable2.text = [NSString stringWithFormat:@"价格:%@",[NormalUse getobjectForKey:[info2 objectForKey:@"trade_money"]]];
+        }
 
 
     }

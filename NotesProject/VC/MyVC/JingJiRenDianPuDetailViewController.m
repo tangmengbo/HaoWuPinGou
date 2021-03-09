@@ -27,6 +27,7 @@
 @property(nonatomic,strong)NSString * field;//默认最新 hot_value 最热
 
 
+
 @end
 
 @implementation JingJiRenDianPuDetailViewController
@@ -51,8 +52,22 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [HTTPModel jingJiRenGetDianPuDetail:nil
+        
+    [self getShopInfo];
+}
+-(void)getShopInfo
+{
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+        if (cityCode.intValue!=-1001) {
+            NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+            [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+
+        }
+    }
+
+    [HTTPModel jingJiRenGetDianPuDetail:dic
                                callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         if (status==1) {
             
@@ -86,9 +101,7 @@
         }
         
     }];
-    
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -131,11 +144,21 @@
     page = 1;
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     if ([NormalUse isValidString:self.field]) {
-        
+
         [dic setObject:self.field forKey:@"field"];
     }
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+        if (cityCode.intValue!=-1001) {
+
+            NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+            [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+
+        }
+    }
+
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -178,11 +201,20 @@
 {
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     if ([NormalUse isValidString:self.field]) {
-        
+
         [dic setObject:self.field forKey:@"field"];
     }
     [dic setObject:[NSString stringWithFormat:@"%d",page] forKey:@"page"];
     [dic setObject:self.dianPuId forKey:@"client_id"];
+    if ([NormalUse isValidDictionary:self.cityInfo]) {
+        NSString * cityCode = [self.cityInfo objectForKey:@"cityCode"];
+        if (cityCode.intValue!=-1001) {
+
+            NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
+            [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"cityCode"];
+
+        }
+    }
     [HTTPModel getTieZiList:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         if (status==1) {
@@ -242,7 +274,7 @@
     }
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
+    //cell.auth_vip = [self.dianPuInfo objectForKey:@"auth_vip"];
     if ((indexPath.row+1)*2<=self.artist_list.count) {
         
         [cell initData:[self.artist_list objectAtIndex:indexPath.row*2] info2:[self.artist_list objectAtIndex:indexPath.row*2+1]];
@@ -528,6 +560,32 @@
             [self.zuiReButton setTitleColor:RGBFormUIColor(0x333333) forState:UIControlStateNormal];
 
         }
+        
+        self.pingFenButton.hidden = YES;
+        self.zuiXinButton.hidden = YES;
+        self.zuiReButton.hidden = YES;
+        
+        self.cityButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-100*BiLiWidth, self.pingFenButton.top, 90*BiLiWidth, 12*BiLiWidth)];
+        [self.cityButton setTitle:@"全部" forState:UIControlStateNormal];
+        [self.cityButton setTitleColor:RGBFormUIColor(0xFF0876) forState:UIControlStateNormal];
+        self.cityButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//        self.cityButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [self.cityButton addTarget:self action:@selector(cityButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:self.cityButton];
+        if ([NormalUse isValidDictionary:self.cityInfo]) {
+            
+            [self.cityButton setTitle:[self.cityInfo objectForKey:@"cityName"] forState:UIControlStateNormal];
+
+        }
+        CGSize  citySize = [NormalUse setSize:self.cityButton.titleLabel.text withCGSize:CGSizeMake(WIDTH_PingMu, WIDTH_PingMu) withFontSize:12*BiLiWidth];
+        
+        self.cityButton.width = citySize.width;
+        self.cityButton.left = headerView.width-citySize.width-10*BiLiWidth;
+        
+        self.locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.cityButton.left-18*BiLiWidth, self.cityButton.top-1*BiLiWidth, 11*BiLiWidth, 14*BiLiWidth)];
+        self.locationImageView.image = [UIImage imageNamed:@"home_location"];
+        [headerView addSubview:self.locationImageView];
+
 
     }
 
@@ -536,6 +594,20 @@
     return headerView;
     
 }
+-(void)cityButtonClick
+{
+    CityListViewController * vc = [[CityListViewController alloc] init];
+    vc.delegate = self;
+    vc.alsoFromHome = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)citySelect:(NSDictionary *)info
+{
+    self.cityInfo = info;
+    [self.cityButton setTitle:[info objectForKey:@"cityName"] forState:UIControlStateNormal];
+    [self getShopInfo];
+}
+
 -(void)chatButtonClick
 {
     if([NormalUse isValidString:[self.dianPuInfo objectForKey:@"ryuser_id"]])

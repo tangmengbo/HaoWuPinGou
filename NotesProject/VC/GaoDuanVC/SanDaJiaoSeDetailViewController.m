@@ -164,8 +164,9 @@
                 NSString * coin = [NormalUse getJinBiStr:@"unlock_rpost_coin"];
                 NSString *url;
                 
-                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"pay_url"]];
-                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"]]];
+                //type_id type_id(预约类型1真实会员贴  2仨角色贴 3普通茶贴)
+                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"interview_url"]];
+                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@&pay_code=%@&type_id=%@&related_id=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],@"2",self.girl_id]];
                 NSURL *cleanURL = [NSURL URLWithString:url];
                 [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
                     
@@ -193,7 +194,36 @@
             }
             else if (pay_status.intValue==1)
             {
-                [NormalUse showToastView:@"订单支付成功" view:self.view];
+                NSNumber * is_interview = [NSNumber numberWithInt:1];
+                [self.tieZiInfo setObject:is_interview forKey:@"is_interview"];
+
+                self->alsoUnlockSuccess = YES;
+                if([NormalUse isValidString:[self.tieZiInfo objectForKey:@"ryuser_id"]])
+                {
+                    VipTieZiJieSuoSuccseeTipView * view = [[VipTieZiJieSuoSuccseeTipView alloc] initWithFrame:CGRectZero];
+                    [self.view addSubview:view];
+                    view.toConnect = ^{
+                        
+                        [self chatButtonClick];
+                    };
+                }
+                
+                [self.yuYueButton removeAllSubviews];
+                
+                UILabel * jieSuoTipLable1 = [[UILabel alloc] initWithFrame:CGRectMake(10*BiLiWidth, 0, self.yuYueButton.width-20*BiLiWidth, self.yuYueButton.height)];
+                jieSuoTipLable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:15*BiLiWidth];
+                jieSuoTipLable1.numberOfLines =2;
+                jieSuoTipLable1.textColor = [UIColor whiteColor];
+                [self.yuYueButton addSubview:jieSuoTipLable1];
+                
+                NSString * unlock_vpost_coin = [NormalUse getJinBiStr:@"unlock_vpost_coin"];
+                NSString * str = [NSString stringWithFormat:@"成功缴纳%@预付金,平台担保真实信息,虚假包赔",unlock_vpost_coin];
+                NSAttributedString * str1 = [[NSAttributedString alloc] initWithString:str];
+                NSMutableAttributedString * text1 = [[NSMutableAttributedString alloc] initWithAttributedString:str1];
+                [text1 addAttribute:NSForegroundColorAttributeName
+                              value:RGBFormUIColor(0xFFFC02)
+                              range:NSMakeRange(4, unlock_vpost_coin.length)];
+                jieSuoTipLable1.attributedText = text1;
 
             }
             else
@@ -811,7 +841,7 @@
     
    [self initJiBenZiLiaoView:self.messageContentView.top+self.messageContentView.height];
 
-    UIImageView * touSuShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-137*BiLiWidth, self.topNavView.bottom-4*BiLiWidth, 137*BiLiWidth, 64*BiLiWidth)];
+    UIImageView * touSuShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-92*BiLiWidth, self.topNavView.bottom-4*BiLiWidth, 92*BiLiWidth, 49*BiLiWidth)];
     touSuShakeImageView.image = [UIImage imageNamed:@"touSuTipKuang"];
     [self.view addSubview:touSuShakeImageView];
     [NormalUse shakeAnimationForView:touSuShakeImageView];

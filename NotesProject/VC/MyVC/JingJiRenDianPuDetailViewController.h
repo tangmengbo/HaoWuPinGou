@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JingJiRenDianPuDetailViewController : MainBaseViewController
+@interface JingJiRenDianPuDetailViewController : MainBaseViewController<CityListViewControllerDelegate>
 
 @property(nonatomic,strong)NSString * dianPuId;
 
@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)UIButton * pingFenButton;
 @property(nonatomic,strong)UIButton * zuiXinButton;
 @property(nonatomic,strong)UIButton * zuiReButton;
+@property(nonatomic,strong)UIImageView * locationImageView;
+@property(nonatomic,strong)UIButton * cityButton;
+@property(nonatomic,strong)NSDictionary * cityInfo;
+
+
 
 @property(nonatomic,strong)Lable_ImageButton * noMessageTipButotn;
 

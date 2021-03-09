@@ -144,32 +144,15 @@
         onLineLable.layer.masksToBounds = YES;
         onLineLable.textAlignment = NSTextAlignmentCenter;
         [self.mainScrollView addSubview:onLineLable];
-        onLineLable.hidden = YES;
 
         [HTTPModel getUserOnLineStatus:@{@"ryuser_id":[self.dingZhiInfo objectForKey:@"ryuser_id"]} callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
-                UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_PingMu-35*BiLiWidth, 0, 1, 30)];
-                [self.mainScrollView addSubview:lineView];
-                
-                UILabel * onLineAnimationLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-60*BiLiWidth, lineView.bottom, 50*BiLiWidth, 30*BiLiWidth)];
-                onLineAnimationLable.textColor = [UIColor whiteColor];
-                onLineAnimationLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:8*BiLiWidth];
-                onLineAnimationLable.layer.cornerRadius = 5*BiLiWidth;
-                onLineAnimationLable.layer.masksToBounds = YES;
-                onLineAnimationLable.textAlignment = NSTextAlignmentCenter;
-                onLineAnimationLable.numberOfLines = 2;
-                [self.mainScrollView addSubview:onLineAnimationLable];
-
                 if ([@"1" isEqualToString:[NormalUse getobjectForKey:[responseObject objectForKey:@"status"]]]) {
                     
                     onLineLable.backgroundColor = RGBFormUIColor(0xFF0101);
                     onLineLable.text = @"我在线哦";
-                     
-                    lineView.backgroundColor = RGBFormUIColor(0xFF0101);
-                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0xFF0101);
-                    onLineAnimationLable.text = @"我在线哦\n快来私我";
 
                 }
                 else
@@ -177,39 +160,7 @@
                     onLineLable.backgroundColor = RGBFormUIColor(0x8F97A2);
                     onLineLable.text = @"暂时离线";
 
-                    lineView.backgroundColor = RGBFormUIColor(0x8F97A2);;
-                    onLineAnimationLable.backgroundColor = RGBFormUIColor(0x8F97A2);
-                    onLineAnimationLable.text = @"暂时离线\n哥哥可留言";
-
                 }
-                
-                [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                    
-                    lineView.height = 90;
-                    onLineAnimationLable.top = 90;
-
-                    
-                } completion:^(BOOL finished) {
-                    
-
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                       
-                        onLineLable.hidden = NO;
-
-                        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                            
-                            lineView.height = 40;
-                            onLineAnimationLable.top = 40;
-
-                        } completion:^(BOOL finished) {
-                            
-                        }];
-
-
-                    });
-
-                }];
-                
             }
         }];
     }

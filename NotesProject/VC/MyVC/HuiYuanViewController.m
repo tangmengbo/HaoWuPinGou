@@ -574,16 +574,13 @@
     //如果支付通道最大金额小于要开通的会员金额
     if (self.max_value.intValue<self.huiYuanCoinsStr.intValue) {
         
-        
         ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:[NSString stringWithFormat:@"请充值%@金币后选择立即开通此会员",self.huiYuanCoinsStr] message2:@"" button1Title:@"立即开通" button2Title:@"购买金币"];
         alertView.button1Click = ^{
             [self kaiTongHuiYuan];
-
         };
         alertView.button2Click = ^{
             ZhangHuDetailViewController * vc = [[ZhangHuDetailViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
-
         };
         [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
