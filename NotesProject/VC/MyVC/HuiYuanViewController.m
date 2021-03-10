@@ -108,7 +108,13 @@
                 
                 button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
                 button.button_lable.text = [info objectForKey:@"pay_name"];
-            }else
+            }
+            else if ([@"网银支付" isEqualToString:[info objectForKey:@"pay_name"]])
+            {
+                button.button_imageView.image = [UIImage imageNamed:@"zhangHu_yiLian"];
+                button.button_lable.text = [info objectForKey:@"pay_name"];
+            }
+            else
             {
                 button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
                 button.button_lable.text = [info objectForKey:@"pay_name"];
@@ -463,16 +469,41 @@
                 
                 NSDictionary * info = [self.payTypeList objectAtIndex:button.tag];
                 NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
-                if (self.huiYuanCoinsStr.intValue<=max_valueNumber.intValue) {
-                    button.enabled = YES;
-                    button.button_imageView1.hidden = NO;
-                    button.alpha = 1;
-                }
+                NSNumber * min_valueNumber = [info objectForKey:@"min_value"];
+                NSNumber * pay_type = [info objectForKey:@"pay_type"];
+                
+                //银联要判断当前充值金额小于最大值并且大于最小值
+                if (pay_type.intValue==3) {
+                    
+                    if(self.huiYuanCoinsStr.intValue>=min_valueNumber.intValue&&self.huiYuanCoinsStr.intValue<=max_valueNumber.intValue) {
+                        
+                        button.enabled = YES;
+                        button.button_imageView1.hidden = NO;
+                        button.alpha = 1;
+
+                    }
+                    else
+                    {
+                        button.enabled = NO;
+                        button.button_imageView1.hidden = YES;
+                        button.alpha = 0.5;
+
+                    }
+                }//支付宝，微信只判断当前充值金额小于最大值
                 else
                 {
-                    button.enabled = NO;
-                    button.button_imageView1.hidden = YES;
-                    button.alpha = 0.5;
+                    if (self.huiYuanCoinsStr.intValue<=max_valueNumber.intValue) {
+                        button.enabled = YES;
+                        button.button_imageView1.hidden = NO;
+                        button.alpha = 1;
+                    }
+                    else
+                    {
+                        button.enabled = NO;
+                        button.button_imageView1.hidden = YES;
+                        button.alpha = 0.5;
+
+                    }
 
                 }
 

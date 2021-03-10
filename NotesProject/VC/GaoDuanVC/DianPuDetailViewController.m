@@ -579,14 +579,14 @@
         [messageLable  sizeToFit];
         
         
-        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
+        UIImageView * jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, messageLable.top+messageLable.height+16*BiLiWidth, 125*BiLiWidth, 20*BiLiWidth)];
         jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [headerView addSubview:jiaoYiBaoZhengImageView];
         
 
-        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(17*BiLiWidth, 3*BiLiWidth, jiaoYiBaoZhengImageView.width-17*BiLiWidth, 14*BiLiWidth)];
+        UILabel * jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(17*BiLiWidth, 4*BiLiWidth, jiaoYiBaoZhengImageView.width-17*BiLiWidth, 14*BiLiWidth)];
         jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
-        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
+        jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0xFFFFFF);
         jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
         jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
         [jiaoYiBaoZhengImageView addSubview:jiaoYiBaoZhengLable];

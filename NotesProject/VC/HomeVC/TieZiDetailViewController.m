@@ -24,7 +24,7 @@
 
 @property(nonatomic,strong)AutoScrollLabel * autoLabel;
 
-@property(nonatomic,strong)NSArray * payTypeList;
+@property(nonatomic,strong)NSMutableArray * payTypeList;
 @property(nonatomic,strong)UIView * zhiFuView;
 @property(nonatomic,strong)NSMutableArray * payTypeButtonArray;
 @property(nonatomic,strong)NSString * orderId;
@@ -80,11 +80,17 @@
                 
                 button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
                 button.button_lable.text = [info objectForKey:@"pay_name"];
-            }else
+            }
+            else if ([@"网银支付" isEqualToString:[info objectForKey:@"pay_name"]])
+            {
+                button.button_imageView.image = [UIImage imageNamed:@"zhangHu_yiLian"];
+                button.button_lable.text = [info objectForKey:@"pay_name"];
+
+            }
+            else
             {
                 button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
                 button.button_lable.text = [info objectForKey:@"pay_name"];
-
             }
             
             [self.payTypeButtonArray addObject:button];
@@ -386,7 +392,33 @@
         
         if (status==1) {
             
-            self.payTypeList = responseObject;
+            NSArray * array = responseObject;
+            
+            self.payTypeList = [NSMutableArray array];
+            for (NSDictionary * info in array) {
+                
+                NSNumber * pay_type = [info objectForKey:@"pay_type"];
+                
+                NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+                NSNumber * min_valueNumber = [info objectForKey:@"min_value"];
+                NSString * unlock_npost_coin = [NormalUse getJinBiStr:@"unlock_npost_coin"];
+
+                if (pay_type.intValue==3) {
+                    
+                    if(unlock_npost_coin.intValue>=min_valueNumber.intValue&&unlock_npost_coin.intValue<=max_valueNumber.intValue) {
+                        
+                        [self.payTypeList addObject:info];
+                    }
+                }
+                else
+                {
+                    if (unlock_npost_coin.intValue<=max_valueNumber.intValue) {
+                        
+                        [self.payTypeList addObject:info];
+                    }
+                }
+            }
+            
             if(![NormalUse isValidArray:self.payTypeList])
             {
                // [NormalUse showToastView:@"支付通道维护中 请稍后充值" view:self.view];

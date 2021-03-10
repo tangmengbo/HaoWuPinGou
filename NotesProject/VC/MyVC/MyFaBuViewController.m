@@ -251,9 +251,6 @@
     [self.mainScrollView addSubview:self.xinXiTableView];
     
     __weak typeof(self)wself = self;
-    
-
-    
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         self->xinXiPage = 1;
@@ -284,8 +281,6 @@
                     imageView.image = [UIImage imageNamed:@"NoMessageTip"];
                     [self.xinXiTableView addSubview:imageView];
                 }
-
-                
                 if (array.count>=10) {
                     
                     [wself.xinXiTableView.mj_footer endRefreshing];

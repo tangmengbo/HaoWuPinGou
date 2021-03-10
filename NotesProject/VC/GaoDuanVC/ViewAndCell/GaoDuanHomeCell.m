@@ -53,9 +53,9 @@
         self.jinRuButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-72*BiLiWidth-12*BiLiWidth, 24*BiLiWidth, 72*BiLiWidth, 24*BiLiWidth)];
         self.jinRuButton.layer.cornerRadius = 12*BiLiWidth;
         self.jinRuButton.layer.borderWidth = 1;
-        self.jinRuButton.layer.borderColor = [RGBFormUIColor(0x999999) CGColor];
+        self.jinRuButton.layer.borderColor = [RGBFormUIColor(0xFF0303) CGColor];
         [self.jinRuButton setTitle:@"进店看看" forState:UIControlStateNormal];
-        [self.jinRuButton setTitleColor:RGBFormUIColor(0x999999) forState:UIControlStateNormal];
+        [self.jinRuButton setTitleColor:RGBFormUIColor(0xFF0303) forState:UIControlStateNormal];
         self.jinRuButton.titleLabel.font = [UIFont systemFontOfSize:12*BiLiWidth];
         [self.jinRuButton addTarget:self action:@selector(jinDianKanKanButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_jinRuButton];
@@ -63,34 +63,38 @@
         self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerImageView.top+self.headerImageView.height+18*BiLiWidth, WIDTH_PingMu, 132*BiLiWidth)];
         [self.contentView addSubview:self.contentScrollView];
         
-        self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 16.5*BiLiWidth*323/56, 16.5*BiLiWidth)];
+        self.jiaoYiBaoZhengImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12*BiLiWidth, self.contentScrollView.top+self.contentScrollView.height+12*BiLiWidth, 125*BiLiWidth, 20*BiLiWidth)];
         self.jiaoYiBaoZhengImageView.image = [UIImage imageNamed:@"baoZhengJin_img"];
         [self.contentView addSubview:self.jiaoYiBaoZhengImageView];
         
-        self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 3*BiLiWidth, self.jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
+        self.jiaoYiBaoZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(15*BiLiWidth, 4*BiLiWidth, self.jiaoYiBaoZhengImageView.width-15*BiLiWidth, 14*BiLiWidth)];
         self.jiaoYiBaoZhengLable.font = [UIFont systemFontOfSize:9*BiLiWidth];
-        self.jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0x4E8AEE);
+        self.jiaoYiBaoZhengLable.textColor = RGBFormUIColor(0xFFFFFF);
         self.jiaoYiBaoZhengLable.adjustsFontSizeToFitWidth = YES;
         self.jiaoYiBaoZhengLable.textAlignment = NSTextAlignmentCenter;
         [self.jiaoYiBaoZhengImageView addSubview:self.jiaoYiBaoZhengLable];
 
         
-        self.renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-144*BiLiWidth,self.jiaoYiBaoZhengImageView.top+1, 60*BiLiWidth, 14.5*BiLiWidth)];
-        self.renZhengLable.textColor = RGBFormUIColor(0x656565);
+        self.renZhengLable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-144*BiLiWidth,self.jiaoYiBaoZhengImageView.top+1, 60*BiLiWidth, 18*BiLiWidth)];
+        self.renZhengLable.textColor = RGBFormUIColor(0xFFFFFF);
         self.renZhengLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.renZhengLable.adjustsFontSizeToFitWidth = YES;
-        self.renZhengLable.backgroundColor = RGBFormUIColor(0xEDEDED);
+        self.renZhengLable.backgroundColor = RGBFormUIColor(0x8AC0F3);
         self.renZhengLable.textAlignment = NSTextAlignmentCenter;
+        self.renZhengLable.layer.cornerRadius = 5*BiLiWidth;
+        self.renZhengLable.layer.masksToBounds = YES;
         [self.contentView addSubview:self.renZhengLable];
 
 
 
-        self.chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(self.renZhengLable.left+self.renZhengLable.width+12*BiLiWidth, self.renZhengLable.top, 60*BiLiWidth, 14.5*BiLiWidth)];
-        self.chengJiaoLable.textColor = RGBFormUIColor(0x656565);
+        self.chengJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(self.renZhengLable.left+self.renZhengLable.width+12*BiLiWidth, self.renZhengLable.top, 60*BiLiWidth, 18*BiLiWidth)];
+        self.chengJiaoLable.textColor = RGBFormUIColor(0xFFFFFF);
         self.chengJiaoLable.font = [UIFont systemFontOfSize:10*BiLiWidth];
         self.chengJiaoLable.adjustsFontSizeToFitWidth = YES;
-        self.chengJiaoLable.backgroundColor = RGBFormUIColor(0xEDEDED);
+        self.chengJiaoLable.backgroundColor = RGBFormUIColor(0xF9A6F5);
         self.chengJiaoLable.textAlignment = NSTextAlignmentCenter;
+        self.chengJiaoLable.layer.cornerRadius = 5*BiLiWidth;
+        self.chengJiaoLable.layer.masksToBounds = YES;
         [self.contentView addSubview:self.chengJiaoLable];
 
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.chengJiaoLable.top+self.chengJiaoLable.height+20*BiLiWidth, WIDTH_PingMu, 8*BiLiWidth)];
@@ -195,10 +199,10 @@
     if ([post_num isKindOfClass:[NSNumber class]]) {
         
         NSString * renZhengStr = [NSString stringWithFormat:@"认证 %d",post_num.intValue];
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:renZhengStr];
-        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
-        self.renZhengLable.attributedText = str;
+//        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:renZhengStr];
+//        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
+//        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
+        self.renZhengLable.text = renZhengStr;
 
 
     }
@@ -207,10 +211,10 @@
     if ([post_num isKindOfClass:[NSNumber class]]) {
         
         NSString * chengJiaoStr = [NSString stringWithFormat:@"成交 %d",deal_num.intValue];
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:chengJiaoStr];
-        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
-        self.chengJiaoLable.attributedText = str;
+//        NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:chengJiaoStr];
+//        [str addAttribute:NSForegroundColorAttributeName value:RGBFormUIColor(0x999999) range:NSMakeRange(0, 2)];
+//        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:9*BiLiWidth] range:NSMakeRange(0, 2)];
+        self.chengJiaoLable.text = chengJiaoStr;
 
 
     }

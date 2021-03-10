@@ -199,7 +199,7 @@
     
     self.buttonArray = [NSMutableArray array];
     
-
+    
     [HTTPModel getZFJinBiList:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
         if (status==1) {
@@ -291,12 +291,12 @@
         originY = button.top+button.height+20*BiLiWidth;
         
     }
-    payTypeIndex = 0;
+    payTypeIndex = -1;
     self.payTypeButtonArray = [NSMutableArray array];
     for(int i=0;i<self.payTypeList.count;i++)
     {
         NSDictionary * info = [self.payTypeList objectAtIndex:i];
-        NSString * pay_channel = [info objectForKey:@"pay_channel"];
+//        NSString * pay_channel = [info objectForKey:@"pay_channel"];
         
         Lable_ImageButton * button  = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(0, originY, WIDTH_PingMu, 21*BiLiWidth)];
         [button addTarget:self action:@selector(payTypeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -312,17 +312,24 @@
         button.tag = i;
         [self.contentScrollView addSubview:button];
         
-        if (i==0) {
-            
-            [button.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
-            button.button_imageView1.layer.borderWidth = 0;
-
-        }
+//        if (i==0) {
+//
+//            [button.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
+//            button.button_imageView1.layer.borderWidth = 0;
+//
+//        }
         if ([@"微信支付" isEqualToString:[info objectForKey:@"pay_name"]]) {
             
             button.button_imageView.image = [UIImage imageNamed:@"zhangHu_Wx"];
             button.button_lable.text = [info objectForKey:@"pay_name"];
-        }else
+        }
+        else if ([@"网银支付" isEqualToString:[info objectForKey:@"pay_name"]])
+        {
+            button.button_imageView.image = [UIImage imageNamed:@"zhangHu_yiLian"];
+            button.button_lable.text = [info objectForKey:@"pay_name"];
+
+        }
+        else
         {
             button.button_imageView.image = [UIImage imageNamed:@"zhangHu_zfb"];
             button.button_lable.text = [info objectForKey:@"pay_name"];
@@ -333,29 +340,33 @@
         originY = originY+40*BiLiWidth;
     }
     
-    UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, originY+35*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
-    [chongZhiButton addTarget:self action:@selector(chongZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentScrollView addSubview:chongZhiButton];
-    
-    [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu, chongZhiButton.top+chongZhiButton.height+40*BiLiWidth)];
-    //渐变设置
-    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-    CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
-    gradientLayer1.frame = chongZhiButton.bounds;
-    gradientLayer1.cornerRadius = 20*BiLiWidth;
-    gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-    gradientLayer1.startPoint = CGPointMake(0, 0);
-    gradientLayer1.endPoint = CGPointMake(0, 1);
-    gradientLayer1.locations = @[@0,@1];
-    [chongZhiButton.layer addSublayer:gradientLayer1];
-    
-    UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, chongZhiButton.width, chongZhiButton.height)];
-    tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    tiJiaoLable.text = @"立即支付";
-    tiJiaoLable.textAlignment = NSTextAlignmentCenter;
-    tiJiaoLable.textColor = [UIColor whiteColor];
-    [chongZhiButton addSubview:tiJiaoLable];
+    if([NormalUse isValidArray:self.payTypeList])
+    {
+        UIButton * chongZhiButton = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu-269*BiLiWidth)/2, originY+35*BiLiWidth, 269*BiLiWidth, 40*BiLiWidth)];
+        [chongZhiButton addTarget:self action:@selector(chongZhiButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentScrollView addSubview:chongZhiButton];
+        
+        [self.contentScrollView setContentSize:CGSizeMake(WIDTH_PingMu, chongZhiButton.top+chongZhiButton.height+40*BiLiWidth)];
+        //渐变设置
+        UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
+        UIColor *colorTwo = RGBFormUIColor(0xFF0876);
+        CAGradientLayer * gradientLayer1 = [CAGradientLayer layer];
+        gradientLayer1.frame = chongZhiButton.bounds;
+        gradientLayer1.cornerRadius = 20*BiLiWidth;
+        gradientLayer1.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+        gradientLayer1.startPoint = CGPointMake(0, 0);
+        gradientLayer1.endPoint = CGPointMake(0, 1);
+        gradientLayer1.locations = @[@0,@1];
+        [chongZhiButton.layer addSublayer:gradientLayer1];
+        
+        UILabel * tiJiaoLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, chongZhiButton.width, chongZhiButton.height)];
+        tiJiaoLable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+        tiJiaoLable.text = @"立即支付";
+        tiJiaoLable.textAlignment = NSTextAlignmentCenter;
+        tiJiaoLable.textColor = [UIColor whiteColor];
+        [chongZhiButton addSubview:tiJiaoLable];
+
+    }
 
 
 }
@@ -367,8 +378,6 @@
         
         [button.button_imageView1 setImage:nil];
         button.button_imageView1.layer.borderWidth = 1;
-
-
     }
     [selectButton.button_imageView1 setImage:[UIImage imageNamed:@"zhangHu_select"]];
     selectButton.button_imageView1.layer.borderWidth = 0;
@@ -423,7 +432,6 @@
 
 -(void)jinEItemButtonClick:(Lable_ImageButton *)selectButton
 {
-    NSLog(@"%d",selectButton.tag);
     for (Lable_ImageButton * button in self.buttonArray) {
         
         self.jinBiButtonBottom.hidden = NO;
@@ -445,11 +453,69 @@
 
         }
     }
+    
+    payTypeIndex = -1;
+    
+    NSDictionary * info = [self.products objectAtIndex:self.jinBiButtonBottom.tag];
+    NSNumber * coin = [info objectForKey:@"coin"];
+    
+    for (Lable_ImageButton * button in self.payTypeButtonArray) {
+        
+        [button.button_imageView1 setImage:nil];
+        button.button_imageView1.layer.borderWidth = 1;
+        
+        NSDictionary * info = [self.payTypeList objectAtIndex:button.tag];
+        NSNumber * max_valueNumber = [info objectForKey:@"max_value"];
+        NSNumber * min_valueNumber = [info objectForKey:@"min_value"];
+        NSNumber * pay_type = [info objectForKey:@"pay_type"];
+        
+        //银联要判断当前充值金额小于最大值并且大于最小值
+        if (pay_type.intValue==3) {
+            
+            if(coin.intValue>=min_valueNumber.intValue && coin.intValue<=max_valueNumber.intValue) {
+                
+                button.enabled = YES;
+                button.button_imageView1.hidden = NO;
+                button.alpha = 1;
+
+            }
+            else
+            {
+                button.enabled = NO;
+                button.button_imageView1.hidden = YES;
+                button.alpha = 0.5;
+
+            }
+        }//支付宝，微信只判断当前充值金额小于最大值
+        else
+        {
+            if (coin.intValue<=max_valueNumber.intValue) {
+                button.enabled = YES;
+                button.button_imageView1.hidden = NO;
+                button.alpha = 1;
+            }
+            else
+            {
+                button.enabled = NO;
+                button.button_imageView1.hidden = YES;
+                button.alpha = 0.5;
+
+            }
+
+        }
+
+    }
+
 }
 
 
 -(void)chongZhiButtonClick
 {
+    if(payTypeIndex==-1)
+    {
+        [NormalUse showToastView:@"请选择支付渠道" view:self.view];
+        return;
+    }
     [self xianShiLoadingView:@"下单中..." view:self.view];
     [HTTPModel getZFOrderId:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
        
