@@ -3902,15 +3902,11 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
                    
                    callback([[dict valueForKey:@"code"] integerValue], [dict valueForKey:@"data"], [dict objectForKey:@"info"]);
                }
-               
            }
            else
            {
                callback(code.intValue, nil, [dict objectForKey:@"info"]);
-               
            }
-           
-           
        } failure:^(NSURLSessionDataTask *task, NSError *error) {
            
            callback(error.code, nil, error.domain);

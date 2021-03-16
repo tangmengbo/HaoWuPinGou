@@ -94,7 +94,7 @@
     UILabel * step2TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step2Lable.left-30*BiLiWidth,step2Lable.top+step2Lable.height+8.5*BiLiWidth , step2Lable.width+60*BiLiWidth, 12*BiLiWidth)];
     step2TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     step2TipLable.textColor = RGBFormUIColor(0xDEDEDE);
-    step2TipLable.text = @"缴纳押金";
+    step2TipLable.text = @"认证费";
     step2TipLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:step2TipLable];
 

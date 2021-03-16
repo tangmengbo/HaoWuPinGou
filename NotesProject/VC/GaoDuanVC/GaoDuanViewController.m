@@ -10,6 +10,7 @@
 #import "GaoDuanHomeCell.h"
 #import "GaoDuanShaiXuanView.h"
 #import "JiaoSeWeiRenZhengFaTieVC.h"
+#import "SanJiaoSeRenZhengStep1.h"
 
 @interface GaoDuanViewController ()<NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,ForeignCityListViewControllerDelegate,CityListViewControllerDelegate>
 {
@@ -258,7 +259,7 @@
 
         if (self.renZhengStatus==0) {//未认证
             
-            NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+            SanJiaoSeRenZhengStep1 * vc = [[SanJiaoSeRenZhengStep1 alloc] init];
             vc.renZhengType = self.renZhengType;
             [self.navigationController pushViewController:vc animated:YES];
             

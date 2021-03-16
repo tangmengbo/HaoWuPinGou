@@ -116,7 +116,7 @@
     UILabel * step3TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step3Lable.left-30*BiLiWidth,step3Lable.top+step3Lable.height+8.5*BiLiWidth , step3Lable.width+60*BiLiWidth, 12*BiLiWidth)];
     step3TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
     step3TipLable.textColor = RGBFormUIColor(0xDEDEDE);
-    step3TipLable.text = @"缴纳押金";
+    step3TipLable.text = @"认证费";
     step3TipLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:step3TipLable];
     

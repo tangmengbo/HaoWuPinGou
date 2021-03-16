@@ -25,6 +25,9 @@
 
 @property(nonatomic,strong)NSDictionary * xiaoXiWeiDuInfo;
 
+@property(nonatomic,strong)UIScrollView * renZhengScrollView;
+@property(nonatomic,strong)UIButton * renZhengHuaButton;
+
 @end
 
 @implementation MyCenterViewController
@@ -129,6 +132,75 @@
     
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
+    
+    [HTTPModel getUserRole:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+        
+        if(status==1)
+        {
+            //0 未认证 1 已认证 2 审核中
+            //"auth_nomal":0,//滴滴约认证：无
+            //auth_agent":1,//经纪人认证：有
+            //auth_goddess":1,//女神认证：有
+            //auth_global":0,//全球陪玩:无
+            //auth_peripheral":0//外围认证：无
+            //auth_vip_cetf 会员是否已认证（只有会员身份才能认证该身份）
+            //auth_couple 夫妻交认证
+            
+            [self.renZhengScrollView removeAllSubviews];
+            NSDictionary * info = responseObject;
+            NSMutableArray * renZhengArray = [NSMutableArray array];
+            NSNumber * auth_nomal = [info objectForKey:@"auth_nomal"];
+            NSNumber * auth_agent = [info objectForKey:@"auth_agent"];
+            NSNumber * auth_goddess = [info objectForKey:@"auth_goddess"];
+            NSNumber * auth_global = [info objectForKey:@"auth_global"];
+            NSNumber * auth_peripheral = [info objectForKey:@"auth_peripheral"];
+            NSNumber * auth_vip_cetf = [info objectForKey:@"auth_vip_cetf"];
+            
+            if (auth_nomal.intValue==0) {
+                [renZhengArray addObject:@"滴滴约认证"];
+            }
+            if (auth_agent.intValue == 0) {
+                [renZhengArray addObject:@"经纪人认证"];
+            }
+            if (auth_goddess.intValue == 0) {
+                [renZhengArray addObject:@"女神认证"];
+            }
+            if (auth_global.intValue == 0) {
+                [renZhengArray addObject:@"全球陪玩认证"];
+            }
+            if (auth_peripheral.intValue == 0) {
+                [renZhengArray addObject:@"外围认证"];
+            }
+            if (auth_vip_cetf.intValue == 1) {
+                [renZhengArray addObject:@"会员专区认证"];
+            }
+            
+            self.renZhengHuaButton.tag = 0;
+            [self.renZhengHuaButton setImage:[UIImage imageNamed:@"jianTou_right"] forState:UIControlStateNormal];
+            if (renZhengArray.count>4) {
+                
+                self.renZhengHuaButton.hidden = NO;
+            }
+            else
+            {
+                self.renZhengHuaButton.hidden = YES;
+            }
+            for (int i=0; i<renZhengArray.count; i++) {
+                
+                UIButton * buttton = [[UIButton alloc] initWithFrame:CGRectMake(60*BiLiWidth*i, 5*BiLiWidth, 50*BiLiWidth, 20*BiLiWidth)];
+                buttton.backgroundColor = RGBFormUIColor(0xFF47AD);
+                buttton.layer.cornerRadius = 5*BiLiWidth;
+                [buttton setTitle:[renZhengArray objectAtIndex:i] forState:UIControlStateNormal];
+                [buttton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                buttton.titleLabel.font = [UIFont systemFontOfSize:9*BiLiWidth];
+                buttton.titleLabel.adjustsFontSizeToFitWidth = YES;
+                [self.renZhengScrollView addSubview:buttton];
+                
+                [self.renZhengScrollView setContentSize:CGSizeMake(buttton.right+10*BiLiWidth, self.renZhengScrollView.height)];
+            }
+            
+        }
+    }];
 
     [HTTPModel getNewMessageCount:nil callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
@@ -214,6 +286,22 @@
 
     [self getUserInfo];
 
+}
+-(void)renZhengHuaButtonClick:(UIButton *)button
+{
+    if (button.tag==0) {
+       
+        [self.renZhengScrollView setContentOffset:CGPointMake(self.renZhengScrollView.contentSize.width-self.renZhengScrollView.width, 0) animated:YES];
+        self.renZhengHuaButton.tag = 1;
+        [self.renZhengHuaButton setImage:[UIImage imageNamed:@"jianTou_left"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.renZhengScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        self.renZhengHuaButton.tag = 0;
+        [self.renZhengHuaButton setImage:[UIImage imageNamed:@"jianTou_right"] forState:UIControlStateNormal];
+
+    }
 }
 -(void)getUserInfo
 {
@@ -415,6 +503,17 @@
     self.vipImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.messageLable.left+self.messageLable.width+3*BiLiWidth, self.messageLable.top+2.5*BiLiWidth, 25*BiLiWidth*170/60, 25*BiLiWidth)];
     [self.mainScrollView addSubview:self.vipImageView];
 
+    self.renZhengScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.messageLable.left, self.messageLable.bottom, 240*BiLiWidth, 30*BiLiWidth)];
+    self.renZhengScrollView.showsVerticalScrollIndicator = NO;
+    self.renZhengScrollView.showsHorizontalScrollIndicator = NO;
+    [self.mainScrollView addSubview:self.renZhengScrollView];
+    
+    self.renZhengHuaButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH_PingMu-40*BiLiWidth, self.renZhengScrollView.top, 40*BiLiWidth, self.renZhengScrollView.height)];
+    [self.renZhengHuaButton setImage:[UIImage imageNamed:@"jianTou_left"] forState:UIControlStateNormal];    [self.renZhengHuaButton addTarget:self action:@selector(renZhengHuaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollView addSubview:self.renZhengHuaButton];
+    self.renZhengHuaButton.hidden = YES;
+    self.renZhengHuaButton.tag = 0;
+    
     
 //    UIButton * xiaoXiButton = [[UIButton alloc] initWithFrame:CGRectMake(277*BiLiWidth, TopHeight_PingMu+12.5*BiLiWidth, 19*BiLiWidth, 22*BiLiWidth)];
 //    [xiaoXiButton setImage:[UIImage imageNamed:@"my_xiaoXi"] forState:UIControlStateNormal];
@@ -743,6 +842,17 @@
     [self.mainScrollView addSubview:self.settingShakeImageView];
     [NormalUse shakeAnimationForView:self.settingShakeImageView];
 
+    NSNumber * auth_vip = [self.userInfo objectForKey:@"auth_vip"];
+    if(auth_vip.intValue==0)
+    {
+        self.vipShakeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20*BiLiWidth, self.huiYuanButton.bottom+4, 130*BiLiWidth, 42*BiLiWidth)];
+        self.vipShakeImageView.image = [UIImage imageNamed:@"huiYuanKuang"];
+        [self.mainScrollView addSubview:self.vipShakeImageView];
+        [NormalUse shakeAnimationForView:self.vipShakeImageView];
+
+    }
+
+    
     
 }
 #pragma mark--UIButton
@@ -769,6 +879,7 @@
 }
 -(void)huiYuanButtonClick
 {
+    [self.vipShakeImageView removeFromSuperview];
     HuiYuanViewController * vc = [[HuiYuanViewController alloc] init];
     vc.info = self.userInfo;
     vc.vipListInfo = self.vipListInfo;

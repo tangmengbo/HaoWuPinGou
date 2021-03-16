@@ -1,19 +1,14 @@
 //
-//  JingJiRenRenZhengStep1VC.m
+//  SanJiaoSeRenZhengStep1.m
 //  JianZhi
 //
-//  Created by 唐蒙波 on 2020/9/1.
-//  Copyright © 2020 Meng. All rights reserved.
+//  Created by tang bo on 2021/3/12.
+//  Copyright © 2021 Meng. All rights reserved.
 //
 
-#import "JingJiRenRenZhengStep1VC.h"
+#import "SanJiaoSeRenZhengStep1.h"
 
-@interface JingJiRenRenZhengStep1VC ()<CityListViewControllerDelegate>
-
-@end
-
-@implementation JingJiRenRenZhengStep1VC
-
+@implementation SanJiaoSeRenZhengStep1
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,69 +32,6 @@
 }
 -(void)initTopStepView
 {
-    /*
-    UIButton * step1BottomView = [[UIButton alloc] initWithFrame:CGRectMake(56*BiLiWidth, self.topNavView.top+self.topNavView.height+20*BiLiWidth, 22*BiLiWidth, 22*BiLiWidth)];
-    UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
-    UIColor *colorTwo = RGBFormUIColor(0xFF0876);
-    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
-    gradientLayer.cornerRadius = 11*BiLiWidth;
-    gradientLayer.frame = step1BottomView.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
-    gradientLayer.startPoint = CGPointMake(0, 0);
-    gradientLayer.endPoint = CGPointMake(0, 1);
-    gradientLayer.locations = @[@0,@1];
-    [step1BottomView.layer addSublayer:gradientLayer];
-    [self.view addSubview:step1BottomView];
-    
-    UILabel * step1Lable = [[UILabel alloc] initWithFrame:step1BottomView.frame];
-    step1Lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    step1Lable.textColor = RGBFormUIColor(0xFFFFFF);
-    step1Lable.textAlignment = NSTextAlignmentCenter;
-    step1Lable.text = @"1";
-    [self.view addSubview:step1Lable];
-    
-    UILabel * step1TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step1BottomView.left-30*BiLiWidth,step1BottomView.top+step1BottomView.height+8.5*BiLiWidth , step1BottomView.width+60*BiLiWidth, 12*BiLiWidth)];
-    step1TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    step1TipLable.textColor = RGBFormUIColor(0x343434);
-    step1TipLable.text = @"填写个人资料";
-    step1TipLable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:step1TipLable];
-    
-    UILabel * step2Lable = [[UILabel alloc] initWithFrame:CGRectMake((WIDTH_PingMu-22*BiLiWidth)/2, step1Lable.top, 22*BiLiWidth, 22*BiLiWidth)];
-    step2Lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    step2Lable.textColor = RGBFormUIColor(0xFFFFFF);
-    step2Lable.textAlignment = NSTextAlignmentCenter;
-    step2Lable.layer.cornerRadius = 11*BiLiWidth;
-    step2Lable.layer.masksToBounds = YES;
-    step2Lable.backgroundColor = RGBFormUIColor(0xDEDEDE);
-    step2Lable.text = @"2";
-    [self.view addSubview:step2Lable];
-    
-    UILabel * step2TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step2Lable.left-30*BiLiWidth,step2Lable.top+step2Lable.height+8.5*BiLiWidth , step2Lable.width+60*BiLiWidth, 12*BiLiWidth)];
-    step2TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    step2TipLable.textColor = RGBFormUIColor(0xDEDEDE);
-    step2TipLable.text = @"认证费";
-    step2TipLable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:step2TipLable];
-
-    
-    UILabel * step3Lable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-22*BiLiWidth-56*BiLiWidth, step2Lable.top, 22*BiLiWidth, 22*BiLiWidth)];
-    step3Lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
-    step3Lable.textColor = RGBFormUIColor(0xFFFFFF);
-    step3Lable.textAlignment = NSTextAlignmentCenter;
-    step3Lable.layer.cornerRadius = 11*BiLiWidth;
-    step3Lable.layer.masksToBounds = YES;
-    step3Lable.backgroundColor = RGBFormUIColor(0xDEDEDE);
-    step3Lable.text = @"3";
-    [self.view addSubview:step3Lable];
-    
-    UILabel * step3TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step3Lable.left-30*BiLiWidth,step3Lable.top+step3Lable.height+8.5*BiLiWidth , step3Lable.width+60*BiLiWidth, 12*BiLiWidth)];
-    step3TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
-    step3TipLable.textColor = RGBFormUIColor(0xDEDEDE);
-    step3TipLable.text = @"等待审核";
-    step3TipLable.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:step3TipLable];
-    */
     UIButton * step1BottomView = [[UIButton alloc] initWithFrame:CGRectMake((WIDTH_PingMu/2-22*BiLiWidth)/2, self.topNavView.top+self.topNavView.height+20*BiLiWidth, 22*BiLiWidth, 22*BiLiWidth)];
     UIColor *colorOne = RGBFormUIColor(0xFF6C6C);
     UIColor *colorTwo = RGBFormUIColor(0xFF0876);
@@ -143,6 +75,24 @@
     step2TipLable.text = @"认证费";
     step2TipLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:step2TipLable];
+
+    
+//    UILabel * step3Lable = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH_PingMu-22*BiLiWidth-56*BiLiWidth, step2Lable.top, 22*BiLiWidth, 22*BiLiWidth)];
+//    step3Lable.font = [UIFont systemFontOfSize:15*BiLiWidth];
+//    step3Lable.textColor = RGBFormUIColor(0xFFFFFF);
+//    step3Lable.textAlignment = NSTextAlignmentCenter;
+//    step3Lable.layer.cornerRadius = 11*BiLiWidth;
+//    step3Lable.layer.masksToBounds = YES;
+//    step3Lable.backgroundColor = RGBFormUIColor(0xDEDEDE);
+//    step3Lable.text = @"3";
+//    [self.view addSubview:step3Lable];
+//
+//    UILabel * step3TipLable = [[UILabel alloc] initWithFrame:CGRectMake(step3Lable.left-30*BiLiWidth,step3Lable.top+step3Lable.height+8.5*BiLiWidth , step3Lable.width+60*BiLiWidth, 12*BiLiWidth)];
+//    step3TipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+//    step3TipLable.textColor = RGBFormUIColor(0xDEDEDE);
+//    step3TipLable.text = @"等待审核";
+//    step3TipLable.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:step3TipLable];
 
     [self initMessageContentView:step2TipLable];
     
@@ -328,7 +278,7 @@
         return;
     }
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:self.renZhengType forKey:@"type"];//认证类型 1茶小二 2经纪人 3会员认证
+    [dic setObject:self.renZhengType forKey:@"type"];//1女神 2外围女 3全球空降 当前选择的认证选项
 //    NSNumber * cityCode  = [self.cityInfo objectForKey:@"cityCode"];
 //    [dic setObject:[NSString stringWithFormat:@"%d",cityCode.intValue] forKey:@"city_code"];
     [dic setObject:self.chanPinShuLiangTF.text forKey:@"nums"];
@@ -338,9 +288,11 @@
 //    [dic setObject:self.endPriceTF.text forKey:@"max_price"];
     [dic setObject:self.lianXiFangShiTF.text forKey:@"contact"];
     
-    JingJiRenRenZhengStep2VC * vc = [[JingJiRenRenZhengStep2VC alloc] init];
+    NvShenRenZhengStep3VC * vc = [[NvShenRenZhengStep3VC alloc] init];
     vc.info = dic;
+    vc.renZhengType = self.renZhengType;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 
 @end

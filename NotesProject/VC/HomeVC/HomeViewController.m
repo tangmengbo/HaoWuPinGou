@@ -930,7 +930,20 @@
 {
     
     self.chaXiaoErFaTieRenZhengView1.top = HEIGHT_PingMu;
+    
+    ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"必须是真实信息和有效的联系方式，认证后可在会员专区发布信息且拥有官方认证标识" message2:@"" button1Title:@"去认证" button2Title:@""];
+    alertView.button1Click = ^{
+        
+        JingJiRenRenZhengStep1VC * vc = [[JingJiRenRenZhengStep1VC alloc] init];
+        vc.renZhengType = @"3";
+        [self.navigationController pushViewController:vc animated:YES];
+    };
+    alertView.button2Click = ^{
+      
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:alertView];
 
+    /*
     if(self.auth_vip.intValue==0)
     {
         ZDYAlertView * alertView = [[ZDYAlertView alloc] initWithFrame:CGRectZero title:@"" message1:@"您当前未开通任何会员，开通会员后才可以进行会员专区认证" message2:@"" button1Title:@"开通会员" button2Title:@""];
@@ -954,6 +967,7 @@
         vc.renZhengType = @"3";
         [self.navigationController pushViewController:vc animated:YES];
     }
+     */
     
 //    [UIView animateWithDuration:0.5 animations:^{
 //

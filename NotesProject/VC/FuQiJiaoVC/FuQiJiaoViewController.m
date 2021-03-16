@@ -9,6 +9,7 @@
 #import "FuQiJiaoViewController.h"
 #import "FuQiJiaoHomeCell.h"
 #import "FuQiJiaoWeiRenZhengFaTieVC.h"
+#import "FuQiJiaoRehnZhengNewViewController.h"
 
 @interface FuQiJiaoViewController ()<UITableViewDelegate,UITableViewDataSource,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource>
 {

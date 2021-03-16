@@ -7,6 +7,7 @@
 //
 
 #import "JiaoSeWeiRenZhengFaTieKouFeiVC.h"
+#import "SanJiaoSeRenZhengStep1.h"
 
 @interface JiaoSeWeiRenZhengFaTieKouFeiVC ()
 
@@ -170,7 +171,7 @@
 
 -(void)quRenZheng
 {
-    NvShenRenZhengStep1VC * vc = [[NvShenRenZhengStep1VC alloc] init];
+    SanJiaoSeRenZhengStep1 * vc = [[SanJiaoSeRenZhengStep1 alloc] init];
     vc.renZhengType = self.renZhengType;
     [self.navigationController pushViewController:vc animated:YES];
 

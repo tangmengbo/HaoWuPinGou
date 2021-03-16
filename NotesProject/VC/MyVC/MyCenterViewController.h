@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)UIImageView * headerShakeImageView;
 @property(nonatomic,strong)UIImageView * settingShakeImageView;
+@property(nonatomic,strong)UIImageView * vipShakeImageView;
 
 @end
 

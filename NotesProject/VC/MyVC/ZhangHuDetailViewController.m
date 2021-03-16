@@ -179,6 +179,7 @@
     [self.daiLiZhiFuButton addTarget:self action:@selector(zhiFuMethodClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.daiLiZhiFuButton.titleLabel sizeToFit];
     [self.contentScrollView addSubview:self.daiLiZhiFuButton];
+    self.daiLiZhiFuButton.hidden = YES;
     
     [self.zaiXianZhiFuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 
