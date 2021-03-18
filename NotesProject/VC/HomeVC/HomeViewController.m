@@ -327,6 +327,17 @@
         maskLayer.path = maskPath.CGPath;
         kuangImageView.layer.mask = maskLayer;
         
+        UIView * kuangView1 = [[UIView alloc] initWithFrame:CGRectMake(7.5*BiLiWidth, 25*BiLiWidth, WIDTH_PingMu/2-10*BiLiWidth, 104*BiLiWidth)];
+        kuangView1.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        kuangView1.layer.borderWidth = 2;
+        [kuangImageView addSubview:kuangView1];
+        
+        UIView * kuangView2 = [[UIView alloc] initWithFrame:CGRectMake(kuangView1.right+5*BiLiWidth, 25*BiLiWidth, WIDTH_PingMu/2-10*BiLiWidth, 104*BiLiWidth)];
+        kuangView2.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+        kuangView2.layer.borderWidth = 2;
+        [kuangImageView addSubview:kuangView2];
+
+        
         self.renZhengButton = [[Lable_ImageButton alloc] initWithFrame:CGRectMake(16*BiLiWidth, 35.5*BiLiWidth, 70*BiLiWidth, 84*BiLiWidth)];
         self.renZhengButton.button_imageView.frame = CGRectMake(0*BiLiWidth, 0, 70*BiLiWidth, 70*BiLiWidth);
         self.renZhengButton.button_imageView.image = [UIImage imageNamed:@"home_RenZheng"];
@@ -1311,6 +1322,12 @@
     UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
     locationImageView.image = [UIImage imageNamed:@"home_location"];
     [self.topNavView addSubview:locationImageView];
+    
+    UIView * cityKuangView = [[UIView alloc] initWithFrame:CGRectMake(11*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2-5*BiLiWidth, 160*BiLiWidth, 24*BiLiWidth)];
+    cityKuangView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+    cityKuangView.layer.borderWidth = 2;
+    [self.topNavView addSubview:cityKuangView];
+
     
     self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 150*BiLiWidth, locationImageView.height)];
     self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];

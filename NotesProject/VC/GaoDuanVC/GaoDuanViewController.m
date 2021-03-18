@@ -448,6 +448,12 @@
     self.lineView.hidden = YES;
     
     self.topNavView.hidden = NO;
+    
+    UIView * cityKuangView = [[UIView alloc] initWithFrame:CGRectMake(11*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2-5*BiLiWidth, 160*BiLiWidth, 24*BiLiWidth)];
+    cityKuangView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
+    cityKuangView.layer.borderWidth = 2;
+    [self.topNavView addSubview:cityKuangView];
+
     UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
     locationImageView.image = [UIImage imageNamed:@"home_location"];
     [self.topNavView addSubview:locationImageView];

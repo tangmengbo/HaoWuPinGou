@@ -79,7 +79,7 @@
     [self.view addSubview:self.bottomView];
     
     UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_PingMu, 0.5)];
-    lineView.backgroundColor = RGBFormUIColor(0x333333);
+    lineView.backgroundColor = RGBFormUIColor(0xFF0876);
     lineView.alpha = 0.2;
     [self.bottomView addSubview:lineView];
     
@@ -95,7 +95,7 @@
     
     self.lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, self.img1.top+self.img1.height+5, self.tab1.width, 11)];
     self.lab1.font = [UIFont systemFontOfSize:11*BiLiWidth];
-    self.lab1.textColor = RGBFormUIColor(0x333333);
+    self.lab1.textColor = RGBFormUIColor(0xFF0876);
     self.lab1.text = @"首页";
     self.lab1.textAlignment = NSTextAlignmentCenter;
     [self.tab1 addSubview:self.lab1];
@@ -206,7 +206,7 @@
         self.img4.image = [UIImage imageNamed:@"tab_xiaoXi_n"];
         self.img5.image = [UIImage imageNamed:@"tab_my_n"];
         
-        self.lab1.textColor = RGBFormUIColor(0x333333);
+        self.lab1.textColor = RGBFormUIColor(0xFF0876);
         self.lab2.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab3.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab4.textColor = RGBFormUIColor(0xDDDDDD);
@@ -226,7 +226,7 @@
         self.img5.image = [UIImage imageNamed:@"tab_my_n"];
         
         self.lab1.textColor = RGBFormUIColor(0xDDDDDD);
-        self.lab2.textColor = RGBFormUIColor(0x333333);
+        self.lab2.textColor = RGBFormUIColor(0xFF0876);
         self.lab3.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab4.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab5.textColor = RGBFormUIColor(0xDDDDDD);
@@ -245,7 +245,7 @@
         
         self.lab1.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab2.textColor = RGBFormUIColor(0xDDDDDD);
-        self.lab3.textColor = RGBFormUIColor(0x333333);
+        self.lab3.textColor = RGBFormUIColor(0xFF0876);
         self.lab4.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab5.textColor = RGBFormUIColor(0xDDDDDD);
 
@@ -263,7 +263,7 @@
         self.lab1.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab2.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab3.textColor = RGBFormUIColor(0xDDDDDD);
-        self.lab4.textColor = RGBFormUIColor(0x333333);
+        self.lab4.textColor = RGBFormUIColor(0xFF0876);
         self.lab5.textColor = RGBFormUIColor(0xDDDDDD);
 
 
@@ -281,7 +281,7 @@
         self.lab2.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab3.textColor = RGBFormUIColor(0xDDDDDD);
         self.lab4.textColor = RGBFormUIColor(0xDDDDDD);
-        self.lab5.textColor = RGBFormUIColor(0x333333);
+        self.lab5.textColor = RGBFormUIColor(0xFF0876);
 
     }
  

@@ -44,6 +44,13 @@
         self.starLable.textColor = RGBFormUIColor(0xF5BB61);
         [self.contentView addSubview:self.starLable];
 
+        UILabel * tipLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starLable.left+self.starLable.width+5*BiLiWidth, self.starImageView.top, 150*BiLiWidth, 12*BiLiWidth)];
+        tipLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
+        tipLable.textColor = RGBFormUIColor(0xF5BB61);
+        tipLable.text = @"全国各个城市都可以安排小姐姐";
+        tipLable.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:tipLable];
+
         
         self.cityLable = [[UILabel alloc] initWithFrame:CGRectMake(self.starLable.left+self.starLable.width+12*BiLiWidth, self.starImageView.top, 60*BiLiWidth, 12*BiLiWidth)];
         self.cityLable.font = [UIFont systemFontOfSize:11*BiLiWidth];

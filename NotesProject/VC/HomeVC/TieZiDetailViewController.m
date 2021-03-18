@@ -859,6 +859,13 @@
                       value:RGBFormUIColor(0xFFFC02)
                       range:NSMakeRange(3, unlock_npost_coin.length)];
         jieSuoTipLable1.attributedText = text1;
+        
+        UILabel * yuYueTipLable = [[UILabel alloc] initWithFrame:CGRectMake(19.5*BiLiWidth, 45*BiLiWidth, 180*BiLiWidth, 11*BiLiWidth)];
+        yuYueTipLable.font = [UIFont systemFontOfSize:11*BiLiWidth];
+        yuYueTipLable.textColor = RGBFormUIColor(0xFFFFFF);
+        yuYueTipLable.text = @"(私聊确定人在后再下订单预约)";
+        [self.yuYueButton addSubview:yuYueTipLable];
+
 
         
         UIButton * yueYueTipButton = [[UIButton alloc] initWithFrame:CGRectMake(self.jieSuoButton.width-107*BiLiWidth, (self.jieSuoButton.height-46*BiLiWidth)/2, 107*BiLiWidth, 46*BiLiWidth)];
