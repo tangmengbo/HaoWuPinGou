@@ -226,11 +226,20 @@
                 
                 self.orderId = responseObject;
                 NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
-                NSString * coin = [NormalUse getJinBiStr:@"unlock_npost_coin"];
+                NSString * coin = [NSString stringWithFormat:@"%d",self->needJinBiValue];
                 NSString *url;
                 //type_id type_id(预约类型1真实会员贴  2仨角色贴 3普通茶贴)
-                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"interview_url"]];
-//                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@&type_id=%@&related_id=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],@"3",self.post_id]];
+                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"auth_url"]];
+                if([NormalUse isValidString:self.other_type])
+                {
+                    url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&order_no=%@&logintoken=%@&pay_channel=%@&pay_code=%@&type=%@&other_type=%@&nums=%@&contact=%@&nprice_label=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],self.renZhengType,self.other_type,[self.info objectForKey:@"nums"],[self.info objectForKey:@"contact"],[self.info objectForKey:@"nprice_label"]]];
+
+                }
+                else
+                {
+                    url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&order_no=%@&logintoken=%@&pay_channel=%@&pay_code=%@&type=%@&nums=%@&contact=%@&nprice_label=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],self.renZhengType,[self.info objectForKey:@"nums"],[self.info objectForKey:@"contact"],[self.info objectForKey:@"nprice_label"]]];
+
+                }
                 NSURL *cleanURL = [NSURL URLWithString:url];
                 [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
                     
@@ -241,7 +250,6 @@
                 [NormalUse showToastView:msg view:self.view];
             }
         }];
-    
 }
 -(void)yanZhengOrder
 {
@@ -460,7 +468,7 @@
     
     NSString * renZhengStr1;
     NSString * renZhengStr2;
-    if ([@"1" isEqualToString:self.renZhengType]) {
+    if ([@"4" isEqualToString:self.renZhengType]) {
         
         if(auth_peripheral.intValue==0)
         {
@@ -479,7 +487,7 @@
         }
 
     }
-    else if ([@"2" isEqualToString:self.renZhengType])
+    else if ([@"5" isEqualToString:self.renZhengType])
     {
         if(auth_goddess.intValue==0)
         {
@@ -628,22 +636,22 @@
         self.lableButton1.button_lable.textColor = RGBFormUIColor(0x333333);
         
         
-        if ([@"1" isEqualToString:self.renZhengType]) {
+        if ([@"4" isEqualToString:self.renZhengType]) {
             
-            self.renZhengType1 = @"2";
+            self.renZhengType1 = @"5";
             needJinBiValue = needJinBiValue+self.peripheral_auth_coin.intValue;
 
 
         }
-        else if ([@"2" isEqualToString:self.renZhengType])
+        else if ([@"5" isEqualToString:self.renZhengType])
         {
-            self.renZhengType1 = @"1";
+            self.renZhengType1 = @"4";
             needJinBiValue = needJinBiValue+self.goddess_auth_coin.intValue;
 
         }
         else
         {
-            self.renZhengType1 = @"1";
+            self.renZhengType1 = @"4";
             needJinBiValue = needJinBiValue+self.goddess_auth_coin.intValue;
 
 
@@ -659,13 +667,13 @@
         
         
         self.renZhengType1 = @"";
-        if ([@"1" isEqualToString:self.renZhengType]) {
+        if ([@"4" isEqualToString:self.renZhengType]) {
             
             needJinBiValue = needJinBiValue-self.peripheral_auth_coin.intValue;
 
 
         }
-        else if ([@"2" isEqualToString:self.renZhengType])
+        else if ([@"5" isEqualToString:self.renZhengType])
         {
             needJinBiValue = needJinBiValue-self.goddess_auth_coin.intValue;
 
@@ -697,22 +705,22 @@
         self.lableButton2.button_imageView1.backgroundColor = RGBFormUIColor(0xFF0876);
         self.lableButton2.button_lable.textColor = RGBFormUIColor(0x333333);
         
-        if ([@"1" isEqualToString:self.renZhengType]) {
+        if ([@"4" isEqualToString:self.renZhengType]) {
             
-            self.renZhengType2 = @"3";
+            self.renZhengType2 = @"6";
             needJinBiValue = needJinBiValue+self.global_auth_coin.intValue;
 
 
         }
-        else if ([@"2" isEqualToString:self.renZhengType])
+        else if ([@"5" isEqualToString:self.renZhengType])
         {
-            self.renZhengType2 = @"3";
+            self.renZhengType2 = @"6";
             needJinBiValue = needJinBiValue+self.global_auth_coin.intValue;
 
         }
         else
         {
-            self.renZhengType2 = @"2";
+            self.renZhengType2 = @"5";
             needJinBiValue = needJinBiValue+self.peripheral_auth_coin.intValue;
 
         }
@@ -726,13 +734,13 @@
         self.lableButton2.button_lable.textColor = RGBFormUIColor(0x999999);
 
         self.renZhengType2 = @"";
-        if ([@"1" isEqualToString:self.renZhengType]) {
+        if ([@"4" isEqualToString:self.renZhengType]) {
             
             needJinBiValue = needJinBiValue-self.global_auth_coin.intValue;
 
 
         }
-        else if ([@"2" isEqualToString:self.renZhengType])
+        else if ([@"6" isEqualToString:self.renZhengType])
         {
             needJinBiValue = needJinBiValue-self.global_auth_coin.intValue;
 
@@ -767,19 +775,19 @@
     }
     if ([NormalUse isValidArray:other_typeArray] && other_typeArray.count>0) {
         
-        NSString * other_type = [other_typeArray objectAtIndex:0];
+        self.other_type = [other_typeArray objectAtIndex:0];
         for (int i=1; i<other_typeArray.count; i++) {
             
-            other_type = [[other_type stringByAppendingString:@"|"] stringByAppendingString:[other_typeArray objectAtIndex:i]];
+            self.other_type = [[self.other_type stringByAppendingString:@"|"] stringByAppendingString:[other_typeArray objectAtIndex:i]];
         }
-    [dic setObject:other_type forKey:@"other_type"];
+        [dic setObject:self.other_type forKey:@"other_type"];
 
     }
 
     
     [self xianShiLoadingView:@"认证中..." view:self.view];
     
-    [HTTPModel sanDaRenZheng:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+    [HTTPModel jiaoSeRenZhengNew:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
         
         [self yinCangLoadingView];
         

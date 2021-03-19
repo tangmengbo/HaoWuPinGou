@@ -159,20 +159,20 @@
             if (auth_nomal.intValue==0) {
                 [renZhengArray addObject:@"滴滴约认证"];
             }
+            if (auth_vip_cetf.intValue == 1) {
+                [renZhengArray addObject:@"会员专区认证"];
+            }
             if (auth_agent.intValue == 0) {
                 [renZhengArray addObject:@"经纪人认证"];
             }
             if (auth_goddess.intValue == 0) {
                 [renZhengArray addObject:@"女神认证"];
             }
+            if (auth_peripheral.intValue == 0) {
+                [renZhengArray addObject:@"外围空降认证"];
+            }
             if (auth_global.intValue == 0) {
                 [renZhengArray addObject:@"全球陪玩认证"];
-            }
-            if (auth_peripheral.intValue == 0) {
-                [renZhengArray addObject:@"外围认证"];
-            }
-            if (auth_vip_cetf.intValue == 1) {
-                [renZhengArray addObject:@"会员专区认证"];
             }
             
             self.renZhengHuaButton.tag = 0;

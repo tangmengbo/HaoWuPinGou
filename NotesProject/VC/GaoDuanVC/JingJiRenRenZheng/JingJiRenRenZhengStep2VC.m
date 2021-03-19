@@ -225,11 +225,24 @@
                 
                 self.orderId = responseObject;
                 NSDictionary * payTypeInfo = [self.payTypeList objectAtIndex:self->payTypeIndex];
-                NSString * coin = [NormalUse getJinBiStr:@"unlock_npost_coin"];
+                NSString * coin;
+                if ([@"1" isEqualToString:[self.info objectForKey:@"type"]]) {
+                    
+                    coin = [NormalUse getJinBiStr:@"normal_auth_coin"];
+                }
+                else if ([@"2" isEqualToString:[self.info objectForKey:@"type"]])
+                {
+                    coin = [NormalUse getJinBiStr:@"agent_auth_coin"];
+                }
+                else
+                {
+                    coin = [NormalUse getJinBiStr:@"normal_vip_coin"];
+                }
+                
                 NSString *url;
-                //type_id type_id(预约类型1真实会员贴  2仨角色贴 3普通茶贴)
-                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"interview_url"]];
-//                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&orderId=%@&logintoken=%@&pay_channel=%@@&pay_code=%@&type_id=%@&related_id=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],@"3",self.post_id]];
+                //type 1茶小二 2经纪人
+                url   =  [NSString stringWithFormat:@"%@/%@",HTTP_REQUESTURL,[payTypeInfo objectForKey:@"auth_url"]];
+                url = [url stringByAppendingString:[NSString stringWithFormat:@"?amount=%@&order_no=%@&logintoken=%@&pay_channel=%@&pay_code=%@&type=%@&nums=%@&contact=%@&nprice_label=%@",[NSString stringWithFormat:@"%d",coin.intValue],self.orderId,[NormalUse defaultsGetObjectKey:LoginToken],[payTypeInfo objectForKey:@"pay_channel"],[payTypeInfo objectForKey:@"pay_code"],[self.info objectForKey:@"type"],[self.info objectForKey:@"nums"],[self.info objectForKey:@"contact"],[self.info objectForKey:@"nprice_label"]]];
                 NSURL *cleanURL = [NSURL URLWithString:url];
                 [[UIApplication sharedApplication] openURL:cleanURL options:nil completionHandler:^(BOOL success) {
                     
@@ -507,14 +520,53 @@
 {
     
     [self xianShiLoadingView:@"提交中..." view:self.view];
-    NSString * type = [self.info objectForKey:@"type"];
+//    NSString * type = [self.info objectForKey:@"type"];
 
-    if([@"3" isEqualToString:type])
-    {
-        //会员认证
-        NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
-        [dic removeObjectForKey:@"type"];
-        [HTTPModel vipRenRenZheng:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//    if([@"3" isEqualToString:type])
+//    {
+//        //会员认证
+//        NSMutableDictionary * dic = [[NSMutableDictionary alloc] initWithDictionary:self.info];
+//        [dic removeObjectForKey:@"type"];
+//        [HTTPModel vipRenRenZheng:dic callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
+//
+//            if (status==1) {
+//
+////                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
+////                [self.navigationController pushViewController:vc animated:YES];
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//                [NormalUse showToastView:@"认证成功" view:[NormalUse getCurrentVC].view];
+//            }
+//            else
+//            {
+//                [self yinCangLoadingView];
+//                if(status==11402)
+//                {
+//                    if([NormalUse isValidArray:self.payTypeList])
+//                    {
+//                        self.zhiFuView.hidden = NO;
+//                    }
+//                    else
+//                    {
+//                        ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
+//                        [view initData];
+//                        [self.view addSubview:view];
+//
+//                    }
+//
+//                }
+//                else
+//                {
+//                    [NormalUse showToastView:msg view:self.view];
+//
+//                }
+//            }
+//        }];
+//
+//    }
+//    else
+//    {
+        //经纪人 茶小二认证 会员认证
+        [HTTPModel jiaoSeRenZhengNew:self.info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
             
             if (status==1) {
                 
@@ -522,6 +574,7 @@
 //                [self.navigationController pushViewController:vc animated:YES];
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 [NormalUse showToastView:@"认证成功" view:[NormalUse getCurrentVC].view];
+
             }
             else
             {
@@ -548,38 +601,8 @@
                 }
             }
         }];
-        
-    }
-    else
-    {
-        //经纪人 茶小二认证
-        [HTTPModel jingJiRenRenZheng:self.info callback:^(NSInteger status, id  _Nullable responseObject, NSString * _Nullable msg) {
-            
-            if (status==1) {
-                
-                JingJiRenRenZhengStep3VC * vc = [[JingJiRenRenZhengStep3VC alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
 
-            }
-            else
-            {
-                [self yinCangLoadingView];
-                if(status==11402)
-                {
-                    ChongZhiOrHuiYuanAlertView * view = [[ChongZhiOrHuiYuanAlertView alloc] initWithFrame:CGRectZero];
-                    [view initData];
-                    [self.view addSubview:view];
-
-                }
-                else
-                {
-                    [NormalUse showToastView:msg view:self.view];
-
-                }
-            }
-        }];
-
-    }
+//    }
 }
 
 @end

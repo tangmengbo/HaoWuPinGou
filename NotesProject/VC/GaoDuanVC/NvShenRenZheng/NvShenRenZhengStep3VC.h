@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * renZhengType1;//补充的认证选项1
 @property(nonatomic,strong)NSString * renZhengType2;//补充的认证选项2
 
+@property(nonatomic,strong)NSString * other_type;
+
 @property(nonatomic,strong)NSDictionary * info;
 
 @property(nonatomic,strong)UILabel * jinBiLable;

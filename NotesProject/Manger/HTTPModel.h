@@ -216,6 +216,10 @@ callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSStr
 +(void)sanDaRenZheng:(NSDictionary *_Nullable)parameter
             callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
 
+//角色认证申请接口 认证类型 1滴滴约 2经纪人 3会员 4女神 5外围 6全球
++(void)jiaoSeRenZhengNew:(NSDictionary *_Nullable)parameter
+            callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;
+
 //收藏帖子
 +(void)tieZiFollow:(NSDictionary *_Nullable)parameter
           callback:(nullable void (^)(NSInteger status, id _Nullable responseObject, NSString* _Nullable msg))callback;

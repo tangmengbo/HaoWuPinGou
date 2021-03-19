@@ -60,6 +60,9 @@
 @property(nonatomic,strong)UIButton * sanDaJiaSeFaTieRenZhengViewFaTieButton;
 @property(nonatomic,strong)NSString * renZhengType;
 @property(nonatomic,assign)int   renZhengStatus;
+
+@property(nonatomic,strong)UIImageView * cityKuangView;
+
 @end
 
 @implementation GaoDuanViewController
@@ -390,6 +393,7 @@
 }
 -(void)shaiXuanButtonClick
 {
+    [self.cityKuangView removeFromSuperview];
     if (self.contentScrollView.contentOffset.x/WIDTH_PingMu==3) {
         
         ForeignCityListViewController * vc = [[ForeignCityListViewController alloc] init];
@@ -449,14 +453,15 @@
     
     self.topNavView.hidden = NO;
     
-    UIView * cityKuangView = [[UIView alloc] initWithFrame:CGRectMake(11*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2-5*BiLiWidth, 160*BiLiWidth, 24*BiLiWidth)];
-    cityKuangView.layer.borderColor = [RGBFormUIColor(0xFF0876) CGColor];
-    cityKuangView.layer.borderWidth = 2;
-    [self.topNavView addSubview:cityKuangView];
 
     UIImageView * locationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16*BiLiWidth, (self.topNavView.height-14*BiLiWidth)/2, 11*BiLiWidth, 14*BiLiWidth)];
     locationImageView.image = [UIImage imageNamed:@"home_location"];
     [self.topNavView addSubview:locationImageView];
+    
+    self.cityKuangView = [[UIImageView alloc] initWithFrame:CGRectMake(85*BiLiWidth, locationImageView.top-5.5*BiLiWidth, 133*BiLiWidth, 25*BiLiWidth)];
+    self.cityKuangView.image = [UIImage imageNamed:@"city_selectTip"];
+    [self.topNavView addSubview:self.cityKuangView];
+
     
     self.locationLable = [[UILabel alloc] initWithFrame:CGRectMake(locationImageView.left+locationImageView.width+5*BiLiWidth, locationImageView.top, 150*BiLiWidth, locationImageView.height)];
     self.locationLable.font = [UIFont systemFontOfSize:12*BiLiWidth];
@@ -769,7 +774,7 @@
 }
 -(void)nvShenRenZhengButtonClick:(UIButton *)button
 {
-    self.renZhengType = @"1";
+    self.renZhengType = @"4";
     self.renZhengStatus = (int)button.tag;
     
     if (button.tag==1) {
@@ -815,7 +820,7 @@
 -(void)kongJiangButtonClick:(UIButton *)button
 {
     
-    self.renZhengType = @"2";
+    self.renZhengType = @"5";
     self.renZhengStatus = (int)button.tag;
     
     if (button.tag==1) {
@@ -860,7 +865,7 @@
 
 -(void)peiWanButtonClick:(UIButton *)button
 {
-    self.renZhengType = @"3";
+    self.renZhengType = @"6";
     self.renZhengStatus = (int)button.tag;
 
     if (button.tag==1) {
